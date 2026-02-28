@@ -1,11 +1,129 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import '../styles/global.css';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Aosus Landing Page Designs</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+	</head>
+	<body class="bg-[#0a0a0a] dark:bg-[#0a0a0a] min-h-screen text-white font-['Space_Grotesk',sans-serif]">
+		<div class="fixed inset-0 z-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #008a2f22 0%, transparent 50%), radial-gradient(circle at 80% 50%, #1d70ba22 0%, transparent 50%);"></div>
+
+		<div class="relative z-10 max-w-5xl mx-auto px-6 py-20">
+			<header class="text-center mb-20">
+				<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-sm text-white/60 mb-8">
+					<span class="w-2 h-2 rounded-full bg-aosus-green animate-pulse"></span>
+					5 Design Concepts
+				</div>
+				<h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-4">
+					<span class="text-white">Aosus</span>
+					<span class="bg-gradient-to-r from-aosus-green to-aosus-blue bg-clip-text text-transparent"> Landing Pages</span>
+				</h1>
+				<p class="text-lg text-white/50 max-w-2xl mx-auto font-['IBM_Plex_Sans_Arabic']">
+					Five unique design concepts for the largest Arabic open-source community
+				</p>
+			</header>
+
+			<div class="grid gap-6">
+				<!-- Design 1 -->
+				<a href="/1/" class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-aosus-green/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#008a2f44]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-aosus-green/20 to-aosus-green/5 border border-aosus-green/20 flex items-center justify-center text-aosus-green text-2xl font-bold">
+							01
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-aosus-green transition-colors mb-2">Geometric Oasis</h2>
+							<p class="text-white/50">Islamic geometric art meets modern tech. Deep dark backgrounds with luminous geometric tessellation patterns, glass morphism cards, and glowing accent lines.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-aosus-green group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-aosus-green/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 2 -->
+				<a href="/2/" class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#d4a85344]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/20 flex items-center justify-center text-amber-500 text-2xl font-bold">
+							02
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-amber-400 transition-colors mb-2">Digital Souk</h2>
+							<p class="text-white/50">Vibrant maximalist bazaar. Warm sand tones, overlapping asymmetric cards, broken grid layout, gradient mesh backgrounds, and lively floating animations.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-amber-400 group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 3 -->
+				<a href="/3/" class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-[#00ff41]/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#00ff4144]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-[#00ff41]/20 to-[#00ff41]/5 border border-[#00ff41]/20 flex items-center justify-center text-[#00ff41] text-2xl font-bold font-mono">
+							03
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-[#00ff41] transition-colors mb-2">Terminal</h2>
+							<p class="text-white/50">Retro hacker terminal aesthetic. CRT scanlines, phosphor green text, boot sequences, git log timelines, package manager service lists. Pure open-source culture.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-[#00ff41] group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-[#00ff41]/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 4 -->
+				<a href="/4/" class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-aosus-blue/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#1d70ba44]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-aosus-blue/20 to-aosus-blue/5 border border-aosus-blue/20 flex items-center justify-center text-aosus-blue text-2xl font-bold">
+							04
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-aosus-blue-light transition-colors mb-2">Calligraphy Flow</h2>
+							<p class="text-white/50">Elegant editorial magazine aesthetic inspired by Arabic calligraphy. Generous whitespace, Ruqaa typography, flowing organic shapes, and refined minimalism.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-aosus-blue-light group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-aosus-blue/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 5 -->
+				<a href="/5/" class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-sky-400/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#38bdf844]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-sky-400/20 to-sky-400/5 border border-sky-400/20 flex items-center justify-center text-sky-400 text-2xl font-bold font-mono">
+							05
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-sky-400 transition-colors mb-2">Blueprint</h2>
+							<p class="text-white/50">Technical architectural blueprint. Grid backgrounds, dimension lines, registration marks, annotation callouts, and revision history tables. Engineering meets community.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-sky-400 group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-sky-400/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+			</div>
+
+			<footer class="mt-20 text-center text-white/30 text-sm">
+				<p>Aosus - The Largest Arabic Open-Source Community</p>
+				<p class="mt-1 font-['IBM_Plex_Sans_Arabic']">مجتمع أسس - أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة</p>
+			</footer>
+		</div>
+	</body>
+</html>

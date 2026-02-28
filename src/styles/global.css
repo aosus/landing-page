@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-aosus-green: #008a2f;
+  --color-aosus-green-light: #00b33c;
+  --color-aosus-green-dark: #006b24;
+  --color-aosus-blue: #1d70ba;
+  --color-aosus-blue-light: #2989e0;
+  --color-aosus-blue-dark: #165a94;
+  --font-sans-ar: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-display-ar: "Tajawal", "IBM Plex Sans Arabic", sans-serif;
+}

@@ -1,0 +1,502 @@
+---
+import '../../styles/global.css';
+---
+
+<html dir="rtl" lang="ar" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أسس — مجتمع المصادر المفتوحة العربي</title>
+  <meta name="description" content="أكبر مجتمع عربي للمصادر المفتوحة" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-white dark:bg-[#0c0c0c] text-neutral-800 dark:text-neutral-200 antialiased transition-colors duration-500 overflow-x-hidden">
+
+  <!-- ==================== DARK MODE TOGGLE ==================== -->
+  <button
+    id="theme-toggle"
+    aria-label="تبديل الوضع الداكن"
+    class="fixed top-6 left-6 z-50 w-11 h-11 rounded-full border border-neutral-200 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center text-neutral-500 dark:text-neutral-400 hover:text-aosus-green dark:hover:text-aosus-green-light transition-colors duration-300 cursor-pointer"
+  >
+    <svg class="w-[18px] h-[18px] block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+    </svg>
+    <svg class="w-[18px] h-[18px] hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+    </svg>
+  </button>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
+    <!-- Subtle dot grid background -->
+    <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style="background-image: radial-gradient(circle, #008a2f 0.8px, transparent 0.8px); background-size: 32px 32px;"></div>
+
+    <!-- Decorative thin lines -->
+    <div class="absolute top-0 right-1/4 w-px h-32 bg-gradient-to-b from-transparent via-aosus-green/20 to-transparent"></div>
+    <div class="absolute top-0 left-1/3 w-px h-48 bg-gradient-to-b from-transparent via-aosus-green/10 to-transparent"></div>
+
+    <div class="relative text-center max-w-5xl mx-auto">
+      <!-- Small pre-heading -->
+      <p class="font-[IBM_Plex_Sans_Arabic] text-xs tracking-[0.3em] uppercase text-neutral-400 dark:text-neutral-500 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+        مجتمع المصادر المفتوحة العربي
+      </p>
+
+      <!-- Massive calligraphic heading -->
+      <h1 class="font-[Aref_Ruqaa] font-bold text-[clamp(6rem,18vw,14rem)] leading-[0.85] text-neutral-900 dark:text-neutral-100 mb-8 animate-fade-in-up" style="animation-delay: 0.4s;">
+        أسس
+      </h1>
+
+      <!-- Green accent line -->
+      <div class="w-16 h-[1.5px] bg-aosus-green mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.6s;"></div>
+
+      <!-- Subtitle -->
+      <p class="font-[Aref_Ruqaa] text-xl md:text-2xl text-neutral-500 dark:text-neutral-400 max-w-lg mx-auto mb-14 leading-relaxed animate-fade-in-up" style="animation-delay: 0.8s;">
+        حيث يلتقي الشغف بالمصادر المفتوحة<br/>مع جمال اللغة العربية
+      </p>
+
+      <!-- CTA Button -->
+      <a
+        href="https://discord.gg/YJUzEhU955"
+        target="_blank"
+        rel="noopener"
+        class="inline-block font-[IBM_Plex_Sans_Arabic] text-sm font-medium border border-neutral-900 dark:border-neutral-200 text-neutral-900 dark:text-neutral-200 px-10 py-3.5 hover:bg-aosus-green hover:border-aosus-green hover:text-white dark:hover:bg-aosus-green dark:hover:border-aosus-green dark:hover:text-white transition-all duration-300 animate-fade-in-up"
+        style="animation-delay: 1s;"
+      >
+        انضم إلى المجتمع
+      </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-up" style="animation-delay: 1.4s;">
+      <span class="font-[IBM_Plex_Sans_Arabic] text-[10px] tracking-[0.2em] text-neutral-400 dark:text-neutral-600 uppercase">اكتشف</span>
+      <div class="w-px h-8 bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-transparent animate-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ==================== CALLIGRAPHIC DIVIDER ==================== -->
+  <div class="flex items-center justify-center py-4">
+    <svg width="200" height="20" viewBox="0 0 200 20" class="text-aosus-green/30">
+      <path d="M0,10 Q25,0 50,10 T100,10 T150,10 T200,10" fill="none" stroke="currentColor" stroke-width="0.8"/>
+      <circle cx="100" cy="10" r="2" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ==================== PHILOSOPHY ==================== -->
+  <section class="py-32 md:py-40 px-6">
+    <div class="max-w-4xl mx-auto">
+      <!-- Section label -->
+      <div class="flex items-center gap-4 mb-16">
+        <span class="font-[Lora] italic text-sm text-aosus-green">01</span>
+        <div class="flex-1 h-px bg-neutral-200 dark:bg-neutral-800"></div>
+        <span class="font-[IBM_Plex_Sans_Arabic] text-xs tracking-[0.2em] text-neutral-400 dark:text-neutral-500">فلسفتنا</span>
+      </div>
+
+      <!-- Drop cap editorial text -->
+      <div class="relative">
+        <p class="font-[Aref_Ruqaa] text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.8] text-neutral-800 dark:text-neutral-200 first-letter:text-7xl first-letter:font-bold first-letter:text-aosus-green first-letter:float-right first-letter:ml-4 first-letter:mt-1 first-letter:leading-[0.8]">
+          مجتمع غير ربحي أنشأت على يد مجموعة من التقنين العرب. هدفنا تعزيز استخدام البرمجيات مفتوحة المصدر في المنطقة العربية، وتقديم بدائل حرة تحترم خصوصية المستخدم.
+        </p>
+      </div>
+
+      <!-- Pull quote -->
+      <blockquote class="mt-20 pr-8 border-r-2 border-aosus-green">
+        <p class="font-[Aref_Ruqaa] text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+          نؤمن بأن التقنية يجب أن تكون متاحة للجميع، وأن اللغة العربية تستحق حضوراً أقوى في عالم المصادر المفتوحة.
+        </p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ==================== THREE PILLARS ==================== -->
+  <section class="py-32 md:py-40 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section label -->
+      <div class="flex items-center gap-4 mb-20">
+        <span class="font-[Lora] italic text-sm text-aosus-green">02</span>
+        <div class="flex-1 h-px bg-neutral-200 dark:bg-neutral-800"></div>
+        <span class="font-[IBM_Plex_Sans_Arabic] text-xs tracking-[0.2em] text-neutral-400 dark:text-neutral-500">الأركان</span>
+      </div>
+
+      <!-- Three columns -->
+      <div class="grid md:grid-cols-3 gap-0">
+        <!-- Vision -->
+        <div class="py-10 md:py-0 md:px-10 border-b md:border-b-0 md:border-l border-neutral-200 dark:border-neutral-800 last:border-0 group">
+          <span class="font-[Lora] italic text-xs text-neutral-400 dark:text-neutral-600 block mb-6">I</span>
+          <h3 class="font-[Aref_Ruqaa] text-2xl md:text-3xl text-neutral-900 dark:text-neutral-100 mb-6">الرؤية</h3>
+          <div class="w-8 h-[1px] bg-aosus-green mb-6 group-hover:w-16 transition-all duration-500"></div>
+          <p class="font-[IBM_Plex_Sans_Arabic] text-sm leading-[2] text-neutral-600 dark:text-neutral-400">
+            أن يصبح المحتوى العربي التقني مفتوح المصدر مرجعاً غنياً يُمكّن كل عربي من المساهمة في صناعة التقنية العالمية.
+          </p>
+        </div>
+
+        <!-- Mission -->
+        <div class="py-10 md:py-0 md:px-10 border-b md:border-b-0 md:border-l border-neutral-200 dark:border-neutral-800 last:border-0 group">
+          <span class="font-[Lora] italic text-xs text-neutral-400 dark:text-neutral-600 block mb-6">II</span>
+          <h3 class="font-[Aref_Ruqaa] text-2xl md:text-3xl text-neutral-900 dark:text-neutral-100 mb-6">الهدف</h3>
+          <div class="w-8 h-[1px] bg-aosus-green mb-6 group-hover:w-16 transition-all duration-500"></div>
+          <p class="font-[IBM_Plex_Sans_Arabic] text-sm leading-[2] text-neutral-600 dark:text-neutral-400">
+            نشر ثقافة البرمجيات الحرة ومفتوحة المصدر في العالم العربي من خلال التوعية والتعليم وتوفير الأدوات والخدمات.
+          </p>
+        </div>
+
+        <!-- Values -->
+        <div class="py-10 md:py-0 md:px-10 border-b md:border-b-0 md:border-l border-neutral-200 dark:border-neutral-800 last:border-0 group">
+          <span class="font-[Lora] italic text-xs text-neutral-400 dark:text-neutral-600 block mb-6">III</span>
+          <h3 class="font-[Aref_Ruqaa] text-2xl md:text-3xl text-neutral-900 dark:text-neutral-100 mb-6">القيم</h3>
+          <div class="w-8 h-[1px] bg-aosus-green mb-6 group-hover:w-16 transition-all duration-500"></div>
+          <p class="font-[IBM_Plex_Sans_Arabic] text-sm leading-[2] text-neutral-600 dark:text-neutral-400">
+            الشفافية والانفتاح والتعاون واحترام الخصوصية — قيم نعيشها في كل ما نبني ونقدم للمجتمع.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CALLIGRAPHIC DIVIDER ==================== -->
+  <div class="flex items-center justify-center py-4">
+    <svg width="120" height="24" viewBox="0 0 120 24" class="text-aosus-green/20">
+      <circle cx="40" cy="12" r="1.5" fill="currentColor"/>
+      <line x1="46" y1="12" x2="74" y2="12" stroke="currentColor" stroke-width="0.5"/>
+      <circle cx="80" cy="12" r="1.5" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section class="py-32 md:py-40 px-6">
+    <div class="max-w-5xl mx-auto">
+      <!-- Section label -->
+      <div class="flex items-center gap-4 mb-8">
+        <span class="font-[Lora] italic text-sm text-aosus-green">03</span>
+        <div class="flex-1 h-px bg-neutral-200 dark:bg-neutral-800"></div>
+        <span class="font-[IBM_Plex_Sans_Arabic] text-xs tracking-[0.2em] text-neutral-400 dark:text-neutral-500">خِدْمَات</span>
+      </div>
+
+      <!-- Section heading -->
+      <h2 class="font-[Aref_Ruqaa] text-4xl md:text-5xl text-neutral-900 dark:text-neutral-100 mb-6">خدماتنا</h2>
+      <p class="font-[IBM_Plex_Sans_Arabic] text-sm text-neutral-500 dark:text-neutral-400 max-w-xl mb-20 leading-relaxed">
+        بدائل مفتوحة المصدر تحترم خصوصيتك، نستضيفها لك مجاناً.
+      </p>
+
+      <!-- Services grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-0">
+        {[
+          { name: "SearXNG", desc: "محرك بحث يحترم خصوصيتك" },
+          { name: "Simply Translate", desc: "ترجمة فورية بدون تتبع" },
+          { name: "Nitter", desc: "واجهة بديلة لتويتر" },
+          { name: "Redlib", desc: "تصفح ريديت بخصوصية" },
+          { name: "Element", desc: "تواصل مشفر عبر ماتركس" },
+          { name: "rimgo", desc: "واجهة بديلة لإمقر" },
+          { name: "Scribe", desc: "اقرأ مقالات ميديم بحرية" },
+          { name: "Quetre", desc: "واجهة بديلة لكورا" },
+          { name: "Sticktock", desc: "شاهد تيكتوك بخصوصية" },
+        ].map((service) => (
+          <div class="group py-8 border-b border-neutral-100 dark:border-neutral-800/60">
+            <h3 class="font-[Aref_Ruqaa] text-xl text-neutral-900 dark:text-neutral-100 mb-2 group-hover:text-aosus-green transition-colors duration-300">
+              {service.name}
+            </h3>
+            <p class="font-[IBM_Plex_Sans_Arabic] text-xs text-neutral-500 dark:text-neutral-500 mb-3">
+              {service.desc}
+            </p>
+            <div class="w-6 h-[1px] bg-aosus-green/40 group-hover:w-full transition-all duration-700 ease-out"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WRITING CONTEST ==================== -->
+  <section class="py-32 md:py-40 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-12 gap-12 md:gap-8 items-start">
+        <!-- Large section number -->
+        <div class="md:col-span-3 lg:col-span-2">
+          <span class="font-[Lora] italic text-sm text-aosus-green block mb-4">04</span>
+          <span class="font-[Aref_Ruqaa] text-[8rem] md:text-[10rem] leading-none text-neutral-100 dark:text-neutral-900 block select-none" aria-hidden="true">٤</span>
+        </div>
+
+        <!-- Content -->
+        <div class="md:col-span-9 lg:col-span-8 lg:col-start-4">
+          <h2 class="font-[Aref_Ruqaa] text-3xl md:text-5xl text-neutral-900 dark:text-neutral-100 mb-4 leading-tight">
+            جائزة أسس للكتابة
+          </h2>
+          <div class="w-12 h-[1px] bg-aosus-green mb-10"></div>
+
+          <div class="space-y-6 font-[IBM_Plex_Sans_Arabic] text-base leading-[2.2] text-neutral-600 dark:text-neutral-400">
+            <p>
+              نؤمن بأن الكتابة التقنية باللغة العربية هي ركيزة أساسية لبناء مجتمع تقني عربي قوي. لذلك أطلقنا جائزة أسس للكتابة التقنية، لتشجيع الكتّاب والمدونين العرب على إثراء المحتوى التقني العربي.
+            </p>
+            <p>
+              الجائزة تُمنح لأفضل المقالات التقنية المكتوبة باللغة العربية، مع مكافآت مالية تبدأ من <span class="text-aosus-green font-semibold">250$</span> وتصل إلى أكثر من ذلك، بالإضافة إلى نشر المقالات عبر منصات المجتمع.
+            </p>
+          </div>
+
+          <!-- Elegant detail block -->
+          <div class="mt-14 p-8 border border-neutral-200 dark:border-neutral-800">
+            <div class="grid sm:grid-cols-3 gap-8">
+              <div>
+                <span class="font-[IBM_Plex_Sans_Arabic] text-[10px] tracking-[0.15em] text-neutral-400 dark:text-neutral-600 uppercase block mb-2">الجائزة</span>
+                <span class="font-[Aref_Ruqaa] text-2xl text-neutral-900 dark:text-neutral-100">+250$</span>
+              </div>
+              <div>
+                <span class="font-[IBM_Plex_Sans_Arabic] text-[10px] tracking-[0.15em] text-neutral-400 dark:text-neutral-600 uppercase block mb-2">اللغة</span>
+                <span class="font-[Aref_Ruqaa] text-2xl text-neutral-900 dark:text-neutral-100">العربية</span>
+              </div>
+              <div>
+                <span class="font-[IBM_Plex_Sans_Arabic] text-[10px] tracking-[0.15em] text-neutral-400 dark:text-neutral-600 uppercase block mb-2">المجال</span>
+                <span class="font-[Aref_Ruqaa] text-2xl text-neutral-900 dark:text-neutral-100">تقني</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CALLIGRAPHIC DIVIDER ==================== -->
+  <div class="flex items-center justify-center py-4">
+    <svg width="200" height="20" viewBox="0 0 200 20" class="text-aosus-green/20">
+      <path d="M20,10 C40,2 60,18 80,10 S120,2 140,10 S180,18 190,10" fill="none" stroke="currentColor" stroke-width="0.6"/>
+      <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+      <circle cx="190" cy="10" r="1.5" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ==================== JOURNEY / TIMELINE ==================== -->
+  <section class="py-32 md:py-40 px-6">
+    <div class="max-w-4xl mx-auto">
+      <!-- Section label -->
+      <div class="flex items-center gap-4 mb-20">
+        <span class="font-[Lora] italic text-sm text-aosus-green">05</span>
+        <div class="flex-1 h-px bg-neutral-200 dark:bg-neutral-800"></div>
+        <span class="font-[IBM_Plex_Sans_Arabic] text-xs tracking-[0.2em] text-neutral-400 dark:text-neutral-500">المسيرة</span>
+      </div>
+
+      <h2 class="font-[Aref_Ruqaa] text-4xl md:text-5xl text-neutral-900 dark:text-neutral-100 mb-20 text-center">المسيرة</h2>
+
+      <!-- Timeline -->
+      <div class="relative">
+        <!-- Central line -->
+        <div class="absolute right-1/2 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-800 translate-x-1/2 hidden md:block"></div>
+        <!-- Mobile line -->
+        <div class="absolute right-6 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-800 md:hidden"></div>
+
+        <div class="space-y-16 md:space-y-20">
+          {[
+            { year: "2015", text: "بداية الفكرة — مجموعة من التقنيين العرب يتحدثون عن المصادر المفتوحة", side: "right" },
+            { year: "2017", text: "تأسيس مجتمع أسس رسمياً وإطلاق أولى المبادرات التوعوية", side: "left" },
+            { year: "2019", text: "إطلاق خدمات الخصوصية المستضافة وتوسع المجتمع عبر المنصات", side: "right" },
+            { year: "2021", text: "إطلاق جائزة أسس للكتابة التقنية ونمو ملحوظ في عدد الأعضاء", side: "left" },
+            { year: "2023", text: "توسيع البنية التحتية وإضافة خدمات جديدة وشراكات مجتمعية", side: "right" },
+            { year: "2024", text: "أسس اليوم — أكبر مجتمع عربي للمصادر المفتوحة", side: "left" },
+          ].map((item) => (
+            <div class={`relative flex items-start gap-8 md:gap-0 ${item.side === 'left' ? 'md:flex-row-reverse' : ''}`}>
+              {/* Dot on line */}
+              <div class="absolute right-[21px] md:right-1/2 md:translate-x-1/2 top-1 w-3 h-3 rounded-full border-2 border-aosus-green bg-white dark:bg-[#0c0c0c] z-10"></div>
+
+              {/* Content */}
+              <div class={`mr-14 md:mr-0 md:w-1/2 ${item.side === 'left' ? 'md:pr-16 md:text-left' : 'md:pl-16 md:text-right'}`}>
+                <span class="font-[Lora] italic text-sm text-aosus-green block mb-2">{item.year}</span>
+                <p class="font-[IBM_Plex_Sans_Arabic] text-sm leading-[2] text-neutral-600 dark:text-neutral-400">
+                  {item.text}
+                </p>
+              </div>
+
+              {/* Empty space for opposite side */}
+              <div class="hidden md:block md:w-1/2"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SUPPORT CTA ==================== -->
+  <section class="py-32 md:py-40 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <!-- Section label -->
+      <div class="flex items-center gap-4 mb-16 max-w-xs mx-auto">
+        <div class="flex-1 h-px bg-neutral-200 dark:bg-neutral-800"></div>
+        <span class="font-[Lora] italic text-sm text-aosus-green">06</span>
+        <div class="flex-1 h-px bg-neutral-200 dark:bg-neutral-800"></div>
+      </div>
+
+      <h2 class="font-[Aref_Ruqaa] text-4xl md:text-6xl text-neutral-900 dark:text-neutral-100 mb-6">ادعمنا</h2>
+      <div class="w-10 h-[1px] bg-aosus-green mx-auto mb-10"></div>
+      <p class="font-[IBM_Plex_Sans_Arabic] text-base text-neutral-500 dark:text-neutral-400 max-w-md mx-auto mb-14 leading-[2]">
+        ساهم في بناء مستقبل تقني عربي مفتوح. دعمك يُمكّننا من الاستمرار في تقديم خدمات حرة تحترم خصوصية الجميع.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="https://opencollective.com/aosus"
+          target="_blank"
+          rel="noopener"
+          class="font-[IBM_Plex_Sans_Arabic] text-sm font-medium bg-aosus-green text-white px-10 py-3.5 hover:bg-aosus-green-dark transition-colors duration-300"
+        >
+          تبرع الآن
+        </a>
+        <a
+          href="https://github.com/aosus"
+          target="_blank"
+          rel="noopener"
+          class="font-[IBM_Plex_Sans_Arabic] text-sm font-medium border border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 px-10 py-3.5 hover:border-aosus-green hover:text-aosus-green dark:hover:border-aosus-green dark:hover:text-aosus-green transition-colors duration-300"
+        >
+          ساهم في الكود
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-neutral-200 dark:border-neutral-800 pt-20 pb-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <!-- Footer top: brand + links -->
+      <div class="grid md:grid-cols-12 gap-12 mb-20">
+        <!-- Brand -->
+        <div class="md:col-span-4">
+          <h3 class="font-[Aref_Ruqaa] text-3xl text-neutral-900 dark:text-neutral-100 mb-4">أسس</h3>
+          <p class="font-[IBM_Plex_Sans_Arabic] text-xs text-neutral-400 dark:text-neutral-600 leading-[2.2] max-w-xs">
+            أكبر مجتمع عربي للمصادر المفتوحة. نبني جسراً بين التقنية واللغة العربية.
+          </p>
+        </div>
+
+        <!-- Social links grid -->
+        <div class="md:col-span-8">
+          <span class="font-[IBM_Plex_Sans_Arabic] text-[10px] tracking-[0.15em] text-neutral-400 dark:text-neutral-600 uppercase block mb-6">تواصل معنا</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3">
+            {[
+              { name: "تويتر", url: "https://twitter.com/aosusdotorg" },
+              { name: "بلوسكاي", url: "https://bsky.app/profile/aosus.org" },
+              { name: "ماستودون", url: "https://mastodon.online/@aosus" },
+              { name: "ديسكورد", url: "https://discord.gg/YJUzEhU955" },
+              { name: "ماتركس", url: "https://matrix.to/#/#aosus:aosus.org" },
+              { name: "تيليجرام", url: "https://t.me/aosus" },
+              { name: "جيتهب", url: "https://github.com/aosus" },
+              { name: "فيسبوك", url: "https://facebook.com/aosus1" },
+              { name: "لينكدإن", url: "https://linkedin.com/company/aosus" },
+            ].map((link) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener"
+                class="font-[IBM_Plex_Sans_Arabic] text-sm text-neutral-500 dark:text-neutral-500 hover:text-aosus-green dark:hover:text-aosus-green transition-colors duration-300 py-1"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer bottom -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-neutral-100 dark:border-neutral-800/60">
+        <p class="font-[IBM_Plex_Sans_Arabic] text-[11px] text-neutral-400 dark:text-neutral-600">
+          &copy; {new Date().getFullYear()} أسس — جميع الحقوق محفوظة
+        </p>
+        <a
+          href="https://aosus.org"
+          target="_blank"
+          rel="noopener"
+          class="font-[IBM_Plex_Sans_Arabic] text-[11px] text-neutral-400 dark:text-neutral-600 hover:text-aosus-green transition-colors duration-300"
+        >
+          aosus.org
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== STYLES ==================== -->
+  <style>
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scrollLine {
+      0%, 100% {
+        opacity: 0.3;
+        transform: scaleY(0.5);
+        transform-origin: top;
+      }
+      50% {
+        opacity: 1;
+        transform: scaleY(1);
+        transform-origin: top;
+      }
+    }
+
+    .animate-fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .animate-scroll-line {
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    /* Selection color */
+    ::selection {
+      background-color: rgba(0, 138, 47, 0.15);
+      color: inherit;
+    }
+
+    /* Smooth scrollbar */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 138, 47, 0.2) transparent;
+    }
+
+    /* First letter styling workaround for RTL */
+    .first-letter\:text-7xl::first-letter {
+      font-size: 4.5rem;
+    }
+    .first-letter\:font-bold::first-letter {
+      font-weight: 700;
+    }
+    .first-letter\:text-aosus-green::first-letter {
+      color: #008a2f;
+    }
+    .first-letter\:float-right::first-letter {
+      float: right;
+    }
+    .first-letter\:ml-4::first-letter {
+      margin-left: 1rem;
+    }
+    .first-letter\:mt-1::first-letter {
+      margin-top: 0.25rem;
+    }
+    .first-letter\:leading-\[0\.8\]::first-letter {
+      line-height: 0.8;
+    }
+  </style>
+
+  <!-- ==================== DARK MODE SCRIPT ==================== -->
+  <script is:inline>
+    (function() {
+      const toggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+
+      // Initialize from localStorage or system preference
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+      }
+
+      toggle.addEventListener('click', function() {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      });
+    })();
+  </script>
+
+</body>
+</html>
