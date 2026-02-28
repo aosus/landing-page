@@ -6,1110 +6,475 @@ import '../../styles/global.css';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مجتمع أسس — أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة</title>
-  <meta name="description" content="أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر" />
+  <meta name="description" content="أسس - أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر" />
+  <title>أسس - مجتمع البرمجيات الحرة والمفتوحة المصدر</title>
+  <link rel="icon" type="image/svg+xml" href="/brand/aosus-icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;400;500;600;700&family=Readex+Pro:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* Blueprint Grid Background */
-    .blueprint-grid {
-      background-color: #0a1628;
-      background-image:
-        /* Thin lines every 20px */
-        linear-gradient(rgba(29, 112, 186, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(29, 112, 186, 0.08) 1px, transparent 1px),
-        /* Thick lines every 100px */
-        linear-gradient(rgba(29, 112, 186, 0.18) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(29, 112, 186, 0.18) 1px, transparent 1px);
-      background-size:
-        20px 20px,
-        20px 20px,
-        100px 100px,
-        100px 100px;
+    body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    /* Gradient mesh background */
+    .mesh-bg {
+      background:
+        radial-gradient(ellipse 50% 40% at 15% 20%, rgba(0,138,47,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 85% 60%, rgba(29,112,186,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 35% at 50% 85%, rgba(0,138,47,0.1) 0%, transparent 70%);
+    }
+    :root:not(.dark) .mesh-bg {
+      background:
+        radial-gradient(ellipse 50% 40% at 15% 20%, rgba(0,138,47,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 85% 60%, rgba(29,112,186,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 35% at 50% 85%, rgba(0,138,47,0.05) 0%, transparent 70%);
     }
 
-    :root:not(.dark) .blueprint-grid {
-      background-color: #e8eef7;
-      background-image:
-        linear-gradient(rgba(29, 112, 186, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(29, 112, 186, 0.06) 1px, transparent 1px),
-        linear-gradient(rgba(29, 112, 186, 0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(29, 112, 186, 0.15) 1px, transparent 1px);
-      background-size:
-        20px 20px,
-        20px 20px,
-        100px 100px,
-        100px 100px;
+    /* Glass card */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    :root:not(.dark) .glass {
+      background: rgba(255,255,255,0.55);
+      border-color: rgba(255,255,255,0.7);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.05);
     }
 
-    /* Corner Registration Marks */
-    .corner-marks {
-      position: relative;
+    .glass-strong {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(40px) saturate(1.6);
+      -webkit-backdrop-filter: blur(40px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .corner-marks::before,
-    .corner-marks::after {
+    :root:not(.dark) .glass-strong {
+      background: rgba(255,255,255,0.7);
+      border-color: rgba(255,255,255,0.8);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+    }
+
+    .glass-accent {
+      background: linear-gradient(135deg, rgba(0,138,47,0.08) 0%, rgba(29,112,186,0.06) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0,138,47,0.15);
+    }
+    :root:not(.dark) .glass-accent {
+      background: linear-gradient(135deg, rgba(0,138,47,0.06) 0%, rgba(29,112,186,0.04) 100%);
+      border-color: rgba(0,138,47,0.2);
+    }
+
+    /* Animations */
+    @keyframes float-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .anim { animation: float-up 0.7s ease-out both; }
+    .d1 { animation-delay: 0.1s; }
+    .d2 { animation-delay: 0.2s; }
+    .d3 { animation-delay: 0.3s; }
+    .d4 { animation-delay: 0.4s; }
+    .d5 { animation-delay: 0.5s; }
+
+    /* Subtle noise texture */
+    .noise::after {
       content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
+      position: fixed;
+      inset: 0;
+      opacity: 0.015;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       pointer-events: none;
+      z-index: 1;
     }
-    .corner-marks::before {
-      top: -1px;
-      right: -1px;
-      border-top: 2px solid var(--color-aosus-blue);
-      border-right: 2px solid var(--color-aosus-blue);
-    }
-    .corner-marks::after {
-      bottom: -1px;
-      left: -1px;
-      border-bottom: 2px solid var(--color-aosus-blue);
-      border-left: 2px solid var(--color-aosus-blue);
+    :root:not(.dark) .noise::after {
+      opacity: 0.025;
     }
 
-    /* Bottom-left and top-right marks via wrapper */
-    .corner-marks-inner {
-      position: relative;
+    /* Glow ring around icon */
+    .glow-ring {
+      box-shadow: 0 0 40px rgba(0,138,47,0.15), 0 0 80px rgba(29,112,186,0.1);
     }
-    .corner-marks-inner::before,
-    .corner-marks-inner::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      pointer-events: none;
-    }
-    .corner-marks-inner::before {
-      top: -1px;
-      left: -1px;
-      border-top: 2px solid var(--color-aosus-blue);
-      border-left: 2px solid var(--color-aosus-blue);
-    }
-    .corner-marks-inner::after {
-      bottom: -1px;
-      right: -1px;
-      border-bottom: 2px solid var(--color-aosus-blue);
-      border-right: 2px solid var(--color-aosus-blue);
-    }
-
-    :root:not(.dark) .corner-marks::before,
-    :root:not(.dark) .corner-marks::after,
-    :root:not(.dark) .corner-marks-inner::before,
-    :root:not(.dark) .corner-marks-inner::after {
-      border-color: #1d70ba;
-    }
-
-    /* Dimension Line */
-    .dimension-line {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .dimension-line::before,
-    .dimension-line::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--color-aosus-green);
-    }
-    .dimension-line::before {
-      background: linear-gradient(to left, var(--color-aosus-green), transparent);
-    }
-    .dimension-line::after {
-      background: linear-gradient(to right, var(--color-aosus-green), transparent);
-    }
-
-    /* Dashed Construction Lines */
-    .construction-line {
-      border-style: dashed;
-      border-color: rgba(29, 112, 186, 0.3);
-    }
-
-    :root:not(.dark) .construction-line {
-      border-color: rgba(29, 112, 186, 0.4);
-    }
-
-    /* Blueprint Drawing Animation */
-    @keyframes draw-in {
-      from {
-        stroke-dashoffset: 1000;
-        opacity: 0;
-      }
-      to {
-        stroke-dashoffset: 0;
-        opacity: 1;
-      }
-    }
-
-    @keyframes fade-draw {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes type-in {
-      from {
-        width: 0;
-        opacity: 0;
-      }
-      to {
-        width: 100%;
-        opacity: 1;
-      }
-    }
-
-    .draw-animate {
-      animation: fade-draw 0.8s ease-out both;
-    }
-
-    .draw-delay-1 { animation-delay: 0.1s; }
-    .draw-delay-2 { animation-delay: 0.2s; }
-    .draw-delay-3 { animation-delay: 0.3s; }
-    .draw-delay-4 { animation-delay: 0.4s; }
-    .draw-delay-5 { animation-delay: 0.5s; }
-    .draw-delay-6 { animation-delay: 0.6s; }
-    .draw-delay-7 { animation-delay: 0.7s; }
-    .draw-delay-8 { animation-delay: 0.8s; }
-    .draw-delay-9 { animation-delay: 0.9s; }
-
-    /* Annotation Callout */
-    .annotation {
-      position: relative;
-      padding-right: 1.5rem;
-    }
-    .annotation::before {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 2px solid var(--color-aosus-green);
-      background: transparent;
-      transform: translateY(-50%);
-    }
-    .annotation::after {
-      content: '';
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      width: 8px;
-      height: 1px;
-      background: var(--color-aosus-green);
-    }
-
-    /* Fonts */
-    .font-mono-bp {
-      font-family: 'Overpass Mono', monospace;
-    }
-    .font-ar {
-      font-family: 'Readex Pro', sans-serif;
-    }
-
-    /* Title Block Border */
-    .title-block {
-      border: 2px solid var(--color-aosus-blue);
-      position: relative;
-    }
-    .title-block::before {
-      content: '';
-      position: absolute;
-      inset: 3px;
-      border: 1px solid rgba(29, 112, 186, 0.4);
-      pointer-events: none;
-    }
-
-    /* Section header with line */
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to left, transparent, var(--color-aosus-blue));
-    }
-
-    /* Component card hover */
-    .component-card {
-      transition: all 0.3s ease;
-    }
-    .component-card:hover {
-      border-color: var(--color-aosus-green) !important;
-      box-shadow: 0 0 20px rgba(0, 138, 47, 0.1);
-    }
-    .component-card:hover .part-number {
-      color: var(--color-aosus-green);
-    }
-
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(29, 112, 186, 0.05);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(29, 112, 186, 0.3);
-      border-radius: 3px;
-    }
-
-    /* Crosshair decoration */
-    .crosshair {
-      position: relative;
-    }
-    .crosshair::before {
-      content: '+';
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      color: rgba(29, 112, 186, 0.4);
-      font-family: 'Overpass Mono', monospace;
-      font-size: 14px;
-      line-height: 1;
-    }
-
-    /* Technical stamp */
-    .tech-stamp {
-      border: 2px solid var(--color-aosus-blue);
-      position: relative;
-    }
-    .tech-stamp::before {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      border: 1px solid rgba(29, 112, 186, 0.3);
-      pointer-events: none;
-    }
-
-    /* Light mode text overrides */
-    :root:not(.dark) .bp-text {
-      color: #0a1628;
-    }
-    :root:not(.dark) .bp-text-muted {
-      color: #2a4060;
-    }
-    :root:not(.dark) .bp-border {
-      border-color: #1d70ba;
-    }
-    :root:not(.dark) .bp-border-subtle {
-      border-color: rgba(29, 112, 186, 0.3);
-    }
-
-    /* Toggle switch */
-    .toggle-track {
-      width: 40px;
-      height: 20px;
-      border-radius: 10px;
-      border: 1px solid var(--color-aosus-blue);
-      background: rgba(29, 112, 186, 0.1);
-      cursor: pointer;
-      position: relative;
-      transition: all 0.3s;
-    }
-    .toggle-track::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--color-aosus-blue);
-      transition: all 0.3s;
-    }
-    :root:not(.dark) .toggle-track::after {
-      right: auto;
-      left: 2px;
-      background: var(--color-aosus-green);
-    }
-
-    /* Step connector line */
-    .step-connector {
-      position: relative;
-    }
-    .step-connector::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: -2rem;
-      width: 1px;
-      height: 2rem;
-      background: repeating-linear-gradient(
-        to bottom,
-        var(--color-aosus-blue) 0px,
-        var(--color-aosus-blue) 4px,
-        transparent 4px,
-        transparent 8px
-      );
-    }
-    .step-connector:last-child::after {
-      display: none;
-    }
-
-    /* Pulse dot */
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-    .pulse-dot {
-      animation: pulse-dot 2s ease-in-out infinite;
+    :root:not(.dark) .glow-ring {
+      box-shadow: 0 0 30px rgba(0,138,47,0.1), 0 0 60px rgba(29,112,186,0.06);
     }
   </style>
 </head>
+<body class="bg-[#08090d] dark:bg-[#08090d] text-gray-900 dark:text-gray-100 antialiased overflow-x-hidden transition-colors duration-300 noise">
 
-<body class="blueprint-grid font-ar min-h-screen text-white dark:text-white bp-text transition-colors duration-500">
+  <!-- Mesh gradient background layer -->
+  <div class="fixed inset-0 mesh-bg pointer-events-none z-0"></div>
 
-  <!-- Navigation / Control Bar -->
-  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-aosus-blue/30 bp-border-subtle backdrop-blur-sm bg-[#0a1628]/80 dark:bg-[#0a1628]/80 bg-[#e8eef7]/80" dir="ltr">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between font-mono-bp text-xs">
-      <div class="flex items-center gap-4">
-        <span class="text-aosus-blue tracking-wider">AOSUS.ORG</span>
-        <span class="text-aosus-blue/40 hidden sm:inline">|</span>
-        <span class="text-aosus-blue/40 hidden sm:inline">DWG NO. 005</span>
-        <span class="text-aosus-blue/40 hidden sm:inline">|</span>
-        <span class="text-aosus-green/60 hidden sm:inline pulse-dot">● LIVE</span>
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 inset-x-0 z-50 glass-strong">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <a href="/5/" class="flex items-center gap-2.5">
+        <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7" />
+        <span class="font-semibold text-sm dark:text-white text-gray-900">أسس</span>
+      </a>
+      <div class="hidden md:flex items-center gap-7 text-[13px] font-medium dark:text-white/50 text-gray-500">
+        <a href="#about" class="hover:text-aosus-green transition-colors">من نحن</a>
+        <a href="#services" class="hover:text-aosus-green transition-colors">الخدمات</a>
+        <a href="#blog" class="hover:text-aosus-green transition-colors">المدونة</a>
+        <a href="#projects" class="hover:text-aosus-green transition-colors">المشاريع</a>
+        <a href="#support" class="hover:text-aosus-green transition-colors">ادعمنا</a>
       </div>
-      <div class="flex items-center gap-4">
-        <span class="text-aosus-blue/50 hidden sm:inline text-[10px]">REVISION</span>
-        <button id="theme-toggle" class="toggle-track" aria-label="تبديل الوضع" title="REVISION TOGGLE">
+      <div class="flex items-center gap-2.5">
+        <button id="theme-toggle" aria-label="تبديل الوضع" class="w-8 h-8 rounded-lg flex items-center justify-center dark:text-white/40 text-gray-400 hover:text-aosus-green transition-colors">
+          <svg class="w-[16px] h-[16px] hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="w-[16px] h-[16px] block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
         </button>
-        <span class="text-aosus-blue/40 text-[10px]" id="mode-label">DARK</span>
+        <span id="lang-toggle" class="text-[11px] font-jakarta font-semibold tracking-wider dark:text-white/40 text-gray-400 cursor-pointer hover:text-aosus-green transition-colors">EN</span>
+        <button id="mobile-menu-btn" class="md:hidden w-8 h-8 flex items-center justify-center dark:text-white/50 text-gray-500">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 py-4 space-y-3 text-sm border-t dark:border-white/[0.05] border-gray-200/50">
+      <a href="#about" class="block dark:text-white/50 text-gray-500">من نحن</a>
+      <a href="#services" class="block dark:text-white/50 text-gray-500">الخدمات</a>
+      <a href="#blog" class="block dark:text-white/50 text-gray-500">المدونة</a>
+      <a href="#projects" class="block dark:text-white/50 text-gray-500">المشاريع</a>
+      <a href="#support" class="block dark:text-white/50 text-gray-500">ادعمنا</a>
     </div>
   </nav>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-
-    <!-- ============================================================ -->
-    <!-- SECTION 1: HERO / TITLE BLOCK                                 -->
-    <!-- ============================================================ -->
-    <section class="mb-20 draw-animate">
-      <!-- Scale notation -->
-      <div class="flex justify-between items-center mb-6 font-mono-bp text-[10px] text-aosus-blue/40 bp-text-muted" dir="ltr">
-        <span>SCALE 1:1</span>
-        <span>SHEET 1 OF 1</span>
-      </div>
-
-      <div class="grid lg:grid-cols-3 gap-8">
-        <!-- Main drawing area -->
-        <div class="lg:col-span-2 corner-marks p-8 sm:p-12">
-          <div class="corner-marks-inner p-0">
-            <!-- Crosshair decorations -->
-            <div class="text-aosus-blue/20 font-mono-bp text-[10px] mb-8" dir="ltr">
-              + ────────────── GENERAL ARRANGEMENT ──────────────
+  <!-- HERO -->
+  <section class="relative z-10 pt-14 min-h-screen flex items-center">
+    <div class="max-w-6xl mx-auto px-6 py-24 md:py-32 w-full">
+      <div class="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
+        <!-- Content -->
+        <div class="lg:col-span-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 glass rounded-full text-xs font-medium dark:text-white/70 text-gray-600 mb-7 anim">
+            <span class="w-1.5 h-1.5 rounded-full bg-aosus-green"></span>
+            منظمة غير ربحية 501(c)(3)
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-[3.4rem] font-bold leading-[1.15] mb-6 anim d1">
+            <span class="dark:text-white text-gray-900">أكبر مجتمع عربي</span><br />
+            <span class="text-aosus-green">للبرمجيات الحرة</span><br />
+            <span class="dark:text-white/80 text-gray-700">والمفتوحة المصدر</span>
+          </h1>
+          <p class="dark:text-white/50 text-gray-500 leading-relaxed max-w-xl mb-8 anim d2">
+            نجمع أكثر من 6,000 عضو من المطورين والمستخدمين العرب في بيئة تعاونية لنشر ثقافة المصادر المفتوحة وحماية الخصوصية الرقمية.
+          </p>
+          <div class="flex flex-wrap gap-3 anim d3">
+            <a href="https://discourse.aosus.org" class="inline-flex items-center gap-2 px-5 py-2.5 bg-aosus-green text-white text-sm font-medium rounded-xl hover:bg-aosus-green-dark transition-colors">
+              انضم إلى المنتدى
+              <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="https://discord.gg/YJUzEhU955" class="inline-flex items-center gap-2 px-5 py-2.5 glass text-sm font-medium dark:text-white/80 text-gray-700 rounded-xl hover:bg-white/10 dark:hover:bg-white/10 transition-colors">
+              Discord
+            </a>
+            <a href="https://matrix.to/#/#aosus:aosus.org" class="inline-flex items-center gap-2 px-5 py-2.5 glass text-sm font-medium dark:text-white/80 text-gray-700 rounded-xl hover:bg-white/10 dark:hover:bg-white/10 transition-colors">
+              Matrix
+            </a>
+          </div>
+        </div>
+        <!-- Glass stats panel -->
+        <div class="lg:col-span-2 anim d3">
+          <div class="glass-strong rounded-3xl p-8 relative">
+            <div class="absolute -top-6 -right-6 w-16 h-16 rounded-2xl bg-aosus-green/10 flex items-center justify-center glow-ring">
+              <img src="/brand/aosus-icon.svg" alt="أسس" class="w-9 h-9" />
             </div>
-
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-8 text-white dark:text-white bp-text draw-animate draw-delay-2">
-              أكبر مجتمع عربي<br/>
-              <span class="text-aosus-blue">للبرمجيات الحرة</span><br/>
-              والمفتوحة المصدر
-            </h1>
-
-            <!-- Dimension lines with stats -->
-            <div class="space-y-4 mt-10 draw-animate draw-delay-3">
-              <div class="dimension-line font-mono-bp text-sm text-aosus-green">
-                <span class="whitespace-nowrap">◄ 6000+ عضو ►</span>
+            <div class="mt-6 grid grid-cols-2 gap-6">
+              <div>
+                <div class="text-3xl font-bold font-jakarta text-aosus-green">6,000+</div>
+                <div class="text-xs dark:text-white/40 text-gray-400 mt-1">عضو فعال</div>
               </div>
-              <div class="dimension-line font-mono-bp text-sm text-aosus-green">
-                <span class="whitespace-nowrap">◄ 9+ خدمات ►</span>
+              <div>
+                <div class="text-3xl font-bold font-jakarta text-aosus-blue">5,000+</div>
+                <div class="text-xs dark:text-white/40 text-gray-400 mt-1">مشاركة</div>
               </div>
-              <div class="dimension-line font-mono-bp text-sm text-aosus-green">
-                <span class="whitespace-nowrap">◄ 2015 — الآن ►</span>
+              <div>
+                <div class="text-3xl font-bold font-jakarta dark:text-white text-gray-900">3,000+</div>
+                <div class="text-xs dark:text-white/40 text-gray-400 mt-1">موضوع</div>
+              </div>
+              <div>
+                <div class="text-3xl font-bold font-jakarta dark:text-white text-gray-900">10</div>
+                <div class="text-xs dark:text-white/40 text-gray-400 mt-1">سنوات</div>
               </div>
             </div>
-
-            <!-- Construction note -->
-            <div class="mt-8 text-aosus-blue/30 font-mono-bp text-[10px]" dir="ltr">
-              ⌂ ALL DIMENSIONS IN PIXELS UNLESS OTHERWISE NOTED
+            <div class="mt-6 pt-5 border-t dark:border-white/[0.06] border-gray-200/50">
+              <div class="flex items-center gap-2">
+                <div class="h-1.5 flex-1 rounded-full bg-gradient-to-l from-aosus-green to-aosus-blue opacity-30"></div>
+                <span class="text-[10px] font-jakarta dark:text-white/30 text-gray-400">EST. 2015</span>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- Title Block (bottom-right) -->
-        <div class="lg:col-span-1 self-end draw-animate draw-delay-4">
-          <div class="title-block p-6">
-            <table class="w-full font-mono-bp text-xs" dir="ltr">
-              <tbody>
-                <tr class="border-b border-aosus-blue/30">
-                  <td class="py-2 text-aosus-blue/50 pe-4">PROJECT</td>
-                  <td class="py-2 text-white dark:text-white bp-text font-ar text-sm font-bold">مجتمع أسس</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/30">
-                  <td class="py-2 text-aosus-blue/50 pe-4">DWG NO.</td>
-                  <td class="py-2 text-aosus-blue">AOSUS-LP-005</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/30">
-                  <td class="py-2 text-aosus-blue/50 pe-4">REV</td>
-                  <td class="py-2 text-aosus-green">R10</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/30">
-                  <td class="py-2 text-aosus-blue/50 pe-4">DATE</td>
-                  <td class="py-2 text-white/70 dark:text-white/70 bp-text-muted">2024-12-01</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/30">
-                  <td class="py-2 text-aosus-blue/50 pe-4">SCALE</td>
-                  <td class="py-2 text-white/70 dark:text-white/70 bp-text-muted">1 : 1</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/30">
-                  <td class="py-2 text-aosus-blue/50 pe-4">STATUS</td>
-                  <td class="py-2 text-aosus-green">● نشط</td>
-                </tr>
-                <tr>
-                  <td class="py-2 text-aosus-blue/50 pe-4">URL</td>
-                  <td class="py-2 text-aosus-blue">aosus.org</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Approval stamp -->
-          <div class="mt-4 border border-dashed border-aosus-blue/30 p-3 font-mono-bp text-[10px] text-aosus-blue/40 text-center" dir="ltr">
-            APPROVED FOR RELEASE<br/>
-            OPEN SOURCE — CC BY-SA 4.0
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Section divider -->
-    <div class="border-t border-dashed border-aosus-blue/20 mb-20 construction-line"></div>
-
-    <!-- ============================================================ -->
-    <!-- SECTION 2: SPECIFICATION (المواصفات)                           -->
-    <!-- ============================================================ -->
-    <section class="mb-20 draw-animate draw-delay-1" id="specs">
-      <div class="section-label mb-8">
-        <div>
-          <span class="font-mono-bp text-[10px] text-aosus-blue/40 block" dir="ltr">SECTION 2.0</span>
-          <h2 class="text-2xl font-bold text-white dark:text-white bp-text">المواصفات</h2>
-          <span class="font-mono-bp text-[11px] text-aosus-blue/50" dir="ltr">SPECIFICATION — من نحن</span>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- SPEC 1.0 -->
-        <div class="corner-marks p-6 draw-animate draw-delay-2">
-          <div class="corner-marks-inner">
-            <div class="font-mono-bp text-[10px] text-aosus-green mb-3" dir="ltr">SPEC 1.0 — VISION</div>
-            <h3 class="text-lg font-bold text-aosus-blue mb-3 annotation">الرؤية</h3>
-            <p class="text-white/80 dark:text-white/80 bp-text-muted text-sm leading-relaxed">
-              نسعى لبناء أكبر مجتمع عربي متخصص في البرمجيات الحرة والمفتوحة المصدر، حيث يجد كل مهتم بالتقنية المفتوحة بيئة داعمة ومحفزة.
+  <!-- ABOUT -->
+  <section id="about" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="glass-strong rounded-3xl p-8 md:p-14 anim">
+        <div class="grid lg:grid-cols-2 gap-12">
+          <div>
+            <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-green uppercase">من نحن</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-6 leading-tight dark:text-white text-gray-900">مجتمع مبني على قيم<br/>التعاون والشفافية</h2>
+            <p class="dark:text-white/50 text-gray-500 leading-relaxed mb-8">
+              أسس هو مجتمع غير ربحي أسسه تقنيون عرب لنشر ثقافة البرمجيات الحرة والمفتوحة المصدر في العالم العربي. نعمل على بناء جسور المعرفة وتوفير بيئة تعاونية تدعم المطورين والمستخدمين.
             </p>
-            <div class="mt-4 border-t border-dashed border-aosus-blue/20 pt-3">
-              <div class="font-mono-bp text-[10px] text-aosus-blue/30 space-y-1" dir="ltr">
-                <div>├─ COMMUNITY DRIVEN</div>
-                <div>├─ ARABIC FIRST</div>
-                <div>└─ OPEN SOURCE</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SPEC 2.0 -->
-        <div class="corner-marks p-6 draw-animate draw-delay-3">
-          <div class="corner-marks-inner">
-            <div class="font-mono-bp text-[10px] text-aosus-green mb-3" dir="ltr">SPEC 2.0 — MISSION</div>
-            <h3 class="text-lg font-bold text-aosus-blue mb-3 annotation">المهمة</h3>
-            <p class="text-white/80 dark:text-white/80 bp-text-muted text-sm leading-relaxed">
-              نشر ثقافة البرمجيات الحرة والمفتوحة المصدر في العالم العربي من خلال المحتوى التعليمي والخدمات المجانية والفعاليات المجتمعية.
-            </p>
-            <div class="mt-4 border-t border-dashed border-aosus-blue/20 pt-3">
-              <div class="font-mono-bp text-[10px] text-aosus-blue/30 space-y-1" dir="ltr">
-                <div>├─ EDUCATION</div>
-                <div>├─ FREE SERVICES</div>
-                <div>└─ EVENTS</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SPEC 3.0 -->
-        <div class="corner-marks p-6 draw-animate draw-delay-4">
-          <div class="corner-marks-inner">
-            <div class="font-mono-bp text-[10px] text-aosus-green mb-3" dir="ltr">SPEC 3.0 — VALUES</div>
-            <h3 class="text-lg font-bold text-aosus-blue mb-3 annotation">القيم</h3>
-            <div class="space-y-3 text-sm">
-              <div class="flex items-start gap-3">
-                <span class="font-mono-bp text-aosus-green text-[10px] mt-1 shrink-0" dir="ltr">VAL.1</span>
-                <span class="text-white/80 dark:text-white/80 bp-text-muted">الشفافية والانفتاح</span>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="font-mono-bp text-aosus-green text-[10px] mt-1 shrink-0" dir="ltr">VAL.2</span>
-                <span class="text-white/80 dark:text-white/80 bp-text-muted">التعاون المجتمعي</span>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="font-mono-bp text-aosus-green text-[10px] mt-1 shrink-0" dir="ltr">VAL.3</span>
-                <span class="text-white/80 dark:text-white/80 bp-text-muted">الخصوصية الرقمية</span>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="font-mono-bp text-aosus-green text-[10px] mt-1 shrink-0" dir="ltr">VAL.4</span>
-                <span class="text-white/80 dark:text-white/80 bp-text-muted">حرية المعرفة</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section divider -->
-    <div class="border-t border-dashed border-aosus-blue/20 mb-20 construction-line"></div>
-
-    <!-- ============================================================ -->
-    <!-- SECTION 3: COMPONENT LIBRARY (المكونات — خِدْمَات)            -->
-    <!-- ============================================================ -->
-    <section class="mb-20 draw-animate draw-delay-1" id="services">
-      <div class="section-label mb-8">
-        <div>
-          <span class="font-mono-bp text-[10px] text-aosus-blue/40 block" dir="ltr">SECTION 3.0</span>
-          <h2 class="text-2xl font-bold text-white dark:text-white bp-text">المكونات</h2>
-          <span class="font-mono-bp text-[11px] text-aosus-blue/50" dir="ltr">COMPONENT LIBRARY — خِدْمَات</span>
-        </div>
-      </div>
-
-      <!-- Parts catalog note -->
-      <div class="mb-8 font-mono-bp text-[10px] text-aosus-blue/30 border border-dashed border-aosus-blue/20 p-3 inline-block" dir="ltr">
-        ⚙ PARTS CATALOG — ALL COMPONENTS SELF-HOSTED & OPEN SOURCE<br/>
-        &nbsp; TOLERANCE: ±0 TRACKING — ZERO DATA COLLECTION
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Component: SearXNG -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-2">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-001</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">SearXNG</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">محرك بحث وصفي يحترم الخصوصية</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: SEARCH ENGINE │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Simply Translate -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-3">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-002</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Simply Translate</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة ترجمة بديلة تحترم الخصوصية</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: TRANSLATION │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Nitter -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-4">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-003</span>
-              <span class="font-mono-bp text-[9px] text-aosus-blue/40 border border-aosus-blue/20 px-2 py-0.5 rounded-sm" dir="ltr">LEGACY</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Nitter</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة بديلة لتويتر بدون تتبع</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: SOCIAL PROXY │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Redlib -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-5">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-004</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Redlib</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة بديلة لريديت تحترم الخصوصية</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: SOCIAL PROXY │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Element -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-6">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-005</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Element</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">تطبيق محادثة مفتوح المصدر عبر بروتوكول ماتركس</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: MESSAGING │ PROTOCOL: MATRIX
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: rimgo -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-7">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-006</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">rimgo</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة بديلة لـ Imgur تحترم الخصوصية</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: IMAGE PROXY │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Scribe -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-7">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-007</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Scribe</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة بديلة لـ Medium بدون إعلانات أو تتبع</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: ARTICLE PROXY │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Quetre -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-8">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-008</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Quetre</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة بديلة لـ Quora تحترم الخصوصية</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: Q&A PROXY │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-
-        <!-- Component: Sticktock -->
-        <div class="component-card border border-aosus-blue/30 bp-border-subtle corner-marks p-5 draw-animate draw-delay-9">
-          <div class="corner-marks-inner">
-            <div class="flex justify-between items-start mb-3">
-              <span class="font-mono-bp text-[10px] text-aosus-blue/40 part-number" dir="ltr">PART-009</span>
-              <span class="font-mono-bp text-[9px] text-aosus-green/60 border border-aosus-green/30 px-2 py-0.5 rounded-sm" dir="ltr">ACTIVE</span>
-            </div>
-            <h3 class="text-base font-bold text-white dark:text-white bp-text mb-1" dir="ltr">Sticktock</h3>
-            <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">واجهة بديلة لـ TikTok بدون تتبع</p>
-            <div class="mt-3 border-t border-aosus-blue/10 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              TYPE: VIDEO PROXY │ PRIVACY: FULL
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section divider -->
-    <div class="border-t border-dashed border-aosus-blue/20 mb-20 construction-line"></div>
-
-    <!-- ============================================================ -->
-    <!-- SECTION 4: ASSEMBLY INSTRUCTIONS (التجميع — جائزة الكتابة)    -->
-    <!-- ============================================================ -->
-    <section class="mb-20 draw-animate draw-delay-1" id="contest">
-      <div class="section-label mb-8">
-        <div>
-          <span class="font-mono-bp text-[10px] text-aosus-blue/40 block" dir="ltr">SECTION 4.0</span>
-          <h2 class="text-2xl font-bold text-white dark:text-white bp-text">التجميع</h2>
-          <span class="font-mono-bp text-[11px] text-aosus-blue/50" dir="ltr">ASSEMBLY INSTRUCTIONS — جائزة الكتابة</span>
-        </div>
-      </div>
-
-      <!-- Prize callout box -->
-      <div class="mb-10 border-2 border-aosus-green/50 p-5 inline-block draw-animate draw-delay-2">
-        <div class="font-mono-bp text-[10px] text-aosus-green/60 mb-1" dir="ltr">⚠ CRITICAL DIMENSION</div>
-        <div class="text-3xl font-bold text-aosus-green font-mono-bp" dir="ltr">$500</div>
-        <div class="text-sm text-white/60 dark:text-white/60 bp-text-muted mt-1">مجموع الجوائز</div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Step 1 -->
-        <div class="step-connector draw-animate draw-delay-3">
-          <div class="corner-marks p-5">
-            <div class="corner-marks-inner">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 border-2 border-aosus-blue flex items-center justify-center font-mono-bp text-lg text-aosus-blue font-bold">1</div>
-                <div class="font-mono-bp text-[10px] text-aosus-blue/40" dir="ltr">STEP 1.0</div>
-              </div>
-              <h3 class="text-base font-bold text-white dark:text-white bp-text mb-2">اختر الموضوع</h3>
-              <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">
-                اختر موضوعاً يتعلق بالبرمجيات الحرة والمفتوحة المصدر
-              </p>
-              <div class="mt-3 border-t border-dashed border-aosus-blue/20 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-                REF: TOPIC SELECTION
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="step-connector draw-animate draw-delay-4">
-          <div class="corner-marks p-5">
-            <div class="corner-marks-inner">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 border-2 border-aosus-blue flex items-center justify-center font-mono-bp text-lg text-aosus-blue font-bold">2</div>
-                <div class="font-mono-bp text-[10px] text-aosus-blue/40" dir="ltr">STEP 2.0</div>
-              </div>
-              <h3 class="text-base font-bold text-white dark:text-white bp-text mb-2">اكتب المقال</h3>
-              <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">
-                اكتب مقالاً عربياً أصيلاً بأسلوب تقني واضح ومفيد
-              </p>
-              <div class="mt-3 border-t border-dashed border-aosus-blue/20 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-                REF: CONTENT CREATION
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="step-connector draw-animate draw-delay-5">
-          <div class="corner-marks p-5">
-            <div class="corner-marks-inner">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 border-2 border-aosus-blue flex items-center justify-center font-mono-bp text-lg text-aosus-blue font-bold">3</div>
-                <div class="font-mono-bp text-[10px] text-aosus-blue/40" dir="ltr">STEP 3.0</div>
-              </div>
-              <h3 class="text-base font-bold text-white dark:text-white bp-text mb-2">أرسل المشاركة</h3>
-              <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">
-                أرسل مقالك عبر المنصة المحددة قبل انتهاء المهلة
-              </p>
-              <div class="mt-3 border-t border-dashed border-aosus-blue/20 pt-2 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-                REF: SUBMISSION
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="draw-animate draw-delay-6">
-          <div class="corner-marks p-5">
-            <div class="corner-marks-inner">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 border-2 border-aosus-green flex items-center justify-center font-mono-bp text-lg text-aosus-green font-bold">4</div>
-                <div class="font-mono-bp text-[10px] text-aosus-green/60" dir="ltr">STEP 4.0 ★</div>
-              </div>
-              <h3 class="text-base font-bold text-white dark:text-white bp-text mb-2">اربح الجائزة</h3>
-              <p class="text-white/60 dark:text-white/60 bp-text-muted text-sm">
-                يتم تقييم المقالات واختيار أفضل المشاركات للفوز بالجوائز
-              </p>
-              <div class="mt-3 border-t border-dashed border-aosus-blue/20 pt-2 font-mono-bp text-[9px] text-aosus-green/40" dir="ltr">
-                REF: AWARD CEREMONY
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section divider -->
-    <div class="border-t border-dashed border-aosus-blue/20 mb-20 construction-line"></div>
-
-    <!-- ============================================================ -->
-    <!-- SECTION 5: REVISION HISTORY (سجل التعديلات)                   -->
-    <!-- ============================================================ -->
-    <section class="mb-20 draw-animate draw-delay-1" id="history">
-      <div class="section-label mb-8">
-        <div>
-          <span class="font-mono-bp text-[10px] text-aosus-blue/40 block" dir="ltr">SECTION 5.0</span>
-          <h2 class="text-2xl font-bold text-white dark:text-white bp-text">سجل التعديلات</h2>
-          <span class="font-mono-bp text-[11px] text-aosus-blue/50" dir="ltr">REVISION HISTORY</span>
-        </div>
-      </div>
-
-      <div class="corner-marks p-6 sm:p-8 draw-animate draw-delay-2">
-        <div class="corner-marks-inner">
-          <div class="overflow-x-auto">
-            <table class="w-full font-mono-bp text-sm" dir="ltr">
-              <thead>
-                <tr class="border-b-2 border-aosus-blue/40">
-                  <th class="text-start py-3 pe-6 text-aosus-blue/60 text-[10px] font-normal tracking-wider">REV #</th>
-                  <th class="text-start py-3 pe-6 text-aosus-blue/60 text-[10px] font-normal tracking-wider">DATE</th>
-                  <th class="text-start py-3 text-aosus-blue/60 text-[10px] font-normal tracking-wider">DESCRIPTION</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R1</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2015</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">تأسيس مجتمع أسس كمجموعة نقاش تقنية</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R2</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2016</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">إطلاق قنوات التواصل الاجتماعي الرسمية</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R3</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2017</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">بناء البنية التحتية للخدمات المستضافة ذاتياً</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R4</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2018</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">إطلاق أولى الخدمات البديلة المحترمة للخصوصية</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R5</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2019</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">الوصول لـ 1000 عضو نشط في المجتمع</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R6</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2020</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">توسيع كتالوج الخدمات وتطوير المنصات</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R7</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2021</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">إطلاق مسابقة الكتابة التقنية الأولى</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R8</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2022</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">تجاوز 3000 عضو وإضافة خدمات جديدة</td>
-                </tr>
-                <tr class="border-b border-aosus-blue/10">
-                  <td class="py-3 pe-6 text-aosus-blue">R9</td>
-                  <td class="py-3 pe-6 text-white/50 dark:text-white/50 bp-text-muted">2023</td>
-                  <td class="py-3 text-white/80 dark:text-white/80 bp-text font-ar">إعادة هيكلة الخدمات وتحديث البنية التحتية</td>
-                </tr>
-                <tr>
-                  <td class="py-3 pe-6 text-aosus-green font-bold">R10</td>
-                  <td class="py-3 pe-6 text-aosus-green/70">2024</td>
-                  <td class="py-3 text-aosus-green/90 font-ar font-bold">تجاوز 6000 عضو — أكبر مجتمع عربي مفتوح المصدر ●</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section divider -->
-    <div class="border-t border-dashed border-aosus-blue/20 mb-20 construction-line"></div>
-
-    <!-- ============================================================ -->
-    <!-- SECTION 6: BILL OF MATERIALS (ادعمنا)                         -->
-    <!-- ============================================================ -->
-    <section class="mb-20 draw-animate draw-delay-1" id="support">
-      <div class="section-label mb-8">
-        <div>
-          <span class="font-mono-bp text-[10px] text-aosus-blue/40 block" dir="ltr">SECTION 6.0</span>
-          <h2 class="text-2xl font-bold text-white dark:text-white bp-text">ادعمنا</h2>
-          <span class="font-mono-bp text-[11px] text-aosus-blue/50" dir="ltr">BILL OF MATERIALS — SUPPORT</span>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-8">
-        <!-- BOM Table -->
-        <div class="corner-marks p-6 draw-animate draw-delay-2">
-          <div class="corner-marks-inner">
-            <div class="font-mono-bp text-[10px] text-aosus-blue/40 mb-4" dir="ltr">PURCHASE ORDER — COMMUNITY SUSTENANCE</div>
-            <div class="overflow-x-auto">
-              <table class="w-full font-mono-bp text-sm" dir="ltr">
-                <thead>
-                  <tr class="border-b-2 border-aosus-blue/40">
-                    <th class="text-start py-2 pe-4 text-aosus-blue/60 text-[10px] font-normal">ITEM</th>
-                    <th class="text-start py-2 pe-4 text-aosus-blue/60 text-[10px] font-normal">DESCRIPTION</th>
-                    <th class="text-start py-2 text-aosus-blue/60 text-[10px] font-normal">QTY</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b border-aosus-blue/10">
-                    <td class="py-3 pe-4 text-aosus-blue">BOM-001</td>
-                    <td class="py-3 pe-4 text-white/80 dark:text-white/80 bp-text font-ar">تبرع مالي مباشر</td>
-                    <td class="py-3 text-aosus-green">∞</td>
-                  </tr>
-                  <tr class="border-b border-aosus-blue/10">
-                    <td class="py-3 pe-4 text-aosus-blue">BOM-002</td>
-                    <td class="py-3 pe-4 text-white/80 dark:text-white/80 bp-text font-ar">المساهمة بالكود المفتوح</td>
-                    <td class="py-3 text-aosus-green">∞</td>
-                  </tr>
-                  <tr class="border-b border-aosus-blue/10">
-                    <td class="py-3 pe-4 text-aosus-blue">BOM-003</td>
-                    <td class="py-3 pe-4 text-white/80 dark:text-white/80 bp-text font-ar">نشر المحتوى التعليمي</td>
-                    <td class="py-3 text-aosus-green">∞</td>
-                  </tr>
-                  <tr class="border-b border-aosus-blue/10">
-                    <td class="py-3 pe-4 text-aosus-blue">BOM-004</td>
-                    <td class="py-3 pe-4 text-white/80 dark:text-white/80 bp-text font-ar">الترجمة والتعريب</td>
-                    <td class="py-3 text-aosus-green">∞</td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 pe-4 text-aosus-blue">BOM-005</td>
-                    <td class="py-3 pe-4 text-white/80 dark:text-white/80 bp-text font-ar">نشر الكلمة ومشاركة المجتمع</td>
-                    <td class="py-3 text-aosus-green">∞</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="mt-4 border-t border-dashed border-aosus-blue/20 pt-3 font-mono-bp text-[9px] text-aosus-blue/30" dir="ltr">
-              NOTE: ALL ITEMS ARE RENEWABLE AND UNLIMITED STOCK
-            </div>
-          </div>
-        </div>
-
-        <!-- Support callout -->
-        <div class="draw-animate draw-delay-3">
-          <div class="border-2 border-aosus-green/40 p-8 h-full flex flex-col justify-center">
-            <div class="font-mono-bp text-[10px] text-aosus-green/60 mb-4" dir="ltr">⚠ ENGINEERING NOTICE</div>
-            <p class="text-xl text-white dark:text-white bp-text mb-4 leading-relaxed">
-              مجتمع أسس يعمل بالكامل بجهود تطوعية. دعمك يساعدنا في الاستمرار بتقديم خدمات مجانية تحترم خصوصيتك.
-            </p>
-            <div class="space-y-3">
-              <a href="https://github.com/aosus" target="_blank" rel="noopener" class="block border border-aosus-blue/30 p-3 hover:border-aosus-green/50 transition-colors group">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <div class="font-mono-bp text-[10px] text-aosus-blue/40 group-hover:text-aosus-green/60 transition-colors" dir="ltr">→ CONTRIBUTE CODE</div>
-                    <div class="text-sm text-white/80 dark:text-white/80 bp-text-muted mt-1">ساهم عبر GitHub</div>
+            <div class="grid grid-cols-2 gap-4">
+              {[
+                { icon: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z', title: 'التعاون', sub: 'بيئة داعمة للجميع', color: 'green' },
+                { icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178zM15 12a3 3 0 11-6 0 3 3 0 016 0z', title: 'الشفافية', sub: 'شفافية مالية وإدارية', color: 'blue' },
+                { icon: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z', title: 'الخصوصية', sub: 'حماية البيانات الشخصية', color: 'green' },
+                { icon: 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342', title: 'المسؤولية', sub: 'التزام بالمجتمع', color: 'blue' },
+              ].map((v) => (
+                <div class="flex items-start gap-3">
+                  <div class={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 ${v.color === 'green' ? 'bg-aosus-green/10 dark:bg-aosus-green/15' : 'bg-aosus-blue/10 dark:bg-aosus-blue/15'}`}>
+                    <svg class={`w-4 h-4 ${v.color === 'green' ? 'text-aosus-green' : 'text-aosus-blue'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d={v.icon}/></svg>
                   </div>
-                  <span class="font-mono-bp text-aosus-blue/30 group-hover:text-aosus-green/60 transition-colors" dir="ltr">→</span>
+                  <div>
+                    <h4 class="font-semibold text-sm dark:text-white text-gray-900">{v.title}</h4>
+                    <p class="text-xs dark:text-white/40 text-gray-400 mt-0.5">{v.sub}</p>
+                  </div>
                 </div>
-              </a>
-              <div class="block border border-aosus-blue/30 p-3">
-                <div class="font-mono-bp text-[10px] text-aosus-blue/40" dir="ltr">→ SPREAD THE WORD</div>
-                <div class="text-sm text-white/80 dark:text-white/80 bp-text-muted mt-1">شارك المجتمع مع أصدقائك</div>
+              ))}
+            </div>
+          </div>
+          <!-- Timeline -->
+          <div class="glass rounded-2xl p-6 md:p-8">
+            <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-blue uppercase">تاريخنا</span>
+            <h3 class="text-lg font-bold mt-2 mb-6 dark:text-white text-gray-900">رحلة عشر سنوات</h3>
+            <div class="space-y-5">
+              {[
+                { year: '2015', text: 'انطلاق فكرة مجتمع عربي للمصادر المفتوحة' },
+                { year: '2016', text: 'تأسيس المجتمع رسمياً وإطلاق المنتدى' },
+                { year: '2017', text: 'إطلاق مبادرات تعريب البرمجيات' },
+                { year: '2021', text: 'إطلاق Matrix ومسابقة الكتابة' },
+                { year: '2022', text: 'الانضمام إلى Open Collective' },
+                { year: '2023', text: 'إنشاء خادم Discord المجتمعي' },
+                { year: '2024', text: 'منظمة غير ربحية 501(c)(3)' },
+              ].map((t, i) => (
+                <div class="flex gap-4 items-start group">
+                  <div class="flex flex-col items-center">
+                    <div class={`w-2.5 h-2.5 rounded-full flex-shrink-0 mt-1 ${i === 6 ? 'bg-aosus-green' : 'dark:bg-white/20 bg-gray-300'}`}></div>
+                    {i < 6 && <div class="w-px h-full dark:bg-white/[0.06] bg-gray-200 mt-1"></div>}
+                  </div>
+                  <div class="pb-4">
+                    <div class="text-xs font-jakarta font-bold text-aosus-green">{t.year}</div>
+                    <div class="text-sm dark:text-white/60 text-gray-600 mt-0.5">{t.text}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-2xl mb-12">
+        <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-blue uppercase">الخدمات</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4 dark:text-white text-gray-900">خدمات تحترم خصوصيتك</h2>
+        <p class="dark:text-white/45 text-gray-500">واجهات بديلة مفتوحة المصدر للخدمات الشائعة نستضيفها على خوادمنا لحماية خصوصيتك.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[
+          { name: 'SearXNG', desc: 'محرك بحث وصفي يحترم الخصوصية', color: 'green' },
+          { name: 'Simply Translate', desc: 'ترجمة فورية بدون تتبع', color: 'blue' },
+          { name: 'Redlib', desc: 'واجهة بديلة لمنصة Reddit', color: 'green' },
+          { name: 'Element', desc: 'تواصل مشفر عبر Matrix', color: 'blue' },
+          { name: 'rimgo', desc: 'واجهة بديلة لـ Imgur', color: 'green' },
+          { name: 'Scribe', desc: 'واجهة بديلة لـ Medium', color: 'blue' },
+          { name: 'Quetre', desc: 'واجهة بديلة لـ Quora', color: 'green' },
+          { name: 'Sticktock', desc: 'واجهة بديلة لـ TikTok', color: 'blue' },
+          { name: 'Nitter', desc: 'واجهة بديلة لتويتر', color: 'green' },
+        ].map((s) => (
+          <div class="glass rounded-2xl p-5 group hover:scale-[1.02] transition-all duration-300 cursor-default">
+            <div class="flex items-center gap-3 mb-3">
+              <div class={`w-2 h-2 rounded-full ${s.color === 'green' ? 'bg-aosus-green' : 'bg-aosus-blue'}`}></div>
+              <h3 class="font-semibold text-sm font-jakarta dark:text-white text-gray-900">{s.name}</h3>
+            </div>
+            <p class="text-xs dark:text-white/45 text-gray-500 leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="glass-strong rounded-3xl p-8 md:p-14">
+        <div class="flex items-end justify-between mb-10">
+          <div>
+            <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-green uppercase">المدونة</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3 dark:text-white text-gray-900">أحدث المقالات</h2>
+          </div>
+          <a href="#" class="text-sm text-aosus-green font-medium hover:underline hidden sm:inline">عرض الكل</a>
+        </div>
+
+        <!-- Featured -->
+        <a href="#" class="group block glass rounded-2xl overflow-hidden mb-6 hover:scale-[1.005] transition-transform duration-300">
+          <div class="grid lg:grid-cols-2">
+            <div class="aspect-[16/10] lg:aspect-auto bg-gradient-to-br from-aosus-green/[0.06] to-aosus-blue/[0.06] dark:from-aosus-green/[0.12] dark:to-aosus-blue/[0.08] flex items-center justify-center min-h-[200px]">
+              <img src="/brand/aosus-icon.svg" alt="" class="w-20 h-20 opacity-15" />
+            </div>
+            <div class="p-7 md:p-10 flex flex-col justify-center">
+              <div class="flex items-center gap-2 text-xs dark:text-white/35 text-gray-400 mb-3">
+                <span class="text-aosus-green font-medium">مقال مميز</span>
+                <span class="dark:text-white/20 text-gray-300">·</span>
+                <time>15 يناير 2025</time>
+              </div>
+              <h3 class="text-xl md:text-2xl font-bold mb-3 group-hover:text-aosus-green transition-colors dark:text-white text-gray-900">البرمجيات الحرة: لماذا تهم المستخدم العربي؟</h3>
+              <p class="dark:text-white/45 text-gray-500 text-sm leading-relaxed mb-4">نستعرض أهمية البرمجيات الحرة والمفتوحة المصدر للمستخدم العربي وكيف يمكنها تحسين تجربته الرقمية.</p>
+              <span class="text-sm text-aosus-green font-medium">اقرأ المقال ←</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Grid -->
+        <div class="grid md:grid-cols-3 gap-4">
+          {[
+            { title: 'دليلك الشامل لتوزيعات لينكس', date: '8 يناير 2025', time: '5 دقائق' },
+            { title: 'المساهمة في المشاريع المفتوحة', date: '1 يناير 2025', time: '3 دقائق' },
+            { title: 'أفضل البرمجيات الحرة البديلة', date: '25 ديسمبر 2024', time: '7 دقائق' },
+          ].map((a) => (
+            <a href="#" class="group block glass rounded-2xl p-6 hover:scale-[1.02] transition-transform duration-300">
+              <div class="flex items-center gap-2 text-xs dark:text-white/35 text-gray-400 mb-3">
+                <time>{a.date}</time>
+                <span class="dark:text-white/20 text-gray-300">·</span>
+                <span>{a.time}</span>
+              </div>
+              <h3 class="font-semibold mb-2 group-hover:text-aosus-green transition-colors dark:text-white text-gray-900">{a.title}</h3>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-blue uppercase">المشاريع</span>
+      <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-10 dark:text-white text-gray-900">مشاريعنا المفتوحة</h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <a href="https://github.com/aosus" class="group glass-strong rounded-2xl p-8 hover:scale-[1.01] transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl glass flex items-center justify-center mb-6 overflow-hidden">
+            <img src="/brand/GNUlinuxsa.webp" alt="GNULinuxSA" class="w-11 h-11 dark:hidden" />
+            <img src="/brand/GNUlinuxsa-white.webp" alt="GNULinuxSA" class="w-11 h-11 hidden dark:block" />
+          </div>
+          <h3 class="font-bold text-xl mb-2 group-hover:text-aosus-green transition-colors dark:text-white text-gray-900">GNULinux Saudi Arabia</h3>
+          <p class="dark:text-white/45 text-gray-500 text-sm leading-relaxed">مجتمع لينكس في السعودية — نشر ثقافة البرمجيات الحرة وتوفير الدعم التقني.</p>
+        </a>
+        <a href="https://github.com/aosus" class="group glass-strong rounded-2xl p-8 hover:scale-[1.01] transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl glass flex items-center justify-center mb-6 overflow-hidden">
+            <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Bridge" class="w-11 h-11" />
+          </div>
+          <h3 class="font-bold text-xl mb-2 group-hover:text-aosus-blue transition-colors dark:text-white text-gray-900">Discourse Chat Bridge</h3>
+          <p class="dark:text-white/45 text-gray-500 text-sm leading-relaxed">جسر مفتوح المصدر للربط بين Discourse ومنصات التواصل الأخرى.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING CONTEST -->
+  <section class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="glass-accent rounded-3xl p-8 md:p-14 relative overflow-hidden">
+        <!-- Decorative circles -->
+        <div class="absolute -top-20 -left-20 w-60 h-60 bg-aosus-green/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-aosus-blue/5 rounded-full blur-3xl"></div>
+        <div class="relative grid lg:grid-cols-5 gap-10 items-center">
+          <div class="lg:col-span-3">
+            <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-green uppercase">جائزة الكتابة</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4 dark:text-white text-gray-900">مسابقة الكتابة الشهرية</h2>
+            <p class="dark:text-white/50 text-gray-500 leading-relaxed mb-8">
+              اكتب عن البرمجيات الحرة والمفتوحة المصدر باللغة العربية وشارك في مسابقتنا الشهرية. جوائز تصل إلى 250$ وأكثر للمقالات المتميزة.
+            </p>
+            <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-aosus-green text-white text-sm font-semibold rounded-xl hover:bg-aosus-green-dark transition-colors">
+              شارك الآن
+              <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+          <div class="lg:col-span-2 flex justify-center">
+            <div class="glass-strong rounded-2xl p-8 text-center w-full max-w-xs">
+              <div class="text-5xl md:text-6xl font-bold font-jakarta text-aosus-green">250$+</div>
+              <div class="text-sm dark:text-white/45 text-gray-500 mt-2">جائزة شهرية</div>
+              <div class="mt-4 pt-4 border-t dark:border-white/[0.06] border-gray-200/50 text-xs dark:text-white/30 text-gray-400">
+                المسابقة مفتوحة لجميع الكتاب العرب
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- SUPPORT -->
+  <section id="support" class="relative z-10 py-24 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="text-[11px] font-jakarta font-semibold tracking-widest text-aosus-green uppercase">ادعمنا</span>
+      <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-4 dark:text-white text-gray-900">ساهم في دعم المجتمع</h2>
+      <p class="dark:text-white/45 text-gray-500 mb-10 leading-relaxed">بدعمك نستمر في تقديم خدمات مجانية تحترم الخصوصية ونشر المحتوى التعليمي المفتوح.</p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="https://github.com/sponsors/aosus" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-xl hover:opacity-90 transition-opacity">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub Sponsors
+        </a>
+        <a href="https://hcb.hackclub.com/donations/start/aosus" class="inline-flex items-center gap-2 px-6 py-3 glass text-sm font-medium dark:text-white/80 text-gray-700 rounded-xl hover:bg-white/10 dark:hover:bg-white/10 transition-colors">
+          تبرع عبر HCB
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <!-- ============================================================ -->
-  <!-- FOOTER / TECHNICAL STAMP                                       -->
-  <!-- ============================================================ -->
-  <footer class="border-t-2 border-aosus-blue/30 bp-border-subtle mt-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="grid md:grid-cols-3 gap-8">
-
-        <!-- Technical Stamp -->
-        <div class="tech-stamp p-6">
-          <div class="font-mono-bp text-[10px] text-aosus-blue/40 mb-3" dir="ltr">DRAWING STAMP</div>
-          <table class="w-full font-mono-bp text-[11px]" dir="ltr">
-            <tbody>
-              <tr class="border-b border-aosus-blue/15">
-                <td class="py-1.5 text-aosus-blue/40 pe-3">TITLE</td>
-                <td class="py-1.5 text-white/70 dark:text-white/70 bp-text-muted font-ar">مجتمع أسس</td>
-              </tr>
-              <tr class="border-b border-aosus-blue/15">
-                <td class="py-1.5 text-aosus-blue/40 pe-3">TYPE</td>
-                <td class="py-1.5 text-white/70 dark:text-white/70 bp-text-muted">OPEN SOURCE COMMUNITY</td>
-              </tr>
-              <tr class="border-b border-aosus-blue/15">
-                <td class="py-1.5 text-aosus-blue/40 pe-3">EST.</td>
-                <td class="py-1.5 text-white/70 dark:text-white/70 bp-text-muted">2015</td>
-              </tr>
-              <tr class="border-b border-aosus-blue/15">
-                <td class="py-1.5 text-aosus-blue/40 pe-3">MEMBERS</td>
-                <td class="py-1.5 text-aosus-green">6000+</td>
-              </tr>
-              <tr>
-                <td class="py-1.5 text-aosus-blue/40 pe-3">LICENSE</td>
-                <td class="py-1.5 text-white/70 dark:text-white/70 bp-text-muted">OPEN SOURCE</td>
-              </tr>
-            </tbody>
-          </table>
+  <!-- FOOTER -->
+  <footer class="relative z-10 border-t dark:border-white/[0.05] border-gray-200/50 py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div class="col-span-2 md:col-span-1">
+          <a href="/5/" class="flex items-center gap-2 mb-4">
+            <img src="/brand/aosus-icon.svg" alt="أسس" class="w-6 h-6" />
+            <span class="font-bold text-sm dark:text-white text-gray-900">أسس</span>
+          </a>
+          <p class="text-xs dark:text-white/35 text-gray-400 leading-relaxed">أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر</p>
         </div>
-
-        <!-- Contact Sheet / Social Links -->
-        <div class="md:col-span-2">
-          <div class="font-mono-bp text-[10px] text-aosus-blue/40 mb-4" dir="ltr">CONTACT SHEET — SOCIAL CHANNELS</div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <a href="https://twitter.com/aosusdotorg" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-001</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Twitter / X</span>
-            </a>
-            <a href="https://bsky.app/profile/aosus.org" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-002</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Bluesky</span>
-            </a>
-            <a href="https://mastodon.online/@aosus" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-003</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Mastodon</span>
-            </a>
-            <a href="https://discord.gg/YJUzEhU955" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-004</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Discord</span>
-            </a>
-            <a href="https://matrix.to/#/#aosus:aosus.org" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-005</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Matrix</span>
-            </a>
-            <a href="https://t.me/aosus" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-006</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Telegram</span>
-            </a>
-            <a href="https://github.com/aosus" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-007</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">GitHub</span>
-            </a>
-            <a href="https://facebook.com/aosus1" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-008</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">Facebook</span>
-            </a>
-            <a href="https://linkedin.com/company/aosus" target="_blank" rel="noopener" class="border border-aosus-blue/20 p-3 hover:border-aosus-green/40 transition-colors group" dir="ltr">
-              <span class="font-mono-bp text-[9px] text-aosus-blue/30 group-hover:text-aosus-green/50 block">CH-009</span>
-              <span class="text-sm text-white/70 dark:text-white/70 bp-text-muted group-hover:text-white dark:group-hover:text-white transition-colors">LinkedIn</span>
-            </a>
-          </div>
+        <div>
+          <h4 class="text-xs font-semibold mb-3 dark:text-white text-gray-900">المجتمع</h4>
+          <ul class="space-y-2 text-xs dark:text-white/35 text-gray-400">
+            <li><a href="https://discourse.aosus.org" class="hover:text-aosus-green transition-colors">المنتدى</a></li>
+            <li><a href="https://discord.gg/YJUzEhU955" class="hover:text-aosus-green transition-colors">Discord</a></li>
+            <li><a href="https://matrix.to/#/#aosus:aosus.org" class="hover:text-aosus-green transition-colors">Matrix</a></li>
+            <li><a href="https://t.me/aosus" class="hover:text-aosus-green transition-colors">Telegram</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold mb-3 dark:text-white text-gray-900">تابعنا</h4>
+          <ul class="space-y-2 text-xs dark:text-white/35 text-gray-400">
+            <li><a href="https://twitter.com/aosusdotorg" class="hover:text-aosus-green transition-colors">Twitter / X</a></li>
+            <li><a href="https://mastodon.online/@aosus" class="hover:text-aosus-green transition-colors">Mastodon</a></li>
+            <li><a href="https://bsky.app/profile/aosus.org" class="hover:text-aosus-green transition-colors">Bluesky</a></li>
+            <li><a href="https://facebook.com/aosus1" class="hover:text-aosus-green transition-colors">Facebook</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold mb-3 dark:text-white text-gray-900">المزيد</h4>
+          <ul class="space-y-2 text-xs dark:text-white/35 text-gray-400">
+            <li><a href="https://github.com/aosus" class="hover:text-aosus-green transition-colors">GitHub</a></li>
+            <li><a href="https://linkedin.com/company/aosus" class="hover:text-aosus-green transition-colors">LinkedIn</a></li>
+            <li><a href="mailto:contact@aosus.org" class="hover:text-aosus-green transition-colors">تواصل معنا</a></li>
+          </ul>
         </div>
       </div>
-
-      <!-- Footer revision mark -->
-      <div class="mt-10 pt-6 border-t border-dashed border-aosus-blue/20 flex flex-wrap justify-between items-center gap-4 font-mono-bp text-[10px] text-aosus-blue/30" dir="ltr">
-        <span>© 2015–2024 AOSUS COMMUNITY — OPEN SOURCE</span>
-        <span>DWG: AOSUS-LP-005 │ REV: R10 │ BLUEPRINT EDITION</span>
-        <span class="text-aosus-green/40">UNLESS OTHERWISE SPECIFIED, ALL RIGHTS OPEN ◊</span>
+      <div class="border-t dark:border-white/[0.05] border-gray-200/50 pt-6 flex items-center justify-between">
+        <p class="text-[10px] dark:text-white/25 text-gray-400">© 2024 أسس — منظمة غير ربحية 501(c)(3)</p>
+        <a href="/" class="text-[10px] dark:text-white/25 text-gray-400 hover:text-aosus-green transition-colors">جميع التصاميم</a>
       </div>
     </div>
   </footer>
 
-  <script is:inline>
-    // Dark/Light mode toggle
-    const toggle = document.getElementById('theme-toggle');
-    const modeLabel = document.getElementById('mode-label');
-    const html = document.documentElement;
-
-    // Check saved preference
-    const saved = localStorage.getItem('blueprint-theme');
-    if (saved === 'light') {
-      html.classList.remove('dark');
-      modeLabel.textContent = 'LIGHT';
-    }
-
-    toggle.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      const isDark = html.classList.contains('dark');
-      modeLabel.textContent = isDark ? 'DARK' : 'LIGHT';
-      localStorage.setItem('blueprint-theme', isDark ? 'dark' : 'light');
-    });
+  <script>
+    document.getElementById('theme-toggle')?.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); });
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.toggle('hidden'); });
   </script>
-
 </body>
 </html>

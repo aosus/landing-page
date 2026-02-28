@@ -6,778 +6,365 @@ import '../../styles/global.css';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>أسس | أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر</title>
   <meta name="description" content="أسس - أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر" />
+  <title>أسس - مجتمع البرمجيات الحرة والمفتوحة المصدر</title>
+  <link rel="icon" type="image/svg+xml" href="/brand/aosus-icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ── Base & CRT ─────────────────────────────────────── */
-    :root {
-      --phosphor: #00ff41;
-      --phosphor-dim: #00cc33;
-      --phosphor-bright: #33ff66;
-      --bg-dark: #0a0a0a;
-      --bg-terminal: #001a00;
-      --glow-sm: 0 0 4px rgba(0, 255, 65, 0.4);
-      --glow-md: 0 0 8px rgba(0, 255, 65, 0.3), 0 0 16px rgba(0, 255, 65, 0.1);
-      --glow-lg: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3), 0 0 40px rgba(0, 255, 65, 0.1);
-    }
+    body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+    .font-serif { font-family: 'Source Serif 4', 'Noto Naskh Arabic', serif; }
+    .font-naskh { font-family: 'Noto Naskh Arabic', serif; }
+    html { scroll-behavior: smooth; }
 
-    html {
-      scrollbar-color: #00ff41 #0a0a0a;
-    }
+    /* Editorial thin rule */
+    .thin-rule { height: 1px; background: currentColor; opacity: 0.1; }
 
-    body {
-      font-family: 'IBM Plex Mono', 'IBM Plex Sans Arabic', monospace;
-      background: var(--bg-dark);
-      color: var(--phosphor);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
+    /* Pull quote */
+    .pull-quote { font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.4; }
 
-    /* Light mode overrides */
-    html:not(.dark) body {
-      background: #fdf6e3;
-      color: #073642;
-    }
-    html:not(.dark) .terminal-window {
-      background: #fdf6e3 !important;
-      border-color: #93a1a1 !important;
-    }
-    html:not(.dark) .terminal-titlebar {
-      background: #eee8d5 !important;
-      border-color: #93a1a1 !important;
-      color: #586e75 !important;
-    }
-    html:not(.dark) .terminal-dot {
-      opacity: 0.5;
-    }
-    html:not(.dark) .phosphor {
-      color: #073642 !important;
-    }
-    html:not(.dark) .phosphor-dim {
-      color: #586e75 !important;
-    }
-    html:not(.dark) .phosphor-bright {
-      color: #073642 !important;
-    }
-    html:not(.dark) .text-glow {
-      text-shadow: none !important;
-    }
-    html:not(.dark) .text-glow-lg {
-      text-shadow: none !important;
-    }
-    html:not(.dark) .scanlines {
-      display: none;
-    }
-    html:not(.dark) .crt-vignette {
-      display: none;
-    }
-    html:not(.dark) .prompt-symbol {
-      color: #268bd2 !important;
-    }
-    html:not(.dark) .aosus-link {
-      color: #268bd2 !important;
-    }
-    html:not(.dark) .section-border {
-      border-color: #93a1a1 !important;
-    }
-    html:not(.dark) .ascii-art {
-      color: #2aa198 !important;
-    }
-    html:not(.dark) .kv-label {
-      color: #b58900 !important;
-    }
-    html:not(.dark) .pkg-name {
-      color: #859900 !important;
-    }
-    html:not(.dark) .pkg-version {
-      color: #cb4b16 !important;
-    }
-    html:not(.dark) .hash {
-      color: #cb4b16 !important;
-    }
-    html:not(.dark) .git-date {
-      color: #6c71c4 !important;
-    }
-    html:not(.dark) .comment {
-      color: #93a1a1 !important;
-    }
-    html:not(.dark) .readme-header {
-      color: #268bd2 !important;
-      border-color: #93a1a1 !important;
-    }
-    html:not(.dark) .cursor-blink {
-      background: #073642 !important;
-    }
-    html:not(.dark) .paper-texture {
-      background-image: repeating-linear-gradient(
-        180deg,
-        transparent,
-        transparent 27px,
-        rgba(0, 0, 0, 0.03) 28px
-      );
-    }
-    html:not(.dark) .cta-cmd:hover {
-      background: #eee8d5 !important;
-    }
+    /* Stagger */
+    @keyframes fade-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-in { animation: fade-in 0.6s ease-out both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
 
-    /* CRT Scanlines Overlay */
-    .scanlines::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.15) 2px,
-        rgba(0, 0, 0, 0.15) 4px
-      );
-    }
-
-    /* CRT Vignette */
-    .crt-vignette::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9998;
-      background: radial-gradient(
-        ellipse at center,
-        transparent 60%,
-        rgba(0, 0, 0, 0.4) 100%
-      );
-    }
-
-    /* Screen Flicker */
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      92% { opacity: 1; }
-      93% { opacity: 0.96; }
-      94% { opacity: 1; }
-      96% { opacity: 0.98; }
-      97% { opacity: 1; }
-    }
-    .flicker {
-      animation: flicker 8s infinite;
-    }
-
-    /* Blinking Cursor */
-    @keyframes blink-cursor {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-    .cursor-blink {
-      display: inline-block;
-      width: 0.6em;
-      height: 1.1em;
-      background: var(--phosphor);
-      vertical-align: text-bottom;
-      animation: blink-cursor 1s step-end infinite;
-    }
-
-    /* Text glow */
-    .text-glow {
-      text-shadow: var(--glow-sm);
-    }
-    .text-glow-lg {
-      text-shadow: var(--glow-lg);
-    }
-
-    /* Boot animation */
-    @keyframes typeIn {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    @keyframes fadeInLine {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .boot-line {
-      animation: fadeInLine 0.1s ease-out forwards;
-      opacity: 0;
-    }
-    .boot-line:nth-child(1) { animation-delay: 0.1s; }
-    .boot-line:nth-child(2) { animation-delay: 0.3s; }
-    .boot-line:nth-child(3) { animation-delay: 0.5s; }
-    .boot-line:nth-child(4) { animation-delay: 0.7s; }
-    .boot-line:nth-child(5) { animation-delay: 0.9s; }
-    .boot-line:nth-child(6) { animation-delay: 1.1s; }
-    .boot-line:nth-child(7) { animation-delay: 1.4s; }
-    .boot-line:nth-child(8) { animation-delay: 1.6s; }
-    .boot-line:nth-child(9) { animation-delay: 1.8s; }
-    .boot-line:nth-child(10) { animation-delay: 2.0s; }
-    .boot-line:nth-child(11) { animation-delay: 2.3s; }
-    .boot-line:nth-child(12) { animation-delay: 2.6s; }
-
-    /* Terminal window */
-    .terminal-window {
-      background: rgba(0, 10, 0, 0.95);
-      border: 1px solid #00ff4133;
-      border-radius: 8px 8px 0 0;
-      overflow: hidden;
-    }
-    .terminal-titlebar {
-      background: rgba(0, 26, 0, 0.9);
-      border-bottom: 1px solid #00ff4122;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .terminal-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    /* Prompt */
-    .prompt-symbol {
-      color: var(--phosphor-bright);
-      font-weight: 700;
-    }
-
-    /* Scrollbar for terminal feel */
-    .terminal-body::-webkit-scrollbar {
-      width: 8px;
-    }
-    .terminal-body::-webkit-scrollbar-track {
-      background: #001a00;
-    }
-    .terminal-body::-webkit-scrollbar-thumb {
-      background: #00ff4144;
-      border-radius: 4px;
-    }
-
-    /* CTA command hover */
-    .cta-cmd {
-      transition: background 0.15s;
-    }
-    .cta-cmd:hover {
-      background: rgba(0, 255, 65, 0.08);
-    }
-
-    /* Progress bar chars */
-    .progress-filled {
-      color: var(--phosphor);
-    }
-    .progress-empty {
-      color: #00ff4133;
-    }
-
-    /* Responsive ASCII art */
-    .ascii-responsive {
-      font-size: clamp(0.35rem, 1.2vw, 0.85rem);
-      line-height: 1.2;
-    }
-
-    /* Selection color */
-    ::selection {
-      background: #00ff4144;
-      color: var(--phosphor-bright);
-    }
-    html:not(.dark) ::selection {
-      background: #268bd233;
-      color: #073642;
-    }
+    /* Hover underline */
+    .hover-line { position: relative; }
+    .hover-line::after { content: ''; position: absolute; bottom: -2px; right: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s ease; }
+    .hover-line:hover::after { width: 100%; }
   </style>
 </head>
+<body class="bg-[#f8f6f3] dark:bg-[#111110] text-[#1a1a1a] dark:text-[#e8e6e3] antialiased overflow-x-hidden transition-colors duration-300">
 
-<body class="scanlines crt-vignette flicker paper-texture">
-  <!-- ══════════════════════════════════════════════════════
-       TERMINAL WINDOW FRAME
-       ══════════════════════════════════════════════════════ -->
-  <div class="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
-    <div class="terminal-window">
-      <!-- Title Bar -->
-      <div class="terminal-titlebar">
-        <div class="flex gap-2" dir="ltr">
-          <div class="terminal-dot bg-[#ff5f57]"></div>
-          <div class="terminal-dot bg-[#febc2e]"></div>
-          <div class="terminal-dot bg-[#28c840]"></div>
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 inset-x-0 z-50 bg-[#f8f6f3]/95 dark:bg-[#111110]/95 backdrop-blur-md">
+    <div class="max-w-[1200px] mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-14">
+        <a href="/3/" class="flex items-center gap-2">
+          <img src="/brand/aosus-icon.svg" alt="أسس" class="w-6 h-6" />
+          <span class="font-bold text-sm">أسس</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-xs font-medium text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">
+          <a href="#about" class="hover-line hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">عن أسس</a>
+          <a href="#services" class="hover-line hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">الخدمات</a>
+          <a href="#blog" class="hover-line hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">المدونة</a>
+          <a href="#projects" class="hover-line hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">المشاريع</a>
         </div>
-        <span class="text-xs sm:text-sm phosphor-dim mr-auto" style="color: #00ff4188; font-family: 'IBM Plex Mono', monospace;" dir="ltr">aosus@community:~</span>
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" aria-label="تبديل الوضع" class="w-7 h-7 flex items-center justify-center text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">
+            <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <svg class="w-4 h-4 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </button>
+          <span class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/30 dark:text-[#e8e6e3]/30 cursor-pointer hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">EN</span>
+          <button id="mobile-menu-btn" class="md:hidden w-7 h-7 flex items-center justify-center text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="thin-rule"></div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 py-4 space-y-3 text-sm">
+      <a href="#about" class="block text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">عن أسس</a>
+      <a href="#services" class="block text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">الخدمات</a>
+      <a href="#blog" class="block text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">المدونة</a>
+      <a href="#projects" class="block text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">المشاريع</a>
+    </div>
+  </nav>
 
-        <!-- Dark/Light Toggle -->
-        <button
-          id="themeToggle"
-          class="text-xs px-2 py-1 border rounded cursor-pointer transition-colors phosphor"
-          style="border-color: #00ff4133; font-family: 'IBM Plex Mono', monospace;"
-          dir="ltr"
-          aria-label="تبديل المظهر"
-        >
-          $ toggle --theme
-        </button>
+  <!-- HERO - Editorial masthead -->
+  <section class="pt-24 pb-12 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="thin-rule mb-8"></div>
+      <div class="grid lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-8 animate-in">
+          <p class="text-xs font-medium text-aosus-green tracking-wider mb-4 uppercase">مجتمع البرمجيات الحرة والمفتوحة المصدر</p>
+          <h1 class="font-naskh text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] mb-6">
+            أكبر مجتمع عربي<br/>
+            <span class="text-aosus-green">للمصادر المفتوحة</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-4 animate-in delay-1">
+          <p class="text-sm text-[#1a1a1a]/60 dark:text-[#e8e6e3]/60 leading-relaxed mb-6">
+            مجتمع غير ربحي أسسه تقنيون عرب لنشر ثقافة البرمجيات الحرة والمفتوحة المصدر. أكثر من 6000 عضو ينشرون المعرفة منذ 2015.
+          </p>
+          <a href="https://discourse.aosus.org" class="inline-flex items-center gap-2 text-sm font-medium text-aosus-green hover-line">
+            انضم إلى المنتدى
+            <svg class="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="thin-rule mt-8"></div>
+    </div>
+  </section>
+
+  <!-- STATS TICKER -->
+  <section class="py-8 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid grid-cols-4 gap-4 text-center">
+        <div>
+          <div class="text-2xl md:text-3xl font-bold font-serif text-aosus-green">6,000+</div>
+          <div class="text-[10px] tracking-wider text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 mt-1 uppercase">عضو</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-bold font-serif">5,000+</div>
+          <div class="text-[10px] tracking-wider text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 mt-1 uppercase">مشاركة</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-bold font-serif text-aosus-blue">3,000+</div>
+          <div class="text-[10px] tracking-wider text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 mt-1 uppercase">موضوع</div>
+        </div>
+        <div>
+          <div class="text-2xl md:text-3xl font-bold font-serif">10</div>
+          <div class="text-[10px] tracking-wider text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 mt-1 uppercase">سنوات</div>
+        </div>
+      </div>
+      <div class="thin-rule mt-8"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT - Editorial Feature -->
+  <section id="about" class="py-16 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-4">
+          <p class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-4">القصة</p>
+          <img src="/brand/aosus-icon.svg" alt="" class="w-20 h-20 opacity-40 mb-6" />
+        </div>
+        <div class="lg:col-span-8">
+          <p class="pull-quote font-naskh text-[#1a1a1a]/80 dark:text-[#e8e6e3]/80 mb-8">
+            «نؤمن بأن التقنية الحرة يجب أن تكون في متناول كل إنسان عربي، بلغته وبما يناسب ثقافته»
+          </p>
+          <div class="grid md:grid-cols-2 gap-8 text-sm text-[#1a1a1a]/60 dark:text-[#e8e6e3]/60 leading-relaxed">
+            <p>
+              تأسس مجتمع أسس عام 2015 على يد مجموعة من التقنيين العرب الذين شعروا بالفجوة الكبيرة في المحتوى العربي حول البرمجيات الحرة. بدأنا كمجموعة صغيرة على وسائل التواصل، ونمونا حتى أصبحنا أكبر مجتمع عربي متخصص.
+            </p>
+            <p>
+              في عام 2024، حققنا إنجازاً مهماً بحصولنا على وضع المنظمة غير الربحية 501(c)(3) عبر مؤسسة Hack Foundation. نلتزم بقيم التعاون والشفافية والخصوصية والمسؤولية في كل ما نقدمه.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="thin-rule mt-16"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-16 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid lg:grid-cols-12 gap-12 mb-12">
+        <div class="lg:col-span-4">
+          <p class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-4">الخدمات</p>
+          <h2 class="text-2xl font-naskh font-bold">بدائل تحترم<br/>خصوصيتك</h2>
+        </div>
+        <div class="lg:col-span-8">
+          <p class="text-sm text-[#1a1a1a]/60 dark:text-[#e8e6e3]/60 leading-relaxed max-w-lg">
+            نستضيف مجموعة من الواجهات البديلة المفتوحة المصدر للخدمات الشائعة حتى تتمكن من تصفح الإنترنت بحرية تامة.
+          </p>
+        </div>
       </div>
 
-      <!-- Terminal Body -->
-      <div class="terminal-body p-4 sm:p-6 md:p-8 space-y-8 sm:space-y-12" style="font-family: 'IBM Plex Mono', 'IBM Plex Sans Arabic', monospace;">
+      <div class="space-y-0">
+        {[
+          { name: 'SearXNG', desc: 'محرك بحث وصفي يحترم الخصوصية' },
+          { name: 'Simply Translate', desc: 'ترجمة فورية بدون تتبع' },
+          { name: 'Redlib', desc: 'واجهة بديلة لمنصة Reddit' },
+          { name: 'Element', desc: 'تواصل مشفر عبر بروتوكول Matrix' },
+          { name: 'rimgo', desc: 'واجهة بديلة لـ Imgur' },
+          { name: 'Scribe', desc: 'واجهة بديلة لـ Medium' },
+          { name: 'Quetre', desc: 'واجهة بديلة لـ Quora' },
+          { name: 'Sticktock', desc: 'واجهة بديلة لـ TikTok' },
+          { name: 'Nitter', desc: 'واجهة بديلة لتويتر' },
+        ].map((s, i) => (
+          <div class="group py-4 border-b border-[#1a1a1a]/[0.06] dark:border-[#e8e6e3]/[0.06] flex items-center justify-between">
+            <div class="flex items-center gap-6">
+              <span class="text-[10px] text-[#1a1a1a]/25 dark:text-[#e8e6e3]/25 font-mono w-6">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="font-medium text-sm group-hover:text-aosus-green transition-colors">{s.name}</h3>
+            </div>
+            <span class="text-xs text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 hidden sm:block">{s.desc}</span>
+          </div>
+        ))}
+      </div>
+      <div class="thin-rule mt-16"></div>
+    </div>
+  </section>
 
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 1: BOOT SEQUENCE / HERO
-             ═══════════════════════════════════════════════════ -->
-        <section>
-          <!-- Boot sequence lines -->
-          <div class="text-xs sm:text-sm phosphor-dim space-y-1 mb-6" style="color: #00cc33;" dir="ltr">
-            <div class="boot-line">[  OK  ] Starting Aosus Community Services...</div>
-            <div class="boot-line">[  OK  ] Loading open-source modules...</div>
-            <div class="boot-line">[  OK  ] Mounting /dev/community</div>
-            <div class="boot-line">[  OK  ] Initializing Arabic locale (ar_SA.UTF-8)</div>
-            <div class="boot-line">[  OK  ] Starting network services...</div>
-            <div class="boot-line">[  OK  ] Loading privacy-first services...</div>
-            <div class="boot-line">[  OK  ] Community kernel loaded (v10.0-stable)</div>
-            <div class="boot-line text-glow" style="color: var(--phosphor);">
-              ══════════════════════════════════════════════════
+  <!-- BLOG - Magazine layout -->
+  <section id="blog" class="py-16 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <p class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-4">المدونة</p>
+          <h2 class="text-2xl font-naskh font-bold">أحدث المقالات</h2>
+        </div>
+        <a href="#" class="text-xs text-aosus-green hover-line font-medium">عرض الكل</a>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-8">
+        <!-- Lead article -->
+        <article class="lg:col-span-7 group">
+          <a href="#" class="block">
+            <div class="aspect-[3/2] bg-gradient-to-br from-aosus-green/8 to-aosus-blue/8 dark:from-aosus-green/15 dark:to-aosus-blue/15 rounded-sm mb-5 flex items-center justify-center">
+              <img src="/brand/aosus-icon.svg" alt="" class="w-16 h-16 opacity-20" />
+            </div>
+            <p class="text-[10px] tracking-wider text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-2">مقال مميز · 15 يناير 2025</p>
+            <h3 class="font-naskh text-2xl font-bold mb-3 group-hover:text-aosus-green transition-colors">البرمجيات الحرة: لماذا تهم المستخدم العربي؟</h3>
+            <p class="text-sm text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50 leading-relaxed">نستعرض في هذا المقال أهمية البرمجيات الحرة والمفتوحة المصدر للمستخدم العربي وكيف يمكنها تحسين تجربته الرقمية مع الحفاظ على الخصوصية والأمان.</p>
+          </a>
+        </article>
+
+        <!-- Side articles -->
+        <div class="lg:col-span-5 space-y-0">
+          {[
+            { date: '8 يناير 2025', title: 'دليلك الشامل لاختيار توزيعة لينكس المناسبة', cat: 'دليل' },
+            { date: '1 يناير 2025', title: 'كيف تبدأ المساهمة في مشاريع المصادر المفتوحة', cat: 'مبتدئين' },
+            { date: '25 ديسمبر 2024', title: 'أفضل البرمجيات الحرة البديلة في عام 2025', cat: 'قوائم' },
+            { date: '18 ديسمبر 2024', title: 'حماية خصوصيتك على الإنترنت: دليل عملي', cat: 'خصوصية' },
+          ].map((a) => (
+            <a href="#" class="group block py-5 border-b border-[#1a1a1a]/[0.06] dark:border-[#e8e6e3]/[0.06]">
+              <div class="flex items-center gap-3 text-[10px] text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase tracking-wider mb-2">
+                <span class="text-aosus-green">{a.cat}</span>
+                <span>·</span>
+                <time>{a.date}</time>
+              </div>
+              <h3 class="font-semibold text-sm group-hover:text-aosus-green transition-colors">{a.title}</h3>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="thin-rule mt-16"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="py-16 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <p class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-4">المشاريع</p>
+      <h2 class="text-2xl font-naskh font-bold mb-10">مشاريعنا المفتوحة</h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="group">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-sm bg-aosus-green/10 dark:bg-aosus-green/15 flex items-center justify-center flex-shrink-0 overflow-hidden">
+              <img src="/brand/GNUlinuxsa.webp" alt="GNULinuxSA" class="w-10 h-10 dark:hidden" />
+              <img src="/brand/GNUlinuxsa-white.webp" alt="GNULinuxSA" class="w-10 h-10 hidden dark:block" />
+            </div>
+            <div>
+              <h3 class="font-semibold mb-1 group-hover:text-aosus-green transition-colors">GNULinux Saudi Arabia</h3>
+              <p class="text-sm text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50 leading-relaxed">مجتمع لينكس في السعودية — نشر ثقافة البرمجيات الحرة وتوفير الدعم التقني باللغة العربية.</p>
             </div>
           </div>
-
-          <!-- ASCII Art Logo -->
-          <div class="ascii-responsive text-glow-lg mb-6 ascii-art" dir="ltr" style="color: var(--phosphor); white-space: pre; overflow-x: auto;">
-<pre class="ascii-responsive" style="margin:0;color:inherit;text-shadow:inherit;">
-     ██████╗  ██████╗ ██╗   ██╗██████╗
-    ██╔═══██╗██╔════╝██║   ██║██╔════╝
-    ███████║║╚█████╗ ██║   ██║╚█████╗
-    ██╔══██║  ╚═══██╗██║   ██║  ╚══██║
-    ██║  ██║██████╔╝╚██████╔╝██████╔╝
-    ╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═════╝
-       A  O  S  U  S  .  O  R  G
-</pre>
+        </div>
+        <div class="group">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-sm bg-aosus-blue/10 dark:bg-aosus-blue/15 flex items-center justify-center flex-shrink-0 overflow-hidden">
+              <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Bridge" class="w-10 h-10" />
+            </div>
+            <div>
+              <h3 class="font-semibold mb-1 group-hover:text-aosus-blue transition-colors">Discourse Chat Bridge</h3>
+              <p class="text-sm text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50 leading-relaxed">جسر مفتوح المصدر للربط بين منصة Discourse ومنصات التواصل مثل Matrix و Discord و Telegram.</p>
+            </div>
           </div>
+        </div>
+      </div>
+      <div class="thin-rule mt-16"></div>
+    </div>
+  </section>
 
-          <!-- Main Title -->
-          <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-glow-lg phosphor-bright leading-relaxed" style="color: var(--phosphor-bright); font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', monospace;">
-            أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر
-          </h1>
-
-          <p class="text-sm sm:text-base mb-6 text-glow phosphor-dim" style="color: var(--phosphor-dim); font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', monospace; line-height: 1.8;">
-            مجتمع أسس هو مجتمع عربي مفتوح يهدف لنشر ثقافة البرمجيات الحرة والمفتوحة المصدر في العالم العربي، ويقدم خِدمات بديلة تحترم خصوصية المستخدم.
+  <!-- WRITING CONTEST -->
+  <section class="py-16 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <p class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-4">جائزة الكتابة</p>
+          <h2 class="text-2xl font-naskh font-bold mb-4">مسابقة الكتابة الشهرية</h2>
+          <p class="text-sm text-[#1a1a1a]/60 dark:text-[#e8e6e3]/60 leading-relaxed mb-6 max-w-lg">
+            اكتب عن البرمجيات الحرة والمفتوحة المصدر باللغة العربية وشارك في مسابقتنا الشهرية للفوز بجوائز تصل إلى 250$ وأكثر. المسابقة مفتوحة للجميع.
           </p>
-
-          <!-- CTA Commands -->
-          <div class="space-y-2 text-sm sm:text-base">
-            <a href="https://discourse.aosus.org" target="_blank" rel="noopener" class="cta-cmd block px-3 py-2 rounded aosus-link" style="color: #1d70ba;" dir="ltr">
-              <span class="prompt-symbol" style="color: var(--phosphor-bright);">$ </span>join --community<span class="cursor-blink mr-1"></span>
-            </a>
-            <a href="#services" class="cta-cmd block px-3 py-2 rounded aosus-link" style="color: #1d70ba;" dir="ltr">
-              <span class="prompt-symbol" style="color: var(--phosphor-bright);">$ </span>list --services
-            </a>
-          </div>
-        </section>
-
-        <!-- Section Divider -->
-        <div class="phosphor-dim text-glow text-xs sm:text-sm" style="color: #00ff4155;" dir="ltr">
-          ────────────────────────────────────────────────────
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-aosus-blue hover-line">
+            تفاصيل المسابقة
+            <svg class="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
         </div>
-
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 2: SYSTEM INFO (من نحن) — neofetch style
-             ═══════════════════════════════════════════════════ -->
-        <section>
-          <div class="text-sm phosphor-dim mb-3 text-glow" style="color: #00cc33;" dir="ltr">
-            <span class="prompt-symbol">$ </span>neofetch --community-info
+        <div class="lg:col-span-5 text-center lg:text-left">
+          <div class="inline-block">
+            <div class="text-[5rem] font-serif font-bold text-aosus-green leading-none">250$</div>
+            <div class="text-xs text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 tracking-wider uppercase mt-2">جائزة شهرية وأكثر</div>
           </div>
-
-          <div class="flex flex-col md:flex-row gap-4 md:gap-8" dir="ltr">
-            <!-- ASCII Art Side -->
-            <div class="ascii-art flex-shrink-0 text-glow" style="color: var(--phosphor); white-space: pre; font-size: clamp(0.4rem, 1vw, 0.7rem); line-height: 1.15;">
-<pre style="margin:0;color:inherit;text-shadow:inherit;">
-        .::::::::.
-      .::::::::::::::.
-    .:::::::::::::::::::
-   ::::   .:::::::.   ::::
-  ::::.   :::::::::.   .::::
-  ::::    :::::::::    :::::
-  ::::.   :::::::::.  .::::
-   ::::   .:::::::.   ::::
-    ''::::::::::::::::''
-      '::::::::::::'
-        '::::::::'
-           أسس
-</pre>
-            </div>
-
-            <!-- Key-Value Info -->
-            <div class="text-xs sm:text-sm space-y-1" style="font-family: 'IBM Plex Mono', monospace;">
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">OS:</span> <span class="phosphor" style="color: var(--phosphor);">Aosus Community v10</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Host:</span> <span class="phosphor" style="color: var(--phosphor);">aosus.org</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Kernel:</span> <span class="phosphor" style="color: var(--phosphor);">Open Source 5.15-libre</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Uptime:</span> <span class="phosphor" style="color: var(--phosphor);">10 سنوات</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Members:</span> <span class="phosphor" style="color: var(--phosphor);">6000+</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Posts:</span> <span class="phosphor" style="color: var(--phosphor);">5000+</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Topics:</span> <span class="phosphor" style="color: var(--phosphor);">3000+</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Languages:</span> <span class="phosphor" style="color: var(--phosphor);">العربية (ar)</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">License:</span> <span class="phosphor" style="color: var(--phosphor);">CC BY-SA 4.0</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Shell:</span> <span class="phosphor" style="color: var(--phosphor);">discourse 3.x</span></div>
-              <div><span class="kv-label" style="color: var(--phosphor-bright);">Mission:</span> <span class="phosphor" style="color: var(--phosphor);">نشر ثقافة البرمجيات الحرة</span></div>
-              <div class="pt-2 flex gap-1" dir="ltr">
-                <span class="inline-block w-4 h-4 rounded-sm" style="background:#008a2f;"></span>
-                <span class="inline-block w-4 h-4 rounded-sm" style="background:#00ff41;"></span>
-                <span class="inline-block w-4 h-4 rounded-sm" style="background:#1d70ba;"></span>
-                <span class="inline-block w-4 h-4 rounded-sm" style="background:#00cc33;"></span>
-                <span class="inline-block w-4 h-4 rounded-sm" style="background:#33ff66;"></span>
-                <span class="inline-block w-4 h-4 rounded-sm" style="background:#006b24;"></span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section Divider -->
-        <div class="phosphor-dim text-glow text-xs sm:text-sm" style="color: #00ff4155;" dir="ltr">
-          ────────────────────────────────────────────────────
         </div>
+      </div>
+      <div class="thin-rule mt-16"></div>
+    </div>
+  </section>
 
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 3: PACKAGE MANAGER (خِدْمَات)
-             ═══════════════════════════════════════════════════ -->
-        <section id="services">
-          <div class="text-sm phosphor-dim mb-1 text-glow" style="color: #00cc33;" dir="ltr">
-            <span class="prompt-symbol">$ </span>apt list --installed | grep aosus
-          </div>
-          <div class="text-xs mb-4 phosphor-dim" style="color: #00ff4155;" dir="ltr">Listing... Done</div>
-
-          <div class="space-y-1 text-xs sm:text-sm" dir="ltr" style="font-family: 'IBM Plex Mono', monospace;">
-            <!-- SearXNG -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-searxng</span><span class="pkg-version" style="color: #1d70ba;">/stable 2024.1</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  محرك بحث وصفي يحترم الخصوصية</div>
-            </div>
-            <!-- Simply Translate -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-simplytranslate</span><span class="pkg-version" style="color: #1d70ba;">/stable 1.0</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة ترجمة بديلة تحترم الخصوصية</div>
-            </div>
-            <!-- Nitter -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-nitter</span><span class="pkg-version" style="color: #1d70ba;">/stable 2024.1</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة بديلة لتويتر بدون تتبع</div>
-            </div>
-            <!-- Redlib -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-redlib</span><span class="pkg-version" style="color: #1d70ba;">/stable 0.35</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة بديلة لريديت خفيفة وسريعة</div>
-            </div>
-            <!-- Element -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-element</span><span class="pkg-version" style="color: #1d70ba;">/stable 1.11</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  خادم ماتركس للتواصل الآمن والمشفر</div>
-            </div>
-            <!-- rimgo -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-rimgo</span><span class="pkg-version" style="color: #1d70ba;">/stable 1.2</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة بديلة لـ Imgur تحترم الخصوصية</div>
-            </div>
-            <!-- Scribe -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-scribe</span><span class="pkg-version" style="color: #1d70ba;">/stable 2024.1</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة بديلة لـ Medium بدون قيود</div>
-            </div>
-            <!-- Quetre -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-quetre</span><span class="pkg-version" style="color: #1d70ba;">/stable 1.0</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة بديلة لـ Quora تحترم الخصوصية</div>
-            </div>
-            <!-- Sticktock -->
-            <div class="py-1">
-              <span class="pkg-name font-bold" style="color: var(--phosphor-bright);">aosus-sticktock</span><span class="pkg-version" style="color: #1d70ba;">/stable 3.0</span> <span class="phosphor" style="color: var(--phosphor);">[installed]</span>
-              <div class="mr-4 phosphor-dim" style="color: #00cc33; font-family: 'IBM Plex Sans Arabic', monospace;">  واجهة بديلة لتيك توك بدون تتبع</div>
-            </div>
-          </div>
-
-          <div class="mt-3 text-xs phosphor-dim" style="color: #00ff4188;" dir="ltr">
-            9 packages installed. 0 to upgrade. All systems operational.
-          </div>
-        </section>
-
-        <!-- Section Divider -->
-        <div class="phosphor-dim text-glow text-xs sm:text-sm" style="color: #00ff4155;" dir="ltr">
-          ────────────────────────────────────────────────────
+  <!-- SUPPORT -->
+  <section class="py-16 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="max-w-xl mx-auto text-center">
+        <p class="text-[10px] font-medium tracking-widest text-[#1a1a1a]/40 dark:text-[#e8e6e3]/40 uppercase mb-4">ادعم المجتمع</p>
+        <h2 class="text-2xl font-naskh font-bold mb-4">ساهم في استمرار المشروع</h2>
+        <p class="text-sm text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50 leading-relaxed mb-8">
+          بدعمك نستمر في تقديم خدمات مجانية ونشر المحتوى التعليمي باللغة العربية.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a href="https://github.com/sponsors/aosus" class="inline-flex items-center gap-2 px-5 py-2 bg-[#1a1a1a] dark:bg-[#e8e6e3] text-white dark:text-[#1a1a1a] text-xs font-medium rounded-sm hover:opacity-90 transition-opacity">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+            GitHub Sponsors
+          </a>
+          <a href="https://hcb.hackclub.com/donations/start/aosus" class="inline-flex items-center gap-2 px-5 py-2 border border-[#1a1a1a]/15 dark:border-[#e8e6e3]/15 text-xs font-medium rounded-sm hover:border-[#1a1a1a]/30 dark:hover:border-[#e8e6e3]/30 transition-colors">
+            تبرع عبر HCB
+          </a>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 4: README.md (جائزة أسس للكتابة)
-             ═══════════════════════════════════════════════════ -->
-        <section>
-          <div class="text-sm phosphor-dim mb-3 text-glow" style="color: #00cc33;" dir="ltr">
-            <span class="prompt-symbol">$ </span>cat README.md
-          </div>
-
-          <!-- README rendered area -->
-          <div class="section-border border rounded p-4 sm:p-6" style="border-color: #00ff4122; background: rgba(0, 26, 0, 0.3); font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', monospace;">
-
-            <h2 class="readme-header text-lg sm:text-xl font-bold mb-4 pb-2 border-b" style="color: var(--phosphor-bright); border-color: #00ff4133;">
-              # جائزة أسس للكتابة التقنية
-            </h2>
-
-            <p class="text-sm mb-4 phosphor" style="color: var(--phosphor); line-height: 1.8;">
-              مسابقة سنوية تهدف لتشجيع إنتاج المحتوى التقني العربي المتعلق بالبرمجيات الحرة والمفتوحة المصدر ونظام لينكس.
-            </p>
-
-            <h3 class="readme-header text-base font-bold mb-3" style="color: var(--phosphor-bright);">
-              ## شروط الجائزة
-            </h3>
-
-            <ul class="text-sm space-y-2 mb-4" style="color: var(--phosphor); line-height: 1.8;">
-              <li class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">-</span>
-                <span>أن يكون المقال باللغة العربية</span>
-              </li>
-              <li class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">-</span>
-                <span>أن يتناول موضوعاً يخص البرمجيات الحرة والمفتوحة المصدر</span>
-              </li>
-              <li class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">-</span>
-                <span>أن يكون المحتوى أصلياً وغير منسوخ</span>
-              </li>
-              <li class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">-</span>
-                <span>يُنشر المقال تحت رخصة المشاع الإبداعي CC BY-SA 4.0</span>
-              </li>
-              <li class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">-</span>
-                <span>أن يُنشر المقال في منصة مجتمع أسس</span>
-              </li>
-            </ul>
-
-            <!-- Code block inside README -->
-            <div class="rounded p-3 text-xs sm:text-sm mb-4" style="background: rgba(0, 0, 0, 0.4); border: 1px solid #00ff4111; font-family: 'IBM Plex Mono', monospace;" dir="ltr">
-              <div class="comment" style="color: #00ff4166;"># المواضيع المقبولة:</div>
-              <div class="phosphor" style="color: var(--phosphor);">topics = [</div>
-              <div class="phosphor" style="color: var(--phosphor);">  "شروحات لينكس",</div>
-              <div class="phosphor" style="color: var(--phosphor);">  "مراجعات توزيعات",</div>
-              <div class="phosphor" style="color: var(--phosphor);">  "أدوات مفتوحة المصدر",</div>
-              <div class="phosphor" style="color: var(--phosphor);">  "الخصوصية والأمان",</div>
-              <div class="phosphor" style="color: var(--phosphor);">  "تجارب شخصية مع المصادر المفتوحة"</div>
-              <div class="phosphor" style="color: var(--phosphor);">]</div>
-            </div>
-
-            <p class="text-xs phosphor-dim" style="color: #00ff4188;">
-              <span dir="ltr">></span> للمزيد من المعلومات، زر
-              <a href="https://discourse.aosus.org" target="_blank" rel="noopener" class="aosus-link underline" style="color: #1d70ba;">منصة أسس</a>
-            </p>
-          </div>
-        </section>
-
-        <!-- Section Divider -->
-        <div class="phosphor-dim text-glow text-xs sm:text-sm" style="color: #00ff4155;" dir="ltr">
-          ────────────────────────────────────────────────────
+  <!-- FOOTER -->
+  <footer class="py-10 px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="thin-rule mb-10"></div>
+      <div class="grid md:grid-cols-3 gap-8 mb-10">
+        <div>
+          <a href="/3/" class="flex items-center gap-2 mb-3">
+            <img src="/brand/aosus-icon.svg" alt="أسس" class="w-5 h-5 opacity-50" />
+            <span class="text-xs font-medium">مجتمع أسس</span>
+          </a>
+          <p class="text-[11px] text-[#1a1a1a]/35 dark:text-[#e8e6e3]/35 leading-relaxed">أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر. منظمة غير ربحية 501(c)(3).</p>
         </div>
-
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 5: GIT LOG (التسلسل الزمني)
-             ═══════════════════════════════════════════════════ -->
-        <section>
-          <div class="text-sm phosphor-dim mb-3 text-glow" style="color: #00cc33;" dir="ltr">
-            <span class="prompt-symbol">$ </span>git log --oneline --reverse
+        <div>
+          <p class="text-[10px] tracking-widest text-[#1a1a1a]/30 dark:text-[#e8e6e3]/30 uppercase mb-3">المجتمع</p>
+          <div class="space-y-2 text-xs text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">
+            <a href="https://discourse.aosus.org" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">المنتدى</a>
+            <a href="https://discord.gg/YJUzEhU955" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Discord</a>
+            <a href="https://matrix.to/#/#aosus:aosus.org" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Matrix</a>
+            <a href="https://t.me/aosus" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Telegram</a>
           </div>
-
-          <div class="space-y-2 text-xs sm:text-sm" dir="ltr" style="font-family: 'IBM Plex Mono', monospace;">
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0001</span>
-              <span class="git-date" style="color: #00ff4188;">(2015-01-01)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">تأسيس مجتمع أسس كمجموعة على تيليجرام</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0002</span>
-              <span class="git-date" style="color: #00ff4188;">(2016-06-15)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">إطلاق أول منتدى للمجتمع</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0003</span>
-              <span class="git-date" style="color: #00ff4188;">(2017-03-20)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">الانتقال إلى منصة Discourse</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0004</span>
-              <span class="git-date" style="color: #00ff4188;">(2018-09-01)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">إطلاق خدمات الخصوصية البديلة</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0005</span>
-              <span class="git-date" style="color: #00ff4188;">(2019-05-10)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">تجاوز 1000 عضو في المجتمع</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0006</span>
-              <span class="git-date" style="color: #00ff4188;">(2020-01-15)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">إطلاق خادم ماتركس (Element)</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0007</span>
-              <span class="git-date" style="color: #00ff4188;">(2021-08-22)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">إطلاق محرك البحث SearXNG</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0008</span>
-              <span class="git-date" style="color: #00ff4188;">(2022-04-01)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">إطلاق جائزة أسس للكتابة التقنية</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s0009</span>
-              <span class="git-date" style="color: #00ff4188;">(2023-02-14)</span>
-              <span class="phosphor" style="color: var(--phosphor); font-family: 'IBM Plex Sans Arabic', monospace;">تجاوز 5000 عضو في المجتمع</span>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-0.5">
-              <span class="hash font-bold" style="color: #1d70ba;">a0s000a</span>
-              <span class="git-date" style="color: #00ff4188;">(2024-01-01)</span>
-              <span class="phosphor text-glow" style="color: var(--phosphor-bright); font-family: 'IBM Plex Sans Arabic', monospace;">تجاوز 6000 عضو — المجتمع مستمر ✦</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section Divider -->
-        <div class="phosphor-dim text-glow text-xs sm:text-sm" style="color: #00ff4155;" dir="ltr">
-          ────────────────────────────────────────────────────
         </div>
-
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 6: CONTRIBUTING.md (ادعمنا)
-             ═══════════════════════════════════════════════════ -->
-        <section>
-          <div class="text-sm phosphor-dim mb-3 text-glow" style="color: #00cc33;" dir="ltr">
-            <span class="prompt-symbol">$ </span>cat CONTRIBUTING.md
+        <div>
+          <p class="text-[10px] tracking-widest text-[#1a1a1a]/30 dark:text-[#e8e6e3]/30 uppercase mb-3">تابعنا</p>
+          <div class="space-y-2 text-xs text-[#1a1a1a]/50 dark:text-[#e8e6e3]/50">
+            <a href="https://twitter.com/aosusdotorg" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Twitter / X</a>
+            <a href="https://mastodon.online/@aosus" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Mastodon</a>
+            <a href="https://bsky.app/profile/aosus.org" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Bluesky</a>
+            <a href="https://github.com/aosus" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">GitHub</a>
+            <a href="https://facebook.com/aosus1" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">Facebook</a>
+            <a href="https://linkedin.com/company/aosus" class="block hover:text-[#1a1a1a] dark:hover:text-[#e8e6e3] transition-colors">LinkedIn</a>
           </div>
-
-          <div class="section-border border rounded p-4 sm:p-6" style="border-color: #00ff4122; background: rgba(0, 26, 0, 0.3); font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', monospace;">
-
-            <h2 class="readme-header text-lg sm:text-xl font-bold mb-4 pb-2 border-b" style="color: var(--phosphor-bright); border-color: #00ff4133;">
-              # ادعمنا
-            </h2>
-
-            <p class="text-sm mb-4 phosphor" style="color: var(--phosphor); line-height: 1.8;">
-              مجتمع أسس يعمل بالكامل بجهود تطوعية. يمكنك دعم المجتمع واستمرار خدماته من خلال:
-            </p>
-
-            <div class="space-y-3 text-sm" style="color: var(--phosphor);">
-              <div class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">01.</span>
-                <div>
-                  <span class="font-bold">الدعم المالي</span>
-                  <span class="phosphor-dim" style="color: #00cc33;">—</span>
-                  ساهم في تغطية تكاليف الخوادم والخدمات عبر
-                  <a href="https://opencollective.com/aosus" target="_blank" rel="noopener" class="aosus-link underline" style="color: #1d70ba;">Open Collective</a>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">02.</span>
-                <div>
-                  <span class="font-bold">المساهمة التقنية</span>
-                  <span class="phosphor-dim" style="color: #00cc33;">—</span>
-                  ساهم في مشاريعنا على
-                  <a href="https://github.com/aosus" target="_blank" rel="noopener" class="aosus-link underline" style="color: #1d70ba;">GitHub</a>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">03.</span>
-                <div>
-                  <span class="font-bold">كتابة المحتوى</span>
-                  <span class="phosphor-dim" style="color: #00cc33;">—</span>
-                  شارك بمقالات تقنية في
-                  <a href="https://discourse.aosus.org" target="_blank" rel="noopener" class="aosus-link underline" style="color: #1d70ba;">منصة أسس</a>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span class="prompt-symbol flex-shrink-0" style="color: var(--phosphor-dim);">04.</span>
-                <div>
-                  <span class="font-bold">نشر الكلمة</span>
-                  <span class="phosphor-dim" style="color: #00cc33;">—</span>
-                  شارك مجتمع أسس مع أصدقائك المهتمين بالمصادر المفتوحة
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section Divider -->
-        <div class="phosphor-dim text-glow text-xs sm:text-sm" style="color: #00ff4155;" dir="ltr">
-          ────────────────────────────────────────────────────
         </div>
+      </div>
+      <div class="thin-rule mb-6"></div>
+      <div class="flex items-center justify-between">
+        <p class="text-[10px] text-[#1a1a1a]/25 dark:text-[#e8e6e3]/25">© 2024 أسس</p>
+        <a href="/" class="text-[10px] text-[#1a1a1a]/25 dark:text-[#e8e6e3]/25 hover:text-[#1a1a1a]/60 dark:hover:text-[#e8e6e3]/60 transition-colors">جميع التصاميم</a>
+      </div>
+    </div>
+  </footer>
 
-        <!-- ═══════════════════════════════════════════════════
-             SECTION 7: FOOTER
-             ═══════════════════════════════════════════════════ -->
-        <footer>
-          <div class="text-sm phosphor-dim mb-3 text-glow" style="color: #00cc33;" dir="ltr">
-            <span class="prompt-symbol">$ </span>cat .social-links
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-1 text-xs sm:text-sm mb-6" dir="ltr" style="font-family: 'IBM Plex Mono', monospace;">
-            <a href="https://twitter.com/aosusdotorg" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> twitter/aosusdotorg
-            </a>
-            <a href="https://bsky.app/profile/aosus.org" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> bsky/aosus.org
-            </a>
-            <a href="https://mastodon.online/@aosus" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> mastodon/@aosus
-            </a>
-            <a href="https://discord.gg/YJUzEhU955" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> discord/aosus
-            </a>
-            <a href="https://matrix.to/#/#aosus:aosus.org" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> matrix/#aosus
-            </a>
-            <a href="https://t.me/aosus" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> telegram/aosus
-            </a>
-            <a href="https://github.com/aosus" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> github/aosus
-            </a>
-            <a href="https://facebook.com/aosus1" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> facebook/aosus1
-            </a>
-            <a href="https://linkedin.com/company/aosus" target="_blank" rel="noopener" class="aosus-link py-1 hover:underline flex items-center gap-2" style="color: #1d70ba;">
-              <span class="prompt-symbol" style="color: var(--phosphor-dim);">→</span> linkedin/aosus
-            </a>
-          </div>
-
-          <!-- Copyright -->
-          <div class="text-xs phosphor-dim space-y-1" style="color: #00ff4155; font-family: 'IBM Plex Mono', monospace;" dir="ltr">
-            <div class="comment"># Copyright (c) 2015-2025 Aosus Community</div>
-            <div class="comment"># Licensed under CC BY-SA 4.0</div>
-            <div class="comment"># https://aosus.org</div>
-          </div>
-
-          <!-- Final prompt -->
-          <div class="mt-6 text-sm text-glow" dir="ltr">
-            <span class="prompt-symbol" style="color: var(--phosphor-bright);">aosus@community:~$ </span><span class="cursor-blink"></span>
-          </div>
-        </footer>
-
-      </div><!-- /terminal-body -->
-    </div><!-- /terminal-window -->
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════
-       THEME TOGGLE SCRIPT
-       ══════════════════════════════════════════════════════ -->
   <script>
-    const toggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-
-    // Check saved preference
-    const saved = localStorage.getItem('aosus-terminal-theme');
-    if (saved === 'light') {
-      html.classList.remove('dark');
-    }
-
-    toggle?.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      const isDark = html.classList.contains('dark');
-      localStorage.setItem('aosus-terminal-theme', isDark ? 'dark' : 'light');
-    });
+    document.getElementById('theme-toggle')?.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); });
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.toggle('hidden'); });
   </script>
 </body>
 </html>
