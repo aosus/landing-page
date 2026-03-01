@@ -16,7 +16,7 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
   <style>
     :root {
       --bg: #ffffff;
-      --bg-alt: #f5f5f5;
+      --bg-alt: #f8f9fa;
       --text: #0a0a0a;
       --text-secondary: #555555;
       --text-tertiary: #999999;
@@ -25,8 +25,6 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
       --green: #008a2f;
       --green-hover: #006b24;
       --blue: #1d70ba;
-      --canvas-stroke: rgba(10, 10, 10, 0.04);
-      --canvas-dot: rgba(10, 10, 10, 0.03);
     }
     .dark {
       --bg: #0e0e0e;
@@ -39,63 +37,38 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
       --green: #00a63a;
       --green-hover: #00c445;
       --blue: #4a9ede;
-      --canvas-stroke: rgba(255, 255, 255, 0.04);
-      --canvas-dot: rgba(255, 255, 255, 0.03);
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       margin: 0;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
     }
-    .mono {
-      font-family: 'IBM Plex Mono', monospace;
-    }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+    
+    .text-secondary { color: var(--text-secondary); transition: color 0.3s ease; }
+    .text-tertiary { color: var(--text-tertiary); transition: color 0.3s ease; }
+    .text-green { color: var(--green); transition: color 0.3s ease; }
+
     .label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.6875rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-tertiary);
+      transition: color 0.3s ease;
     }
-    .grid-line {
-      border-bottom: 1px solid var(--border);
-    }
-    .grid-line-top {
-      border-top: 1px solid var(--border);
-    }
-    .grid-line-right {
-      border-right: 1px solid var(--border);
-    }
-    .grid-line-left {
-      border-left: 1px solid var(--border);
-    }
-    a { text-decoration: none; color: inherit; }
+    .grid-line { border-bottom: 1px solid var(--border); }
+    .grid-line-top { border-top: 1px solid var(--border); }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    @media (min-width: 768px) { .container { padding: 0 40px; } }
-    @media (min-width: 1024px) { .container { padding: 0 48px; } }
-
-    /* Canvas layer */
-    #calligraphy-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .page-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Mobile menu */
+    html { scroll-behavior: smooth; }
     .mobile-menu { display: none; }
     .mobile-menu.active { display: block; }
-
-    /* Reveal animation */
+    
     .reveal {
       opacity: 0;
       transform: translateY(10px);
@@ -105,14 +78,152 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
       opacity: 1;
       transform: translateY(0);
     }
+    a { text-decoration: none; color: inherit; }
+
+    /* Utility classes */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+    @media (min-width: 768px) { .container { padding: 0 40px; } }
+    @media (min-width: 1024px) { .container { padding: 0 48px; } }
+
+    /* Watermarks */
+    .bg-watermark {
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 800px;
+      height: 800px;
+      opacity: 0.02;
+      z-index: 0;
+      pointer-events: none;
+      color: var(--text);
+      transform: rotate(15deg);
+    }
+    .bg-watermark-2 {
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 600px;
+      height: 600px;
+      opacity: 0.02;
+      z-index: 0;
+      pointer-events: none;
+      color: var(--text);
+      transform: rotate(-10deg);
+    }
+    .dark .bg-watermark, .dark .bg-watermark-2 {
+      opacity: 0.03;
+    }
+
+    /* Arabesque Hover Effects */
+    .arabesque-hover {
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .arabesque-hover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: var(--green);
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l1.46-1.46-1.46-1.46.353-.354 1.46 1.46 1.46-1.46.354.354-1.46 1.46 1.46 1.46-.354.353-1.46-1.46-1.46 1.46-.353-.353zM25.373 60l-1.46 1.46 1.46 1.46-.353.354-1.46-1.46-1.46 1.46-.354-.354 1.46-1.46-1.46-1.46.354-.353 1.46 1.46 1.46-1.46.353.353z' /%3E%3Cg fill-rule='evenodd'%3E%3Cpath d='M45.642 0h-5.284L30 10.358 19.642 0h-5.284L30 15.642 45.642 0zM0 45.642v-5.284L10.358 30 0 19.642v-5.284L15.642 30 0 45.642zM60 45.642v-5.284L49.642 30 60 19.642v-5.284L44.358 30 60 45.642zM45.642 60h-5.284L30 49.642 19.642 60h-5.284L30 44.358 45.642 60zM14.645 14.645L0 29.29V14.645h14.645zM14.645 45.355L0 30.71v14.645h14.645zM45.355 14.645L60 29.29V14.645H45.355zM45.355 45.355L60 30.71v14.645H45.355zM30 35.355L24.645 30 30 24.645 35.355 30 30 35.355zM30 42.426L17.574 30 30 17.574 42.426 30 30 42.426z' /%3E%3C/g%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l1.46-1.46-1.46-1.46.353-.354 1.46 1.46 1.46-1.46.354.354-1.46 1.46 1.46 1.46-.354.353-1.46-1.46-1.46 1.46-.353-.353zM25.373 60l-1.46 1.46 1.46 1.46-.353.354-1.46-1.46-1.46 1.46-.354-.354 1.46-1.46-1.46-1.46.354-.353 1.46 1.46 1.46-1.46.353.353z' /%3E%3Cg fill-rule='evenodd'%3E%3Cpath d='M45.642 0h-5.284L30 10.358 19.642 0h-5.284L30 15.642 45.642 0zM0 45.642v-5.284L10.358 30 0 19.642v-5.284L15.642 30 0 45.642zM60 45.642v-5.284L49.642 30 60 19.642v-5.284L44.358 30 60 45.642zM45.642 60h-5.284L30 49.642 19.642 60h-5.284L30 44.358 45.642 60zM14.645 14.645L0 29.29V14.645h14.645zM14.645 45.355L0 30.71v14.645h14.645zM45.355 14.645L60 29.29V14.645H45.355zM45.355 45.355L60 30.71v14.645H45.355zM30 35.355L24.645 30 30 24.645 35.355 30 30 35.355zM30 42.426L17.574 30 30 17.574 42.426 30 30 42.426z' /%3E%3C/g%3E%3C/svg%3E");
+      -webkit-mask-size: 60px 60px;
+      mask-size: 60px 60px;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.4s ease, transform 0.6s ease;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+    
+    .arabesque-hover:hover {
+      background-color: var(--text);
+      color: var(--bg);
+      box-shadow: inset 0 0 0 1px var(--green);
+    }
+    .arabesque-hover:hover::before {
+      opacity: 0.12;
+      transform: scale(1);
+    }
+    
+    /* Text color overrides on hover */
+    .arabesque-hover:hover .text-secondary { color: rgba(255,255,255,0.7) !important; }
+    .dark .arabesque-hover:hover .text-secondary { color: rgba(0,0,0,0.6) !important; }
+    
+    .arabesque-hover:hover .text-tertiary { color: var(--green) !important; }
+    .arabesque-hover:hover .label { color: var(--green) !important; }
+    
+    .arabesque-hover:hover .text-green { color: var(--bg) !important; }
+    .dark .arabesque-hover:hover .text-green { color: var(--bg) !important; }
+    
+    .arabesque-hover:hover .value-dot { background: var(--bg) !important; }
+    
+    .arabesque-hover:hover .project-logo { filter: brightness(0) invert(1); }
+    .dark .arabesque-hover:hover .project-logo { filter: brightness(0); }
+
+    /* Buttons */
+    .arabesque-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 28px;
+      background: var(--green);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid var(--green);
+      position: relative;
+      overflow: hidden;
+    }
+    .arabesque-btn-primary:hover {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+      box-shadow: inset 0 0 0 1px var(--green);
+    }
+    .arabesque-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 28px;
+      border: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .arabesque-btn-secondary:hover {
+      border-color: var(--text);
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: inset 0 0 0 1px var(--green);
+    }
+
+    /* Footer Links */
+    .footer-link {
+      transition: color 0.2s;
+      color: var(--text-secondary);
+    }
+    .footer-link:hover {
+      color: var(--green);
+    }
   </style>
 </head>
 <body>
 
-  <!-- CALLIGRAPHY CANVAS -->
-  <canvas id="calligraphy-canvas"></canvas>
+  <!-- SVG Geometry Defs -->
+  <svg style="display: none;" aria-hidden="true">
+    <defs>
+      <path id="star8" d="M50 0 L60 30 L90 20 L70 45 L100 50 L70 55 L90 80 L60 70 L50 100 L40 70 L10 80 L30 55 L0 50 L30 45 L10 20 L40 30 Z" />
+    </defs>
+  </svg>
 
-  <div class="page-content">
+  <div class="bg-watermark">
+    <svg viewBox="0 0 100 100" width="100%" height="100%" fill="currentColor">
+      <use href="#star8" />
+    </svg>
+  </div>
 
   <!-- NAVIGATION -->
   <nav class="grid-line" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: var(--bg); height: 56px;">
@@ -121,13 +232,13 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
         <img src="/brand/aosus-icon.svg" alt="أسس" style="width: 28px; height: 28px;" />
         <span style="font-weight: 600; font-size: 1.125rem;">أسس</span>
       </a>
-      <div style="display: none; align-items: center; gap: 32px; font-size: 0.8125rem; color: var(--text-secondary);" class="nav-links-desktop">
-        <a href="#about" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">من نحن</a>
-        <a href="#services" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">الخدمات</a>
-        <a href="#contest" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">الجائزة</a>
-        <a href="#timeline" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">تاريخنا</a>
-        <a href="#projects" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">المشاريع</a>
-        <a href="#support" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">ادعمنا</a>
+      <div style="display: none; align-items: center; gap: 32px; font-size: 0.8125rem;" class="nav-links-desktop">
+        <a href="#about" class="footer-link">من نحن</a>
+        <a href="#services" class="footer-link">الخدمات</a>
+        <a href="#contest" class="footer-link">الجائزة</a>
+        <a href="#timeline" class="footer-link">تاريخنا</a>
+        <a href="#projects" class="footer-link">المشاريع</a>
+        <a href="#support" class="footer-link">ادعمنا</a>
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
         <button id="theme-toggle" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: none; border: none; color: var(--text-secondary); cursor: pointer;" aria-label="تبديل المظهر">
@@ -139,8 +250,8 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
         </button>
       </div>
     </div>
-    <div id="mobile-menu" class="mobile-menu grid-line-top" style="background: var(--bg); padding: 0 24px 16px;">
-      <div style="display: flex; flex-direction: column; font-size: 0.875rem; color: var(--text-secondary);">
+    <div id="mobile-menu" class="mobile-menu grid-line-top" style="background: var(--bg); padding: 0 24px 16px; position: relative; z-index: 40;">
+      <div style="display: flex; flex-direction: column; font-size: 0.875rem;" class="text-secondary">
         <a href="#about" style="padding: 10px 0; border-bottom: 1px solid var(--border-light);">من نحن</a>
         <a href="#services" style="padding: 10px 0; border-bottom: 1px solid var(--border-light);">الخدمات</a>
         <a href="#contest" style="padding: 10px 0; border-bottom: 1px solid var(--border-light);">الجائزة</a>
@@ -162,36 +273,36 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
             <br />للبرمجيات الحرة
             <br />والمفتوحة المصدر
           </h1>
-          <p style="font-size: 1.125rem; color: var(--text-secondary); line-height: 1.8; max-width: 560px; margin: 0 0 48px;">
+          <p class="text-secondary" style="font-size: 1.125rem; line-height: 1.8; max-width: 560px; margin: 0 0 48px;">
             مجتمع غير ربحي أسسه مجموعة من التقنيين العرب بهدف نشر ثقافة المصادر المفتوحة والبرمجيات الحرة في العالم العربي
           </p>
         </div>
         <div class="reveal" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 64px;">
-          <a href="https://discourse.aosus.org" style="display: inline-flex; align-items: center; padding: 10px 28px; background: var(--green); color: #fff; font-size: 0.875rem; font-weight: 500; transition: background 0.2s;" onmouseover="this.style.background='var(--green-hover)'" onmouseout="this.style.background='var(--green)'">
+          <a href="https://discourse.aosus.org" class="arabesque-btn-primary">
             انضم للمجتمع
           </a>
-          <a href="#about" style="display: inline-flex; align-items: center; padding: 10px 28px; border: 1px solid var(--border); font-size: 0.875rem; color: var(--text-secondary); transition: border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='var(--text)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
+          <a href="#about" class="arabesque-btn-secondary">
             تعرّف علينا
           </a>
         </div>
       </div>
 
       <!-- Stats grid -->
-      <div class="reveal stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr);">
-        <div class="grid-line" style="padding: 32px 0;">
-          <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">6,000<span style="color: var(--green);">+</span></div>
+      <div class="reveal" style="display: grid; grid-template-columns: repeat(4, 1fr);">
+        <div class="grid-line arabesque-hover" style="padding: 32px 24px; border-left: 1px solid var(--border); margin-right: -24px;">
+          <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">6,000<span class="text-green">+</span></div>
           <div class="label" style="margin-top: 8px;">عضو</div>
         </div>
-        <div class="grid-line grid-line-right" style="padding: 32px 24px;">
-          <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">5,000<span style="color: var(--green);">+</span></div>
+        <div class="grid-line arabesque-hover" style="padding: 32px 24px; border-left: 1px solid var(--border);">
+          <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">5,000<span class="text-green">+</span></div>
           <div class="label" style="margin-top: 8px;">مشاركة</div>
         </div>
-        <div class="grid-line grid-line-right" style="padding: 32px 24px;">
+        <div class="grid-line arabesque-hover" style="padding: 32px 24px; border-left: 1px solid var(--border);">
           <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">10</div>
           <div class="label" style="margin-top: 8px;">سنوات</div>
         </div>
-        <div class="grid-line grid-line-right" style="padding: 32px 24px;">
-          <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">3,000<span style="color: var(--green);">+</span></div>
+        <div class="grid-line arabesque-hover" style="padding: 32px 24px; margin-left: -24px;">
+          <div class="mono" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em;">3,000<span class="text-green">+</span></div>
           <div class="label" style="margin-top: 8px;">موضوع</div>
         </div>
       </div>
@@ -202,52 +313,52 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
   <section id="about" style="padding: 96px 0;">
     <div class="container">
       <div class="grid-line" style="padding-bottom: 96px;">
-        <div class="reveal">
+        <div class="reveal" style="display: grid; grid-template-columns: 1fr; gap: 64px;" class="about-grid">
           <div>
             <span class="label" style="display: block; margin-bottom: 20px;">01 — من نحن</span>
             <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; margin: 0 0 24px;">نبني مجتمعاً عربياً مفتوح المصدر</h2>
-            <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.9; max-width: 640px;">
+            <p class="text-secondary" style="font-size: 1rem; line-height: 1.9; max-width: 640px;">
               نسعى لنشر ثقافة البرمجيات الحرة والمفتوحة المصدر في العالم العربي. نؤمن بأن التقنية يجب أن تكون متاحة للجميع وأن المعرفة حق مشترك.
             </p>
           </div>
 
           <!-- Vision & Mission -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 64px;" class="vision-grid">
-            <div style="padding: 32px; border: 1px solid var(--border);">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;" class="vision-grid">
+            <div class="arabesque-hover" style="padding: 32px; border: 1px solid var(--border);">
               <span class="label" style="display: block; margin-bottom: 16px;">الرؤية</span>
-              <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+              <p class="text-secondary" style="font-size: 0.9375rem; line-height: 1.8; margin: 0;">
                 أن يكون العالم العربي رائداً في استخدام وتطوير البرمجيات الحرة والمفتوحة المصدر
               </p>
             </div>
-            <div style="padding: 32px; border: 1px solid var(--border); border-right: none;">
+            <div class="arabesque-hover" style="padding: 32px; border: 1px solid var(--border); border-right: none;">
               <span class="label" style="display: block; margin-bottom: 16px;">الرسالة</span>
-              <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+              <p class="text-secondary" style="font-size: 0.9375rem; line-height: 1.8; margin: 0;">
                 نشر ثقافة المصادر المفتوحة والبرمجيات الحرة وتعزيز استخدامها في المجتمع العربي
               </p>
             </div>
           </div>
 
           <!-- Values -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 0;" class="values-grid">
-            <div style="padding: 24px; border: 1px solid var(--border); border-top: none;">
-              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px;"></div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;" class="values-grid">
+            <div class="arabesque-hover" style="padding: 24px; border: 1px solid var(--border);">
+              <div class="value-dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px; transition: background 0.3s ease;"></div>
               <div style="font-weight: 600; margin-bottom: 8px;">التعاون</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary); line-height: 1.7;">العمل الجماعي أساس نجاحنا</div>
+              <div class="text-tertiary" style="font-size: 0.8125rem; line-height: 1.7;">العمل الجماعي أساس نجاحنا</div>
             </div>
-            <div style="padding: 24px; border: 1px solid var(--border); border-right: none; border-top: none;">
-              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px;"></div>
+            <div class="arabesque-hover" style="padding: 24px; border: 1px solid var(--border); border-right: none;">
+              <div class="value-dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px; transition: background 0.3s ease;"></div>
               <div style="font-weight: 600; margin-bottom: 8px;">الشفافية</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary); line-height: 1.7;">الوضوح في كل ما نقوم به</div>
+              <div class="text-tertiary" style="font-size: 0.8125rem; line-height: 1.7;">الوضوح في كل ما نقوم به</div>
             </div>
-            <div style="padding: 24px; border: 1px solid var(--border); border-right: none; border-top: none;">
-              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px;"></div>
+            <div class="arabesque-hover" style="padding: 24px; border: 1px solid var(--border); border-right: none;">
+              <div class="value-dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px; transition: background 0.3s ease;"></div>
               <div style="font-weight: 600; margin-bottom: 8px;">الخصوصية</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary); line-height: 1.7;">حماية بيانات المستخدمين</div>
+              <div class="text-tertiary" style="font-size: 0.8125rem; line-height: 1.7;">حماية بيانات المستخدمين</div>
             </div>
-            <div style="padding: 24px; border: 1px solid var(--border); border-right: none; border-top: none;">
-              <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px;"></div>
+            <div class="arabesque-hover" style="padding: 24px; border: 1px solid var(--border); border-right: none;">
+              <div class="value-dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-bottom: 16px; transition: background 0.3s ease;"></div>
               <div style="font-weight: 600; margin-bottom: 8px;">المسؤولية</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary); line-height: 1.7;">التزامنا تجاه المجتمع</div>
+              <div class="text-tertiary" style="font-size: 0.8125rem; line-height: 1.7;">التزامنا تجاه المجتمع</div>
             </div>
           </div>
         </div>
@@ -261,63 +372,63 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
       <div class="reveal">
         <span class="label" style="display: block; margin-bottom: 20px;">02 — الخدمات</span>
         <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; margin: 0 0 16px;">خدمات مجانية تحترم خصوصيتك</h2>
-        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.8; max-width: 560px; margin: 0 0 56px;">
+        <p class="text-secondary" style="font-size: 1rem; line-height: 1.8; max-width: 560px; margin: 0 0 56px;">
           نقدم بدائل مفتوحة المصدر تحترم خصوصيتك للخدمات المغلقة الأكثر استخداماً
         </p>
       </div>
 
-      <!-- Services 3x3 grid -->
+      <!-- Services grid -->
       <div class="reveal" style="border: 1px solid var(--border);">
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;" class="services-grid">
           <!-- Row 1 -->
-          <div style="padding: 28px; border-bottom: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">01</div>
+          <div class="arabesque-hover" style="padding: 28px; border-bottom: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">01</div>
             <div style="font-weight: 600; margin-bottom: 6px;">SearXNG</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">محرك بحث يحترم الخصوصية</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">محرك بحث يحترم الخصوصية</div>
           </div>
-          <div style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">02</div>
+          <div class="arabesque-hover" style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">02</div>
             <div style="font-weight: 600; margin-bottom: 6px;">Simply Translate</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">ترجمة بديلة لـ Google Translate</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">ترجمة بديلة لـ Google Translate</div>
           </div>
-          <div style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">03</div>
+          <div class="arabesque-hover" style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">03</div>
             <div style="font-weight: 600; margin-bottom: 6px;">Nitter</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">واجهة بديلة لـ Twitter</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">واجهة بديلة لـ Twitter</div>
           </div>
 
           <!-- Row 2 -->
-          <div style="padding: 28px; border-bottom: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">04</div>
+          <div class="arabesque-hover" style="padding: 28px; border-bottom: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">04</div>
             <div style="font-weight: 600; margin-bottom: 6px;">Redlib</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">واجهة بديلة لـ Reddit</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">واجهة بديلة لـ Reddit</div>
           </div>
-          <div style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">05</div>
+          <div class="arabesque-hover" style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">05</div>
             <div style="font-weight: 600; margin-bottom: 6px;">Element</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">تطبيق محادثة عبر Matrix</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">تطبيق محادثة عبر Matrix</div>
           </div>
-          <div style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">06</div>
+          <div class="arabesque-hover" style="padding: 28px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">06</div>
             <div style="font-weight: 600; margin-bottom: 6px;">rimgo</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">واجهة بديلة لـ Imgur</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">واجهة بديلة لـ Imgur</div>
           </div>
 
           <!-- Row 3 -->
-          <div style="padding: 28px;">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">07</div>
+          <div class="arabesque-hover" style="padding: 28px;">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">07</div>
             <div style="font-weight: 600; margin-bottom: 6px;">Scribe</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">واجهة بديلة لـ Medium</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">واجهة بديلة لـ Medium</div>
           </div>
-          <div style="padding: 28px; border-right: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">08</div>
+          <div class="arabesque-hover" style="padding: 28px; border-right: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">08</div>
             <div style="font-weight: 600; margin-bottom: 6px;">Quetre</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">واجهة بديلة لـ Quora</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">واجهة بديلة لـ Quora</div>
           </div>
-          <div style="padding: 28px; border-right: 1px solid var(--border);">
-            <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); margin-bottom: 10px;">09</div>
+          <div class="arabesque-hover" style="padding: 28px; border-right: 1px solid var(--border);">
+            <div class="mono text-tertiary" style="font-size: 0.6875rem; margin-bottom: 10px;">09</div>
             <div style="font-weight: 600; margin-bottom: 6px;">ProxiTok</div>
-            <div style="font-size: 0.8125rem; color: var(--text-secondary);">واجهة بديلة لـ TikTok</div>
+            <div class="text-secondary" style="font-size: 0.8125rem;">واجهة بديلة لـ TikTok</div>
           </div>
         </div>
       </div>
@@ -332,21 +443,21 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
           <div style="padding-left: 48px;" class="contest-content">
             <span class="label" style="display: block; margin-bottom: 20px;">03 — جائزة الكتابة</span>
             <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; margin: 0 0 24px;">جائزة الكتابة الشهرية</h2>
-            <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 32px;">
+            <p class="text-secondary" style="font-size: 1rem; line-height: 1.8; margin: 0 0 32px;">
               نحفز المحتوى العربي التقني من خلال جائزة شهرية لأفضل المقالات في مجال البرمجيات الحرة والمفتوحة المصدر
             </p>
-            <a href="https://discourse.aosus.org/c/writing-contest" style="display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-size: 0.875rem; font-weight: 500;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+            <a href="https://discourse.aosus.org/c/writing-contest" style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 500;" class="text-green" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
               شارك في المسابقة
               <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
             </a>
           </div>
           <div style="display: flex; align-items: center; justify-content: center;">
-            <div style="border: 1px solid var(--border); padding: 48px; text-align: center;">
-              <div class="mono" style="font-size: 0.6875rem; color: var(--text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">الجائزة الشهرية</div>
+            <div class="arabesque-hover" style="border: 1px solid var(--border); padding: 48px; text-align: center;">
+              <div class="mono label" style="margin-bottom: 16px;">الجائزة الشهرية</div>
               <div class="mono" style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 600; letter-spacing: -0.02em;">
-                <span style="color: var(--green);">$</span>250<span style="color: var(--green);">+</span>
+                <span class="text-green">$</span>250<span class="text-green">+</span>
               </div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary); margin-top: 12px;">لأفضل مقال تقني عربي</div>
+              <div class="text-tertiary" style="font-size: 0.8125rem; margin-top: 12px;">لأفضل مقال تقني عربي</div>
             </div>
           </div>
         </div>
@@ -362,68 +473,69 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
         <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; margin: 0 0 56px;">مسيرة عقد من العطاء</h2>
       </div>
 
+      <!-- Timeline as structured rows -->
       <div class="reveal" style="border-top: 1px solid var(--border);">
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
             <span class="mono" style="font-size: 1rem; font-weight: 600;">2015</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">البداية</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">انطلاق فكرة المجتمع ومجموعة تيليجرام</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">انطلاق فكرة المجتمع ومجموعة تيليجرام</div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
             <span class="mono" style="font-size: 1rem; font-weight: 600;">2016</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">التأسيس الرسمي</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">إطلاق منتدى Discourse ومجتمع أسس بشكل رسمي</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">إطلاق منتدى Discourse ومجتمع أسس بشكل رسمي</div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
             <span class="mono" style="font-size: 1rem; font-weight: 600;">2017</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">التعريب والتوطين</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">المساهمة في تعريب البرمجيات الحرة ومنصات المصادر المفتوحة</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">المساهمة في تعريب البرمجيات الحرة ومنصات المصادر المفتوحة</div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
             <span class="mono" style="font-size: 1rem; font-weight: 600;">2021</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">Matrix وجائزة الكتابة</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">إطلاق خادم Matrix وبداية مسابقة الكتابة الشهرية</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">إطلاق خادم Matrix وبداية مسابقة الكتابة الشهرية</div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
             <span class="mono" style="font-size: 1rem; font-weight: 600;">2022</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">Open Collective</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">الانضمام لمنصة Open Collective لتلقي التبرعات بشفافية</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">الانضمام لمنصة Open Collective لتلقي التبرعات بشفافية</div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
             <span class="mono" style="font-size: 1rem; font-weight: 600;">2023</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">Discord</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">إطلاق خادم Discord لتوسيع نطاق المجتمع</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">إطلاق خادم Discord لتوسيع نطاق المجتمع</div>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);" class="timeline-row">
+        <div class="timeline-row arabesque-hover" style="display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--border);">
           <div style="padding: 24px 0; border-left: 1px solid var(--border); padding-left: 24px;" class="timeline-year">
-            <span class="mono" style="font-size: 1rem; font-weight: 600; color: var(--green);">2024</span>
+            <span class="mono" style="font-size: 1rem; font-weight: 600;">2024</span>
           </div>
           <div style="padding: 24px;">
             <div style="font-weight: 500; margin-bottom: 4px;">منظمة غير ربحية 501(c)(3)</div>
-            <div style="font-size: 0.875rem; color: var(--text-secondary);">التسجيل رسمياً كمنظمة غير ربحية في الولايات المتحدة</div>
+            <div class="text-secondary" style="font-size: 0.875rem;">التسجيل رسمياً كمنظمة غير ربحية في الولايات المتحدة</div>
           </div>
         </div>
       </div>
@@ -440,30 +552,34 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
         </div>
 
         <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;" class="projects-grid">
-          <div style="border: 1px solid var(--border); padding: 40px;">
+          <div class="arabesque-hover" style="border: 1px solid var(--border); padding: 40px;">
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-              <img src="/brand/GNUlinuxsa.webp" alt="GNU/Linux Saudi Arabia" style="height: 36px;" class="project-logo light-logo" />
-              <img src="/brand/GNUlinuxsa-white.webp" alt="GNU/Linux Saudi Arabia" style="height: 36px; display: none;" class="project-logo dark-logo" />
+              <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="/brand/GNUlinuxsa-white.webp" />
+                <img src="/brand/GNUlinuxsa.webp" alt="GNU/Linux Saudi Arabia" style="height: 36px; transition: filter 0.3s ease;" class="project-logo" />
+              </picture>
             </div>
             <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 8px;">GNU/Linux Saudi Arabia</div>
-            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7; margin: 0 0 20px;">
+            <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.7; margin: 0 0 20px;">
               مجتمع فرعي يركز على نشر نظام جنو/لينكس في المملكة العربية السعودية
             </p>
-            <a href="https://gnulinux.sa" style="display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-size: 0.8125rem; font-weight: 500;">
+            <a href="https://gnulinux.sa" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; font-weight: 500;" class="text-green">
               gnulinux.sa
               <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
             </a>
           </div>
-          <div style="border: 1px solid var(--border); border-right: none; padding: 40px;">
+          <div class="arabesque-hover" style="border: 1px solid var(--border); border-right: none; padding: 40px;">
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-              <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Chat Bridge" style="height: 36px; display: none;" class="project-logo dark-logo" />
-              <span style="font-weight: 600; font-size: 0.875rem; color: var(--text-tertiary);" class="project-logo light-logo">DCB</span>
+              <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="/brand/Discourse_Bridge-white.webp" />
+                <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Chat Bridge" style="height: 36px; transition: filter 0.3s ease;" class="project-logo" />
+              </picture>
             </div>
             <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 8px;">Discourse Chat Bridge</div>
-            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7; margin: 0 0 20px;">
+            <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.7; margin: 0 0 20px;">
               جسر محادثة يربط بين Discourse وMatrix وDiscord وTelegram
             </p>
-            <a href="https://github.com/aosus/discourse-chat-bridge" style="display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-size: 0.8125rem; font-weight: 500;">
+            <a href="https://github.com/aosus/discourse-chat-bridge" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; font-weight: 500;" class="text-green">
               github.com
               <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
             </a>
@@ -474,34 +590,40 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
   </section>
 
   <!-- SUPPORT -->
-  <section id="support" style="background: var(--bg-alt); padding: 96px 0;">
+  <section id="support" style="background: var(--bg-alt); padding: 96px 0; position: relative;">
+    <div class="bg-watermark-2">
+      <svg viewBox="0 0 100 100" width="100%" height="100%" fill="currentColor">
+        <use href="#star8" />
+      </svg>
+    </div>
+    
     <div class="container">
       <div class="reveal">
         <span class="label" style="display: block; margin-bottom: 20px;">06 — ادعم المجتمع</span>
         <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; margin: 0 0 16px;">ساهم في دعم المجتمع</h2>
-        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.8; max-width: 560px; margin: 0 0 56px;">
+        <p class="text-secondary" style="font-size: 1rem; line-height: 1.8; max-width: 560px; margin: 0 0 56px;">
           مجتمع أسس يعتمد على دعم أفراده. كل مساهمة تساعدنا في الاستمرار وتقديم خدمات أفضل.
         </p>
       </div>
 
       <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;" class="support-grid">
-        <a href="https://github.com/sponsors/aosus" style="display: block; border: 1px solid var(--border); padding: 40px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">
+        <a href="https://github.com/sponsors/aosus" class="arabesque-hover" style="display: block; border: 1px solid var(--border); padding: 40px;">
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" /></svg>
-            <span class="label">github sponsors</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" /></svg>
+            <span class="label" style="margin-bottom: 0;">github sponsors</span>
           </div>
           <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 8px;">GitHub Sponsors</div>
-          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7; margin: 0;">
+          <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.7; margin: 0;">
             ادعم مجتمع أسس عبر GitHub Sponsors بدعم شهري أو لمرة واحدة
           </p>
         </a>
-        <a href="https://hcb.hackclub.com/donations/start/aosus" style="display: block; border: 1px solid var(--border); border-right: none; padding: 40px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">
+        <a href="https://hcb.hackclub.com/donations/start/aosus" class="arabesque-hover" style="display: block; border: 1px solid var(--border); border-right: none; padding: 40px;">
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-            <span class="label">hcb donations</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+            <span class="label" style="margin-bottom: 0;">hcb donations</span>
           </div>
           <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 8px;">HCB تبرعات</div>
-          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7; margin: 0;">
+          <p class="text-secondary" style="font-size: 0.875rem; line-height: 1.7; margin: 0;">
             تبرع عبر Hack Club Bank بشفافية كاملة ومع إمكانية الحصول على إعفاء ضريبي
           </p>
         </a>
@@ -510,16 +632,16 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
   </section>
 
   <!-- FOOTER -->
-  <footer style="border-top: 1px solid var(--border); padding: 48px 0;">
+  <footer style="border-top: 1px solid var(--border); padding: 48px 0; position: relative; z-index: 2; background: var(--bg);">
     <div class="container">
       <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;" class="footer-grid">
         <!-- Brand -->
         <div>
-          <a href={base + "/7/"} style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
             <img src="/brand/aosus-icon.svg" alt="أسس" style="width: 24px; height: 24px;" />
             <span style="font-weight: 600;">أسس</span>
-          </a>
-          <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.7; margin: 0;">
+          </div>
+          <p class="text-secondary" style="font-size: 0.8125rem; line-height: 1.7; margin: 0;">
             أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر
           </p>
         </div>
@@ -527,40 +649,38 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
         <!-- Social links -->
         <div>
           <div class="label" style="margin-bottom: 16px;">التواصل الاجتماعي</div>
-          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8125rem; color: var(--text-secondary);">
-            <a href="https://twitter.com/aosusdotorg" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Twitter</a>
-            <a href="https://bsky.app/profile/aosus.org" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Bluesky</a>
-            <a href="https://mastodon.online/@aosus" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Mastodon</a>
-            <a href="https://www.facebook.com/aosus1" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Facebook</a>
-            <a href="https://linkedin.com/company/aosus" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">LinkedIn</a>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8125rem;">
+            <a href="https://twitter.com/aosusdotorg" class="footer-link">Twitter</a>
+            <a href="https://bsky.app/profile/aosus.org" class="footer-link">Bluesky</a>
+            <a href="https://mastodon.online/@aosus" class="footer-link">Mastodon</a>
+            <a href="https://www.facebook.com/aosus1" class="footer-link">Facebook</a>
+            <a href="https://linkedin.com/company/aosus" class="footer-link">LinkedIn</a>
           </div>
         </div>
 
         <!-- Platforms -->
         <div>
           <div class="label" style="margin-bottom: 16px;">منصات المجتمع</div>
-          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8125rem; color: var(--text-secondary);">
-            <a href="https://discourse.aosus.org" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Discourse</a>
-            <a href="https://discord.gg/YJUzEhU955" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Discord</a>
-            <a href="https://matrix.to/#/#aosus:aosus.org" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Matrix</a>
-            <a href="https://t.me/aosus" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">Telegram</a>
-            <a href="https://github.com/aosus" style="transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">GitHub</a>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8125rem;">
+            <a href="https://discourse.aosus.org" class="footer-link">Discourse</a>
+            <a href="https://discord.gg/YJUzEhU955" class="footer-link">Discord</a>
+            <a href="https://matrix.to/#/#aosus:aosus.org" class="footer-link">Matrix</a>
+            <a href="https://t.me/aosus" class="footer-link">Telegram</a>
+            <a href="https://github.com/aosus" class="footer-link">GitHub</a>
           </div>
         </div>
       </div>
 
       <div style="border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center;" class="footer-bottom">
-        <div style="font-size: 0.75rem; color: var(--text-tertiary);">
+        <div class="text-tertiary" style="font-size: 0.75rem;">
           &copy; 2024 أسس — مجتمع البرمجيات الحرة والمفتوحة المصدر
         </div>
-        <a href="mailto:contact@aosus.org" style="font-size: 0.75rem; color: var(--text-tertiary); transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-tertiary)'">
+        <a href="mailto:contact@aosus.org" class="text-tertiary footer-link" style="font-size: 0.75rem;">
           contact@aosus.org
         </a>
       </div>
     </div>
   </footer>
-
-  </div><!-- .page-content -->
 
   <!-- Responsive styles -->
   <style>
@@ -572,8 +692,11 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
       .mobile-toggle-btn { display: flex !important; }
 
       /* Stats: 2 cols on mobile */
-      .stats-grid {
+      section:first-of-type .container > div:last-child {
         grid-template-columns: repeat(2, 1fr) !important;
+      }
+      section:first-of-type .container > div:last-child > div:nth-child(even) {
+        border-left: none !important;
       }
 
       /* About: vision/mission stacked */
@@ -612,19 +735,19 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
     }
   </style>
 
-  <!-- Dark mode logo switching -->
+  <!-- Dark mode global overrides -->
   <style>
-    .dark .light-logo { display: none !important; }
-    .dark .dark-logo { display: block !important; }
+    .dark .project-logo { filter: brightness(0) invert(1); }
   </style>
 
   <script>
-    // ─── Theme toggle ───
+    // Theme toggle
     const toggle = document.getElementById('theme-toggle');
     const html = document.documentElement;
     const moonIcon = toggle.querySelector('.theme-moon');
     const sunIcon = toggle.querySelector('.theme-sun');
 
+    // Check saved preference or system preference
     const savedTheme = localStorage.getItem('theme-7');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -642,19 +765,21 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
       localStorage.setItem('theme-7', isDark ? 'dark' : 'light');
     });
 
-    // ─── Mobile menu toggle ───
+    // Mobile menu toggle
     const mobileToggle = document.getElementById('mobile-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     mobileToggle.addEventListener('click', () => {
       mobileMenu.classList.toggle('active');
     });
+
+    // Close mobile menu on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
       });
     });
 
-    // ─── Reveal on scroll ───
+    // Reveal on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -664,173 +789,6 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ─── Arabic Calligraphy Canvas (Swiss Geometric) ───
-    (function() {
-      const canvas = document.getElementById('calligraphy-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      let W = 0, H = 0;
-      let scrollY = 0;
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-      function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }
-      resize();
-      window.addEventListener('resize', () => {
-        resize();
-        strokes = createStrokes();
-      });
-
-      window.addEventListener('scroll', () => {
-        scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      }, { passive: true });
-
-      // Geometric calligraphy-inspired stroke templates
-      // These use angular, precise shapes fitting the Swiss aesthetic
-      // but inspired by Arabic letter forms
-      const pathTemplates = [
-        // Alef vertical — precise straight line with slight angular serif
-        { type: 'lines', points: [0.5, 0.1, 0.5, 0.85, 0.48, 0.9], lineWidth: 1.5 },
-        // Baa baseline — flat horizontal with angular hook
-        { type: 'lines', points: [0.1, 0.5, 0.7, 0.5, 0.8, 0.55, 0.9, 0.5], lineWidth: 1.5 },
-        // Nun bowl — angular arc (3 segments approximating a bowl)
-        { type: 'lines', points: [0.2, 0.4, 0.3, 0.65, 0.5, 0.7, 0.7, 0.65, 0.8, 0.4], lineWidth: 1 },
-        // Sin teeth — three angular peaks
-        { type: 'lines', points: [0.0, 0.6, 0.12, 0.35, 0.24, 0.6, 0.36, 0.35, 0.48, 0.6, 0.6, 0.35, 0.72, 0.6], lineWidth: 1 },
-        // Lam vertical with angular top
-        { type: 'lines', points: [0.45, 0.15, 0.5, 0.1, 0.5, 0.9], lineWidth: 1.5 },
-        // Kaaf angular top stroke
-        { type: 'lines', points: [0.15, 0.5, 0.4, 0.2, 0.85, 0.35], lineWidth: 1 },
-        // Waw angular loop
-        { type: 'lines', points: [0.5, 0.3, 0.3, 0.3, 0.25, 0.5, 0.3, 0.7, 0.5, 0.7, 0.5, 0.3], lineWidth: 1 },
-        // Daal angular curve
-        { type: 'lines', points: [0.25, 0.35, 0.5, 0.3, 0.7, 0.5, 0.6, 0.7], lineWidth: 1.5 },
-        // Ha angular figure-eight
-        { type: 'lines', points: [0.5, 0.3, 0.3, 0.35, 0.3, 0.5, 0.5, 0.5, 0.7, 0.5, 0.7, 0.65, 0.5, 0.7], lineWidth: 1 },
-        // Raa descender
-        { type: 'lines', points: [0.6, 0.3, 0.5, 0.5, 0.4, 0.75, 0.35, 0.85], lineWidth: 1.5 },
-        // Taa angular baseline with tooth
-        { type: 'lines', points: [0.1, 0.55, 0.4, 0.55, 0.5, 0.35, 0.6, 0.55, 0.9, 0.55], lineWidth: 1 },
-        // Yaa descending hook
-        { type: 'lines', points: [0.4, 0.3, 0.5, 0.5, 0.45, 0.7, 0.3, 0.85, 0.2, 0.9], lineWidth: 1 },
-        // Angular dot pair
-        { type: 'dots', points: [0.45, 0.4, 0.55, 0.4], radius: 2 },
-        // Single precise dot
-        { type: 'dots', points: [0.5, 0.5], radius: 2.5 },
-        // Triple dot row
-        { type: 'dots', points: [0.4, 0.35, 0.5, 0.3, 0.6, 0.35], radius: 1.5 },
-        // Angular meem — square-ish loop
-        { type: 'lines', points: [0.6, 0.4, 0.4, 0.4, 0.35, 0.55, 0.45, 0.65, 0.6, 0.55, 0.6, 0.4], lineWidth: 1 },
-        // Long connecting baseline
-        { type: 'lines', points: [0.0, 0.5, 0.25, 0.48, 0.5, 0.5, 0.75, 0.48, 1.0, 0.5], lineWidth: 2 },
-        // Ain angular eye
-        { type: 'lines', points: [0.3, 0.3, 0.2, 0.5, 0.3, 0.65, 0.5, 0.55, 0.7, 0.65, 0.8, 0.5], lineWidth: 1 },
-        // Grid cross (Swiss element)
-        { type: 'lines', points: [0.5, 0.2, 0.5, 0.8], lineWidth: 0.5 },
-        // Grid horizontal
-        { type: 'lines', points: [0.2, 0.5, 0.8, 0.5], lineWidth: 0.5 },
-      ];
-
-      function createStrokes() {
-        const strokes = [];
-        const count = isMobile ? 14 : 28;
-
-        for (let i = 0; i < count; i++) {
-          const template = pathTemplates[i % pathTemplates.length];
-          const scale = 80 + Math.random() * 200;
-          strokes.push({
-            template: template,
-            x: Math.random() * W,
-            y: Math.random() * (H * 3), // distribute across scrollable area
-            scale: scale,
-            rotation: (Math.random() - 0.5) * 0.4, // slight rotation, more constrained for Swiss precision
-            parallaxFactor: 0.15 + Math.random() * 0.35,
-            lineWidth: template.lineWidth || 1,
-          });
-        }
-        return strokes;
-      }
-
-      let strokes = createStrokes();
-
-      function isDark() {
-        return document.documentElement.classList.contains('dark');
-      }
-
-      function getStrokeStyle() {
-        return isDark()
-          ? 'rgba(255, 255, 255, 0.04)'
-          : 'rgba(10, 10, 10, 0.04)';
-      }
-
-      function getDotStyle() {
-        return isDark()
-          ? 'rgba(255, 255, 255, 0.03)'
-          : 'rgba(10, 10, 10, 0.03)';
-      }
-
-      function drawStroke(stroke) {
-        const { template, x, y, scale, rotation, parallaxFactor, lineWidth } = stroke;
-        // Parallax: shift the stroke based on scroll position
-        const parallaxOffset = scrollY * parallaxFactor;
-        // Calculate screen-relative Y position
-        const screenY = y - parallaxOffset;
-
-        // Only draw if roughly within viewport (with generous margin)
-        if (screenY < -scale * 2 || screenY > H + scale * 2) return;
-
-        ctx.save();
-        ctx.translate(x, screenY);
-        ctx.rotate(rotation);
-
-        if (template.type === 'dots') {
-          ctx.fillStyle = getDotStyle();
-          const pts = template.points;
-          for (let i = 0; i < pts.length; i += 2) {
-            ctx.beginPath();
-            ctx.arc(
-              (pts[i] - 0.5) * scale,
-              (pts[i + 1] - 0.5) * scale,
-              template.radius || 2,
-              0,
-              Math.PI * 2
-            );
-            ctx.fill();
-          }
-        } else if (template.type === 'lines') {
-          ctx.strokeStyle = getStrokeStyle();
-          ctx.lineWidth = lineWidth;
-          ctx.lineCap = 'square'; // Angular caps for Swiss precision
-          ctx.lineJoin = 'miter';
-          ctx.beginPath();
-          const pts = template.points;
-          ctx.moveTo((pts[0] - 0.5) * scale, (pts[1] - 0.5) * scale);
-          for (let i = 2; i < pts.length; i += 2) {
-            ctx.lineTo((pts[i] - 0.5) * scale, (pts[i + 1] - 0.5) * scale);
-          }
-          ctx.stroke();
-        }
-
-        ctx.restore();
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, W, H);
-
-        for (const stroke of strokes) {
-          drawStroke(stroke);
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      animate();
-    })();
   </script>
 
 </body>

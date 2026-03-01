@@ -15,734 +15,687 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --cream: #f4f1eb;
-      --cream-dark: #e8e4dc;
-      --ink: #1a1a18;
-      --ink-light: #4a4a45;
-      --ink-lighter: #8a8a82;
-      --charcoal: #141416;
-      --charcoal-light: #1e1e21;
-      --charcoal-text: #d4d4cc;
-      --charcoal-muted: #8a8a82;
+      --cream: #FAF8F5;
+      --cream-dark: #EAE6DF;
+      --ink: #232220;
+      --ink-light: #5A5752;
+      --ink-lighter: #8A8780;
+      --charcoal: #141312;
+      --charcoal-light: #1E1C1B;
+      --charcoal-text: #E3E1DB;
+      --charcoal-muted: #95928B;
+      --primary: #008a2f;
+      --primary-hover: #006b24;
     }
-    html { scroll-behavior: smooth; }
+    
     body {
       font-family: 'IBM Plex Sans Arabic', sans-serif;
       background: var(--cream);
       color: var(--ink);
-      position: relative;
+      overflow-x: hidden;
     }
+    
     .dark body {
       background: var(--charcoal);
       color: var(--charcoal-text);
     }
+    
     .font-serif-ar {
       font-family: 'Amiri', serif;
     }
+    
+    /* Dynamic Reactive Background */
+    #dynamic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 138, 47, 0.04), transparent 40%);
+      transition: background 0.5s ease;
+      will-change: background;
+    }
+    .dark #dynamic-bg {
+      background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.02), transparent 40%);
+    }
+
+    /* Modern Minimal Rule */
     .rule {
       border: none;
-      border-top: 1px solid rgba(26, 26, 24, 0.12);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(35, 34, 32, 0.1), transparent);
     }
     .dark .rule {
-      border-top-color: rgba(212, 212, 204, 0.1);
+      background: linear-gradient(90deg, transparent, rgba(227, 225, 219, 0.1), transparent);
     }
-    .mobile-menu { display: none; }
-    .mobile-menu.active { display: block; }
+    
+    /* Elegant Reveal with Blur */
     .reveal {
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(24px);
+      filter: blur(8px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                  filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
+      filter: blur(0);
     }
-    #calligraphy-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+
+    /* Sophisticated Hover Effects */
+    .classy-hover {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .page-content {
-      position: relative;
-      z-index: 1;
+    .classy-hover:hover {
+      transform: translateY(-6px);
     }
+    .light-shadow-hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    }
+    .light-shadow-hover:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    }
+    .dark-shadow-hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    .dark .dark-shadow-hover:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Dynamic Text Gradient */
+    .text-gradient {
+      background: linear-gradient(to left, var(--primary), #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .dark .text-gradient {
+      background: linear-gradient(to left, #4ade80, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+    
+    /* Mobile menu */
+    .mobile-menu { display: none; }
+    .mobile-menu.active { display: block; }
   </style>
 </head>
-<body class="antialiased">
+<body class="antialiased relative selection:bg-[var(--primary)] selection:text-white">
 
-  <!-- CALLIGRAPHY CANVAS -->
-  <canvas id="calligraphy-canvas"></canvas>
+  <!-- Reactive Background Layer -->
+  <div id="dynamic-bg"></div>
 
-  <div class="page-content">
+  <!-- Main Content Wrapper to sit above the dynamic background -->
+  <div class="relative z-10">
 
-  <!-- NAVIGATION -->
-  <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-    <div class="bg-white/90 dark:bg-[#1e1e21]/90 backdrop-blur-md rounded-full px-8 py-3 border border-black/[0.06] dark:border-white/[0.06] shadow-sm">
-      <div class="flex items-center gap-8">
-        <a href={base + "/6/"} class="flex items-center gap-2.5">
-          <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7" />
-          <span class="font-semibold text-[var(--ink)] dark:text-[var(--charcoal-text)]">أسس</span>
-        </a>
-        <div class="hidden md:flex items-center gap-6 text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">
-          <a href="#about" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">من نحن</a>
-          <a href="#services" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">الخدمات</a>
-          <a href="#contest" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">الجائزة</a>
-          <a href="#timeline" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">تاريخنا</a>
-          <a href="#projects" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">المشاريع</a>
-          <a href="#support" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">ادعمنا</a>
-        </div>
-        <button id="theme-toggle" class="w-8 h-8 flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white transition-colors" aria-label="تبديل المظهر">
-          <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
-          <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></svg>
-        </button>
-        <button id="mobile-toggle" class="md:hidden w-8 h-8 flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]" aria-label="القائمة">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 9h16.5m-16.5 6h16.5" /></svg>
-        </button>
-      </div>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu mt-2 bg-white/95 dark:bg-[#1e1e21]/95 backdrop-blur-md rounded-2xl border border-black/[0.06] dark:border-white/[0.06] shadow-lg overflow-hidden">
-      <div class="flex flex-col p-4 text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">
-        <a href="#about" class="py-2.5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">من نحن</a>
-        <a href="#services" class="py-2.5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">الخدمات</a>
-        <a href="#contest" class="py-2.5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">الجائزة</a>
-        <a href="#timeline" class="py-2.5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">تاريخنا</a>
-        <a href="#projects" class="py-2.5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">المشاريع</a>
-        <a href="#support" class="py-2.5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">ادعمنا</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20">
-    <div class="max-w-4xl mx-auto text-center">
-      <h1 class="font-serif-ar text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] leading-[1.1] font-bold text-[var(--ink)] dark:text-white mb-8 reveal">
-        أكبر مجتمع عربي
-        <br />
-        <span class="text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">للبرمجيات الحرة</span>
-      </h1>
-      <p class="text-lg md:text-xl text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] max-w-2xl mx-auto leading-relaxed mb-12 reveal">
-        مجتمع غير ربحي أسسه مجموعة من التقنيين العرب بهدف نشر ثقافة المصادر المفتوحة والبرمجيات الحرة في العالم العربي
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 reveal">
-        <a href="https://discourse.aosus.org" class="px-8 py-3.5 bg-[#008a2f] text-white rounded-full text-sm font-medium hover:bg-[#006b24] transition-colors">
-          انضم للمجتمع
-        </a>
-        <a href="#about" class="px-8 py-3.5 border border-[var(--ink)]/15 dark:border-white/15 text-[var(--ink)] dark:text-[var(--charcoal-text)] rounded-full text-sm font-medium hover:border-[var(--ink)]/30 dark:hover:border-white/30 transition-colors">
-          تعرّف علينا
-        </a>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 reveal">
-        <div class="text-center">
-          <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white">6,000<span class="text-[#008a2f]">+</span></div>
-          <div class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-1">عضو</div>
-        </div>
-        <div class="text-center">
-          <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white">5,000<span class="text-[#008a2f]">+</span></div>
-          <div class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-1">مشاركة</div>
-        </div>
-        <div class="text-center">
-          <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white">10</div>
-          <div class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-1">سنوات</div>
-        </div>
-        <div class="text-center">
-          <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white">3,000<span class="text-[#008a2f]">+</span></div>
-          <div class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-1">موضوع</div>
+    <!-- NAVIGATION -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl transition-all duration-300">
+      <div class="bg-white/70 dark:bg-[#1E1C1B]/70 backdrop-blur-xl rounded-full px-6 py-3 border border-black/5 dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-shadow duration-500">
+        <div class="flex items-center justify-between gap-8">
+          <a href={base + "/6/"} class="flex items-center gap-2.5 group">
+            <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500" />
+            <span class="font-semibold text-[var(--ink)] dark:text-[var(--charcoal-text)] group-hover:text-[var(--primary)] transition-colors">أسس</span>
+          </a>
+          <div class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">
+            <a href="#about" class="relative py-1 group hover:text-[var(--ink)] dark:hover:text-white transition-colors">
+              من نحن
+              <span class="absolute bottom-0 right-0 w-full h-[2px] bg-[var(--primary)] scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></span>
+            </a>
+            <a href="#services" class="relative py-1 group hover:text-[var(--ink)] dark:hover:text-white transition-colors">
+              الخدمات
+              <span class="absolute bottom-0 right-0 w-full h-[2px] bg-[var(--primary)] scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></span>
+            </a>
+            <a href="#contest" class="relative py-1 group hover:text-[var(--ink)] dark:hover:text-white transition-colors">
+              الجائزة
+              <span class="absolute bottom-0 right-0 w-full h-[2px] bg-[var(--primary)] scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></span>
+            </a>
+            <a href="#timeline" class="relative py-1 group hover:text-[var(--ink)] dark:hover:text-white transition-colors">
+              تاريخنا
+              <span class="absolute bottom-0 right-0 w-full h-[2px] bg-[var(--primary)] scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></span>
+            </a>
+            <a href="#projects" class="relative py-1 group hover:text-[var(--ink)] dark:hover:text-white transition-colors">
+              المشاريع
+              <span class="absolute bottom-0 right-0 w-full h-[2px] bg-[var(--primary)] scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></span>
+            </a>
+            <a href="#support" class="relative py-1 group hover:text-[var(--ink)] dark:hover:text-white transition-colors">
+              ادعمنا
+              <span class="absolute bottom-0 right-0 w-full h-[2px] bg-[var(--primary)] scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></span>
+            </a>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:scale-110 transition-all duration-300" aria-label="تبديل المظهر">
+              <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+              <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></svg>
+            </button>
+            <button id="mobile-toggle" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]" aria-label="القائمة">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 9h16.5m-16.5 6h16.5" /></svg>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <hr class="rule max-w-5xl mx-auto" />
-
-  <!-- ABOUT / من نحن -->
-  <section id="about" class="py-24 md:py-32 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-16 reveal">من نحن</h2>
-
-      <div class="grid md:grid-cols-2 gap-16 mb-20">
-        <div class="reveal">
-          <h3 class="text-sm font-medium tracking-wide text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] uppercase mb-4">الرؤية</h3>
-          <p class="text-lg leading-relaxed text-[var(--ink-light)] dark:text-[var(--charcoal-text)]">
-            نشر الوعي بأهمية البرمجيات الحرة ومفتوحة المصدر في العالم العربي، وبناء مجتمع تقني عربي متميز يساهم في تطوير ودعم المشاريع مفتوحة المصدر.
-          </p>
-        </div>
-        <div class="reveal">
-          <h3 class="text-sm font-medium tracking-wide text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] uppercase mb-4">المهمة</h3>
-          <p class="text-lg leading-relaxed text-[var(--ink-light)] dark:text-[var(--charcoal-text)]">
-            تقديم منصة متكاملة للنقاش والتعلم ومشاركة المعرفة حول البرمجيات الحرة والمفتوحة المصدر، وتوفير خدمات تحترم خصوصية المستخدمين.
-          </p>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="mobile-menu mt-3 bg-white/90 dark:bg-[#1E1C1B]/90 backdrop-blur-xl rounded-2xl border border-black/5 dark:border-white/5 shadow-2xl overflow-hidden transform origin-top transition-all">
+        <div class="flex flex-col p-4 text-sm font-medium text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">
+          <a href="#about" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">من نحن</a>
+          <a href="#services" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">الخدمات</a>
+          <a href="#contest" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">الجائزة</a>
+          <a href="#timeline" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">تاريخنا</a>
+          <a href="#projects" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">المشاريع</a>
+          <a href="#support" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--ink)] dark:hover:text-white transition-colors">ادعمنا</a>
         </div>
       </div>
+    </nav>
 
-      <hr class="rule mb-16" />
+    <!-- HERO -->
+    <section class="min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 relative overflow-hidden">
+      <!-- Subtle decorative element -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--primary)]/5 rounded-full blur-[100px] -z-10 animate-pulse" style="animation-duration: 8s;"></div>
+      
+      <div class="max-w-5xl mx-auto text-center relative z-10">
+        <h1 class="font-serif-ar text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] leading-[1.1] font-bold text-[var(--ink)] dark:text-white mb-8 reveal">
+          أكبر مجتمع عربي
+          <br />
+          <span class="text-gradient drop-shadow-sm">للبرمجيات الحرة</span>
+        </h1>
+        <p class="text-lg md:text-2xl text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] max-w-2xl mx-auto leading-relaxed mb-12 reveal" style="transition-delay: 100ms;">
+          مجتمع غير ربحي أسسه مجموعة من التقنيين العرب بهدف نشر ثقافة المصادر المفتوحة والبرمجيات الحرة في العالم العربي
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mb-24 reveal" style="transition-delay: 200ms;">
+          <a href="https://discourse.aosus.org" class="group relative px-8 py-4 bg-[var(--primary)] text-white rounded-full text-base font-semibold hover:bg-[var(--primary-hover)] hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,138,47,0.3)] transition-all overflow-hidden">
+            <span class="relative z-10">انضم للمجتمع</span>
+            <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+          </a>
+          <a href="#about" class="px-8 py-4 border border-[var(--ink)]/15 dark:border-white/15 text-[var(--ink)] dark:text-[var(--charcoal-text)] rounded-full text-base font-medium hover:border-[var(--ink)]/40 dark:hover:border-white/40 hover:-translate-y-1 hover:bg-black/5 dark:hover:bg-white/5 transition-all">
+            تعرّف علينا
+          </a>
+        </div>
 
-      <h3 class="text-sm font-medium tracking-wide text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] uppercase mb-10 reveal">القيم</h3>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 reveal">
-        <div>
-          <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3">التعاون</h4>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">نؤمن بقوة العمل الجماعي والتعاون المفتوح بين أعضاء المجتمع</p>
-        </div>
-        <div>
-          <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3">الشفافية</h4>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">نلتزم بالشفافية الكاملة في جميع أعمالنا وقراراتنا</p>
-        </div>
-        <div>
-          <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3">الخصوصية</h4>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">نحترم خصوصية المستخدمين ونوفر بدائل تحمي بياناتهم</p>
-        </div>
-        <div>
-          <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3">المسؤولية</h4>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">نتحمل مسؤولية بناء مجتمع تقني عربي متميز ومستدام</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 reveal" style="transition-delay: 300ms;">
+          <div class="text-center group p-6 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/5 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover">
+            <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white group-hover:scale-110 transition-transform duration-500 group-hover:text-[var(--primary)]">6000<span class="text-[var(--primary)]">+</span></div>
+            <div class="text-sm font-medium text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-2">عضو</div>
+          </div>
+          <div class="text-center group p-6 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/5 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover">
+            <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white group-hover:scale-110 transition-transform duration-500 group-hover:text-[var(--primary)]">5000<span class="text-[var(--primary)]">+</span></div>
+            <div class="text-sm font-medium text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-2">مشاركة</div>
+          </div>
+          <div class="text-center group p-6 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/5 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover">
+            <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white group-hover:scale-110 transition-transform duration-500 group-hover:text-[var(--primary)]">10</div>
+            <div class="text-sm font-medium text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-2">سنوات</div>
+          </div>
+          <div class="text-center group p-6 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/5 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover">
+            <div class="font-serif-ar text-4xl md:text-5xl font-bold text-[var(--ink)] dark:text-white group-hover:scale-110 transition-transform duration-500 group-hover:text-[var(--primary)]">3000<span class="text-[var(--primary)]">+</span></div>
+            <div class="text-sm font-medium text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mt-2">موضوع</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="rule max-w-5xl mx-auto" />
+    <hr class="rule max-w-5xl mx-auto" />
 
-  <!-- SERVICES / الخدمات -->
-  <section id="services" class="py-24 md:py-32 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-6 reveal">الخدمات</h2>
-      <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mb-16 max-w-2xl reveal">
-        نوفر مجموعة من الخدمات البديلة التي تحترم خصوصية المستخدمين وتعتمد على البرمجيات مفتوحة المصدر
-      </p>
+    <!-- ABOUT / من نحن -->
+    <section id="about" class="py-24 md:py-32 px-6 relative">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="font-serif-ar text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--ink)] dark:text-white mb-16 reveal">من نحن</h2>
 
-      <div class="space-y-0 reveal">
-        <a href="https://search.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">SearXNG</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">محرك بحث يحترم الخصوصية</p>
+        <div class="grid md:grid-cols-2 gap-8 mb-24">
+          <div class="reveal p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover">
+            <div class="w-12 h-12 rounded-full bg-[var(--primary)]/10 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+            </div>
+            <h3 class="font-serif-ar text-3xl font-bold text-[var(--ink)] dark:text-white mb-4">الرؤية</h3>
+            <p class="text-lg leading-relaxed text-[var(--ink-light)] dark:text-[var(--charcoal-text)]">
+              نشر الوعي بأهمية البرمجيات الحرة ومفتوحة المصدر في العالم العربي، وبناء مجتمع تقني عربي متميز يساهم في تطوير ودعم المشاريع مفتوحة المصدر.
+            </p>
           </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://translate.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">Simply Translate</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">ترجمة نصوص بدون تتبع</p>
+          <div class="reveal p-8 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover" style="transition-delay: 100ms;">
+            <div class="w-12 h-12 rounded-full bg-[var(--primary)]/10 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            </div>
+            <h3 class="font-serif-ar text-3xl font-bold text-[var(--ink)] dark:text-white mb-4">المهمة</h3>
+            <p class="text-lg leading-relaxed text-[var(--ink-light)] dark:text-[var(--charcoal-text)]">
+              تقديم منصة متكاملة للنقاش والتعلم ومشاركة المعرفة حول البرمجيات الحرة والمفتوحة المصدر، وتوفير خدمات تحترم خصوصية المستخدمين.
+            </p>
           </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://nitter.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">Nitter</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">واجهة بديلة لتويتر</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://redlib.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">Redlib</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">واجهة بديلة لريديت</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://element.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">Element</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">تطبيق محادثة مشفر</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://rimgo.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">rimgo</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">واجهة بديلة لإمجر</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://scribe.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">Scribe</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">واجهة بديلة لميديم</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://quetre.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">Quetre</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">واجهة بديلة لكورا</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-        <a href="https://tok.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between py-5 border-b border-black/[0.06] dark:border-white/[0.06] hover:pr-4 transition-all">
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white group-hover:text-[#008a2f] transition-colors">ProxiTok</h3>
-            <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">واجهة بديلة لتيك توك</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[#008a2f] transition-colors -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <hr class="rule max-w-5xl mx-auto" />
-
-  <!-- WRITING CONTEST / جائزة الكتابة -->
-  <section id="contest" class="py-24 md:py-32 px-6">
-    <div class="max-w-4xl mx-auto">
-      <div class="grid md:grid-cols-[1fr,1.2fr] gap-16 items-start">
-        <div class="reveal">
-          <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-6">جائزة الكتابة</h2>
-          <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">
-            مسابقة شهرية لتشجيع إنتاج المحتوى العربي التقني المتميز حول البرمجيات الحرة والمفتوحة المصدر
-          </p>
         </div>
-        <div class="reveal">
-          <div class="font-serif-ar text-7xl md:text-8xl font-bold text-[#008a2f] mb-4">$250<span class="text-3xl text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">+</span></div>
-          <p class="text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mb-8">جائزة شهرية لأفضل مقال تقني</p>
-          <a href="https://discourse.aosus.org/t/15188" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 bg-[#008a2f] text-white rounded-full text-sm font-medium hover:bg-[#006b24] transition-colors">
-            شارك الآن
-            <svg class="w-4 h-4 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+
+        <h3 class="font-serif-ar text-4xl font-bold text-[var(--ink)] dark:text-white mb-10 reveal">القيم</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+          <div class="p-8 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover group">
+            <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3 group-hover:text-[var(--primary)] transition-colors">التعاون</h4>
+            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed text-sm">نؤمن بقوة العمل الجماعي والتعاون المفتوح بين أعضاء المجتمع</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover group" style="transition-delay: 100ms;">
+            <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3 group-hover:text-[var(--primary)] transition-colors">الشفافية</h4>
+            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed text-sm">نلتزم بالشفافية الكاملة في جميع أعمالنا وقراراتنا</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover group" style="transition-delay: 200ms;">
+            <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3 group-hover:text-[var(--primary)] transition-colors">الخصوصية</h4>
+            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed text-sm">نحترم خصوصية المستخدمين ونوفر بدائل تحمي بياناتهم</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover group" style="transition-delay: 300ms;">
+            <h4 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3 group-hover:text-[var(--primary)] transition-colors">المسؤولية</h4>
+            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed text-sm">نتحمل مسؤولية بناء مجتمع تقني عربي متميز ومستدام</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule max-w-5xl mx-auto" />
+
+    <!-- SERVICES / الخدمات -->
+    <section id="services" class="py-24 md:py-32 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-serif-ar text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--ink)] dark:text-white mb-6 reveal">الخدمات</h2>
+        <p class="text-xl text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mb-16 max-w-2xl reveal">
+          نوفر مجموعة من الخدمات البديلة التي تحترم خصوصية المستخدمين وتعتمد على البرمجيات مفتوحة المصدر
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-4 reveal">
+          <!-- Service Items -->
+          <a href="https://search.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">SearXNG</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">محرك بحث يحترم الخصوصية</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://translate.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">Simply Translate</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">ترجمة نصوص بدون تتبع</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://nitter.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">Nitter</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">واجهة بديلة لتويتر</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://redlib.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">Redlib</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">واجهة بديلة لريديت</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://element.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">Element</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">تطبيق محادثة مشفر</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://rimgo.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">rimgo</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">واجهة بديلة لإمجر</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://scribe.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">Scribe</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">واجهة بديلة لميديم</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://quetre.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">Quetre</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">واجهة بديلة لكورا</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
+          </a>
+          <a href="https://tok.aosus.org" target="_blank" rel="noopener" class="group flex items-center justify-between p-6 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover transition-all md:col-span-2 lg:col-span-1">
+            <div>
+              <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">ProxiTok</h3>
+              <p class="text-sm text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mt-1">واجهة بديلة لتيك توك</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-[var(--primary)] group-hover:text-white group-hover:scale-110 transition-all duration-300">
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </div>
           </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="rule max-w-5xl mx-auto" />
+    <hr class="rule max-w-5xl mx-auto" />
 
-  <!-- TIMELINE / تاريخنا -->
-  <section id="timeline" class="py-24 md:py-32 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-16 reveal">تاريخنا</h2>
+    <!-- WRITING CONTEST / جائزة الكتابة -->
+    <section id="contest" class="py-24 md:py-32 px-6">
+      <div class="max-w-4xl mx-auto p-12 md:p-16 rounded-[3rem] bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md classy-hover light-shadow-hover dark:dark-shadow-hover relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute -top-32 -left-32 w-64 h-64 bg-[var(--primary)]/10 rounded-full blur-[80px]"></div>
 
-      <div class="space-y-12 reveal">
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] w-24 flex-shrink-0">2015</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">البداية</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">بدأت فكرة تأسيس مجتمع عربي للمصادر المفتوحة</p>
+        <div class="grid md:grid-cols-[1fr,1fr] gap-12 items-center relative z-10">
+          <div class="reveal">
+            <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-6">جائزة الكتابة</h2>
+            <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-text)] leading-relaxed">
+              مسابقة شهرية لتشجيع إنتاج المحتوى العربي التقني المتميز حول البرمجيات الحرة والمفتوحة المصدر
+            </p>
           </div>
-        </div>
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] w-24 flex-shrink-0">2016</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">التأسيس</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">تأسيس مجتمع أسس رسمياً وإطلاق منصة النقاش</p>
-          </div>
-        </div>
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] w-24 flex-shrink-0">2017</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">التعريب</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">المساهمة في تعريب البرمجيات الحرة ومفتوحة المصدر</p>
-          </div>
-        </div>
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] w-24 flex-shrink-0">2021</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">Matrix وجائزة الكتابة</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">إطلاق خادم Matrix للتواصل وبدء مسابقة الكتابة الشهرية</p>
-          </div>
-        </div>
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] w-24 flex-shrink-0">2022</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">Open Collective</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">الانضمام لمنصة Open Collective لإدارة التبرعات بشفافية</p>
-          </div>
-        </div>
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] w-24 flex-shrink-0">2023</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">Discord</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">إطلاق خادم Discord للوصول لشريحة أوسع من المجتمع</p>
-          </div>
-        </div>
-        <div class="flex gap-8 items-start">
-          <div class="font-serif-ar text-3xl font-bold text-[#008a2f] w-24 flex-shrink-0">2024</div>
-          <div>
-            <h3 class="text-lg font-medium text-[var(--ink)] dark:text-white mb-1">منظمة غير ربحية 501(c)(3)</h3>
-            <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">الحصول على صفة المنظمة غير الربحية 501(c)(3) في الولايات المتحدة</p>
+          <div class="reveal md:text-left">
+            <div class="font-serif-ar text-7xl md:text-8xl font-bold text-gradient mb-4 inline-block transform hover:scale-105 transition-transform cursor-default">$250<span class="text-4xl text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] font-sans">+</span></div>
+            <p class="text-lg text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] mb-8 font-medium">جائزة شهرية لأفضل مقال تقني</p>
+            <a href="https://discourse.aosus.org/t/15188" target="_blank" rel="noopener" class="inline-flex items-center gap-3 px-8 py-4 bg-[var(--primary)] text-white rounded-full text-base font-semibold hover:bg-[var(--primary-hover)] hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,138,47,0.3)] transition-all">
+              شارك الآن
+              <svg class="w-5 h-5 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+            </a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="rule max-w-5xl mx-auto" />
+    <hr class="rule max-w-5xl mx-auto" />
 
-  <!-- PROJECTS / المشاريع -->
-  <section id="projects" class="py-24 md:py-32 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-16 reveal">المشاريع</h2>
+    <!-- TIMELINE / تاريخنا -->
+    <section id="timeline" class="py-24 md:py-32 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-serif-ar text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--ink)] dark:text-white mb-16 reveal text-center">تاريخنا</h2>
 
-      <div class="grid md:grid-cols-2 gap-16 reveal">
-        <div>
-          <div class="mb-6">
-            <img src="/brand/GNUlinuxsa.webp" alt="GNULinux Saudi Arabia" class="h-12 dark:hidden" />
-            <img src="/brand/GNUlinuxsa-white.webp" alt="GNULinux Saudi Arabia" class="h-12 hidden dark:block" />
-          </div>
-          <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3">جنو/لينكس السعودية</h3>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed mb-4">
-            مجموعة مجتمعية متخصصة في نشر ثقافة جنو/لينكس والبرمجيات الحرة في المملكة العربية السعودية
-          </p>
-          <a href="https://gnulinux.sa" target="_blank" rel="noopener" class="text-[#008a2f] text-sm font-medium hover:underline">gnulinux.sa</a>
-        </div>
-
-        <div>
-          <div class="mb-6">
-            <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Chat Bridge" class="h-12 hidden dark:block" />
-            <div class="h-12 flex items-center dark:hidden">
-              <span class="font-serif-ar text-xl font-bold text-[var(--ink)]">Discourse Chat Bridge</span>
+        <div class="space-y-6 reveal">
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-white/50 dark:hover:bg-white/5 border border-transparent hover:border-white/60 dark:hover:border-white/10 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary)] transition-colors w-24 flex-shrink-0 relative z-10">2015</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1 group-hover:-translate-y-0.5 transition-transform duration-300">البداية</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">بدأت فكرة تأسيس مجتمع عربي للمصادر المفتوحة</p>
             </div>
           </div>
-          <h3 class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white mb-3">جسر محادثات Discourse</h3>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed mb-4">
-            إضافة مفتوحة المصدر تربط محادثات Discourse مع منصات التواصل الأخرى مثل Matrix و Discord
-          </p>
-          <a href="https://github.com/aosus/discourse-chat-bridge" target="_blank" rel="noopener" class="text-[#008a2f] text-sm font-medium hover:underline">المستودع على GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <hr class="rule max-w-5xl mx-auto" />
-
-  <!-- SUPPORT / ادعم المجتمع -->
-  <section id="support" class="py-24 md:py-32 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="font-serif-ar text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--ink)] dark:text-white mb-6 reveal">ادعم المجتمع</h2>
-      <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mb-16 max-w-2xl reveal">
-        ساهم في استمرار خدمات المجتمع ودعم المشاريع مفتوحة المصدر. كل تبرع يساعدنا في تقديم المزيد.
-      </p>
-
-      <div class="grid md:grid-cols-2 gap-8 reveal">
-        <a href="https://github.com/sponsors/aosus" target="_blank" rel="noopener" class="group block p-8 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl hover:border-[#008a2f]/30 transition-colors">
-          <div class="flex items-center gap-3 mb-4">
-            <svg class="w-6 h-6 text-[var(--ink)] dark:text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-            <h3 class="text-xl font-semibold text-[var(--ink)] dark:text-white">GitHub Sponsors</h3>
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-white/50 dark:hover:bg-white/5 border border-transparent hover:border-white/60 dark:hover:border-white/10 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary)] transition-colors w-24 flex-shrink-0 relative z-10">2016</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1 group-hover:-translate-y-0.5 transition-transform duration-300">التأسيس</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">تأسيس مجتمع أسس رسمياً وإطلاق منصة النقاش</p>
+            </div>
           </div>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">ادعمنا عبر GitHub Sponsors بتبرع شهري أو لمرة واحدة</p>
-        </a>
 
-        <a href="https://hcb.hackclub.com/donations/start/aosus" target="_blank" rel="noopener" class="group block p-8 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl hover:border-[#008a2f]/30 transition-colors">
-          <div class="flex items-center gap-3 mb-4">
-            <svg class="w-6 h-6 text-[var(--ink)] dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
-            <h3 class="text-xl font-semibold text-[var(--ink)] dark:text-white">HCB</h3>
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-white/50 dark:hover:bg-white/5 border border-transparent hover:border-white/60 dark:hover:border-white/10 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary)] transition-colors w-24 flex-shrink-0 relative z-10">2017</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1 group-hover:-translate-y-0.5 transition-transform duration-300">التعريب</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">المساهمة في تعريب البرمجيات الحرة ومفتوحة المصدر</p>
+            </div>
           </div>
-          <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">تبرع عبر Hack Club Bank — بطاقة ائتمانية أو تحويل بنكي</p>
-        </a>
-      </div>
-    </div>
-  </section>
 
-  <hr class="rule max-w-5xl mx-auto" />
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-white/50 dark:hover:bg-white/5 border border-transparent hover:border-white/60 dark:hover:border-white/10 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary)] transition-colors w-24 flex-shrink-0 relative z-10">2021</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1 group-hover:-translate-y-0.5 transition-transform duration-300">Matrix وجائزة الكتابة</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">إطلاق خادم Matrix للتواصل وبدء مسابقة الكتابة الشهرية</p>
+            </div>
+          </div>
 
-  <!-- FOOTER -->
-  <footer class="py-16 px-6">
-    <div class="max-w-4xl mx-auto">
-      <div class="flex flex-col md:flex-row items-start justify-between gap-12 mb-16">
-        <div>
-          <a href={base + "/6/"} class="flex items-center gap-3 mb-4">
-            <img src="/brand/aosus-icon.svg" alt="أسس" class="w-8 h-8" />
-            <span class="font-serif-ar text-2xl font-bold text-[var(--ink)] dark:text-white">أسس</span>
-          </a>
-          <p class="text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] max-w-xs">أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر</p>
-        </div>
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-white/50 dark:hover:bg-white/5 border border-transparent hover:border-white/60 dark:hover:border-white/10 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary)] transition-colors w-24 flex-shrink-0 relative z-10">2022</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1 group-hover:-translate-y-0.5 transition-transform duration-300">Open Collective</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">الانضمام لمنصة Open Collective لإدارة التبرعات بشفافية</p>
+            </div>
+          </div>
 
-        <div class="flex flex-wrap gap-4">
-          <a href="https://twitter.com/aosusdotorg" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Twitter">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="https://bsky.app/profile/aosus.org" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Bluesky">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.627 3.59 3.501 6.158 3.186-4.349.639-8.166 2.428-3.326 8.567 5.433 5.14 7.61-1.337 8.544-4.243.934 2.906 2.065 9.258 8.544 4.243 4.839-6.139.874-7.928-3.326-8.567 2.568.315 5.373-.56 6.158-3.186C23.622 9.418 24 4.458 24 3.768c0-.69-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
-          </a>
-          <a href="https://mastodon.online/@aosus" target="_blank" rel="noopener me" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Mastodon">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 00.023-.043v-1.809a.052.052 0 00-.02-.041.053.053 0 00-.046-.01 20.282 20.282 0 01-4.709.547c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 01-.319-1.433.053.053 0 01.066-.054 19.648 19.648 0 004.636.546c.568 0 1.133-.014 1.691-.042 2.458-.124 5.085-.373 7.035-1.311l.048-.024c1.68-.874 3.167-2.577 3.3-5.399z"/></svg>
-          </a>
-          <a href="https://discord.gg/YJUzEhU955" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Discord">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
-          </a>
-          <a href="https://matrix.to/#/#aosus:aosus.org" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Matrix">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.277.245.489.559.646.951.152.392.23.863.23 1.417v5.728h-2.349V11.52c0-.286-.01-.559-.032-.812a1.755 1.755 0 00-.18-.66 1.106 1.106 0 00-.438-.448c-.194-.11-.457-.166-.789-.166-.332 0-.6.064-.803.189a1.38 1.38 0 00-.48.499 1.946 1.946 0 00-.231.696 5.56 5.56 0 00-.06.785v4.768h-2.35v-4.8c0-.254-.004-.503-.018-.752a2.074 2.074 0 00-.143-.688 1.052 1.052 0 00-.415-.503c-.194-.13-.476-.196-.846-.196-.168 0-.357.025-.566.074a1.7 1.7 0 00-.553.254 1.478 1.478 0 00-.425.486 1.586 1.586 0 00-.173.779v5.346H5.46V7.81zm13.305 16.19v-22.9H19.33V0H21.6v24h-2.28v-.55z"/></svg>
-          </a>
-          <a href="https://t.me/aosus" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Telegram">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-          </a>
-          <a href="https://github.com/aosus" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="GitHub">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          </a>
-          <a href="https://facebook.com/aosus1" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="Facebook">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <a href="https://linkedin.com/company/aosus" target="_blank" rel="noopener" class="w-10 h-10 border border-black/[0.08] dark:border-white/[0.08] rounded-full flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--ink)] dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors" aria-label="LinkedIn">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-white/50 dark:hover:bg-white/5 border border-transparent hover:border-white/60 dark:hover:border-white/10 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary)] transition-colors w-24 flex-shrink-0 relative z-10">2023</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1 group-hover:-translate-y-0.5 transition-transform duration-300">Discord</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">إطلاق خادم Discord للوصول لشريحة أوسع من المجتمع</p>
+            </div>
+          </div>
+
+          <div class="group flex gap-8 items-center p-6 rounded-3xl hover:bg-[var(--primary)]/5 dark:hover:bg-[var(--primary)]/10 border border-[var(--primary)]/20 hover:shadow-[0_12px_40px_rgba(0,138,47,0.1)] transition-all cursor-default relative overflow-hidden backdrop-blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-l from-[var(--primary)]/10 to-transparent opacity-100"></div>
+            <div class="font-serif-ar text-3xl md:text-4xl font-bold text-[var(--primary)] w-24 flex-shrink-0 relative z-10 transform group-hover:scale-110 transition-transform">2024</div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-[var(--ink)] dark:text-white mb-1">منظمة غير ربحية 501(c)(3)</h3>
+              <p class="text-[var(--ink-light)] dark:text-[var(--charcoal-muted)]">الحصول على صفة المنظمة غير الربحية 501(c)(3) في الولايات المتحدة</p>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <hr class="rule mb-8" />
+    <hr class="rule max-w-5xl mx-auto" />
 
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">
-        <p>&copy; 2024 مجتمع أسس. جميع الحقوق محفوظة.</p>
-        <a href="mailto:contact@aosus.org" class="hover:text-[var(--ink)] dark:hover:text-white transition-colors">contact@aosus.org</a>
+    <!-- PROJECTS / المشاريع -->
+    <section id="projects" class="py-24 md:py-32 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-serif-ar text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--ink)] dark:text-white mb-16 reveal">المشاريع</h2>
+
+        <div class="grid md:grid-cols-2 gap-10 reveal">
+          <a href="https://gnulinux.sa" target="_blank" rel="noopener" class="group block p-10 rounded-[2.5rem] bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 classy-hover light-shadow-hover dark:dark-shadow-hover backdrop-blur-md relative overflow-hidden">
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-[var(--primary)]/5 rounded-full blur-[60px] group-hover:bg-[var(--primary)]/20 transition-colors duration-500"></div>
+            
+            <div class="relative z-10">
+              <div class="mb-8 h-12 flex items-center">
+                <img src="/brand/GNUlinuxsa.webp" alt="GNULinux Saudi Arabia" class="h-10 dark:hidden group-hover:scale-105 group-hover:-rotate-2 transition-transform duration-500" />
+                <img src="/brand/GNUlinuxsa-white.webp" alt="GNULinux Saudi Arabia" class="h-10 hidden dark:block group-hover:scale-105 group-hover:-rotate-2 transition-transform duration-500" />
+              </div>
+              <h3 class="font-serif-ar text-3xl font-bold text-[var(--ink)] dark:text-white mb-4 group-hover:text-[var(--primary)] transition-colors">جنو/لينكس السعودية</h3>
+              <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed mb-8">
+                مجموعة مجتمعية متخصصة في نشر ثقافة جنو/لينكس والبرمجيات الحرة في المملكة العربية السعودية
+              </p>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] text-sm font-bold uppercase tracking-wider">
+                زيارة الموقع
+                <svg class="w-5 h-5 -scale-x-100 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+              </span>
+            </div>
+          </a>
+
+          <a href="https://github.com/aosus/discourse-chat-bridge" target="_blank" rel="noopener" class="group block p-10 rounded-[2.5rem] bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 classy-hover light-shadow-hover dark:dark-shadow-hover backdrop-blur-md relative overflow-hidden">
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-[var(--primary)]/5 rounded-full blur-[60px] group-hover:bg-[var(--primary)]/20 transition-colors duration-500"></div>
+            
+            <div class="relative z-10">
+              <div class="mb-8 h-12 flex items-center">
+                <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Chat Bridge" class="h-10 hidden dark:block group-hover:scale-105 group-hover:rotate-2 transition-transform duration-500" />
+                <div class="h-10 flex items-center dark:hidden group-hover:scale-105 group-hover:rotate-2 transition-transform duration-500">
+                  <span class="font-serif-ar text-2xl font-bold text-[var(--ink)]">Discourse Bridge</span>
+                </div>
+              </div>
+              <h3 class="font-serif-ar text-3xl font-bold text-[var(--ink)] dark:text-white mb-4 group-hover:text-[var(--primary)] transition-colors">جسر محادثات Discourse</h3>
+              <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed mb-8">
+                إضافة مفتوحة المصدر تربط محادثات Discourse مع منصات التواصل الأخرى مثل Matrix و Discord
+              </p>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] text-sm font-bold uppercase tracking-wider">
+                المستودع على GitHub
+                <svg class="w-5 h-5 -scale-x-100 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>
+              </span>
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  </div><!-- .page-content -->
+    <hr class="rule max-w-5xl mx-auto" />
+
+    <!-- SUPPORT / ادعم المجتمع -->
+    <section id="support" class="py-24 md:py-32 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-serif-ar text-5xl md:text-6xl lg:text-7xl font-bold text-[var(--ink)] dark:text-white mb-6 reveal">ادعم المجتمع</h2>
+        <p class="text-xl text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] mb-16 max-w-2xl reveal">
+          ساهم في استمرار خدمات المجتمع ودعم المشاريع مفتوحة المصدر. كل تبرع يساعدنا في تقديم المزيد.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8 reveal">
+          <a href="https://github.com/sponsors/aosus" target="_blank" rel="noopener" class="group flex flex-col justify-center p-10 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-[2.5rem] classy-hover light-shadow-hover dark:dark-shadow-hover backdrop-blur-md relative overflow-hidden">
+            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-black/5 dark:bg-white/5 rounded-full blur-2xl group-hover:bg-[var(--primary)]/10 transition-colors duration-500"></div>
+            <div class="relative z-10">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 rounded-full bg-white dark:bg-[#1E1C1B] shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-7 h-7 text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">GitHub Sponsors</h3>
+              </div>
+              <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">ادعمنا عبر GitHub Sponsors بتبرع شهري أو لمرة واحدة</p>
+            </div>
+          </a>
+
+          <a href="https://hcb.hackclub.com/donations/start/aosus" target="_blank" rel="noopener" class="group flex flex-col justify-center p-10 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-[2.5rem] classy-hover light-shadow-hover dark:dark-shadow-hover backdrop-blur-md relative overflow-hidden">
+            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-black/5 dark:bg-white/5 rounded-full blur-2xl group-hover:bg-[var(--primary)]/10 transition-colors duration-500"></div>
+            <div class="relative z-10">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 rounded-full bg-white dark:bg-[#1E1C1B] shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <svg class="w-7 h-7 text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">HCB</h3>
+              </div>
+              <p class="text-lg text-[var(--ink-light)] dark:text-[var(--charcoal-muted)] leading-relaxed">تبرع عبر Hack Club Bank — بطاقة ائتمانية أو تحويل بنكي</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule max-w-5xl mx-auto" />
+
+    <!-- FOOTER -->
+    <footer class="py-20 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-12 mb-16 text-center md:text-right">
+          <div>
+            <a href={base + "/6/"} class="flex items-center justify-center md:justify-start gap-4 mb-6 group">
+              <div class="w-12 h-12 rounded-2xl bg-white/50 dark:bg-white/5 flex items-center justify-center border border-white/60 dark:border-white/10 group-hover:rotate-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7" />
+              </div>
+              <span class="font-serif-ar text-3xl font-bold text-[var(--ink)] dark:text-white group-hover:text-[var(--primary)] transition-colors">أسس</span>
+            </a>
+            <p class="text-base text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] max-w-xs">أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر</p>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://twitter.com/aosusdotorg" target="_blank" rel="noopener" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="Twitter">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://bsky.app/profile/aosus.org" target="_blank" rel="noopener" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="Bluesky">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.627 3.59 3.501 6.158 3.186-4.349.639-8.166 2.428-3.326 8.567 5.433 5.14 7.61-1.337 8.544-4.243.934 2.906 2.065 9.258 8.544 4.243 4.839-6.139.874-7.928-3.326-8.567 2.568.315 5.373-.56 6.158-3.186C23.622 9.418 24 4.458 24 3.768c0-.69-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+            </a>
+            <a href="https://mastodon.online/@aosus" target="_blank" rel="noopener me" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="Mastodon">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 00.023-.043v-1.809a.052.052 0 00-.02-.041.053.053 0 00-.046-.01 20.282 20.282 0 01-4.709.547c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 01-.319-1.433.053.053 0 01.066-.054 19.648 19.648 0 004.636.546c.568 0 1.133-.014 1.691-.042 2.458-.124 5.085-.373 7.035-1.311l.048-.024c1.68-.874 3.167-2.577 3.3-5.399z"/></svg>
+            </a>
+            <a href="https://discord.gg/YJUzEhU955" target="_blank" rel="noopener" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="Discord">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+            </a>
+            <a href="https://matrix.to/#/#aosus:aosus.org" target="_blank" rel="noopener" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="Matrix">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.277.245.489.559.646.951.152.392.23.863.23 1.417v5.728h-2.349V11.52c0-.286-.01-.559-.032-.812a1.755 1.755 0 00-.18-.66 1.106 1.106 0 00-.438-.448c-.194-.11-.457-.166-.789-.166-.332 0-.6.064-.803.189a1.38 1.38 0 00-.48.499 1.946 1.946 0 00-.231.696 5.56 5.56 0 00-.06.785v4.768h-2.35v-4.8c0-.254-.004-.503-.018-.752a2.074 2.074 0 00-.143-.688 1.052 1.052 0 00-.415-.503c-.194-.13-.476-.196-.846-.196-.168 0-.357.025-.566.074a1.7 1.7 0 00-.553.254 1.478 1.478 0 00-.425.486 1.586 1.586 0 00-.173.779v5.346H5.46V7.81zm13.305 16.19v-22.9H19.33V0H21.6v24h-2.28v-.55z"/></svg>
+            </a>
+            <a href="https://t.me/aosus" target="_blank" rel="noopener" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="Telegram">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+            <a href="https://github.com/aosus" target="_blank" rel="noopener" class="w-12 h-12 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl flex items-center justify-center text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] hover:-translate-y-1 hover:shadow-md transition-all backdrop-blur-sm" aria-label="GitHub">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <hr class="rule mb-10" />
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-sm font-medium text-[var(--ink-lighter)] dark:text-[var(--charcoal-muted)]">
+          <p>© 2024 مجتمع أسس. جميع الحقوق محفوظة.</p>
+          <a href="mailto:contact@aosus.org" class="flex items-center gap-2 hover:text-[var(--primary)] transition-colors group">
+            contact@aosus.org
+            <span class="w-8 h-[2px] bg-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
 
   <script>
-    // ─── Theme toggle ───
+    // Smooth Dynamic Background Follow
+    const dynamicBg = document.getElementById('dynamic-bg');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    
+    function animateGlow() {
+      // Interpolate for ultra-smooth movement
+      currentX += (mouseX - currentX) * 0.08;
+      currentY += (mouseY - currentY) * 0.08;
+      
+      if(dynamicBg) {
+        dynamicBg.style.setProperty('--mouse-x', `${currentX}px`);
+        dynamicBg.style.setProperty('--mouse-y', `${currentY}px`);
+      }
+      requestAnimationFrame(animateGlow);
+    }
+    
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    // Start animation loop
+    animateGlow();
+
+    // Theme toggle
     const toggle = document.getElementById('theme-toggle');
     const html = document.documentElement;
     if (localStorage.getItem('theme') === 'dark') html.classList.add('dark');
     toggle?.addEventListener('click', () => {
       html.classList.toggle('dark');
       localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-      // Signal canvas to update colors
-      window.dispatchEvent(new CustomEvent('themechange'));
     });
 
-    // ─── Mobile menu ───
+    // Mobile menu
     const mobileToggle = document.getElementById('mobile-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    mobileToggle?.addEventListener('click', () => mobileMenu?.classList.toggle('active'));
-    mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu?.classList.remove('active')));
+    mobileToggle?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('active');
+      mobileToggle.classList.toggle('text-[var(--primary)]');
+    });
+    mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu?.classList.remove('active');
+      mobileToggle?.classList.remove('text-[var(--primary)]');
+    }));
 
-    // ─── Reveal on scroll ───
+    // Reveal on scroll with advanced observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          // Optional: unobserve after reveal for performance
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ─── Arabic Calligraphy Canvas ───
-    (function() {
-      const canvas = document.getElementById('calligraphy-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      let W = 0, H = 0;
-      let mouseX = 0, mouseY = 0;
-      let targetMouseX = 0, targetMouseY = 0;
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-      function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      // Track mouse with smoothing
-      window.addEventListener('mousemove', (e) => {
-        targetMouseX = (e.clientX / W - 0.5) * 2; // -1 to 1
-        targetMouseY = (e.clientY / H - 0.5) * 2;
-      });
-
-      // ─── Calligraphy stroke definitions ───
-      // Each stroke is a group of bezier curves that mimic Arabic calligraphy shapes:
-      // flowing horizontal baselines, ascending alefs, curved letters, dots
-      // Coordinates are normalized 0-1, scaled to canvas size on draw
-
-      function createStrokes() {
-        const strokes = [];
-        const count = isMobile ? 10 : 18;
-
-        // Predefined calligraphy-inspired path shapes (normalized 0-1 coordinates)
-        const pathTemplates = [
-          // Flowing horizontal baseline (like Arabic text baseline)
-          { type: 'cubic', points: [0, 0.5, 0.15, 0.35, 0.35, 0.65, 0.5, 0.5], lineWidth: 3 },
-          // Ascending alef-like stroke
-          { type: 'cubic', points: [0.5, 0.8, 0.48, 0.5, 0.52, 0.3, 0.5, 0.1], lineWidth: 2.5 },
-          // Sweeping baa curve
-          { type: 'cubic', points: [0, 0.5, 0.2, 0.7, 0.4, 0.7, 0.6, 0.5], lineWidth: 3.5 },
-          // Nun bowl
-          { type: 'quadratic', points: [0.2, 0.4, 0.5, 0.7, 0.8, 0.4], lineWidth: 2 },
-          // Lam descender
-          { type: 'cubic', points: [0.5, 0.2, 0.45, 0.4, 0.55, 0.6, 0.5, 0.9], lineWidth: 2 },
-          // Sin teeth
-          { type: 'multi', segments: [
-            { type: 'quadratic', points: [0, 0.5, 0.1, 0.3, 0.2, 0.5] },
-            { type: 'quadratic', points: [0.2, 0.5, 0.3, 0.3, 0.4, 0.5] },
-            { type: 'quadratic', points: [0.4, 0.5, 0.5, 0.3, 0.6, 0.5] },
-          ], lineWidth: 1.5 },
-          // Waw loop
-          { type: 'cubic', points: [0.3, 0.3, 0.1, 0.3, 0.1, 0.7, 0.3, 0.7], lineWidth: 2 },
-          // Ha figure-eight
-          { type: 'multi', segments: [
-            { type: 'cubic', points: [0.5, 0.3, 0.2, 0.3, 0.2, 0.6, 0.5, 0.5] },
-            { type: 'cubic', points: [0.5, 0.5, 0.8, 0.4, 0.8, 0.7, 0.5, 0.7] },
-          ], lineWidth: 2 },
-          // Sweeping kaaf top
-          { type: 'cubic', points: [0.1, 0.5, 0.3, 0.2, 0.6, 0.2, 0.9, 0.4], lineWidth: 3 },
-          // Dot cluster (triple dots)
-          { type: 'dots', points: [0.4, 0.4, 0.5, 0.35, 0.6, 0.4], radius: 3 },
-          // Flowing ain curve
-          { type: 'cubic', points: [0.2, 0.3, 0.1, 0.6, 0.5, 0.8, 0.8, 0.5], lineWidth: 2.5 },
-          // Meem circle
-          { type: 'cubic', points: [0.5, 0.3, 0.3, 0.3, 0.3, 0.7, 0.5, 0.7], lineWidth: 2 },
-          // Tail descender
-          { type: 'quadratic', points: [0.5, 0.4, 0.6, 0.8, 0.4, 0.9], lineWidth: 1.5 },
-          // Long connecting stroke
-          { type: 'cubic', points: [0, 0.5, 0.25, 0.45, 0.75, 0.55, 1, 0.5], lineWidth: 4 },
-          // Taa curve with extension
-          { type: 'multi', segments: [
-            { type: 'cubic', points: [0.1, 0.5, 0.2, 0.3, 0.4, 0.3, 0.5, 0.5] },
-            { type: 'quadratic', points: [0.5, 0.5, 0.7, 0.6, 0.9, 0.5] },
-          ], lineWidth: 2.5 },
-          // Yaa descender hook
-          { type: 'cubic', points: [0.3, 0.3, 0.5, 0.5, 0.4, 0.8, 0.2, 0.9], lineWidth: 2 },
-          // Daal simple curve
-          { type: 'quadratic', points: [0.2, 0.3, 0.5, 0.3, 0.7, 0.6], lineWidth: 3 },
-          // Raa swoop
-          { type: 'cubic', points: [0.5, 0.3, 0.55, 0.5, 0.4, 0.7, 0.3, 0.8], lineWidth: 2 },
-          // Single dot
-          { type: 'dots', points: [0.5, 0.5], radius: 4 },
-          // Sheen triple peak
-          { type: 'multi', segments: [
-            { type: 'quadratic', points: [0, 0.6, 0.1, 0.3, 0.2, 0.6] },
-            { type: 'quadratic', points: [0.2, 0.6, 0.3, 0.3, 0.4, 0.6] },
-            { type: 'quadratic', points: [0.4, 0.6, 0.5, 0.3, 0.6, 0.6] },
-            { type: 'quadratic', points: [0.6, 0.6, 0.8, 0.7, 1, 0.6] },
-          ], lineWidth: 1.5 },
-        ];
-
-        for (let i = 0; i < count; i++) {
-          const template = pathTemplates[i % pathTemplates.length];
-          const scale = 120 + Math.random() * 280;
-          strokes.push({
-            template: template,
-            x: Math.random() * W,
-            y: Math.random() * H,
-            scale: scale,
-            rotation: Math.random() * Math.PI * 2,
-            parallaxFactor: 0.01 + Math.random() * 0.04,
-            lineWidth: template.lineWidth || 2,
-          });
-        }
-        return strokes;
-      }
-
-      let strokes = createStrokes();
-
-      // Recreate strokes on resize to reposition
-      window.addEventListener('resize', () => {
-        strokes = createStrokes();
-      });
-
-      function isDark() {
-        return document.documentElement.classList.contains('dark');
-      }
-
-      function getStrokeColor() {
-        return isDark()
-          ? 'rgba(255, 255, 255, 0.04)'
-          : 'rgba(26, 26, 24, 0.04)';
-      }
-
-      function getDotColor() {
-        return isDark()
-          ? 'rgba(255, 255, 255, 0.03)'
-          : 'rgba(26, 26, 24, 0.03)';
-      }
-
-      function drawStroke(stroke) {
-        const { template, x, y, scale, rotation, parallaxFactor, lineWidth } = stroke;
-        const offsetX = mouseX * parallaxFactor * W * 0.5;
-        const offsetY = mouseY * parallaxFactor * H * 0.5;
-
-        ctx.save();
-        ctx.translate(x + offsetX, y + offsetY);
-        ctx.rotate(rotation);
-
-        if (template.type === 'dots') {
-          ctx.fillStyle = getDotColor();
-          const pts = template.points;
-          for (let i = 0; i < pts.length; i += 2) {
-            ctx.beginPath();
-            ctx.arc(
-              (pts[i] - 0.5) * scale,
-              (pts[i + 1] - 0.5) * scale,
-              template.radius || 3,
-              0,
-              Math.PI * 2
-            );
-            ctx.fill();
-          }
-        } else {
-          ctx.strokeStyle = getStrokeColor();
-          ctx.lineWidth = lineWidth;
-          ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
-          ctx.beginPath();
-
-          if (template.type === 'cubic') {
-            const p = template.points;
-            ctx.moveTo((p[0] - 0.5) * scale, (p[1] - 0.5) * scale);
-            ctx.bezierCurveTo(
-              (p[2] - 0.5) * scale, (p[3] - 0.5) * scale,
-              (p[4] - 0.5) * scale, (p[5] - 0.5) * scale,
-              (p[6] - 0.5) * scale, (p[7] - 0.5) * scale
-            );
-          } else if (template.type === 'quadratic') {
-            const p = template.points;
-            ctx.moveTo((p[0] - 0.5) * scale, (p[1] - 0.5) * scale);
-            ctx.quadraticCurveTo(
-              (p[2] - 0.5) * scale, (p[3] - 0.5) * scale,
-              (p[4] - 0.5) * scale, (p[5] - 0.5) * scale
-            );
-          } else if (template.type === 'multi') {
-            const segs = template.segments;
-            // Start from first segment's first point
-            const firstSeg = segs[0];
-            ctx.moveTo(
-              (firstSeg.points[0] - 0.5) * scale,
-              (firstSeg.points[1] - 0.5) * scale
-            );
-            for (const seg of segs) {
-              if (seg.type === 'cubic') {
-                const p = seg.points;
-                ctx.bezierCurveTo(
-                  (p[2] - 0.5) * scale, (p[3] - 0.5) * scale,
-                  (p[4] - 0.5) * scale, (p[5] - 0.5) * scale,
-                  (p[6] - 0.5) * scale, (p[7] - 0.5) * scale
-                );
-              } else {
-                const p = seg.points;
-                ctx.quadraticCurveTo(
-                  (p[2] - 0.5) * scale, (p[3] - 0.5) * scale,
-                  (p[4] - 0.5) * scale, (p[5] - 0.5) * scale
-                );
-              }
-            }
-          }
-          ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      function animate() {
-        // Smooth mouse interpolation
-        mouseX += (targetMouseX - mouseX) * 0.05;
-        mouseY += (targetMouseY - mouseY) * 0.05;
-
-        ctx.clearRect(0, 0, W, H);
-
-        for (const stroke of strokes) {
-          drawStroke(stroke);
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      animate();
-
-      // Update on theme change
-      window.addEventListener('themechange', () => {
-        // Colors are read dynamically in getStrokeColor/getDotColor, so no action needed.
-        // The next frame will pick up the new theme.
-      });
-    })();
   </script>
 </body>
 </html>
