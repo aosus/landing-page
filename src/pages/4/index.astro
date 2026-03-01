@@ -2,7 +2,7 @@
 import '../../styles/global.css';
 ---
 
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,396 +11,452 @@ import '../../styles/global.css';
   <link rel="icon" type="image/svg+xml" href="/brand/aosus-icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+    :root {
+      --white: #ffffff;
+      --off-white: #f7f7f5;
+      --text: #1a1a18;
+      --text-muted: #5a5a52;
+      --text-dim: #9a9a90;
+      --border: rgba(0,0,0,0.1);
+      --green: #008a2f;
+      --green-dark: #006b24;
+      --green-darker: #004d1a;
+      --dark-bg: #111110;
+      --dark-text: #e8e8e2;
+    }
+    .dark {
+      --white: #111110;
+      --off-white: #1a1a18;
+      --text: #e8e8e2;
+      --text-muted: #a0a098;
+      --text-dim: #6a6a62;
+      --border: rgba(255,255,255,0.08);
+      --dark-bg: #0a0a0a;
+      --dark-text: #e8e8e2;
+    }
+    body {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background: var(--white);
+      color: var(--text);
+    }
     .font-dm { font-family: 'DM Sans', sans-serif; }
+    .bg-green { background-color: var(--green); }
+    .bg-dark { background-color: var(--dark-bg); }
+    .mobile-menu { display: none; }
+    .mobile-menu.active { display: block; }
     html { scroll-behavior: smooth; }
-    @keyframes slide-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-up { animation: slide-up 0.6s ease-out both; }
-    .d1 { animation-delay: 0.1s; }
-    .d2 { animation-delay: 0.2s; }
-    .d3 { animation-delay: 0.3s; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
-<body class="bg-white dark:bg-[#0b0b0f] text-gray-900 dark:text-gray-100 antialiased overflow-x-hidden transition-colors duration-300">
+<body class="antialiased">
 
   <!-- NAVIGATION -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-white/90 dark:bg-[#0b0b0f]/90 backdrop-blur-xl border-b border-gray-100 dark:border-white/[0.05]">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+  <nav class="fixed top-0 inset-x-0 z-50 bg-[#008a2f]">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
       <a href="/4/" class="flex items-center gap-2.5">
-        <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7" />
-        <span class="font-bold text-base">أسس</span>
+        <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7 brightness-0 invert" />
+        <span class="font-bold text-white text-lg">أسس</span>
       </a>
-      <div class="hidden md:flex items-center gap-7 text-[13px] font-medium text-gray-500 dark:text-gray-400">
-        <a href="#about" class="hover:text-gray-900 dark:hover:text-white transition-colors">من نحن</a>
-        <a href="#services" class="hover:text-gray-900 dark:hover:text-white transition-colors">الخدمات</a>
-        <a href="#blog" class="hover:text-gray-900 dark:hover:text-white transition-colors">المدونة</a>
-        <a href="#projects" class="hover:text-gray-900 dark:hover:text-white transition-colors">المشاريع</a>
+      <div class="hidden md:flex items-center gap-7 text-sm text-white/80">
+        <a href="#about" class="hover:text-white transition-colors">من نحن</a>
+        <a href="#services" class="hover:text-white transition-colors">الخدمات</a>
+        <a href="#contest" class="hover:text-white transition-colors">الجائزة</a>
+        <a href="#timeline" class="hover:text-white transition-colors">تاريخنا</a>
+        <a href="#projects" class="hover:text-white transition-colors">المشاريع</a>
+        <a href="#support" class="hover:text-white transition-colors">ادعمنا</a>
       </div>
-      <div class="flex items-center gap-2.5">
-        <button id="theme-toggle" aria-label="تبديل الوضع" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">
-          <svg class="w-[18px] h-[18px] hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          <svg class="w-[18px] h-[18px] block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <div class="flex items-center gap-2">
+        <button id="theme-toggle" class="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white transition-colors" aria-label="تبديل المظهر">
+          <svg class="w-4 h-4 theme-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+          <svg class="w-4 h-4 theme-sun hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></svg>
         </button>
-        <span id="lang-toggle" class="text-[11px] font-dm font-semibold tracking-wider text-gray-400 cursor-pointer hover:text-gray-700 dark:hover:text-white transition-colors">EN</span>
-        <button id="mobile-menu-btn" class="md:hidden w-8 h-8 flex items-center justify-center text-gray-500">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <button id="mobile-toggle" class="md:hidden w-8 h-8 flex items-center justify-center text-white/70" aria-label="القائمة">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 9h16.5m-16.5 6h16.5" /></svg>
         </button>
       </div>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden px-6 py-4 space-y-3 text-sm border-t border-gray-100 dark:border-white/[0.05]">
-      <a href="#about" class="block text-gray-500">من نحن</a>
-      <a href="#services" class="block text-gray-500">الخدمات</a>
-      <a href="#blog" class="block text-gray-500">المدونة</a>
-      <a href="#projects" class="block text-gray-500">المشاريع</a>
+    <div id="mobile-menu" class="mobile-menu bg-[#006b24]">
+      <div class="flex flex-col px-6 pb-4 text-sm text-white/80">
+        <a href="#about" class="py-2.5 hover:text-white transition-colors">من نحن</a>
+        <a href="#services" class="py-2.5 hover:text-white transition-colors">الخدمات</a>
+        <a href="#contest" class="py-2.5 hover:text-white transition-colors">الجائزة</a>
+        <a href="#timeline" class="py-2.5 hover:text-white transition-colors">تاريخنا</a>
+        <a href="#projects" class="py-2.5 hover:text-white transition-colors">المشاريع</a>
+        <a href="#support" class="py-2.5 hover:text-white transition-colors">ادعمنا</a>
+      </div>
     </div>
   </nav>
 
-  <!-- HERO - Full width split -->
-  <section class="pt-16 min-h-screen flex flex-col">
-    <div class="flex-1 grid lg:grid-cols-2">
-      <!-- Left: Content -->
-      <div class="flex items-center px-8 md:px-16 lg:px-20 py-20">
-        <div class="max-w-lg">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-aosus-green/10 dark:bg-aosus-green/15 text-aosus-green text-xs font-medium mb-6 animate-up">
-            <span class="w-1.5 h-1.5 rounded-full bg-aosus-green"></span>
-            منظمة غير ربحية 501(c)(3)
-          </div>
-          <h1 class="text-4xl md:text-5xl font-bold leading-[1.15] mb-6 animate-up d1">
-            أكبر مجتمع عربي
-            <span class="text-aosus-green">للبرمجيات الحرة</span>
-            والمفتوحة المصدر
-          </h1>
-          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 animate-up d2">
-            نجمع أكثر من 6,000 عضو من المطورين والمستخدمين العرب في بيئة تعاونية لنشر ثقافة المصادر المفتوحة وحماية الخصوصية الرقمية.
-          </p>
-          <div class="flex flex-wrap gap-3 animate-up d3">
-            <a href="https://discourse.aosus.org" class="inline-flex items-center gap-2 px-5 py-2.5 bg-aosus-green text-white text-sm font-medium rounded-lg hover:bg-aosus-green-dark transition-colors">
-              انضم إلى المنتدى
-            </a>
-            <a href="https://discord.gg/YJUzEhU955" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 dark:bg-white/[0.06] text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-white/[0.1] transition-colors">
-              Discord
-            </a>
-            <a href="https://matrix.to/#/#aosus:aosus.org" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-100 dark:bg-white/[0.06] text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-white/[0.1] transition-colors">
-              Matrix
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Right: Visual -->
-      <div class="hidden lg:flex items-center justify-center bg-gradient-to-br from-aosus-green/[0.04] to-aosus-blue/[0.04] dark:from-aosus-green/[0.08] dark:to-aosus-blue/[0.08] relative overflow-hidden">
-        <div class="relative">
-          <img src="/brand/aosus-icon.svg" alt="أسس" class="w-48 h-48 opacity-30" />
-        </div>
-        <!-- Stats overlay -->
-        <div class="absolute bottom-12 right-12 left-12 grid grid-cols-2 gap-4">
-          <div class="bg-white/80 dark:bg-black/40 backdrop-blur-lg rounded-xl p-5 border border-gray-200/50 dark:border-white/[0.06]">
-            <div class="text-2xl font-bold text-aosus-green font-dm">6,000+</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">عضو فعال</div>
-          </div>
-          <div class="bg-white/80 dark:bg-black/40 backdrop-blur-lg rounded-xl p-5 border border-gray-200/50 dark:border-white/[0.06]">
-            <div class="text-2xl font-bold text-aosus-blue font-dm">5,000+</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">مشاركة</div>
-          </div>
-          <div class="bg-white/80 dark:bg-black/40 backdrop-blur-lg rounded-xl p-5 border border-gray-200/50 dark:border-white/[0.06]">
-            <div class="text-2xl font-bold font-dm">3,000+</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">موضوع</div>
-          </div>
-          <div class="bg-white/80 dark:bg-black/40 backdrop-blur-lg rounded-xl p-5 border border-gray-200/50 dark:border-white/[0.06]">
-            <div class="text-2xl font-bold font-dm">10</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">سنوات</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Mobile stats -->
-    <div class="lg:hidden grid grid-cols-4 gap-4 px-8 py-8 bg-gray-50 dark:bg-white/[0.02] border-t border-gray-100 dark:border-white/[0.05]">
-      <div class="text-center">
-        <div class="text-xl font-bold text-aosus-green font-dm">6K+</div>
-        <div class="text-[10px] text-gray-500 mt-0.5">عضو</div>
-      </div>
-      <div class="text-center">
-        <div class="text-xl font-bold font-dm">5K+</div>
-        <div class="text-[10px] text-gray-500 mt-0.5">مشاركة</div>
-      </div>
-      <div class="text-center">
-        <div class="text-xl font-bold text-aosus-blue font-dm">3K+</div>
-        <div class="text-[10px] text-gray-500 mt-0.5">موضوع</div>
-      </div>
-      <div class="text-center">
-        <div class="text-xl font-bold font-dm">10</div>
-        <div class="text-[10px] text-gray-500 mt-0.5">سنوات</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT - Alternating sections -->
-  <section id="about" class="bg-gray-50 dark:bg-white/[0.02] border-y border-gray-100 dark:border-white/[0.05]">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid lg:grid-cols-2">
-        <div class="px-8 md:px-16 lg:px-20 py-20">
-          <span class="text-xs font-semibold tracking-widest text-aosus-green uppercase font-dm">من نحن</span>
-          <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-6 leading-tight">مجتمع مبني على قيم التعاون والشفافية</h2>
-          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-            أسس هو مجتمع غير ربحي أسسه تقنيون عرب لنشر ثقافة البرمجيات الحرة والمفتوحة المصدر في العالم العربي. نعمل على بناء جسور المعرفة وتوفير بيئة تعاونية.
-          </p>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-aosus-green/10 dark:bg-aosus-green/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-4 h-4 text-aosus-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-sm">التعاون</h4>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">بيئة داعمة للجميع</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-aosus-blue/10 dark:bg-aosus-blue/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-4 h-4 text-aosus-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-sm">الشفافية</h4>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">شفافية مالية وإدارية</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-aosus-green/10 dark:bg-aosus-green/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-4 h-4 text-aosus-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-sm">الخصوصية</h4>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">حماية البيانات الشخصية</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-aosus-blue/10 dark:bg-aosus-blue/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg class="w-4 h-4 text-aosus-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"/></svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-sm">المسؤولية</h4>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">التزام بالمجتمع</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Timeline side -->
-        <div class="bg-white dark:bg-[#0b0b0f] px-8 md:px-16 lg:px-20 py-20 border-r border-gray-100 dark:border-white/[0.05]">
-          <span class="text-xs font-semibold tracking-widest text-aosus-blue uppercase font-dm">تاريخنا</span>
-          <h3 class="text-xl font-bold mt-3 mb-8">رحلة عشر سنوات</h3>
-          <div class="space-y-6">
-            {[
-              { year: '2015', text: 'انطلاق فكرة مجتمع عربي للمصادر المفتوحة' },
-              { year: '2016', text: 'تأسيس المجتمع رسمياً وإطلاق المنتدى' },
-              { year: '2017', text: 'إطلاق مبادرات تعريب البرمجيات' },
-              { year: '2021', text: 'إطلاق Matrix ومسابقة الكتابة' },
-              { year: '2022', text: 'الانضمام إلى Open Collective' },
-              { year: '2024', text: 'منظمة غير ربحية 501(c)(3)' },
-            ].map((t) => (
-              <div class="flex gap-4">
-                <div class="text-sm font-bold font-dm text-aosus-green w-12 flex-shrink-0">{t.year}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-400 pb-6 border-b border-gray-100 dark:border-white/[0.05] flex-1">{t.text}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES - Bold heading with grid -->
-  <section id="services" class="py-24 px-8 md:px-16 lg:px-10">
-    <div class="max-w-7xl mx-auto">
-      <div class="max-w-3xl mb-14">
-        <span class="text-xs font-semibold tracking-widest text-aosus-blue uppercase font-dm">الخدمات</span>
-        <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-4">خدمات تحترم خصوصيتك</h2>
-        <p class="text-gray-500 dark:text-gray-400">واجهات بديلة مفتوحة المصدر للخدمات الشائعة نستضيفها على خوادمنا.</p>
-      </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 dark:bg-white/[0.06] rounded-2xl overflow-hidden">
-        {[
-          { name: 'SearXNG', desc: 'محرك بحث وصفي يحترم الخصوصية', accent: 'green' },
-          { name: 'Simply Translate', desc: 'ترجمة فورية بدون تتبع', accent: 'blue' },
-          { name: 'Redlib', desc: 'واجهة بديلة لمنصة Reddit', accent: 'green' },
-          { name: 'Element', desc: 'تواصل مشفر عبر Matrix', accent: 'blue' },
-          { name: 'rimgo', desc: 'واجهة بديلة لـ Imgur', accent: 'green' },
-          { name: 'Scribe', desc: 'واجهة بديلة لـ Medium', accent: 'blue' },
-          { name: 'Quetre', desc: 'واجهة بديلة لـ Quora', accent: 'green' },
-          { name: 'Sticktock', desc: 'واجهة بديلة لـ TikTok', accent: 'blue' },
-          { name: 'Nitter', desc: 'واجهة بديلة لتويتر', accent: 'green' },
-        ].map((s) => (
-          <div class="bg-white dark:bg-[#0b0b0f] p-6 group hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
-            <div class={`w-2 h-2 rounded-full mb-4 ${s.accent === 'green' ? 'bg-aosus-green' : 'bg-aosus-blue'}`}></div>
-            <h3 class={`font-semibold text-sm font-dm mb-1 group-hover:${s.accent === 'green' ? 'text-aosus-green' : 'text-aosus-blue'} transition-colors`}>{s.name}</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400">{s.desc}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- BLOG - Large feature -->
-  <section id="blog" class="bg-gray-50 dark:bg-white/[0.02] border-y border-gray-100 dark:border-white/[0.05] py-24 px-8 md:px-16 lg:px-10">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-end justify-between mb-14">
-        <div>
-          <span class="text-xs font-semibold tracking-widest text-aosus-green uppercase font-dm">المدونة</span>
-          <h2 class="text-3xl md:text-4xl font-bold mt-4">أحدث المقالات</h2>
-        </div>
-        <a href="#" class="text-sm text-aosus-green font-medium hover:underline hidden sm:inline">عرض الكل</a>
-      </div>
-
-      <!-- Featured -->
-      <a href="#" class="group block rounded-2xl overflow-hidden mb-8 bg-white dark:bg-[#0b0b0f] border border-gray-200/60 dark:border-white/[0.06] hover:shadow-lg dark:hover:shadow-black/20 transition-shadow">
-        <div class="grid lg:grid-cols-2">
-          <div class="aspect-[4/3] lg:aspect-auto bg-gradient-to-br from-aosus-green/5 to-aosus-blue/5 dark:from-aosus-green/10 dark:to-aosus-blue/10 flex items-center justify-center">
-            <img src="/brand/aosus-icon.svg" alt="" class="w-24 h-24 opacity-15" />
-          </div>
-          <div class="p-8 md:p-12 flex flex-col justify-center">
-            <div class="flex items-center gap-2 text-xs text-gray-400 mb-3">
-              <span class="text-aosus-green font-medium">مقال مميز</span>
-              <span>·</span>
-              <time>15 يناير 2025</time>
-            </div>
-            <h3 class="text-2xl font-bold mb-3 group-hover:text-aosus-green transition-colors">البرمجيات الحرة: لماذا تهم المستخدم العربي؟</h3>
-            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">نستعرض أهمية البرمجيات الحرة والمفتوحة المصدر للمستخدم العربي وكيف يمكنها تحسين تجربته الرقمية مع الحفاظ على الخصوصية.</p>
-            <span class="text-sm text-aosus-green font-medium">اقرأ المقال ←</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Grid -->
-      <div class="grid md:grid-cols-3 gap-6">
-        {[
-          { title: 'دليلك الشامل لتوزيعات لينكس', date: '8 يناير 2025', time: '5 دقائق' },
-          { title: 'المساهمة في المشاريع المفتوحة', date: '1 يناير 2025', time: '3 دقائق' },
-          { title: 'أفضل البرمجيات الحرة البديلة', date: '25 ديسمبر 2024', time: '7 دقائق' },
-        ].map((a) => (
-          <a href="#" class="group block p-6 rounded-2xl bg-white dark:bg-[#0b0b0f] border border-gray-200/60 dark:border-white/[0.06] hover:shadow-md dark:hover:shadow-black/20 transition-shadow">
-            <div class="flex items-center gap-2 text-xs text-gray-400 mb-3">
-              <time>{a.date}</time>
-              <span>·</span>
-              <span>{a.time}</span>
-            </div>
-            <h3 class="font-semibold mb-2 group-hover:text-aosus-green transition-colors">{a.title}</h3>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="py-24 px-8 md:px-16 lg:px-10">
-    <div class="max-w-7xl mx-auto">
-      <span class="text-xs font-semibold tracking-widest text-aosus-blue uppercase font-dm">المشاريع</span>
-      <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-12">مشاريعنا المفتوحة</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <a href="https://github.com/aosus" class="group p-8 rounded-2xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200/60 dark:border-white/[0.06] hover:border-aosus-green/30 transition-colors">
-          <div class="w-14 h-14 rounded-2xl bg-white dark:bg-white/[0.06] border border-gray-200/60 dark:border-white/[0.06] flex items-center justify-center mb-6 overflow-hidden">
-            <img src="/brand/GNUlinuxsa.webp" alt="GNULinuxSA" class="w-11 h-11 dark:hidden" />
-            <img src="/brand/GNUlinuxsa-white.webp" alt="GNULinuxSA" class="w-11 h-11 hidden dark:block" />
-          </div>
-          <h3 class="font-bold text-xl mb-2 group-hover:text-aosus-green transition-colors">GNULinux Saudi Arabia</h3>
-          <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">مجتمع لينكس في السعودية — نشر ثقافة البرمجيات الحرة وتوفير الدعم التقني.</p>
-        </a>
-        <a href="https://github.com/aosus" class="group p-8 rounded-2xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200/60 dark:border-white/[0.06] hover:border-aosus-blue/30 transition-colors">
-          <div class="w-14 h-14 rounded-2xl bg-white dark:bg-white/[0.06] border border-gray-200/60 dark:border-white/[0.06] flex items-center justify-center mb-6 overflow-hidden">
-            <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Bridge" class="w-11 h-11" />
-          </div>
-          <h3 class="font-bold text-xl mb-2 group-hover:text-aosus-blue transition-colors">Discourse Chat Bridge</h3>
-          <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">جسر مفتوح المصدر للربط بين Discourse ومنصات التواصل الأخرى.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- WRITING CONTEST - Bold split -->
-  <section class="bg-aosus-green">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2">
-      <div class="px-8 md:px-16 lg:px-20 py-20 text-white">
-        <span class="text-xs font-semibold tracking-widest uppercase font-dm text-white/60">جائزة الكتابة</span>
-        <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-4">مسابقة الكتابة الشهرية</h2>
-        <p class="text-white/75 leading-relaxed mb-8">
-          اكتب عن البرمجيات الحرة والمفتوحة المصدر باللغة العربية وشارك في مسابقتنا الشهرية. جوائز تصل إلى 250$ وأكثر.
+  <!-- HERO — Full green background -->
+  <section class="bg-[#008a2f] pt-14">
+    <div class="min-h-[90vh] flex flex-col justify-center px-6 py-20">
+      <div class="max-w-5xl mx-auto w-full">
+        <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[1.1] text-white mb-8 reveal">
+          أكبر مجتمع عربي
+          <br />للبرمجيات الحرة
+          <br />والمفتوحة المصدر
+        </h1>
+        <p class="text-lg md:text-xl text-white/75 max-w-xl leading-relaxed mb-12 reveal">
+          مجتمع غير ربحي أسسه مجموعة من التقنيين العرب بهدف نشر ثقافة المصادر المفتوحة والبرمجيات الحرة في العالم العربي
         </p>
-        <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-aosus-green text-sm font-semibold rounded-lg hover:bg-white/90 transition-colors">
-          شارك الآن
-        </a>
-      </div>
-      <div class="hidden lg:flex items-center justify-center bg-aosus-green-dark/30 px-20 py-20">
-        <div class="text-center text-white">
-          <div class="text-7xl font-bold font-dm">250$+</div>
-          <div class="text-white/60 text-sm mt-2">جائزة شهرية</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SUPPORT -->
-  <section class="py-24 px-8 md:px-16 lg:px-10">
-    <div class="max-w-3xl mx-auto text-center">
-      <span class="text-xs font-semibold tracking-widest text-aosus-green uppercase font-dm">ادعمنا</span>
-      <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-4">ساهم في دعم المجتمع</h2>
-      <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed">بدعمك نستمر في تقديم خدمات مجانية تحترم الخصوصية ونشر المحتوى التعليمي.</p>
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="https://github.com/sponsors/aosus" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-          GitHub Sponsors
-        </a>
-        <a href="https://hcb.hackclub.com/donations/start/aosus" class="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 dark:border-white/15 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:border-gray-400 dark:hover:border-white/25 transition-colors">
-          تبرع عبر HCB
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-gray-100 dark:border-white/[0.05] py-12 px-8 md:px-16 lg:px-10">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-        <div class="col-span-2 md:col-span-1">
-          <a href="/4/" class="flex items-center gap-2 mb-4">
-            <img src="/brand/aosus-icon.svg" alt="أسس" class="w-6 h-6" />
-            <span class="font-bold text-sm">أسس</span>
+        <div class="flex flex-wrap gap-4 mb-16 reveal">
+          <a href="https://discourse.aosus.org" class="px-8 py-3.5 bg-white text-[#008a2f] rounded-lg text-sm font-bold hover:bg-white/90 transition-colors">
+            انضم للمجتمع
           </a>
-          <p class="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر</p>
+          <a href="#about" class="px-8 py-3.5 border-2 border-white/40 text-white rounded-lg text-sm font-medium hover:border-white/70 transition-colors">
+            تعرّف علينا
+          </a>
         </div>
-        <div>
-          <h4 class="text-xs font-semibold mb-3">المجتمع</h4>
-          <ul class="space-y-2 text-xs text-gray-400 dark:text-gray-500">
-            <li><a href="https://discourse.aosus.org" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">المنتدى</a></li>
-            <li><a href="https://discord.gg/YJUzEhU955" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Discord</a></li>
-            <li><a href="https://matrix.to/#/#aosus:aosus.org" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Matrix</a></li>
-            <li><a href="https://t.me/aosus" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Telegram</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold mb-3">تابعنا</h4>
-          <ul class="space-y-2 text-xs text-gray-400 dark:text-gray-500">
-            <li><a href="https://twitter.com/aosusdotorg" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Twitter / X</a></li>
-            <li><a href="https://mastodon.online/@aosus" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Mastodon</a></li>
-            <li><a href="https://bsky.app/profile/aosus.org" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Bluesky</a></li>
-            <li><a href="https://facebook.com/aosus1" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Facebook</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="text-xs font-semibold mb-3">المزيد</h4>
-          <ul class="space-y-2 text-xs text-gray-400 dark:text-gray-500">
-            <li><a href="https://github.com/aosus" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">GitHub</a></li>
-            <li><a href="https://linkedin.com/company/aosus" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">LinkedIn</a></li>
-            <li><a href="mailto:contact@aosus.org" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">تواصل معنا</a></li>
-          </ul>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
+          <div>
+            <div class="font-dm text-5xl md:text-6xl font-black text-white">6K<span class="text-white/50">+</span></div>
+            <div class="text-sm text-white/60 mt-1">عضو</div>
+          </div>
+          <div>
+            <div class="font-dm text-5xl md:text-6xl font-black text-white">5K<span class="text-white/50">+</span></div>
+            <div class="text-sm text-white/60 mt-1">مشاركة</div>
+          </div>
+          <div>
+            <div class="font-dm text-5xl md:text-6xl font-black text-white">10</div>
+            <div class="text-sm text-white/60 mt-1">سنوات</div>
+          </div>
+          <div>
+            <div class="font-dm text-5xl md:text-6xl font-black text-white">3K<span class="text-white/50">+</span></div>
+            <div class="text-sm text-white/60 mt-1">موضوع</div>
+          </div>
         </div>
       </div>
-      <div class="border-t border-gray-100 dark:border-white/[0.05] pt-6 flex items-center justify-between">
-        <p class="text-[10px] text-gray-400 dark:text-gray-500">© 2024 أسس — منظمة غير ربحية 501(c)(3)</p>
-        <a href="/" class="text-[10px] text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">جميع التصاميم</a>
+    </div>
+  </section>
+
+  <!-- ABOUT / من نحن — White/off-white -->
+  <section id="about" class="py-24 md:py-32 px-6" style="background: var(--white);">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 reveal" style="color: var(--text);">من نحن</h2>
+
+      <div class="grid md:grid-cols-2 gap-12 mb-20">
+        <div class="reveal">
+          <h3 class="text-xs font-bold tracking-widest uppercase mb-4" style="color: var(--green);">الرؤية</h3>
+          <p class="text-lg leading-[1.8]" style="color: var(--text-muted);">
+            نشر الوعي بأهمية البرمجيات الحرة ومفتوحة المصدر في العالم العربي، وبناء مجتمع تقني عربي متميز يساهم في تطوير ودعم المشاريع مفتوحة المصدر.
+          </p>
+        </div>
+        <div class="reveal">
+          <h3 class="text-xs font-bold tracking-widest uppercase mb-4" style="color: var(--green);">المهمة</h3>
+          <p class="text-lg leading-[1.8]" style="color: var(--text-muted);">
+            تقديم منصة متكاملة للنقاش والتعلم ومشاركة المعرفة حول البرمجيات الحرة والمفتوحة المصدر، وتوفير خدمات تحترم خصوصية المستخدمين.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px rounded-xl overflow-hidden reveal" style="background: var(--border);">
+        <div class="p-8" style="background: var(--off-white);">
+          <div class="w-10 h-10 rounded-lg bg-[#008a2f] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+          </div>
+          <h4 class="text-lg font-bold mb-2" style="color: var(--text);">التعاون</h4>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">نؤمن بقوة العمل الجماعي والتعاون المفتوح بين أعضاء المجتمع</p>
+        </div>
+        <div class="p-8" style="background: var(--off-white);">
+          <div class="w-10 h-10 rounded-lg bg-[#008a2f] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </div>
+          <h4 class="text-lg font-bold mb-2" style="color: var(--text);">الشفافية</h4>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">نلتزم بالشفافية الكاملة في جميع أعمالنا وقراراتنا</p>
+        </div>
+        <div class="p-8" style="background: var(--off-white);">
+          <div class="w-10 h-10 rounded-lg bg-[#008a2f] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+          </div>
+          <h4 class="text-lg font-bold mb-2" style="color: var(--text);">الخصوصية</h4>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">نحترم خصوصية المستخدمين ونوفر بدائل تحمي بياناتهم</p>
+        </div>
+        <div class="p-8" style="background: var(--off-white);">
+          <div class="w-10 h-10 rounded-lg bg-[#008a2f] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
+          </div>
+          <h4 class="text-lg font-bold mb-2" style="color: var(--text);">المسؤولية</h4>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">نتحمل مسؤولية بناء مجتمع تقني عربي متميز ومستدام</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES / الخدمات — Dark section -->
+  <section id="services" class="py-24 md:py-32 px-6" style="background: var(--dark-bg);">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 reveal">الخدمات</h2>
+      <p class="text-base text-white/50 mb-12 max-w-xl reveal">
+        بدائل مفتوحة المصدر تحترم خصوصيتك، مستضافة على خوادمنا
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal">
+        <a href="https://search.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">SearXNG</h3>
+          <p class="text-sm text-white/40">محرك بحث يحترم الخصوصية</p>
+        </a>
+        <a href="https://translate.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">Simply Translate</h3>
+          <p class="text-sm text-white/40">ترجمة نصوص بدون تتبع</p>
+        </a>
+        <a href="https://nitter.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">Nitter</h3>
+          <p class="text-sm text-white/40">واجهة بديلة لتويتر</p>
+        </a>
+        <a href="https://redlib.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">Redlib</h3>
+          <p class="text-sm text-white/40">واجهة بديلة لريديت</p>
+        </a>
+        <a href="https://element.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">Element</h3>
+          <p class="text-sm text-white/40">تطبيق محادثة مشفر</p>
+        </a>
+        <a href="https://rimgo.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">rimgo</h3>
+          <p class="text-sm text-white/40">واجهة بديلة لإمجر</p>
+        </a>
+        <a href="https://scribe.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">Scribe</h3>
+          <p class="text-sm text-white/40">واجهة بديلة لميديم</p>
+        </a>
+        <a href="https://quetre.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">Quetre</h3>
+          <p class="text-sm text-white/40">واجهة بديلة لكورا</p>
+        </a>
+        <a href="https://tok.aosus.org" target="_blank" rel="noopener" class="group p-6 rounded-xl border border-white/[0.06] hover:border-[#008a2f]/50 transition-colors">
+          <h3 class="text-white font-semibold mb-1 group-hover:text-[#00b33c] transition-colors">ProxiTok</h3>
+          <p class="text-sm text-white/40">واجهة بديلة لتيك توك</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING CONTEST / جائزة الكتابة — Green section -->
+  <section id="contest" class="bg-[#008a2f] py-24 md:py-32 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-[1.3fr,1fr] gap-12 items-center reveal">
+        <div>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">جائزة الكتابة الشهرية</h2>
+          <p class="text-lg text-white/75 leading-relaxed mb-8">
+            مسابقة شهرية لتشجيع إنتاج المحتوى العربي التقني المتميز حول البرمجيات الحرة والمفتوحة المصدر
+          </p>
+          <a href="https://discourse.aosus.org/t/15188" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-[#008a2f] rounded-lg text-sm font-bold hover:bg-white/90 transition-colors">
+            شارك الآن
+          </a>
+        </div>
+        <div class="text-center">
+          <div class="font-dm text-8xl md:text-9xl font-black text-white">$250</div>
+          <div class="text-white/60 mt-2">جائزة شهرية+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE / تاريخنا — White -->
+  <section id="timeline" class="py-24 md:py-32 px-6" style="background: var(--white);">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 reveal" style="color: var(--text);">تاريخنا</h2>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+        <div class="p-6 rounded-xl" style="background: var(--off-white);">
+          <div class="font-dm text-4xl font-black mb-3" style="color: var(--green);">2015</div>
+          <h3 class="font-bold mb-1" style="color: var(--text);">البداية</h3>
+          <p class="text-sm" style="color: var(--text-muted);">بدأت فكرة تأسيس مجتمع عربي للمصادر المفتوحة</p>
+        </div>
+        <div class="p-6 rounded-xl" style="background: var(--off-white);">
+          <div class="font-dm text-4xl font-black mb-3" style="color: var(--green);">2016</div>
+          <h3 class="font-bold mb-1" style="color: var(--text);">التأسيس</h3>
+          <p class="text-sm" style="color: var(--text-muted);">تأسيس مجتمع أسس رسمياً وإطلاق منصة النقاش</p>
+        </div>
+        <div class="p-6 rounded-xl" style="background: var(--off-white);">
+          <div class="font-dm text-4xl font-black mb-3" style="color: var(--green);">2017</div>
+          <h3 class="font-bold mb-1" style="color: var(--text);">التعريب</h3>
+          <p class="text-sm" style="color: var(--text-muted);">المساهمة في تعريب البرمجيات الحرة ومفتوحة المصدر</p>
+        </div>
+        <div class="p-6 rounded-xl" style="background: var(--off-white);">
+          <div class="font-dm text-4xl font-black mb-3" style="color: var(--green);">2021</div>
+          <h3 class="font-bold mb-1" style="color: var(--text);">Matrix والكتابة</h3>
+          <p class="text-sm" style="color: var(--text-muted);">إطلاق خادم Matrix وبدء مسابقة الكتابة الشهرية</p>
+        </div>
+        <div class="p-6 rounded-xl" style="background: var(--off-white);">
+          <div class="font-dm text-4xl font-black mb-3" style="color: var(--green);">2022</div>
+          <h3 class="font-bold mb-1" style="color: var(--text);">Open Collective</h3>
+          <p class="text-sm" style="color: var(--text-muted);">الانضمام لمنصة Open Collective لإدارة التبرعات بشفافية</p>
+        </div>
+        <div class="p-6 rounded-xl" style="background: var(--off-white);">
+          <div class="font-dm text-4xl font-black mb-3" style="color: var(--green);">2023</div>
+          <h3 class="font-bold mb-1" style="color: var(--text);">Discord</h3>
+          <p class="text-sm" style="color: var(--text-muted);">إطلاق خادم Discord للوصول لشريحة أوسع من المجتمع</p>
+        </div>
+        <div class="p-6 rounded-xl bg-[#008a2f] col-span-1 lg:col-span-2">
+          <div class="font-dm text-4xl font-black text-white mb-3">2024</div>
+          <h3 class="font-bold text-white mb-1">منظمة غير ربحية 501(c)(3)</h3>
+          <p class="text-sm text-white/70">الحصول على صفة المنظمة غير الربحية 501(c)(3) في الولايات المتحدة</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS / المشاريع — Off-white -->
+  <section id="projects" class="py-24 md:py-32 px-6" style="background: var(--off-white);">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-12 reveal" style="color: var(--text);">المشاريع</h2>
+
+      <div class="grid md:grid-cols-2 gap-6 reveal">
+        <div class="p-8 rounded-xl" style="background: var(--white);">
+          <div class="mb-5">
+            <img src="/brand/GNUlinuxsa.webp" alt="GNULinux Saudi Arabia" class="h-10 gnulinux-light" />
+            <img src="/brand/GNUlinuxsa-white.webp" alt="GNULinux Saudi Arabia" class="h-10 gnulinux-dark hidden" />
+          </div>
+          <h3 class="text-xl font-bold mb-2" style="color: var(--text);">جنو/لينكس السعودية</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color: var(--text-muted);">
+            مجموعة مجتمعية متخصصة في نشر ثقافة جنو/لينكس والبرمجيات الحرة في المملكة العربية السعودية
+          </p>
+          <a href="https://gnulinux.sa" target="_blank" rel="noopener" class="text-sm font-semibold hover:underline" style="color: var(--green);">gnulinux.sa</a>
+        </div>
+        <div class="p-8 rounded-xl" style="background: var(--white);">
+          <div class="mb-5 h-10 flex items-center">
+            <span class="text-lg font-bold discourse-light" style="color: var(--text);">Discourse Chat Bridge</span>
+            <img src="/brand/Discourse_Bridge-white.webp" alt="Discourse Chat Bridge" class="h-10 discourse-dark hidden" />
+          </div>
+          <h3 class="text-xl font-bold mb-2" style="color: var(--text);">جسر محادثات Discourse</h3>
+          <p class="text-sm leading-relaxed mb-5" style="color: var(--text-muted);">
+            إضافة مفتوحة المصدر تربط محادثات Discourse مع منصات التواصل الأخرى مثل Matrix و Discord
+          </p>
+          <a href="https://github.com/aosus/discourse-chat-bridge" target="_blank" rel="noopener" class="text-sm font-semibold hover:underline" style="color: var(--green);">المستودع على GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT / ادعم المجتمع — White -->
+  <section id="support" class="py-24 md:py-32 px-6" style="background: var(--white);">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 reveal" style="color: var(--text);">ادعم المجتمع</h2>
+      <p class="text-base mb-12 reveal" style="color: var(--text-muted);">
+        ساهم في استمرار خدمات المجتمع ودعم المشاريع مفتوحة المصدر
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6 reveal">
+        <a href="https://github.com/sponsors/aosus" target="_blank" rel="noopener" class="group block p-8 rounded-xl border transition-colors" style="border-color: var(--border);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-6 h-6" style="color: var(--green);" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+            <h3 class="text-xl font-bold" style="color: var(--text);">GitHub Sponsors</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">ادعمنا عبر GitHub Sponsors بتبرع شهري أو لمرة واحدة</p>
+        </a>
+        <a href="https://hcb.hackclub.com/donations/start/aosus" target="_blank" rel="noopener" class="group block p-8 rounded-xl border transition-colors" style="border-color: var(--border);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-6 h-6" style="color: var(--green);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
+            <h3 class="text-xl font-bold" style="color: var(--text);">HCB</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">تبرع عبر Hack Club Bank — بطاقة ائتمانية أو تحويل بنكي</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dark -->
+  <footer class="py-16 px-6" style="background: var(--dark-bg);">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex flex-col md:flex-row items-start justify-between gap-10 mb-12">
+        <div>
+          <a href="/4/" class="flex items-center gap-3 mb-3">
+            <img src="/brand/aosus-icon.svg" alt="أسس" class="w-7 h-7 brightness-0 invert" />
+            <span class="font-bold text-white text-lg">أسس</span>
+          </a>
+          <p class="text-sm text-white/40 max-w-xs">أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر</p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="https://twitter.com/aosusdotorg" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="Twitter">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://bsky.app/profile/aosus.org" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="Bluesky">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.627 3.59 3.501 6.158 3.186-4.349.639-8.166 2.428-3.326 8.567 5.433 5.14 7.61-1.337 8.544-4.243.934 2.906 2.065 9.258 8.544 4.243 4.839-6.139.874-7.928-3.326-8.567 2.568.315 5.373-.56 6.158-3.186C23.622 9.418 24 4.458 24 3.768c0-.69-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+          </a>
+          <a href="https://mastodon.online/@aosus" target="_blank" rel="noopener me" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="Mastodon">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 00.023-.043v-1.809a.052.052 0 00-.02-.041.053.053 0 00-.046-.01 20.282 20.282 0 01-4.709.547c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 01-.319-1.433.053.053 0 01.066-.054 19.648 19.648 0 004.636.546c.568 0 1.133-.014 1.691-.042 2.458-.124 5.085-.373 7.035-1.311l.048-.024c1.68-.874 3.167-2.577 3.3-5.399z"/></svg>
+          </a>
+          <a href="https://discord.gg/YJUzEhU955" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="Discord">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+          </a>
+          <a href="https://matrix.to/#/#aosus:aosus.org" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="Matrix">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.277.245.489.559.646.951.152.392.23.863.23 1.417v5.728h-2.349V11.52c0-.286-.01-.559-.032-.812a1.755 1.755 0 00-.18-.66 1.106 1.106 0 00-.438-.448c-.194-.11-.457-.166-.789-.166-.332 0-.6.064-.803.189a1.38 1.38 0 00-.48.499 1.946 1.946 0 00-.231.696 5.56 5.56 0 00-.06.785v4.768h-2.35v-4.8c0-.254-.004-.503-.018-.752a2.074 2.074 0 00-.143-.688 1.052 1.052 0 00-.415-.503c-.194-.13-.476-.196-.846-.196-.168 0-.357.025-.566.074a1.7 1.7 0 00-.553.254 1.478 1.478 0 00-.425.486 1.586 1.586 0 00-.173.779v5.346H5.46V7.81zm13.305 16.19v-22.9H19.33V0H21.6v24h-2.28v-.55z"/></svg>
+          </a>
+          <a href="https://t.me/aosus" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="Telegram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://github.com/aosus" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors" aria-label="GitHub">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/30">
+        <p>© ٢٠٢٤ مجتمع أسس. جميع الحقوق محفوظة.</p>
+        <a href="mailto:contact@aosus.org" class="hover:text-white/60 transition-colors">contact@aosus.org</a>
       </div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('theme-toggle')?.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); });
-    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => { document.getElementById('mobile-menu')?.classList.toggle('hidden'); });
+    // Theme toggle
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const moon = document.querySelector('.theme-moon');
+    const sun = document.querySelector('.theme-sun');
+    
+    function updateUI() {
+      const isDark = html.classList.contains('dark');
+      if (isDark) {
+        moon?.classList.add('hidden');
+        sun?.classList.remove('hidden');
+      } else {
+        moon?.classList.remove('hidden');
+        sun?.classList.add('hidden');
+      }
+      // Toggle project logos
+      document.querySelectorAll('.gnulinux-light').forEach(el => el.classList.toggle('hidden', isDark));
+      document.querySelectorAll('.gnulinux-dark').forEach(el => el.classList.toggle('hidden', !isDark));
+      document.querySelectorAll('.discourse-light').forEach(el => el.classList.toggle('hidden', isDark));
+      document.querySelectorAll('.discourse-dark').forEach(el => el.classList.toggle('hidden', !isDark));
+    }
+    
+    if (localStorage.getItem('theme') === 'dark') html.classList.add('dark');
+    updateUI();
+    
+    toggle?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      updateUI();
+    });
+
+    // Mobile menu
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileToggle?.addEventListener('click', () => mobileMenu?.classList.toggle('active'));
+    mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu?.classList.remove('active')));
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
