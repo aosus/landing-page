@@ -22,14 +22,14 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
 			<header class="text-center mb-20">
 				<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-sm text-white/60 mb-8">
 					<span class="w-2 h-2 rounded-full bg-aosus-green animate-pulse"></span>
-					5 Design Concepts
+					10 Design Concepts
 				</div>
 				<h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-4">
 					<span class="text-white">Aosus</span>
 					<span class="bg-gradient-to-r from-aosus-green to-aosus-blue bg-clip-text text-transparent"> Landing Pages</span>
 				</h1>
 				<p class="text-lg text-white/50 max-w-2xl mx-auto font-['IBM_Plex_Sans_Arabic']">
-					Five unique design concepts for the largest Arabic open-source community
+					Ten unique design concepts for the largest Arabic open-source community
 				</p>
 			</header>
 
@@ -117,6 +117,97 @@ const base = import.meta.env.GITHUB_ACTIONS ? '/landing-page' : '';
 						</div>
 					</div>
 					<div class="absolute top-0 right-0 w-40 h-40 bg-neutral-400/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+				<!-- Divider -->
+				<div class="flex items-center gap-4 py-4">
+					<div class="flex-1 h-px bg-white/10"></div>
+					<span class="text-xs text-white/30 uppercase tracking-[0.2em] font-mono">Hybrid Designs — Canvas + Typography</span>
+					<div class="flex-1 h-px bg-white/10"></div>
+				</div>
+
+				<!-- Design 6: Warm Grid -->
+				<a href={base + "/6/"} class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-aosus-green/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#008a2f44]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-aosus-green/20 to-amber-700/10 border border-aosus-green/20 flex items-center justify-center text-aosus-green text-2xl font-bold">
+							06
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-aosus-green transition-colors mb-2">Warm Grid</h2>
+							<p class="text-white/50">Design 1 + 5 hybrid. Warm cream palette with Swiss grid borders. Canvas particle constellation in hero responding to mouse. Amiri serif headings inside structured grid, monospace labels.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-aosus-green group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-aosus-green/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 7: Calligraphic Flow -->
+				<a href={base + "/7/"} class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#f59e0b44]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl font-bold">
+							07
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-amber-400 transition-colors mb-2">Calligraphic Flow</h2>
+							<p class="text-white/50">Serif elegance meets Arabic calligraphy art. Dark background with Amiri for key moments. Canvas animated calligraphy strokes draw progressively in the hero section.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-amber-400 group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 8: Tessellation -->
+				<a href={base + "/8/"} class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-aosus-blue/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#1d70ba44]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-aosus-blue/20 to-aosus-blue/5 border border-aosus-blue/20 flex items-center justify-center text-aosus-blue text-2xl font-bold">
+							08
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-aosus-blue-light transition-colors mb-2">Tessellation</h2>
+							<p class="text-white/50">Swiss precision meets Islamic geometric art. Clean backgrounds with IBM Plex fonts, strict grid layout. Canvas slowly rotating Islamic star tessellation pattern at low opacity in background.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-aosus-blue-light group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-aosus-blue/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 9: Ink Reveal -->
+				<a href={base + "/9/"} class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-neutral-500/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#73737344]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-neutral-500/20 to-neutral-500/5 border border-neutral-500/20 flex items-center justify-center text-neutral-400 text-2xl font-bold">
+							09
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-neutral-300 transition-colors mb-2">Ink Reveal</h2>
+							<p class="text-white/50">Warmth meets structure with scroll-triggered ink effects. Warm parchment background, serif headings, bordered sections. Canvas ink wash particles burst as sections scroll into view.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-neutral-300 group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-neutral-400/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				</a>
+
+				<!-- Design 10: Kinetic Type -->
+				<a href={base + "/10/"} class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 hover:border-aosus-green/50 hover:bg-white/[0.06] hover:shadow-[0_0_60px_-15px_#008a2f44]">
+					<div class="flex flex-col md:flex-row md:items-center gap-6">
+						<div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-aosus-green/20 to-aosus-blue/10 border border-aosus-green/20 flex items-center justify-center text-aosus-green text-2xl font-bold">
+							10
+						</div>
+						<div class="flex-1">
+							<h2 class="text-2xl font-semibold text-white group-hover:text-aosus-green transition-colors mb-2">Kinetic Type</h2>
+							<p class="text-white/50">Swiss structure meets massive Arabic typography with physics. Clean background, Swiss grid body sections. Canvas hero with Arabic words floating with physics, responding to mouse interaction.</p>
+						</div>
+						<div class="flex-shrink-0 text-white/20 group-hover:text-aosus-green group-hover:translate-x-1 transition-all">
+							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+						</div>
+					</div>
+					<div class="absolute top-0 right-0 w-40 h-40 bg-aosus-green/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
 				</a>
 			</div>
 
