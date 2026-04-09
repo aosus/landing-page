@@ -216,7 +216,11 @@ const Design4 = ({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) => {
         <div className="flex items-center gap-4">
           <div className="hidden md:flex gap-6 font-bold uppercase tracking-widest text-lg">
             {t.nav.links.map((link, i) => (
-              <a key={i} href="#" className={`hover:text-[${i % 2 === 0 ? '#008a2f' : '#1d70ba'}] transition-colors`}>
+              <a
+                key={i}
+                href="#"
+                className={`transition-colors ${i % 2 === 0 ? 'hover:text-[#008a2f]' : 'hover:text-[#1d70ba]'}`}
+              >
                 {link}
               </a>
             ))}
@@ -375,7 +379,7 @@ const Design4 = ({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) => {
             {t.projects.items.map((project, i) => (
               <div
                 key={i}
-                className={`group border-8 ${borderColor} ${project.invert ? `bg-[#008a2f] text-white hover:${isDark ? 'bg-white hover:text-black' : 'bg-black hover:text-white'}` : `${isDark ? 'bg-black' : 'bg-white'} hover:bg-[#1d70ba] hover:text-white`} transition-colors relative overflow-hidden ${i === 1 ? 'md:mt-24' : ''}`}
+                className={`group border-8 ${borderColor} transition-colors relative overflow-hidden ${i === 1 ? 'md:mt-24' : ''} ${project.invert ? `bg-[#008a2f] text-white ${isDark ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}` : `${isDark ? 'bg-black' : 'bg-white'} hover:bg-[#1d70ba] hover:text-white`}`}
               >
                 <div className={`p-8 border-b-8 ${borderColor}`}>
                   <h3 className="font-black text-4xl uppercase mb-2">{project.title}</h3>
