@@ -157,7 +157,7 @@ const Starfield = ({ isDark }: { isDark: boolean }) => {
 };
 
 export function Design3({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) {
-  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'ar');
+  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'en');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const content = lang === 'ar' ? ARABIC : ENGLISH;
   const isDark = theme === 'dark';

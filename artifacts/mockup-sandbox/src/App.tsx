@@ -118,11 +118,11 @@ function Gallery() {
 }
 
 const DESIGN_ROUTE_MAP: Record<string, string> = {
-  "/1": "design-1/Design1En",
-  "/2": "design-2/Design2En",
-  "/3": "design-3/Design3En",
-  "/4": "design-4/Design4En",
-  "/5": "design-5/Design5En",
+  "/1": "design-1/Design1",
+  "/2": "design-2/Design2",
+  "/3": "design-3/Design3",
+  "/4": "design-4/Design4",
+  "/5": "design-5/Design5",
   "/1-ar": "design-1/Design1Ar",
   "/2-ar": "design-2/Design2Ar",
   "/3-ar": "design-3/Design3Ar",

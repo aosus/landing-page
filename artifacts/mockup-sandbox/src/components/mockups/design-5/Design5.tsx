@@ -204,7 +204,7 @@ const Particle = ({ x, y, delay }: { x: number, y: number, delay: number }) => (
 );
 
 export default function Design5({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) {
-  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'ar');
+  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'en');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const t = content[lang];
   const isRtl = lang === 'ar';

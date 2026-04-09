@@ -192,7 +192,7 @@ const MatrixRain = () => {
 };
 
 export default function Design1({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) {
-  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'ar');
+  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'en');
   const [isDark, setIsDark] = useState(true);
   const [mounted, setMounted] = useState(false);
   const t = CONTENT[lang];
