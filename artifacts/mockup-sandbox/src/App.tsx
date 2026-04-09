@@ -128,6 +128,13 @@ const DESIGN_ROUTE_MAP: Record<string, string> = {
   "/3-ar": "design-3/Design3Ar",
   "/4-ar": "design-4/Design4Ar",
   "/5-ar": "design-5/Design5Ar",
+  "/site": "design-aosus/HomePage",
+  "/site/blog": "design-aosus/BlogPage",
+  "/site/article": "design-aosus/ArticlePage",
+  "/site/services": "design-aosus/ServicesPage",
+  "/site/writing-contest": "design-aosus/WritingContestPage",
+  "/site/support-us": "design-aosus/SupportPage",
+  "/site/contact-us": "design-aosus/ContactPage",
 };
 
 function getPreviewPath(): string | null {
