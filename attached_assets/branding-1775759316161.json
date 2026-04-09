@@ -1,0 +1,106 @@
+{
+  "colorScheme": "dark",
+  "fonts": [
+    {
+      "family": "Almarai",
+      "role": "body"
+    },
+    {
+      "family": "Arial",
+      "role": "unknown"
+    },
+    {
+      "family": "Helvetica",
+      "role": "unknown"
+    },
+    {
+      "family": "Lucida Sans Unicode",
+      "role": "unknown"
+    },
+    {
+      "family": "Lucida Grande",
+      "role": "unknown"
+    }
+  ],
+  "colors": {
+    "primary": "#0EB513",
+    "secondary": "#1D7F07",
+    "accent": "#008A2F",
+    "background": "#000000",
+    "textPrimary": "#808080",
+    "link": "#008A2F"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Almarai",
+      "heading": "Almarai"
+    },
+    "fontStacks": {
+      "heading": [
+        "Almarai",
+        "sans-serif"
+      ],
+      "body": [
+        "Almarai",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Almarai",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "17px",
+      "h2": "50px",
+      "body": "20.4px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "3px"
+  },
+  "components": {},
+  "images": {
+    "logo": "https://aosus.org/wp-content/uploads/2021/09/aosus-w-lwogores.png",
+    "favicon": "https://aosus.org/wp-content/uploads/2021/09/fav-150x150.png",
+    "ogImage": "https://aosus.org/wp-content/uploads/2022/09/writing-preview.jpg",
+    "logoHref": "https://aosus.org/",
+    "logoAlt": "مجتمع أسس أسس (أُسُس) تهدف إلى الإثراء في البرمجيات الحرة والمفتوحة المصدر في الوطن العربي"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is located in the header, is visible, links to the homepage, and the alt text matches the brand name 'مجتمع أسس'.",
+    "confidence": 0.95,
+    "source": "llm"
+  },
+  "personality": {
+    "tone": "professional",
+    "energy": "medium",
+    "targetAudience": "Arabic-speaking tech enthusiasts and writers"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0.9,
+    "overall": 0.45
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is located in the header, is visible, links to the homepage, and the alt text matches the brand name 'مجتمع أسس'.",
+        "confidence": 0.95
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": false,
+      "llmSucceeded": false
+    }
+  }
+}
