@@ -203,8 +203,8 @@ const Particle = ({ x, y, delay }: { x: number, y: number, delay: number }) => (
   />
 );
 
-export default function Design5() {
-  const [lang, setLang] = useState<'ar' | 'en'>('ar');
+export default function Design5({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) {
+  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'ar');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const t = content[lang];
   const isRtl = lang === 'ar';
@@ -270,15 +270,17 @@ export default function Design5() {
         </div>
 
         <div className="flex items-center gap-4">
-          <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={toggleLang}
-            className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-white/5 transition-colors"
-          >
-            <Globe className="w-4 h-4" />
-            <span className="text-sm font-medium">{t.nav.lang}</span>
-          </motion.button>
+          {!langProp && (
+            <motion.button 
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleLang}
+              className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-white/5 transition-colors"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="text-sm font-medium">{t.nav.lang}</span>
+            </motion.button>
+          )}
           
           <motion.button 
             whileHover={{ scale: 1.1 }}

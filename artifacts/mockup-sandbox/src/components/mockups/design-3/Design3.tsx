@@ -156,8 +156,8 @@ const Starfield = ({ isDark }: { isDark: boolean }) => {
   );
 };
 
-export function Design3() {
-  const [lang, setLang] = useState<'ar' | 'en'>('ar');
+export function Design3({ lang: langProp }: { lang?: 'ar' | 'en' } = {}) {
+  const [lang, setLang] = useState<'ar' | 'en'>(langProp ?? 'ar');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const content = lang === 'ar' ? ARABIC : ENGLISH;
   const isDark = theme === 'dark';
@@ -223,13 +223,15 @@ export function Design3() {
           </div>
           
           <div className="flex items-center gap-4">
-            <button 
-              onClick={toggleLang}
-              className={`p-2 rounded-full backdrop-blur-sm border transition-colors ${isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-900/5 border-slate-900/10 hover:bg-slate-900/10'}`}
-              aria-label="Toggle Language"
-            >
-              <Globe className="w-5 h-5" />
-            </button>
+            {!langProp && (
+              <button 
+                onClick={toggleLang}
+                className={`p-2 rounded-full backdrop-blur-sm border transition-colors ${isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-900/5 border-slate-900/10 hover:bg-slate-900/10'}`}
+                aria-label="Toggle Language"
+              >
+                <Globe className="w-5 h-5" />
+              </button>
+            )}
             <button 
               onClick={toggleTheme}
               className={`p-2 rounded-full backdrop-blur-sm border transition-colors ${isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-900/5 border-slate-900/10 hover:bg-slate-900/10'}`}
