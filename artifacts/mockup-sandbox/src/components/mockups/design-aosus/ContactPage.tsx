@@ -1,39 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Send, ExternalLink } from 'lucide-react';
-import Layout, { GlassCard, SectionHeading, BASE, type Lang } from './Layout';
+import Layout, { CyberCard, SectionHeading, BASE, type Lang } from './Layout';
 
 const CONTENT = {
   en: {
-    title: 'Contact Us',
+    title: 'Contact',
     subtitle: 'Get in touch with the Aosus community team.',
     channels: [
-      {
-        title: 'Email',
-        desc: 'For general inquiries, partnerships, or sponsorship opportunities.',
-        value: 'contact@aosus.org',
-        href: 'mailto:contact@aosus.org',
-        icon: Mail,
-        color: '#008a2f',
-      },
-      {
-        title: 'Matrix Room',
-        desc: 'The Aosus room on the federated Matrix network is active and all team members are present. Connected to the Telegram group.',
-        value: '#aosus:aosus.org',
-        href: 'https://matrix.to/#/#aosus:aosus.org',
-        icon: MessageSquare,
-        color: '#1d70ba',
-      },
-      {
-        title: 'Telegram Group',
-        desc: 'Moderators and the Aosus community team are active on the official Telegram group.',
-        value: '@aosus',
-        href: 'https://t.me/aosus',
-        icon: Send,
-        color: '#008a2f',
-      },
+      { title: 'Email', desc: 'For general inquiries, partnerships, or sponsorship opportunities.', value: 'contact@aosus.org', href: 'mailto:contact@aosus.org', icon: Mail, color: '#008a2f' },
+      { title: 'Matrix Room', desc: 'The Aosus room on the federated Matrix network. All team members are present. Connected to Telegram.', value: '#aosus:aosus.org', href: 'https://matrix.to/#/#aosus:aosus.org', icon: MessageSquare, color: '#1d70ba' },
+      { title: 'Telegram Group', desc: 'Moderators and the Aosus community team are active on the official group.', value: '@aosus', href: 'https://t.me/aosus', icon: Send, color: '#008a2f' },
     ],
-    socialTitle: 'Follow Us',
+    socialTitle: 'Follow_Us',
     socials: [
       { name: 'Twitter/X', handle: '@aosusdotorg', href: 'https://twitter.com/aosusdotorg' },
       { name: 'LinkedIn', handle: 'Aosus', href: 'https://www.linkedin.com/company/aosus/' },
@@ -44,33 +23,12 @@ const CONTENT = {
     ],
   },
   ar: {
-    title: 'اتصل بنا',
+    title: 'اتصل_بنا',
     subtitle: 'تواصل مع فريق مجتمع أسس.',
     channels: [
-      {
-        title: 'البريد الإلكتروني',
-        desc: 'للاستفسارات العامة والشراكات وفرص الرعاية.',
-        value: 'contact@aosus.org',
-        href: 'mailto:contact@aosus.org',
-        icon: Mail,
-        color: '#008a2f',
-      },
-      {
-        title: 'غرفة أسس على Matrix',
-        desc: 'غرفة أسس على شبكة Matrix الفدرالية فعالة ويوجد فيها جميع فريق أسس، وهي موصولة بمجموعة الTelegram.',
-        value: '#aosus:aosus.org',
-        href: 'https://matrix.to/#/#aosus:aosus.org',
-        icon: MessageSquare,
-        color: '#1d70ba',
-      },
-      {
-        title: 'مجموعتنا على Telegram',
-        desc: 'مشرفون وفريق مجتمع أسس نشيطين على مجموعة المجتمع الرسمية.',
-        value: '@aosus',
-        href: 'https://t.me/aosus',
-        icon: Send,
-        color: '#008a2f',
-      },
+      { title: 'البريد الإلكتروني', desc: 'للاستفسارات العامة والشراكات وفرص الرعاية.', value: 'contact@aosus.org', href: 'mailto:contact@aosus.org', icon: Mail, color: '#008a2f' },
+      { title: 'غرفة Matrix', desc: 'غرفة أسس على شبكة Matrix الفدرالية. جميع فريق أسس متواجد وموصولة بمجموعة Telegram.', value: '#aosus:aosus.org', href: 'https://matrix.to/#/#aosus:aosus.org', icon: MessageSquare, color: '#1d70ba' },
+      { title: 'مجموعة Telegram', desc: 'مشرفون وفريق مجتمع أسس نشيطين على المجموعة الرسمية.', value: '@aosus', href: 'https://t.me/aosus', icon: Send, color: '#008a2f' },
     ],
     socialTitle: 'تابعنا',
     socials: [
@@ -90,10 +48,10 @@ export default function ContactPage({ lang: langProp }: { lang?: Lang }) {
       {({ lang, isDark }) => {
         const t = CONTENT[lang];
         const isRtl = lang === 'ar';
-        const ff = isRtl ? 'Almarai, sans-serif' : undefined;
+        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
 
         return (
-          <div className={`min-h-screen ${isDark ? 'bg-[#0a0f1a]' : 'bg-[#f8f9fc]'}`}>
+          <div className={`min-h-screen ${isDark ? '' : 'bg-gray-50'}`}>
             <section className="py-24">
               <div className="max-w-4xl mx-auto px-6">
                 <SectionHeading title={t.title} subtitle={t.subtitle} isDark={isDark} lang={lang} />
@@ -109,18 +67,16 @@ export default function ContactPage({ lang: langProp }: { lang?: Lang }) {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                     >
-                      <GlassCard isDark={isDark} className="p-6 text-center h-full group cursor-pointer">
-                        <div className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center mb-4" style={{ backgroundColor: `${channel.color}15` }}>
-                          <channel.icon className="w-7 h-7" style={{ color: channel.color }} />
-                        </div>
-                        <h3 className="text-lg font-bold mb-2 group-hover:text-[#008a2f] transition-colors" style={{ fontFamily: ff }}>
+                      <CyberCard isDark={isDark} className="p-6 text-center h-full group cursor-pointer">
+                        <channel.icon className="w-8 h-8 mx-auto mb-4" style={{ color: channel.color }} />
+                        <h3 className="text-lg font-bold mb-2 font-mono group-hover:text-[#008a2f] transition-colors" style={isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined}>
                           {channel.title}
                         </h3>
                         <p className={`text-sm mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} style={{ fontFamily: ff }}>
                           {channel.desc}
                         </p>
-                        <span className="text-sm font-medium text-[#008a2f]">{channel.value}</span>
-                      </GlassCard>
+                        <span className="text-sm font-mono text-[#008a2f]">{channel.value}</span>
+                      </CyberCard>
                     </motion.a>
                   ))}
                 </div>
@@ -129,15 +85,15 @@ export default function ContactPage({ lang: langProp }: { lang?: Lang }) {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {t.socials.map((social, i) => (
                     <a key={i} href={social.href} target="_blank" rel="noopener noreferrer">
-                      <GlassCard isDark={isDark} className="p-4 group cursor-pointer">
+                      <CyberCard isDark={isDark} className="p-4 group cursor-pointer">
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="font-semibold text-sm group-hover:text-[#008a2f] transition-colors">{social.name}</div>
-                            <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{social.handle}</div>
+                            <div className="font-bold text-sm font-mono group-hover:text-[#008a2f] transition-colors">{social.name}</div>
+                            <div className={`text-xs font-mono ${isDark ? 'text-gray-600' : 'text-gray-400'}`}>{social.handle}</div>
                           </div>
-                          <ExternalLink className={`w-4 h-4 ${isDark ? 'text-gray-600' : 'text-gray-400'} group-hover:text-[#008a2f] transition-colors`} />
+                          <ExternalLink className={`w-4 h-4 ${isDark ? 'text-gray-700' : 'text-gray-400'} group-hover:text-[#008a2f] transition-colors`} />
                         </div>
-                      </GlassCard>
+                      </CyberCard>
                     </a>
                   ))}
                 </div>

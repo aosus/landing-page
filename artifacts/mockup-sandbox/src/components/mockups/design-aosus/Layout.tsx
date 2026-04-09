@@ -1,6 +1,6 @@
-import React, { useState, useEffect, type ReactNode } from 'react';
+import React, { useState, useEffect, useRef, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Globe, Menu, X, Github, MessageSquare, Heart } from 'lucide-react';
+import { Sun, Moon, Globe, Menu, X, Github, MessageSquare, Heart, Terminal } from 'lucide-react';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -32,6 +32,46 @@ const SOCIALS = [
   { label: 'Telegram', href: 'https://t.me/aosus', icon: MessageSquare },
 ];
 
+function MatrixRain() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = 'أبجدهوزحطيكلمنسعفصقرشتثخذضظغABCDEF0123456789$+-*/='.split('');
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops: number[] = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#008a2f';
+      ctx.font = `${fontSize}px monospace`;
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    };
+
+    const interval = setInterval(draw, 33);
+    const handleResize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    window.addEventListener('resize', handleResize);
+    return () => { clearInterval(interval); window.removeEventListener('resize', handleResize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-15 z-0 mix-blend-screen" />;
+}
+
 interface LayoutProps {
   children: (ctx: { lang: Lang; isDark: boolean }) => ReactNode;
   lang?: Lang;
@@ -51,21 +91,29 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
   }, [isDark, isRtl, lang]);
 
   const navItems = NAV[lang];
-  const fontFamily = isRtl ? 'Almarai, sans-serif' : 'Inter, system-ui, sans-serif';
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-[#0a0f1a] text-white' : 'bg-[#f8f9fc] text-gray-900'}`}
+      className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-black text-white' : 'bg-white text-gray-900'} selection:bg-[#008a2f] selection:text-black overflow-x-hidden`}
       dir={isRtl ? 'rtl' : 'ltr'}
-      style={{ fontFamily }}
+      style={{ fontFamily: isRtl ? "'Almarai', sans-serif" : "'Inter', system-ui, sans-serif" }}
     >
-      <header className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${isDark ? 'bg-[#0a0f1a]/80' : 'bg-white/80'} backdrop-blur-xl border-b ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
+      <MatrixRain />
+
+      <div className="fixed top-0 left-1/4 w-96 h-96 bg-[#008a2f]/10 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-[#1d70ba]/10 rounded-full blur-[120px] pointer-events-none z-0" />
+
+      <header className={`fixed top-0 inset-x-0 z-50 border-b border-[#008a2f]/20 ${isDark ? 'bg-black/60' : 'bg-white/60'} backdrop-blur-md`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <a href={`${BASE}/site`} className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-full bg-[#008a2f] flex items-center justify-center text-white font-bold text-sm group-hover:scale-110 transition-transform">
-              <img src={`${BASE}/images/hero-1.png`} alt="Aosus" className="w-9 h-9 rounded-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+          <a href={`${BASE}/site`} className="flex items-center gap-3 group">
+            <img
+              src={`${BASE}/images/aosus-logo.png`}
+              alt="Aosus Logo"
+              className={`h-8 w-auto filter brightness-0 ${isDark ? 'invert' : ''}`}
+            />
+            <div className="hidden md:flex text-xs text-[#008a2f] tracking-widest uppercase font-mono">
+              <span className="opacity-50">sys.</span>ACTIVE
             </div>
-            <span className="font-bold text-lg" style={{ fontFamily: 'Almarai, sans-serif' }}>أسس</span>
           </a>
 
           <div className="hidden lg:flex items-center gap-1">
@@ -75,10 +123,11 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
                 <a
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive
-                    ? 'text-[#008a2f] bg-[#008a2f]/10'
-                    : isDark ? 'text-gray-300 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  className={`px-3 py-2 text-sm font-medium transition-all font-mono ${isActive
+                    ? 'text-[#008a2f] border-b-2 border-[#008a2f]'
+                    : isDark ? 'text-gray-400 hover:text-[#008a2f]' : 'text-gray-600 hover:text-[#008a2f]'
                   }`}
+                  style={isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined}
                 >
                   {item.label}
                 </a>
@@ -90,22 +139,21 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
             {!langProp && (
               <button
                 onClick={() => setLang(l => l === 'ar' ? 'en' : 'ar')}
-                className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
+                className="px-3 py-1 text-xs border border-[#1d70ba]/30 text-[#1d70ba] hover:bg-[#1d70ba]/10 transition-all font-mono"
                 title="Toggle language"
               >
-                <Globe className="w-4 h-4" />
+                {lang === 'ar' ? 'EN' : 'AR'}
               </button>
             )}
             <button
               onClick={() => setIsDark(!isDark)}
-              className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
-              title="Toggle theme"
+              className="p-2 border border-[#008a2f]/30 text-[#008a2f] hover:bg-[#008a2f]/10 transition-all"
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`p-2 rounded-lg lg:hidden transition-colors ${isDark ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}
+              className={`p-2 lg:hidden border border-[#008a2f]/30 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
             >
               {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -118,14 +166,14 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className={`lg:hidden overflow-hidden border-t ${isDark ? 'border-white/10 bg-[#0a0f1a]/95' : 'border-gray-200 bg-white/95'} backdrop-blur-xl`}
+              className={`lg:hidden overflow-hidden border-t border-[#008a2f]/20 ${isDark ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md`}
             >
               <div className="px-4 py-3 space-y-1">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
-                    className={`block px-3 py-2 rounded-lg text-sm font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
+                    className={`block px-3 py-2 text-sm font-medium ${isDark ? 'text-gray-400 hover:text-[#008a2f]' : 'text-gray-600 hover:text-[#008a2f]'} transition-colors`}
                   >
                     {item.label}
                   </a>
@@ -136,28 +184,35 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
         </AnimatePresence>
       </header>
 
-      <main className="pt-16">
+      <main className="pt-16 relative z-10">
         {children({ lang, isDark })}
       </main>
 
-      <footer className={`border-t ${isDark ? 'border-white/10 bg-[#060b14]' : 'border-gray-200 bg-gray-50'}`}>
+      <footer className={`relative z-10 border-t border-[#008a2f]/20 ${isDark ? 'bg-black/80' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-[#008a2f] flex items-center justify-center text-white font-bold text-xs">أ</div>
-                <span className="font-bold text-lg" style={{ fontFamily: 'Almarai, sans-serif' }}>أسس</span>
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  src={`${BASE}/images/aosus-logo.png`}
+                  alt="Aosus"
+                  className={`h-7 w-auto filter brightness-0 ${isDark ? 'invert' : ''}`}
+                />
               </div>
-              <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
                 {lang === 'ar'
                   ? 'أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة المصدر.'
                   : 'The largest Arabic community for free and open-source software.'}
               </p>
+              <div className="mt-3 flex items-center gap-2 text-xs font-mono text-[#008a2f]">
+                <Terminal className="w-3 h-3" />
+                <span className="opacity-60">{isDark ? 'STATUS: ONLINE' : 'STATUS: ACTIVE'}</span>
+              </div>
             </div>
 
             <div>
-              <h4 className={`font-semibold text-sm uppercase tracking-wider mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {lang === 'ar' ? 'روابط' : 'Links'}
+              <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
+                <span className="opacity-50">/</span> {lang === 'ar' ? 'روابط' : 'Links'}
               </h4>
               <ul className="space-y-2">
                 {navItems.slice(0, 4).map(item => (
@@ -171,8 +226,8 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
             </div>
 
             <div>
-              <h4 className={`font-semibold text-sm uppercase tracking-wider mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {lang === 'ar' ? 'المجتمع' : 'Community'}
+              <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
+                <span className="opacity-50">/</span> {lang === 'ar' ? 'المجتمع' : 'Community'}
               </h4>
               <ul className="space-y-2">
                 {SOCIALS.map(s => (
@@ -186,17 +241,17 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
             </div>
 
             <div>
-              <h4 className={`font-semibold text-sm uppercase tracking-wider mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {lang === 'ar' ? 'ادعمنا' : 'Support'}
+              <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
+                <span className="opacity-50">/</span> {lang === 'ar' ? 'ادعمنا' : 'Support'}
               </h4>
-              <p className={`text-sm mb-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className={`text-sm mb-4 ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
                 {lang === 'ar'
                   ? 'ادعم المجتمع عبر التبرع أو المساهمة في المشاريع.'
                   : 'Support the community through donations or contributing to projects.'}
               </p>
               <a
                 href={`${BASE}/site/support-us`}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#008a2f] text-white text-sm font-medium rounded-lg hover:bg-[#006b24] transition-colors"
+                className="group inline-flex items-center gap-2 px-4 py-2 border border-[#008a2f] text-[#008a2f] text-sm font-mono uppercase tracking-wider hover:bg-[#008a2f] hover:text-black transition-all"
               >
                 <Heart className="w-4 h-4" />
                 {lang === 'ar' ? 'تبرع' : 'Donate'}
@@ -204,13 +259,13 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
             </div>
           </div>
 
-          <div className={`mt-12 pt-8 border-t ${isDark ? 'border-white/10' : 'border-gray-200'} flex flex-col sm:flex-row justify-between items-center gap-4`}>
-            <p className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+          <div className={`mt-12 pt-8 border-t border-[#008a2f]/10 flex flex-col sm:flex-row justify-between items-center gap-4`}>
+            <p className={`text-xs font-mono ${isDark ? 'text-gray-600' : 'text-gray-400'}`}>
               © {new Date().getFullYear()} Aosus Community. {lang === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}
             </p>
-            <p className={`text-xs ${isDark ? 'text-gray-600' : 'text-gray-400'}`}>
+            <p className={`text-xs font-mono ${isDark ? 'text-gray-700' : 'text-gray-400'}`}>
               {lang === 'ar'
-                ? 'أسس مستضاف مالياً من The Hack Foundation (501(c)(3))'
+                ? 'مستضاف مالياً من The Hack Foundation (501(c)(3))'
                 : 'Fiscally sponsored by The Hack Foundation (501(c)(3))'}
             </p>
           </div>
@@ -220,25 +275,28 @@ export default function Layout({ children, lang: langProp, activePath }: LayoutP
   );
 }
 
-export function GlassCard({ children, className = '', isDark = true, hover = true }: { children: ReactNode; className?: string; isDark?: boolean; hover?: boolean }) {
+export function CyberCard({ children, className = '', isDark = true, hover = true }: { children: ReactNode; className?: string; isDark?: boolean; hover?: boolean }) {
   return (
-    <div className={`rounded-2xl border ${isDark
-      ? 'bg-white/5 border-white/10 backdrop-blur-sm'
+    <div className={`relative border ${isDark
+      ? 'bg-[#008a2f]/5 border-[#008a2f]/20'
       : 'bg-white border-gray-200 shadow-sm'
-    } ${hover ? (isDark ? 'hover:bg-white/10 hover:border-white/20' : 'hover:shadow-md hover:border-gray-300') : ''} transition-all duration-300 ${className}`}>
+    } ${hover ? (isDark ? 'hover:bg-[#008a2f]/10 hover:border-[#008a2f]/40' : 'hover:shadow-md hover:border-gray-300') : ''} transition-all duration-300 ${className}`}>
+      <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#008a2f]/50 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#008a2f]/50 pointer-events-none" />
       {children}
     </div>
   );
 }
 
 export function SectionHeading({ title, subtitle, isDark = true, center = true, lang = 'en' }: { title: string; subtitle?: string; isDark?: boolean; center?: boolean; lang?: Lang }) {
+  const isRtl = lang === 'ar';
   return (
     <div className={`mb-12 ${center ? 'text-center' : ''}`}>
-      <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: lang === 'ar' ? 'Almarai, sans-serif' : undefined }}>
-        {title}
+      <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-widest mb-4" style={{ fontFamily: isRtl ? "'Almarai', sans-serif" : 'monospace' }}>
+        <span className="text-[#008a2f]">/</span> {title}
       </h2>
       {subtitle && (
-        <p className={`text-lg max-w-2xl ${center ? 'mx-auto' : ''} ${isDark ? 'text-gray-400' : 'text-gray-500'}`} style={{ fontFamily: lang === 'ar' ? 'Almarai, sans-serif' : undefined }}>
+        <p className={`text-base max-w-2xl ${center ? 'mx-auto' : ''} ${isDark ? 'text-gray-400' : 'text-gray-500'}`} style={{ fontFamily: isRtl ? "'Almarai', sans-serif" : undefined }}>
           {subtitle}
         </p>
       )}
@@ -247,15 +305,21 @@ export function SectionHeading({ title, subtitle, isDark = true, center = true, 
 }
 
 export function PrimaryButton({ children, href, className = '' }: { children: ReactNode; href?: string; className?: string }) {
-  const cls = `inline-flex items-center gap-2 px-6 py-3 bg-[#008a2f] text-white font-semibold rounded-xl hover:bg-[#006b24] transition-all duration-300 hover:shadow-lg hover:shadow-[#008a2f]/25 ${className}`;
-  if (href) return <a href={href} className={cls}>{children}</a>;
-  return <button className={cls}>{children}</button>;
+  const cls = `group relative inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#008a2f] text-[#008a2f] font-bold uppercase tracking-wider overflow-hidden hover:shadow-[0_0_20px_rgba(0,138,47,0.4)] transition-all font-mono ${className}`;
+  const inner = (
+    <>
+      <span className="absolute inset-0 bg-[#008a2f] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+      <span className="relative z-10 group-hover:text-black flex items-center gap-2 transition-colors">{children}</span>
+    </>
+  );
+  if (href) return <a href={href} className={cls}>{inner}</a>;
+  return <button className={cls}>{inner}</button>;
 }
 
 export function SecondaryButton({ children, href, isDark = true, className = '' }: { children: ReactNode; href?: string; isDark?: boolean; className?: string }) {
-  const cls = `inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-xl border-2 transition-all duration-300 ${isDark
-    ? 'border-white/20 text-white hover:bg-white/10 hover:border-white/40'
-    : 'border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-400'
+  const cls = `inline-flex items-center gap-2 px-6 py-3 font-mono uppercase tracking-wider border transition-all duration-300 ${isDark
+    ? 'border-white/20 text-gray-300 hover:border-[#1d70ba] hover:text-[#1d70ba]'
+    : 'border-gray-300 text-gray-700 hover:border-[#1d70ba] hover:text-[#1d70ba]'
   } ${className}`;
   if (href) return <a href={href} className={cls}>{children}</a>;
   return <button className={cls}>{children}</button>;

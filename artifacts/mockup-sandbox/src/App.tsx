@@ -135,6 +135,13 @@ const DESIGN_ROUTE_MAP: Record<string, string> = {
   "/site/writing-contest": "design-aosus/WritingContestPage",
   "/site/support-us": "design-aosus/SupportPage",
   "/site/contact-us": "design-aosus/ContactPage",
+  "/site-ar": "design-aosus/HomePageAr",
+  "/site-ar/blog": "design-aosus/BlogPageAr",
+  "/site-ar/article": "design-aosus/ArticlePageAr",
+  "/site-ar/services": "design-aosus/ServicesPageAr",
+  "/site-ar/writing-contest": "design-aosus/WritingContestPageAr",
+  "/site-ar/support-us": "design-aosus/SupportPageAr",
+  "/site-ar/contact-us": "design-aosus/ContactPageAr",
 };
 
 function getPreviewPath(): string | null {

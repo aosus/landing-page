@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, User, ArrowRight, ArrowLeft, MessageSquare, Tag } from 'lucide-react';
-import Layout, { GlassCard, BASE, type Lang } from './Layout';
+import { Calendar, User, ArrowLeft, ArrowRight, MessageSquare, Tag } from 'lucide-react';
+import Layout, { CyberCard, PrimaryButton, BASE, type Lang } from './Layout';
 
 const ARTICLE = {
   en: {
@@ -18,7 +18,7 @@ const ARTICLE = {
       'It is worth noting that the Aosus community has previously supported the organizing team in the Alexandria edition of the Scrapyard Vanity event.',
     ],
     supportCta: 'Support Aosus Community',
-    discussCta: 'Discuss this on the Community Forum',
+    discussCta: 'Discuss on Forum',
     prevPost: 'Contribute to Translating Firefox!',
     prevLabel: 'Previous Post',
   },
@@ -36,7 +36,7 @@ const ARTICLE = {
       'يُذكر أن مجتمع أُسُس قد سبق له دعم الفريق المنظمة في نسخة الإسكندرية من حدث Scrapyard Vanity.',
     ],
     supportCta: 'ادعم مجتمع أسس',
-    discussCta: 'علّق على الموضوع في المجتمع',
+    discussCta: 'علّق في المنتدى',
     prevPost: 'ساهم في ترجمة Firefox!',
     prevLabel: 'المقال السابق',
   },
@@ -48,19 +48,19 @@ export default function ArticlePage({ lang: langProp }: { lang?: Lang }) {
       {({ lang, isDark }) => {
         const t = ARTICLE[lang];
         const isRtl = lang === 'ar';
-        const ff = isRtl ? 'Almarai, sans-serif' : undefined;
+        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
         const BackArrow = isRtl ? ArrowRight : ArrowLeft;
 
         return (
-          <article className={`py-24 min-h-screen ${isDark ? 'bg-[#0a0f1a]' : 'bg-[#f8f9fc]'}`}>
+          <article className={`py-24 min-h-screen ${isDark ? '' : 'bg-gray-50'}`}>
             <div className="max-w-3xl mx-auto px-6">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                <nav className={`flex items-center gap-2 text-sm mb-8 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                <nav className={`flex items-center gap-2 text-xs font-mono mb-8 ${isDark ? 'text-gray-600' : 'text-gray-400'}`}>
                   <a href={`${BASE}/site`} className="hover:text-[#008a2f] transition-colors">{t.breadcrumb[0]}</a>
-                  <span>›</span>
+                  <span className="text-[#008a2f]">/</span>
                   <a href={`${BASE}/site/blog`} className="hover:text-[#008a2f] transition-colors">{t.breadcrumb[1]}</a>
-                  <span>›</span>
-                  <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>{t.title.slice(0, 40)}…</span>
+                  <span className="text-[#008a2f]">/</span>
+                  <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>{t.title.slice(0, 40)}…</span>
                 </nav>
 
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6" style={{ fontFamily: ff }}>
@@ -68,24 +68,21 @@ export default function ArticlePage({ lang: langProp }: { lang?: Lang }) {
                 </h1>
 
                 <div className="flex items-center gap-4 mb-8 flex-wrap">
-                  <span className={`flex items-center gap-1.5 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`flex items-center gap-1.5 text-sm font-mono ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     <User className="w-4 h-4" />
                     {t.author}
                   </span>
-                  <span className={`flex items-center gap-1.5 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className={`flex items-center gap-1.5 text-sm font-mono ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     <Calendar className="w-4 h-4" />
                     {t.date}
                   </span>
                 </div>
 
-                <div className={`w-full h-64 md:h-80 rounded-2xl mb-10 overflow-hidden ${isDark ? 'bg-gradient-to-br from-[#008a2f]/30 to-[#1d70ba]/20' : 'bg-gradient-to-br from-[#008a2f]/10 to-[#1d70ba]/10'} flex items-center justify-center`}>
+                <div className="w-full h-64 md:h-80 mb-10 overflow-hidden border border-[#008a2f]/20">
                   <img
                     src={`${BASE}/images/hero-1.png`}
                     alt=""
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
                   />
                 </div>
 
@@ -99,41 +96,38 @@ export default function ArticlePage({ lang: langProp }: { lang?: Lang }) {
 
                 <div className="flex flex-wrap gap-2 mb-10">
                   {t.tags.map((tag, i) => (
-                    <span key={i} className={`inline-flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-full ${isDark ? 'bg-white/5 text-gray-300 border border-white/10' : 'bg-gray-100 text-gray-600 border border-gray-200'}`}>
+                    <span key={i} className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-wider px-3 py-1.5 border border-[#008a2f]/20 text-[#008a2f] bg-[#008a2f]/5">
                       <Tag className="w-3 h-3" />
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <GlassCard isDark={isDark} className="p-6 mb-8" hover={false}>
+                <CyberCard isDark={isDark} className="p-6 mb-8" hover={false}>
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className={`font-semibold ${isDark ? 'text-gray-200' : 'text-gray-700'}`} style={{ fontFamily: ff }}>
+                    <p className={`font-bold ${isDark ? 'text-gray-200' : 'text-gray-700'}`} style={{ fontFamily: ff }}>
                       {t.supportCta}
                     </p>
-                    <a
-                      href={`${BASE}/site/support-us`}
-                      className="px-5 py-2.5 bg-[#008a2f] text-white text-sm font-medium rounded-lg hover:bg-[#006b24] transition-colors"
-                    >
+                    <PrimaryButton href={`${BASE}/site/support-us`}>
                       {lang === 'ar' ? 'ادعمنا' : 'Support Us'}
-                    </a>
+                    </PrimaryButton>
                   </div>
-                </GlassCard>
+                </CyberCard>
 
                 <a
                   href="https://discourse.aosus.org/"
-                  className={`flex items-center gap-2 text-sm font-medium mb-12 ${isDark ? 'text-[#008a2f] hover:text-[#00c853]' : 'text-[#008a2f] hover:text-[#006b24]'} transition-colors`}
+                  className="flex items-center gap-2 text-sm font-mono uppercase tracking-wider text-[#008a2f] hover:underline mb-12"
                 >
                   <MessageSquare className="w-4 h-4" />
                   {t.discussCta}
                 </a>
 
-                <div className={`border-t ${isDark ? 'border-white/10' : 'border-gray-200'} pt-8`}>
-                  <a href={`${BASE}/site/blog`} className={`flex items-center gap-3 group ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'} transition-colors`}>
+                <div className={`border-t border-[#008a2f]/20 pt-8`}>
+                  <a href={`${BASE}/site/blog`} className={`flex items-center gap-3 group ${isDark ? 'text-gray-400 hover:text-[#008a2f]' : 'text-gray-500 hover:text-[#008a2f]'} transition-colors`}>
                     <BackArrow className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                     <div>
-                      <div className="text-xs uppercase tracking-wider mb-0.5">{t.prevLabel}</div>
-                      <div className="font-semibold" style={{ fontFamily: ff }}>{t.prevPost}</div>
+                      <div className="text-xs uppercase tracking-wider font-mono mb-0.5">{t.prevLabel}</div>
+                      <div className="font-bold" style={{ fontFamily: ff }}>{t.prevPost}</div>
                     </div>
                   </a>
                 </div>
