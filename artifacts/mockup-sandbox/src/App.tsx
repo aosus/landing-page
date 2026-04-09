@@ -117,6 +117,14 @@ function Gallery() {
   );
 }
 
+const DESIGN_ROUTE_MAP: Record<string, string> = {
+  "/1": "design-1/Design1",
+  "/2": "design-2/Design2",
+  "/3": "design-3/Design3",
+  "/4": "design-4/Design4",
+  "/5": "design-5/Design5",
+};
+
 function getPreviewPath(): string | null {
   const basePath = getBasePath();
   const { pathname } = window.location;
@@ -124,6 +132,10 @@ function getPreviewPath(): string | null {
     basePath && pathname.startsWith(basePath)
       ? pathname.slice(basePath.length) || "/"
       : pathname;
+  // Check short design routes /1 through /5
+  if (DESIGN_ROUTE_MAP[local]) {
+    return DESIGN_ROUTE_MAP[local];
+  }
   const match = local.match(/^\/preview\/(.+)$/);
   return match ? match[1] : null;
 }

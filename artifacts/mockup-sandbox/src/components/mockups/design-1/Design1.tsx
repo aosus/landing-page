@@ -115,8 +115,10 @@ export default function Design1() {
 
   if (!mounted) return null;
 
+  const bgClass = isDark ? 'bg-black text-white' : 'bg-gray-950 text-gray-100';
+
   return (
-    <div className={`min-h-screen bg-black text-white selection:bg-[#008a2f] selection:text-black overflow-x-hidden font-mono ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen ${bgClass} selection:bg-[#008a2f] selection:text-black overflow-x-hidden font-mono ${isDark ? 'dark' : ''}`}>
       <MatrixRain />
       
       {/* Background glow effects */}
@@ -259,7 +261,7 @@ export default function Design1() {
                 descEn: "The central hub for Arabic tech discussions. The core of Aosus.",
                 descAr: "المركز الأساسي للنقاشات التقنية العربية. قلب مجتمع أسس.",
                 icon: Server,
-                color: "#008a2f",
+                iconClass: "text-[#008a2f]",
                 link: "https://discourse.aosus.org/"
               },
               {
@@ -268,7 +270,7 @@ export default function Design1() {
                 descEn: "Ad-free frontend services (SearXNG, Nitter, Redlib) hosted by Aosus.",
                 descAr: "واجهات خالية من الإعلانات للخدمات الشائعة، مستضافة بواسطة أسس.",
                 icon: Shield,
-                color: "#1d70ba",
+                iconClass: "text-[#1d70ba]",
                 link: "https://aosus.org/services"
               },
               {
@@ -277,7 +279,7 @@ export default function Design1() {
                 descEn: "Open-source tool connecting Discourse with Matrix, Telegram, and Discord.",
                 descAr: "أداة مفتوحة المصدر لربط ديسكورس مع ماتركس، تيليجرام وديسكورد.",
                 icon: Cpu,
-                color: "#008a2f",
+                iconClass: "text-[#008a2f]",
                 link: "https://github.com/aosus/discourse-chat-bridge"
               }
             ].map((project, i) => (
@@ -291,7 +293,7 @@ export default function Design1() {
               >
                 <div className="absolute inset-0 bg-gradient-to-b from-[#008a2f]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="bg-black p-6 rounded-md h-full border border-gray-800 group-hover:border-[#008a2f]/50 transition-colors relative z-10 flex flex-col">
-                  <project.icon className={`w-8 h-8 mb-6 text-[${project.color}] group-hover:scale-110 transition-transform`} />
+                  <project.icon className={`w-8 h-8 mb-6 ${project.iconClass} group-hover:scale-110 transition-transform`} />
                   <div className="space-y-4 flex-grow">
                     <div>
                       <h3 className="text-lg font-bold text-white mb-1">{project.titleEn}</h3>

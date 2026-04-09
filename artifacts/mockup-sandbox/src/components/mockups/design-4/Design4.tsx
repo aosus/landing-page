@@ -253,6 +253,70 @@ const Design4 = () => {
         </div>
       </section>
 
+      {/* Blog / News Section */}
+      <section className={`py-32 px-6 bg-[#008a2f] text-white border-y-8 ${borderColor}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-16 border-b-8 border-white pb-8">
+            <h2 className="font-black text-6xl md:text-8xl uppercase tracking-tighter">Latest</h2>
+            <h2 className="font-['Almarai'] font-black text-5xl md:text-7xl">آخر الأخبار</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+            {[
+              {
+                num: "01",
+                date: "MAR 2024",
+                titleEn: "Daydream Hackathon Sponsorship",
+                titleAr: "رعاية هاكاثون Daydream",
+                descEn: "Aosus sponsors a school hackathon in Alexandria, introducing students to open-source via Godot game engine.",
+                link: "https://aosus.org/2135"
+              },
+              {
+                num: "02",
+                date: "FEB 2024",
+                titleEn: "Contribute to Firefox Arabic!",
+                titleAr: "ساهم في تَرْجَمَة Firefox",
+                descEn: "Mozilla calls on Arabic speakers to improve Firefox Arabic support. Join the translation effort now.",
+                link: "https://aosus.org/2125"
+              },
+              {
+                num: "03",
+                date: "NOV 2023",
+                titleEn: "Piped Service Shutdown",
+                titleAr: "توقف خدمة Piped",
+                descEn: "Due to persistent technical issues with Piped, the service will be discontinued. Privacy alternatives remain available.",
+                link: "https://aosus.org/2071"
+              }
+            ].map((post, i) => (
+              <motion.a
+                key={i}
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ y: 40, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                className={`group border-8 ${borderColor} border-l-0 first:border-l-8 p-8 flex flex-col justify-between min-h-[400px] bg-white text-black hover:bg-black hover:text-white transition-colors relative overflow-hidden`}
+              >
+                <div>
+                  <div className="flex justify-between items-start mb-8">
+                    <span className="font-black text-7xl opacity-20 group-hover:opacity-40 transition-opacity">{post.num}</span>
+                    <span className="font-bold text-sm uppercase tracking-widest opacity-60">{post.date}</span>
+                  </div>
+                  <h3 className="font-black text-3xl uppercase leading-tight mb-4">{post.titleEn}</h3>
+                  <h3 className="font-['Almarai'] font-black text-2xl leading-tight text-[#008a2f] group-hover:text-[#008a2f] mb-6" dir="rtl">{post.titleAr}</h3>
+                  <p className="text-lg opacity-80 leading-snug">{post.descEn}</p>
+                </div>
+                <div className="flex items-center gap-3 font-black uppercase tracking-widest mt-8 group-hover:gap-6 transition-all">
+                  <span>Read</span>
+                  <ArrowRight className="w-6 h-6" />
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Footer */}
       <footer className={`border-t-8 ${borderColor} bg-[#1d70ba] text-white pt-32 pb-16 px-6 relative overflow-hidden`}>
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center gap-12">
