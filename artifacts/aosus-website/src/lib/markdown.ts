@@ -10,9 +10,15 @@ export interface PostFrontMatter {
   author: string;
   tags: string[];
   thumbnail: string;
+  ogImage: string;
   excerpt: string;
   slug: string;
   lang: "en" | "ar";
+}
+
+function deriveOgImage(thumbnail: string): string {
+  const baseName = thumbnail.replace(/^\/images\//, "").replace(/\.[^.]+$/, "");
+  return `/og/${baseName}.jpg`;
 }
 
 export interface Post extends PostFrontMatter {
@@ -36,15 +42,17 @@ export function getAllPosts(lang: "en" | "ar"): PostFrontMatter[] {
     const { data } = matter(fileContents);
     const slug = filename.replace(/\.md$/, "");
 
+    const thumbnail = data.thumbnail || "/images/hero-1.png";
     return {
       title: data.title || "",
       date: data.date || "",
       author: data.author || "",
       tags: data.tags || [],
-      thumbnail: data.thumbnail || "/images/hero-1.png",
+      thumbnail,
+      ogImage: deriveOgImage(thumbnail),
       excerpt: data.excerpt || "",
       slug,
-      lang,
+      lang: data.lang || lang,
     } as PostFrontMatter;
   });
 
@@ -73,15 +81,17 @@ export async function getPostBySlug(
   const processedContent = await remark().use(html).process(rawContent);
   const content = processedContent.toString();
 
+  const thumbnail = data.thumbnail || "/images/hero-1.png";
   return {
     title: data.title || "",
     date: data.date || "",
     author: data.author || "",
     tags: data.tags || [],
-    thumbnail: data.thumbnail || "/images/hero-1.png",
+    thumbnail,
+    ogImage: deriveOgImage(thumbnail),
     excerpt: data.excerpt || "",
     slug,
-    lang,
+    lang: data.lang || lang,
     content,
   };
 }

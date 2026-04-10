@@ -1,3 +1,17 @@
 {
-  "/(en)/page": "app/(en)/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(en)/contact-us/page": "app/(en)/contact-us/page.js",
+  "/(en)/services/page": "app/(en)/services/page.js",
+  "/(en)/page": "app/(en)/page.js",
+  "/(en)/writing-contest/page": "app/(en)/writing-contest/page.js",
+  "/ar/page": "app/ar/page.js",
+  "/ar/contact-us/page": "app/ar/contact-us/page.js",
+  "/ar/services/page": "app/ar/services/page.js",
+  "/ar/support-us/page": "app/ar/support-us/page.js",
+  "/ar/writing-contest/page": "app/ar/writing-contest/page.js",
+  "/(en)/support-us/page": "app/(en)/support-us/page.js",
+  "/(en)/blog/page": "app/(en)/blog/page.js",
+  "/(en)/blog/[slug]/page": "app/(en)/blog/[slug]/page.js",
+  "/ar/blog/[slug]/page": "app/ar/blog/[slug]/page.js",
+  "/ar/blog/page": "app/ar/blog/page.js"
 }

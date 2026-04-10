@@ -4,6 +4,7 @@ date: "2025-09-18"
 author: "FarisZR"
 tags: ["البرمجيات الحرة", "رعاية", "مجتمع أسس"]
 thumbnail: "/images/hero-1.png"
+lang: "ar"
 excerpt: "يسر مجتمع أُسُس أن يعلن عن رعايته لحدث Daydream Alexandria الذي سيُقام في مدينة الإسكندرية."
 ---
 

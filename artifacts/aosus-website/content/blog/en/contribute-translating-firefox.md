@@ -4,6 +4,7 @@ date: "2025-09-01"
 author: "FarisZR"
 tags: ["Open Source", "Mozilla", "Translation"]
 thumbnail: "/images/hero-2.png"
+lang: "en"
 excerpt: "Do you use Firefox and want to improve its Arabic support? Mozilla needs your help! The browser needs contributions to improve Arabic language support."
 ---
 

@@ -4,6 +4,7 @@ date: "2025-09-01"
 author: "FarisZR"
 tags: ["مصادر مفتوحة", "Mozilla", "ترجمة"]
 thumbnail: "/images/hero-2.png"
+lang: "ar"
 excerpt: "هل تستخدم Firefox وتريد تحسين دعمه للعربية؟ Mozilla تحتاج مساعدتك!"
 ---
 

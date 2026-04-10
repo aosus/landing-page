@@ -4,6 +4,7 @@ date: "2022-09-30"
 author: "FarisZR"
 tags: ["Writing Contest", "Community", "Awards"]
 thumbnail: "/images/hero-1.png"
+lang: "en"
 excerpt: "5 detailed topics on free and open-source software, this time also about web technologies!"
 ---
 

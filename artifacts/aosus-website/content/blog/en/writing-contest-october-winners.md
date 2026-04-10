@@ -4,6 +4,7 @@ date: "2022-10-30"
 author: "FarisZR"
 tags: ["Writing Contest", "Community", "Awards"]
 thumbnail: "/images/hero-5.png"
+lang: "en"
 excerpt: "Valuable and detailed topics on free and open-source software win the Aosus Writing Award for October!"
 ---
 

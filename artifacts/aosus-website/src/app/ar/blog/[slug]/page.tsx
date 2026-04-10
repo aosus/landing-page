@@ -23,7 +23,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      images: [post.thumbnail],
+      images: [post.ogImage],
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
@@ -33,7 +33,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      images: [post.thumbnail],
+      images: [post.ogImage],
     },
   };
 }

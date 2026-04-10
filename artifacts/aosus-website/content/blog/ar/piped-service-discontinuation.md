@@ -4,6 +4,7 @@ date: "2025-08-15"
 author: "FarisZR"
 tags: ["خدمات", "خصوصية", "إعلان"]
 thumbnail: "/images/hero-3.png"
+lang: "ar"
 excerpt: "خدمة Piped في مجتمع أسس تواجه مشاكل في التشغيل. نعلن عن الإيقاف القريب للخدمة."
 ---
 

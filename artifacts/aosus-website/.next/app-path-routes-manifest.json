@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/(en)/contact-us/page": "/contact-us",
+  "/(en)/services/page": "/services",
+  "/(en)/page": "/",
+  "/(en)/writing-contest/page": "/writing-contest",
+  "/ar/page": "/ar",
+  "/ar/contact-us/page": "/ar/contact-us",
+  "/ar/services/page": "/ar/services",
+  "/ar/support-us/page": "/ar/support-us",
+  "/ar/writing-contest/page": "/ar/writing-contest",
+  "/(en)/support-us/page": "/support-us",
+  "/(en)/blog/page": "/blog",
+  "/(en)/blog/[slug]/page": "/blog/[slug]",
+  "/ar/blog/[slug]/page": "/ar/blog/[slug]",
+  "/ar/blog/page": "/ar/blog"
+}

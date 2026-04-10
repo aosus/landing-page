@@ -4,6 +4,7 @@ date: "2024-06-15"
 author: "FarisZR"
 tags: ["Community", "Partnership", "Nonprofit"]
 thumbnail: "/images/hero-4.png"
+lang: "en"
 excerpt: "Aosus is now fiscally sponsored by The Hack Foundation, gaining 501(c)(3) nonprofit status for tax-deductible donations."
 ---
 
