@@ -26,35 +26,53 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
 
-## Aosus Website Mockup (artifacts/mockup-sandbox)
+## Aosus Website (artifacts/aosus-website)
 
-Multi-page website mockup for Aosus (أسس), the largest Arabic open-source community.
+Production website for Aosus (أسس), the largest Arabic open-source community. Migrated from Vite+React SPA to **Next.js 15** static site (`output: 'export'`).
 
-### Design Direction
-- **Design 1 (Cyber/Terminal)** aesthetic: black background, green (#008a2f) accent borders, monospace headings, matrix rain background, corner bracket decorations on cards, terminal-style section headers (`/ Section_Name`), uppercase tracking.
-- Body text uses Inter (EN) / Almarai (AR) for readability. UI chrome uses monospace.
-- Brand colors: #008a2f (green primary), #1d70ba (blue secondary).
+### Stack
+- **Framework**: Next.js 15 (App Router, static export)
+- **Styling**: Tailwind CSS v4 with `@tailwindcss/postcss` + `@tailwindcss/typography`
+- **Animation**: Framer Motion
+- **Icons**: Lucide React
+- **Content**: Markdown files with YAML front matter (gray-matter + remark)
+- **Fonts**: Inter (EN), Almarai (AR)
+- **Brand colors**: #008a2f (green primary), #1d70ba (blue secondary)
 
-### Phase 1 (complete)
-- 5 visually distinct landing page designs × 2 languages (10 total routes: /1–/5, /1-ar–/5-ar)
+### Design
+- Cyber/terminal aesthetic: black background, green accent borders, monospace headings, matrix rain background, corner bracket decorations on cards, terminal-style section headers (`/ Section_Name`)
+- No "STATUS: ACTIVE" badges or terminal status bars
+- Stats/metrics section preserved on homepage (Members 3,000+, Posts 10,000+, Topics 1,300+, Years 9)
 
-### Phase 2 (complete)
-- 7-page multi-page site in both EN and AR (14 total routes):
-  - EN: `/site`, `/site/blog`, `/site/article`, `/site/services`, `/site/writing-contest`, `/site/support-us`, `/site/contact-us`
-  - AR: `/site-ar`, `/site-ar/blog`, `/site-ar/article`, `/site-ar/services`, `/site-ar/writing-contest`, `/site-ar/support-us`, `/site-ar/contact-us`
-- Shared Layout with nav, footer, MatrixRain, dark/light toggle, lang toggle
-- Shared components: CyberCard, SectionHeading, PrimaryButton, SecondaryButton
-- Arabic AR wrapper components force `lang="ar"` prop
-- Blog listing includes thumbnails per article
-- Uses actual Aosus logo from `public/images/aosus-logo.png`
+### Bilingual Routing
+- English routes: `/`, `/blog`, `/blog/[slug]`, `/services`, `/writing-contest`, `/support-us`, `/contact-us`
+- Arabic routes: `/ar`, `/ar/blog`, `/ar/blog/[slug]`, `/ar/services`, `/ar/writing-contest`, `/ar/support-us`, `/ar/contact-us`
+- Arabic pages import English client components and pass `lang="ar"`
+
+### Content Pipeline
+- Blog articles stored as markdown in `content/blog/{en|ar}/{slug}.md`
+- Front matter: title, date, author, tags, thumbnail, excerpt
+- `src/lib/markdown.ts` handles parsing and rendering
+- `generateStaticParams` pre-renders all article pages at build time
 
 ### Key Files
-- `design-aosus/Layout.tsx` — shared layout with MatrixRain, nav, footer, CyberCard, etc.
-- `design-aosus/HomePage.tsx` — homepage with hero, stats, projects, timeline, about, blog preview
-- `design-aosus/BlogPage.tsx` — blog listing with thumbnails
-- `design-aosus/ArticlePage.tsx` — article detail (Daydream hackathon sample)
-- `design-aosus/ServicesPage.tsx` — privacy services listing
-- `design-aosus/WritingContestPage.tsx` — writing contest with rules, steps, past winners
-- `design-aosus/SupportPage.tsx` — donations, GitHub sponsors, referral links
-- `design-aosus/ContactPage.tsx` — contact channels and social links
-- `design-aosus/*Ar.tsx` — Arabic wrapper components
+- `src/app/layout.tsx` — root layout with global OG metadata
+- `src/components/layout/Layout.tsx` — shared layout with MatrixRain, nav, footer, CyberCard, etc.
+- `src/lib/markdown.ts` — markdown parsing utilities
+- `src/app/(en)/HomePageClient.tsx` — homepage
+- `src/app/(en)/blog/BlogPageClient.tsx` — blog listing
+- `src/app/(en)/blog/[slug]/ArticlePageClient.tsx` — article detail with OG tags
+- `src/app/(en)/services/ServicesPageClient.tsx` — privacy services
+- `src/app/(en)/writing-contest/WritingContestPageClient.tsx` — writing contest
+- `src/app/(en)/support-us/SupportPageClient.tsx` — donations
+- `src/app/(en)/contact-us/ContactPageClient.tsx` — contact channels
+- `content/blog/en/*.md` — English blog articles (6 posts)
+- `content/blog/ar/*.md` — Arabic blog articles (6 posts)
+
+### Commands
+- `pnpm --filter @workspace/aosus-website run dev` — Next.js dev server
+- `pnpm --filter @workspace/aosus-website run build` — static export to `out/`
+
+## Aosus Website Mockup (artifacts/mockup-sandbox)
+
+Multi-page website mockup for Aosus. Used during design phase, now superseded by the production Next.js site.
