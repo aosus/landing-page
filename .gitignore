@@ -11,6 +11,20 @@ out-tsc
 # dependencies
 node_modules
 
+# Next.js
+.next/
+.next-env.d.ts
+
+# Build output
+.artifacts/**/dist
+.artifacts/**/.next
+.artifacts/**/out
+
+# Environment
+.env
+.env.local
+.env.*.local
+
 # IDEs and editors
 /.idea
 .project
