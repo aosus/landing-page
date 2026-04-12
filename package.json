@@ -1,16 +1,36 @@
 {
-  "name": "workspace",
+  "name": "aosus-website",
   "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {
-    "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
-    "build": "pnpm run typecheck && pnpm -r --if-present run build",
-    "typecheck:libs": "tsc --build",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
-  },
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port ${PORT:-25211} --hostname 0.0.0.0",
+    "optimize-images": "tsx scripts/optimize-images.ts",
+    "build": "tsx scripts/optimize-images.ts && next build",
+    "start": "node scripts/serve-static.mjs"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.24",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^0.545.0",
+    "next": "^15.3.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
+    "sharp": "^0.33.5",
+    "tailwind-merge": "^3.3.1",
+    "clsx": "^2.1.1",
+    "class-variance-authority": "^0.7.1"
+  },
   "devDependencies": {
-    "typescript": "~5.9.2",
-    "prettier": "^3.8.1"
+    "@tailwindcss/postcss": "^4.1.4",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.3"
   }
 }

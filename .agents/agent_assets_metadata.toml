@@ -3,30 +3,30 @@ outputs = []
 
 [[generated]]
 id = "LpruRextYpSPqUcPL5W-D"
-uri = "file://artifacts/mockup-sandbox/public/images/hero-4.png"
+uri = "file://public/images/hero-4.png"
 type = "image"
 title = "Brutalist tech poster art"
 
 [[generated]]
 id = "RnMJmoL0n3QE0EZ9ySc0P"
-uri = "file://artifacts/mockup-sandbox/public/images/hero-2.png"
+uri = "file://public/images/hero-2.png"
 type = "image"
 title = "Editorial Arabic calligraphy flat lay"
 
 [[generated]]
 id = "4mxMtUBIw2fTuEEiQWw1f"
-uri = "file://artifacts/mockup-sandbox/public/images/hero-1.png"
+uri = "file://public/images/hero-1.png"
 type = "image"
 title = "dark matrix hacker aesthetic code"
 
 [[generated]]
 id = "kTXWpqqVdfjTRKyGvnVi5"
-uri = "file://artifacts/mockup-sandbox/public/images/hero-3.png"
+uri = "file://public/images/hero-3.png"
 type = "image"
 title = "Deep space nebula with Arabic constellations"
 
 [[generated]]
 id = "CLgxCXU7XCqRomJeHdB2k"
-uri = "file://artifacts/mockup-sandbox/public/images/hero-5.png"
+uri = "file://public/images/hero-5.png"
 type = "image"
 title = "Bioluminescent Arabic organic forest"
