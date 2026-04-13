@@ -9,7 +9,11 @@ import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const slugs = getAllSlugs("ar");
-  return slugs.map((slug) => ({ slug }));
+  return Array.from(
+    new Set(
+      slugs.flatMap((slug) => [slug, encodeURIComponent(slug)]),
+    ),
+  ).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

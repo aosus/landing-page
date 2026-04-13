@@ -32,7 +32,25 @@ function getPostDir(slug: string): string {
   return path.join(blogRoot, slug);
 }
 
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 function getPostFilePath(slug: string, lang: Lang): string {
+  const slugs = [slug, decodeSlug(slug)];
+
+  for (const candidate of slugs) {
+    const filePath = path.join(getPostDir(candidate), `index.${lang}.md`);
+
+    if (fs.existsSync(filePath)) {
+      return filePath;
+    }
+  }
+
   return path.join(getPostDir(slug), `index.${lang}.md`);
 }
 
@@ -69,10 +87,28 @@ function getAllPostDirectories(): string[] {
     return [];
   }
 
-  return fs
-    .readdirSync(blogRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
+  function walk(dir: string, relativeDir = ""): string[] {
+    return fs
+      .readdirSync(dir, { withFileTypes: true })
+      .flatMap((entry) => {
+        if (!entry.isDirectory() || entry.name.startsWith("_")) {
+          return [];
+        }
+
+        const nextRelativeDir = path.join(relativeDir, entry.name);
+        const nextDir = path.join(dir, entry.name);
+        const hasIndexFile = ["index.ar.md", "index.en.md"].some((fileName) =>
+          fs.existsSync(path.join(nextDir, fileName)),
+        );
+
+        return [
+          ...(hasIndexFile ? [nextRelativeDir] : []),
+          ...walk(nextDir, nextRelativeDir),
+        ];
+      });
+  }
+
+  return walk(blogRoot);
 }
 
 function parsePostFrontMatter(filePath: string, slug: string, lang: Lang) {
@@ -125,7 +161,9 @@ export function getAllPosts(lang: Lang): PostFrontMatter[] {
 }
 
 export function getRegularPosts(lang: Lang): PostFrontMatter[] {
-  return getAllPosts(lang).filter((post) => !post.categories.includes("writing-contest"));
+  return getAllPosts(lang).filter(
+    (post) => !post.categories.includes("writing-contest") && !post.categories.includes("media"),
+  );
 }
 
 export function getLatestPosts(lang: Lang, count = 3): PostFrontMatter[] {

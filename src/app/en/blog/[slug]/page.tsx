@@ -48,14 +48,15 @@ export default async function EnArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug, "en");
+  const decodedSlug = decodeURIComponent(slug);
+  const post = await getPostBySlug(decodedSlug, "en");
 
   if (!post) {
     notFound();
   }
 
   const allPosts = getRegularPosts("en");
-  const currentIndex = allPosts.findIndex((item) => item.slug === slug);
+  const currentIndex = allPosts.findIndex((item) => item.slug === decodedSlug);
   const prevPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
