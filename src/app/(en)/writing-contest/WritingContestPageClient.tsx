@@ -327,7 +327,7 @@ export default function WritingContestPage({
                           {item.date}
                         </div>
                         {"slug" in item ? (
-                          <a href={`${blogBase}/${item.slug}`}>
+                          <a href={`${blogBase}/${encodeURIComponent((item as PostFrontMatter).slug)}`}>
                             <h3 className="font-bold" style={{ fontFamily: ff }}>
                               {item.title}
                             </h3>

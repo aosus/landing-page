@@ -152,7 +152,7 @@ export default function ArticlePageClient({
                 {prevPost && (
                   <div className="border-t border-[#008a2f]/20 pt-8">
                     <Link
-                      href={`${blogLink}/${prevPost.slug}`}
+                      href={`${blogLink}/${encodeURIComponent(prevPost.slug)}`}
                       className="flex items-center gap-3 text-gray-500 transition-colors group hover:text-[#008a2f] dark:text-gray-400"
                     >
                       <BackArrow className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />

@@ -78,7 +78,7 @@ function BlogPageContent({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
             >
-              <Link href={`${blogBase}/${post.slug}`} className="block h-full">
+                <Link href={`${blogBase}/${encodeURIComponent(post.slug)}`} className="block h-full">
                 <CyberCard
                   isDark={isDark}
                   className="group h-full cursor-pointer overflow-hidden"
