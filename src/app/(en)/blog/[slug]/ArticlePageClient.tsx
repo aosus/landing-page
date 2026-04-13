@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import Layout, {
   CyberCard,
+  FollowLinksPanel,
   PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
@@ -26,6 +27,8 @@ const LABELS = {
     discussCta: "Discuss on Forum",
     prevLabel: "Previous Post",
     supportBtn: "Support Us",
+    followTitle: "Follow us",
+    followIntro: "Stay close to the community and catch new updates.",
   },
   ar: {
     breadcrumb: ["الرئيسية", "المدونة"],
@@ -33,6 +36,8 @@ const LABELS = {
     discussCta: "علّق في المنتدى",
     prevLabel: "المقال السابق",
     supportBtn: "ادعمنا",
+    followTitle: "تابعنا",
+    followIntro: "ابقَ قريبًا من المجتمع وتابع آخر التحديثات.",
   },
 };
 
@@ -138,6 +143,28 @@ export default function ArticlePageClient({
                     <PrimaryButton href={supportLink}>
                       {t.supportBtn}
                     </PrimaryButton>
+                  </div>
+                </CyberCard>
+
+                <CyberCard isDark={isDark} className="p-6 mb-8" hover={false}>
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <p
+                        className="text-xs font-mono uppercase tracking-widest text-[#008a2f] mb-2"
+                        style={
+                          isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
+                        }
+                      >
+                        / {t.followTitle}
+                      </p>
+                      <p
+                        className="text-sm text-gray-500 dark:text-gray-400"
+                        style={{ fontFamily: ff }}
+                      >
+                        {t.followIntro}
+                      </p>
+                    </div>
+                    <FollowLinksPanel lang={lang} />
                   </div>
                 </CyberCard>
 

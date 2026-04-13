@@ -2,7 +2,23 @@
 
 import React, { useState, useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Menu, X, Github, MessageSquare, Heart } from "lucide-react";
+import {
+  Sun,
+  Moon,
+  Menu,
+  X,
+  Github,
+  MessageSquare,
+  MessagesSquare,
+  Heart,
+  Twitter,
+  Linkedin,
+  Facebook,
+  Rss,
+  Share2,
+  ChevronDown,
+  Send,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getLocalizedPath, isEnglishPath, type Lang } from "@/lib/locale";
@@ -30,8 +46,40 @@ const NAV = {
   ],
 };
 
-const SOCIALS = [
+type IconComponent = React.ComponentType<{ className?: string }>;
+
+type FollowLink = {
+  label: string;
+  href: string;
+  icon: IconComponent;
+};
+
+type FollowGroup = {
+  label: string;
+  icon: IconComponent;
+  links: FollowLink[];
+};
+
+const SOCIAL_MEDIA_LINKS: FollowLink[] = [
   { label: "GitHub", href: "https://github.com/aosus", icon: Github },
+  {
+    label: "Twitter/X",
+    href: "https://twitter.com/aosusdotorg",
+    icon: Twitter,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/aosus/",
+    icon: Linkedin,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/aosus1/",
+    icon: Facebook,
+  },
+];
+
+const CHAT_PLATFORM_LINKS: FollowLink[] = [
   {
     label: "Matrix",
     href: "https://matrix.to/#/#aosus:aosus.org",
@@ -40,10 +88,143 @@ const SOCIALS = [
   {
     label: "Discord",
     href: "https://discord.gg/YJUzEhU955",
-    icon: MessageSquare,
+    icon: MessagesSquare,
   },
-  { label: "Telegram", href: "https://t.me/aosus", icon: MessageSquare },
+  { label: "Telegram", href: "https://t.me/aosus", icon: Send },
 ];
+
+const RSS_LINK: FollowLink = {
+  label: "RSS Feed",
+  href: "https://aosus.org/feed",
+  icon: Rss,
+};
+
+const COMMUNITY_LINKS: FollowLink[] = [
+  ...SOCIAL_MEDIA_LINKS,
+  ...CHAT_PLATFORM_LINKS,
+  RSS_LINK,
+];
+
+const FOLLOW_GROUPS = (lang: Lang): FollowGroup[] => [
+  {
+    label: lang === "ar" ? "وسائل التواصل" : "Social media",
+    icon: Share2,
+    links: SOCIAL_MEDIA_LINKS,
+  },
+  {
+    label: lang === "ar" ? "منصات الدردشة" : "Chat platforms",
+    icon: MessagesSquare,
+    links: CHAT_PLATFORM_LINKS,
+  },
+];
+
+export function FollowLinksPanel({
+  lang,
+  groups = FOLLOW_GROUPS(lang),
+  className = "",
+  buttonClassName = "",
+  onLinkClick,
+}: {
+  lang: Lang;
+  groups?: FollowGroup[];
+  className?: string;
+  buttonClassName?: string;
+  onLinkClick?: () => void;
+}) {
+  return (
+    <div className={`space-y-4 ${className}`.trim()}>
+      {groups.map((group) => {
+        const GroupIcon = group.icon;
+        return (
+          <section key={group.label} className="space-y-3">
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#008a2f]">
+              <GroupIcon className="h-4 w-4" />
+              <span>{group.label}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {group.links.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={onLinkClick}
+                    className={`inline-flex items-center gap-2 rounded-full border border-[#008a2f]/20 px-3 py-2 text-xs font-medium text-gray-500 transition-all hover:border-[#008a2f] hover:text-[#008a2f] dark:text-gray-400 dark:hover:text-[#008a2f] ${buttonClassName}`.trim()}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{link.label}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+function FollowDropdown({
+  lang,
+  open,
+  onToggle,
+  onLinkClick,
+  align = "end",
+  label,
+}: {
+  label: string;
+  lang: Lang;
+  open: boolean;
+  onToggle: () => void;
+  onLinkClick?: () => void;
+  align?: "start" | "end";
+}) {
+  const alignClass = align === "start" ? "left-0" : "right-0";
+  const buttonLabel = label;
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[#008a2f]/20 bg-white/70 px-3 text-xs font-mono text-gray-500 transition-all hover:border-[#008a2f] hover:text-[#008a2f] dark:bg-black/20 dark:text-gray-400"
+        aria-label={buttonLabel}
+        aria-expanded={open}
+        title={buttonLabel}
+      >
+        <Share2 className="h-4 w-4" />
+        <MessagesSquare className="h-4 w-4" />
+        <span className="hidden xl:inline">{label}</span>
+        <ChevronDown
+          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            className={`absolute ${alignClass} top-full z-50 mt-3 w-80 rounded-2xl border border-[#008a2f]/20 bg-white/95 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.18)] backdrop-blur-md dark:bg-black/95`}
+          >
+            <div className="mb-4 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#008a2f]">
+              <Share2 className="h-4 w-4" />
+              <MessagesSquare className="h-4 w-4" />
+              <span>{label}</span>
+            </div>
+            <FollowLinksPanel
+              lang={lang}
+              onLinkClick={onLinkClick}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -111,6 +292,8 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [communityMenuOpen, setCommunityMenuOpen] = useState(false);
+  const actionsRef = useRef<HTMLDivElement>(null);
   const isRtl = lang === "ar";
 
   useEffect(() => {
@@ -155,6 +338,28 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!actionsRef.current?.contains(event.target as Node)) {
+        setCommunityMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setCommunityMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const navItems = NAV[lang];
   const homeHref = getLocalizedPath(lang, "/");
   const supportHref = getLocalizedPath(lang, "/support-us");
@@ -190,8 +395,8 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
       <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-[#1d70ba]/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[#008a2f]/20 bg-white/60 backdrop-blur-md dark:bg-black/60">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href={homeHref} className="flex items-center gap-3 group">
+        <nav className="max-w-7xl mx-auto px-3 sm:px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+          <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
             <img
               src="/images/aosus-logo.png"
               alt="Aosus Logo"
@@ -199,7 +404,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             />
           </Link>
 
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1 justify-self-center">
             {navItems.map((item) => {
               const isActive =
                 pathname === item.href ||
@@ -225,7 +430,17 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             })}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div ref={actionsRef} className="justify-self-end flex items-center gap-2">
+            <div className="hidden xl:flex items-center gap-2 mr-1">
+              <FollowDropdown
+                label={lang === "ar" ? "المجتمع" : "Community"}
+                lang={lang}
+                open={communityMenuOpen}
+                onToggle={() => setCommunityMenuOpen((current) => !current)}
+                onLinkClick={() => setCommunityMenuOpen(false)}
+                align={isRtl ? "start" : "end"}
+              />
+            </div>
             <Link
               href={langToggleHref}
               className="px-3 py-1 text-xs border border-[#1d70ba]/30 text-[#1d70ba] hover:bg-[#1d70ba]/10 transition-all font-mono"
@@ -277,6 +492,12 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                     {item.label}
                   </Link>
                 ))}
+                <div className="pt-4 border-t border-[#008a2f]/10">
+                  <FollowLinksPanel
+                    lang={lang}
+                    onLinkClick={() => setMenuOpen(false)}
+                  />
+                </div>
               </div>
             </motion.div>
           )}
@@ -328,7 +549,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                 {lang === "ar" ? "المجتمع" : "Community"}
               </h4>
               <ul className="space-y-2">
-                {SOCIALS.map((s) => (
+                {COMMUNITY_LINKS.map((s) => (
                   <li key={s.label}>
                     <a
                       href={s.href}
