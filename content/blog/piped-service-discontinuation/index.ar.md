@@ -3,7 +3,8 @@ title: "إيقاف خدمة Piped"
 date: "2025-08-15"
 author: "FarisZR"
 tags: ["خدمات", "خصوصية", "إعلان"]
-image: "/images/hero-3.png"
+categories: ["general"]
+image: "cover.png"
 lang: "ar"
 excerpt: "خدمة Piped في مجتمع أسس تواجه مشاكل في التشغيل. نعلن عن الإيقاف القريب للخدمة."
 ---

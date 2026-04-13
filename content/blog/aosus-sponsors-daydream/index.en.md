@@ -3,7 +3,8 @@ title: "Aosus Sponsors Daydream Hackathon for School Students in Alexandria"
 date: "2025-09-18"
 author: "FarisZR"
 tags: ["Free Software", "Sponsorship", "Aosus Community"]
-image: "/images/hero-1.png"
+categories: ["general"]
+image: "cover.png"
 lang: "en"
 excerpt: "Aosus sponsors the Daydream hackathon in Alexandria, introducing school students to free and open-source software through game development with the Godot engine."
 ---

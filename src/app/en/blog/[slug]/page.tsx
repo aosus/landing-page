@@ -1,4 +1,8 @@
-import { getPostBySlug, getAllSlugs, getAllPosts } from "@/lib/markdown";
+import {
+  getPostBySlug,
+  getAllSlugs,
+  getRegularPosts,
+} from "@/lib/markdown";
 import ArticlePageClient from "../../../(en)/blog/[slug]/ArticlePageClient";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -50,7 +54,7 @@ export default async function EnArticlePage({
     notFound();
   }
 
-  const allPosts = getAllPosts("en");
+  const allPosts = getRegularPosts("en");
   const currentIndex = allPosts.findIndex((item) => item.slug === slug);
   const prevPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;

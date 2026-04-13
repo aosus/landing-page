@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/markdown";
+import { getRegularPosts } from "@/lib/markdown";
 import BlogPageClient from "../(en)/blog/BlogPageClient";
 
 export const metadata = {
@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default function BlogPage() {
-  const posts = getAllPosts("ar");
+  const posts = getRegularPosts("ar");
 
   return <BlogPageClient posts={posts} lang="ar" />;
 }

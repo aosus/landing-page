@@ -10,6 +10,7 @@ export interface PostFrontMatter {
   date: string;
   author: string;
   tags: string[];
+  categories: string[];
   image: string;
   thumbnail: string;
   ogImage: string;
@@ -20,43 +21,56 @@ export interface PostFrontMatter {
 
 export const POSTS_PER_PAGE = 9;
 
-function getImageBaseName(sourceImage: string): string {
-  return sourceImage.replace(/^\/images\//, "").replace(/\.[^.]+$/, "");
-}
-
-function deriveOptimizedImage(sourceImage: string): string {
-  return `/images/processed/${getImageBaseName(sourceImage)}.webp`;
-}
-
-function deriveThumbnail(sourceImage: string): string {
-  return `/images/thumbs/${getImageBaseName(sourceImage)}.webp`;
-}
-
-function deriveOgImage(sourceImage: string): string {
-  return `/og/${getImageBaseName(sourceImage)}.jpg`;
-}
-
 export interface Post extends PostFrontMatter {
   content: string;
 }
 
-const contentDir = path.join(process.cwd(), "content", "blog");
+const contentRoot = path.join(process.cwd(), "content");
+const blogRoot = path.join(contentRoot, "blog");
 
 function getPostDir(slug: string): string {
-  return path.join(contentDir, slug);
+  return path.join(blogRoot, slug);
 }
 
 function getPostFilePath(slug: string, lang: Lang): string {
   return path.join(getPostDir(slug), `index.${lang}.md`);
 }
 
+function isRemoteAsset(assetPath: string): boolean {
+  return /^(?:https?:)?\/\//i.test(assetPath) || assetPath.startsWith("data:");
+}
+
+function resolvePostAssetUrl(filePath: string, assetPath: string): string {
+  if (isRemoteAsset(assetPath)) {
+    return assetPath;
+  }
+
+  const absolutePath = path.resolve(path.dirname(filePath), assetPath);
+  const relativePath = path.relative(contentRoot, absolutePath).replaceAll(path.sep, "/");
+
+  return `/content/${relativePath}`;
+}
+
+function rewriteMarkdownImages(filePath: string, markdown: string): string {
+  return markdown.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt: string, rawUrl: string) => {
+    const url = rawUrl.trim();
+
+    if (isRemoteAsset(url) || url.startsWith("/")) {
+      return `![${alt}](${url})`;
+    }
+
+    const resolvedUrl = resolvePostAssetUrl(filePath, url);
+    return `![${alt}](${resolvedUrl})`;
+  });
+}
+
 function getAllPostDirectories(): string[] {
-  if (!fs.existsSync(contentDir)) {
+  if (!fs.existsSync(blogRoot)) {
     return [];
   }
 
   return fs
-    .readdirSync(contentDir, { withFileTypes: true })
+    .readdirSync(blogRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
 }
@@ -64,17 +78,26 @@ function getAllPostDirectories(): string[] {
 function parsePostFrontMatter(filePath: string, slug: string, lang: Lang) {
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
-  const sourceImage = data.image || data.thumbnail || "/images/hero-1.png";
+  const imageSource = data.image || "cover.png";
+  const thumbnailSource = data.thumbnail || imageSource;
+  const ogImageSource = data.ogImage || imageSource;
+  const categories = Array.isArray(data.categories)
+    ? data.categories
+    : data.categories
+      ? [data.categories]
+      : [];
+  const tags = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [];
 
   return {
     frontMatter: {
       title: data.title || "",
       date: data.date || "",
       author: data.author || "",
-      tags: data.tags || [],
-      image: deriveOptimizedImage(sourceImage),
-      thumbnail: deriveThumbnail(sourceImage),
-      ogImage: deriveOgImage(sourceImage),
+      tags,
+      categories,
+      image: resolvePostAssetUrl(filePath, imageSource),
+      thumbnail: resolvePostAssetUrl(filePath, thumbnailSource),
+      ogImage: resolvePostAssetUrl(filePath, ogImageSource),
       excerpt: data.excerpt || "",
       slug,
       lang,
@@ -96,13 +119,37 @@ export function getAllPosts(lang: Lang): PostFrontMatter[] {
     })
     .filter((post): post is PostFrontMatter => post !== null);
 
-  posts.sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
+  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return posts;
+}
+
+export function getRegularPosts(lang: Lang): PostFrontMatter[] {
+  return getAllPosts(lang).filter((post) => !post.categories.includes("writing-contest"));
+}
+
+export function getLatestPosts(lang: Lang, count = 3): PostFrontMatter[] {
+  return getRegularPosts(lang).slice(0, count);
+}
+
+export function getPostsByCategory(lang: Lang, category: string): PostFrontMatter[] {
+  return getAllPosts(lang).filter((post) => post.categories.includes(category));
+}
+
+export function getArticleFilePath(slug: string, lang: Lang): string | null {
+  const filePath = getPostFilePath(slug, lang);
+
+  return fs.existsSync(filePath) ? filePath : null;
+}
+
+export function getPostAssetPath(slug: string, lang: Lang, assetPath: string): string {
+  const filePath = getArticleFilePath(slug, lang);
+
+  if (!filePath) {
+    return assetPath;
+  }
+
+  return resolvePostAssetUrl(filePath, assetPath);
 }
 
 export async function getPostBySlug(
@@ -121,12 +168,13 @@ export async function getPostBySlug(
     lang,
   );
 
-  const processedContent = await remark().use(html).process(rawContent);
-  const content = processedContent.toString();
+  const processedContent = await remark().use(html).process(
+    rewriteMarkdownImages(filePath, rawContent),
+  );
 
   return {
     ...frontMatter,
-    content,
+    content: processedContent.toString(),
   };
 }
 
@@ -137,12 +185,11 @@ export function getAllSlugs(lang: Lang): string[] {
 }
 
 export function getTotalPostPages(lang: Lang): number {
-  const totalPosts = getAllPosts(lang).length;
-  return Math.max(1, Math.ceil(totalPosts / POSTS_PER_PAGE));
+  return Math.max(1, Math.ceil(getRegularPosts(lang).length / POSTS_PER_PAGE));
 }
 
 export function getPostsPage(lang: Lang, page: number) {
-  const allPosts = getAllPosts(lang);
+  const allPosts = getRegularPosts(lang);
   const totalPages = Math.max(1, Math.ceil(allPosts.length / POSTS_PER_PAGE));
 
   if (page < 1 || page > totalPages) {

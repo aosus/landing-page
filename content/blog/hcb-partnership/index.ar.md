@@ -3,7 +3,8 @@ title: "أسس تتشارك مع مؤسسة Hack Club"
 date: "2024-06-15"
 author: "FarisZR"
 tags: ["المجتمع", "شراكة", "منظمة غير ربحية"]
-image: "/images/hero-4.png"
+categories: ["general"]
+image: "cover.png"
 lang: "ar"
 excerpt: "أسس الآن مستضاف مالياً من The Hack Foundation، وحصل على صفة منظمة غير ربحية."
 ---

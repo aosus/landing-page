@@ -1,8 +1,8 @@
 import HomePageClient from "../(en)/HomePageClient";
-import { getAllPosts } from "@/lib/markdown";
+import { getLatestPosts } from "@/lib/markdown";
 
 export default function ArHomePage() {
-  const enPosts = getAllPosts("en");
-  const arPosts = getAllPosts("ar");
+  const enPosts = getLatestPosts("en");
+  const arPosts = getLatestPosts("ar");
   return <HomePageClient lang="ar" latestPosts={{ en: enPosts, ar: arPosts }} />;
 }

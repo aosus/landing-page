@@ -27,14 +27,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Aosus - The Largest Arabic Open-Source Community",
     description: "Where Arab technologists build the future of open source.",
-    images: ["/images/hero-1.png"],
+    images: ["/opengraph.jpg"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Aosus - The Largest Arabic Open-Source Community",
     description: "Where Arab technologists build the future of open source.",
-    images: ["/images/hero-1.png"],
+    images: ["/opengraph.jpg"],
   },
 };
 

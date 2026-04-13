@@ -3,7 +3,8 @@ title: "ساهم في ترجمة Firefox!"
 date: "2025-09-01"
 author: "FarisZR"
 tags: ["مصادر مفتوحة", "Mozilla", "ترجمة"]
-image: "/images/hero-2.png"
+categories: ["general"]
+image: "cover.png"
 lang: "ar"
 excerpt: "هل تستخدم Firefox وتريد تحسين دعمه للعربية؟ Mozilla تحتاج مساعدتك!"
 ---

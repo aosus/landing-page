@@ -3,7 +3,8 @@ title: "Piped Service Discontinuation"
 date: "2025-08-15"
 author: "FarisZR"
 tags: ["Services", "Privacy", "Announcement"]
-image: "/images/hero-3.png"
+categories: ["general"]
+image: "cover.png"
 lang: "en"
 excerpt: "The Piped service in the Aosus community has been facing playback issues. We are announcing the upcoming discontinuation of the service."
 ---

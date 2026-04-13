@@ -1,5 +1,8 @@
 import WritingContestPage from "../(en)/writing-contest/WritingContestPageClient";
+import { getPostsByCategory } from "@/lib/markdown";
 
 export default function WritingContestPageRoute() {
-  return <WritingContestPage lang="ar" />;
+  const posts = getPostsByCategory("ar", "writing-contest");
+
+  return <WritingContestPage lang="ar" posts={posts} />;
 }

@@ -5,6 +5,8 @@
 .next-env.d.ts
 out/
 *.tsbuildinfo
+public/content/
+artifacts/
 
 # dependencies
 node_modules/

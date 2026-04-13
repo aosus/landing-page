@@ -17,6 +17,8 @@ import Layout, {
   PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
+import type { PostFrontMatter } from "@/lib/markdown";
+import { getLocalizedPath } from "@/lib/locale";
 
 const CONTENT = {
   en: {
@@ -168,8 +170,10 @@ const CONTENT = {
 
 export default function WritingContestPage({
   lang: langProp,
+  posts,
 }: {
   lang?: Lang;
+  posts?: PostFrontMatter[];
 }) {
   return (
     <Layout lang={langProp}>
@@ -177,6 +181,8 @@ export default function WritingContestPage({
         const t = CONTENT[lang];
         const isRtl = lang === "ar";
         const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+        const latestPosts = posts?.slice(0, 3) || [];
+        const blogBase = getLocalizedPath(lang, "/blog");
 
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
@@ -314,16 +320,26 @@ export default function WritingContestPage({
                   lang={lang}
                 />
                 <div className="space-y-4">
-                  {t.pastWinners.items.map((item, i) => (
-                    <CyberCard key={i} isDark={isDark} className="p-4">
-                      <div className="text-xs font-mono mb-1 text-gray-400 dark:text-gray-600">
-                        {item.date}
-                      </div>
-                      <h3 className="font-bold" style={{ fontFamily: ff }}>
-                        {item.title}
-                      </h3>
-                    </CyberCard>
-                  ))}
+                  {(latestPosts.length ? latestPosts : t.pastWinners.items).map(
+                    (item, i) => (
+                      <CyberCard key={i} isDark={isDark} className="p-4">
+                        <div className="text-xs font-mono mb-1 text-gray-400 dark:text-gray-600">
+                          {item.date}
+                        </div>
+                        {"slug" in item ? (
+                          <a href={`${blogBase}/${item.slug}`}>
+                            <h3 className="font-bold" style={{ fontFamily: ff }}>
+                              {item.title}
+                            </h3>
+                          </a>
+                        ) : (
+                          <h3 className="font-bold" style={{ fontFamily: ff }}>
+                            {item.title}
+                          </h3>
+                        )}
+                      </CyberCard>
+                    ),
+                  )}
                 </div>
               </div>
             </section>

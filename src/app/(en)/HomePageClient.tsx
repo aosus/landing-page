@@ -498,7 +498,7 @@ export default function HomePageClient({
                       center={false}
                     />
                     <div className="space-y-4">
-                      {(dynamicPosts || t.blog).map((post, i) => {
+                      {(dynamicPosts && dynamicPosts.length ? dynamicPosts : t.blog).map((post, i) => {
                         const isDynamic = "slug" in post;
                         const link = isDynamic
                           ? `${blogBase}/${(post as PostFrontMatter).slug}`

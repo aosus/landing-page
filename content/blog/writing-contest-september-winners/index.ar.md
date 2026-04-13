@@ -3,7 +3,8 @@ title: "إعلان فائزين شهر سبتمبر"
 date: "2022-09-30"
 author: "FarisZR"
 tags: ["جائزة الكتابة", "المجتمع", "جوائز"]
-image: "/images/hero-1.png"
+categories: ["writing-contest"]
+image: "cover.png"
 lang: "ar"
 excerpt: "5 مواضيع مفصلة حول البرمجيات الحرة والمفتوحة، هذه المرة أيضاً عن تقنيات الويب!"
 ---

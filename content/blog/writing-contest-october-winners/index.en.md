@@ -3,7 +3,8 @@ title: "Writing Contest: October Winners Announced"
 date: "2022-10-30"
 author: "FarisZR"
 tags: ["Writing Contest", "Community", "Awards"]
-image: "/images/hero-5.png"
+categories: ["writing-contest"]
+image: "cover.png"
 lang: "en"
 excerpt: "Valuable and detailed topics on free and open-source software win the Aosus Writing Award for October!"
 ---

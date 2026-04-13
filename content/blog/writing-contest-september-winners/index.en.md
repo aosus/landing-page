@@ -3,7 +3,8 @@ title: "Writing Contest: September Winners"
 date: "2022-09-30"
 author: "FarisZR"
 tags: ["Writing Contest", "Community", "Awards"]
-image: "/images/hero-1.png"
+categories: ["writing-contest"]
+image: "cover.png"
 lang: "en"
 excerpt: "5 detailed topics on free and open-source software, this time also about web technologies!"
 ---

@@ -3,7 +3,8 @@ title: "Aosus Partners with Hack Club Foundation"
 date: "2024-06-15"
 author: "FarisZR"
 tags: ["Community", "Partnership", "Nonprofit"]
-image: "/images/hero-4.png"
+categories: ["general"]
+image: "cover.png"
 lang: "en"
 excerpt: "Aosus is now fiscally sponsored by The Hack Foundation, gaining 501(c)(3) nonprofit status for tax-deductible donations."
 ---

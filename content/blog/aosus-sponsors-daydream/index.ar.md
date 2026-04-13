@@ -3,7 +3,8 @@ title: "مجتمع أسس يرعى هاكاثون Daydream لطلاب المدا
 date: "2025-09-18"
 author: "FarisZR"
 tags: ["البرمجيات الحرة", "رعاية", "مجتمع أسس"]
-image: "/images/hero-1.png"
+categories: ["general"]
+image: "cover.png"
 lang: "ar"
 excerpt: "يسر مجتمع أُسُس أن يعلن عن رعايته لحدث Daydream Alexandria الذي سيُقام في مدينة الإسكندرية."
 ---
