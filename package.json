@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx scripts/sync-content-assets.ts && next dev --port ${PORT:-25211} --hostname 0.0.0.0",
-    "build": "tsx scripts/sync-content-assets.ts && next build",
+    "dev": "tsx scripts/sync-content-assets.ts && tsx scripts/build-link-previews.ts && next dev --port ${PORT:-25211} --hostname 0.0.0.0",
+    "build": "tsx scripts/sync-content-assets.ts && tsx scripts/build-link-previews.ts && next build",
     "start": "node scripts/serve-static.mjs",
     "import:wordpress": "tsx scripts/import-wordpress.ts",
     "test": "vitest run"
@@ -35,7 +35,10 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "cheerio": "^1.2.0",
     "jsdom": "^29.0.2",
+    "open-graph-scraper": "^6.11.0",
+    "p-limit": "^7.3.0",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "^5.8.3",

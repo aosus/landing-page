@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import remarkLinkPreviews from "./remarkLinkPreviews";
 import type { Lang } from "@/lib/locale";
 
 export interface PostFrontMatter {
@@ -231,9 +232,10 @@ export async function getPostBySlug(
     return null;
   }
 
-  const processedContent = await remark().use(html).process(
-    rewriteMarkdownImages(post.filePath, post.content),
-  );
+  const processedContent = await remark()
+    .use(remarkLinkPreviews)
+    .use(html, { sanitize: false })
+    .process(rewriteMarkdownImages(post.filePath, post.content));
 
   return {
     ...post.frontMatter,
