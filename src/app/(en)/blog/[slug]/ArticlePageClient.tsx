@@ -17,7 +17,7 @@ import Layout, {
   type Lang,
 } from "@/components/layout/Layout";
 import type { Post, PostFrontMatter } from "@/lib/markdown";
-import { getLocalizedPath } from "@/lib/locale";
+import { getLocalizedPath, getPostPath } from "@/lib/locale";
 
 const LABELS = {
   en: {
@@ -152,7 +152,11 @@ export default function ArticlePageClient({
                 {prevPost && (
                   <div className="border-t border-[#008a2f]/20 pt-8">
                     <Link
-                      href={`${blogLink}/${encodeURIComponent(prevPost.slug)}`}
+                      href={getPostPath(
+                        lang,
+                        prevPost.slug,
+                        prevPost.wpType === "post" && prevPost.wpId === prevPost.slug,
+                      )}
                       className="flex items-center gap-3 text-gray-500 transition-colors group hover:text-[#008a2f] dark:text-gray-400"
                     >
                       <BackArrow className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
