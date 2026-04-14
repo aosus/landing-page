@@ -4,11 +4,11 @@ date: "2025-06-21"
 author: "FarisZR"
 tags: ["firefox", "mozilla", "أسس", "اللغة العربية", "ترجمة", "فايرفوكس", "فيرفوكس", "مجتمع أسس", "مفتوح المصدر"]
 categories: ["اعلان"]
-image: "image1-cf6f6298.png"
-thumbnail: "image1-cf6f6298.png"
-ogImage: "image1-cf6f6298.png"
+image: "image1-cf6f6298-2.png"
+thumbnail: "image1-cf6f6298-2.png"
+ogImage: "image1-cf6f6298-2.png"
 excerpt: "هل انت تستخدم متصفح Firefox ومهتم بتحسين دعمة للعربية؟ Mozilla تطلب منك المساعدة! المتصفح يحتاج لمساهمتكم لتحسين دعمه للعربية."
-slug: "ساهم-في-تَرْجَمَة-فيرفكس"
+slug: "2125"
 wpId: 2125
 wpType: "post"
 sourceUrl: "https://aosus.org/2125"

@@ -4,11 +4,11 @@ date: "2025-09-18"
 author: "FarisZR"
 tags: ["البرمجيات الحرة", "رعاية", "مجتمع أسس"]
 categories: ["اعلان"]
-image: "aosus-alexandria-daydream-0409239e.jpeg"
-thumbnail: "aosus-alexandria-daydream-0409239e.jpeg"
-ogImage: "aosus-alexandria-daydream-0409239e.jpeg"
+image: "aosus-alexandria-daydream-0409239e-2.jpeg"
+thumbnail: "aosus-alexandria-daydream-0409239e-2.jpeg"
+ogImage: "aosus-alexandria-daydream-0409239e-2.jpeg"
 excerpt: "مجتمع أسس يرعى هاكاثون Daydream في الاسنكدرية, ليعرف طلاب المدارس على البرمجيات المفتوحة و الحرة عبر برمجة الالعاب مع محرك Godot."
-slug: "مجتمع-أسس-يرعى-هاكاثون-daydream-لطلاب-المدارس"
+slug: "2135"
 wpId: 2135
 wpType: "post"
 sourceUrl: "https://aosus.org/2135"

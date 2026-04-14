@@ -4,11 +4,11 @@ date: "2022-11-10"
 author: "FarisZR"
 tags: ["Dns filtering", "Pihole", "Tracker control", "البرمجيات الحرة", "جائزة أسس للكتابة", "فلتره الDNS", "كتابة", "لينكس", "مجتمع أسس", "مفتوح المصدر", "منع الاعلانات"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-9-2022-8fa66f4a.jpg"
-thumbnail: "writing-winners-9-2022-8fa66f4a.jpg"
-ogImage: "writing-winners-9-2022-8fa66f4a.jpg"
+image: "writing-winners-9-2022-8fa66f4a-2.jpg"
+thumbnail: "writing-winners-9-2022-8fa66f4a-2.jpg"
+ogImage: "writing-winners-9-2022-8fa66f4a-2.jpg"
 excerpt: "أعلان الفائزين في #جائزة_أسس_للكتابة لشهر سبتمبر! 5 مواضيع مفصلة حول #البرمجيات_الحرة و#البرمجيات_المفتوحة, هذه المرة أيضا عن تقنيات #الويب!"
-slug: "إعلان-الفائزين-بجائزة-أسس-للكتابة-لشه-4"
+slug: "1584"
 wpId: 1584
 wpType: "post"
 sourceUrl: "https://aosus.org/1584"

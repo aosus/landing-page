@@ -4,11 +4,11 @@ date: "2023-05-13"
 author: "FarisZR"
 tags: ["discord", "أسس", "سيرفر دسكورد برمجيات مفتوحة", "سيرفر دسكورد دوكر", "سيرفر دسكورد لينكس", "مجتمع أسس"]
 categories: ["اعلان"]
-image: "Aosus-discord-1-jpeg-1f23b7bf.webp"
-thumbnail: "Aosus-discord-1-jpeg-1f23b7bf.webp"
-ogImage: "Aosus-discord-1-jpeg-1f23b7bf.webp"
+image: "Aosus-discord-1-jpeg-1f23b7bf-2.webp"
+thumbnail: "Aosus-discord-1-jpeg-1f23b7bf-2.webp"
+ogImage: "Aosus-discord-1-jpeg-1f23b7bf-2.webp"
 excerpt: "أفتتاح سيرفر #دسكورد لمجتمع أسس ليكون اول سيرفر عربي حول #البرمجيات_المفتوحة على المنصة, مع إمكانيه التحدث مع المستخدمين على منصات اخرى مثل #تيليجرام و #ماتركس. انضمو الان!"
-slug: "أفتتاح-سيرفر-دسكورد-لمجتمع-أسس"
+slug: "1847"
 wpId: 1847
 wpType: "post"
 sourceUrl: "https://aosus.org/1847"

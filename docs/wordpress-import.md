@@ -9,11 +9,11 @@ Run `pnpm import:wordpress` to sync WordPress posts and media into local markdow
 The importer:
 
 - fetches published posts, media, categories, tags, and users from `https://aosus.org/wp-json/wp/v2`
-- writes each imported post into a folder under `content/blog/<slug>/`
-- downloads referenced WordPress upload assets next to the post files
+- writes each imported post into one folder under `content/blog/<slug>/`
+- downloads referenced WordPress upload assets into that same folder
 - rewrites image URLs in markdown so local assets point at `/content/blog/...`
 - stores WordPress metadata in front matter, including `wpId`, `wpType`, and `sourceUrl`
-- skips writing markdown pages for WordPress media attachments
+- skips creating separate folders for WordPress media attachments
 
 ## Post routing
 
@@ -32,8 +32,8 @@ Imported posts are written as a single locale file when the importer can determi
 - media items still keep both locale files
 - the markdown loader reads the exact locale file and does not fall back to the other locale
 
-Attachment folders are different. They keep the downloaded files, but they no longer get a page.
-If you see a folder with only images or other binaries, it is probably a WordPress media asset folder.
+Imported WordPress posts should have one folder each.
+If you see a folder that only exists for media, it should be removed.
 
 ## Route changes
 

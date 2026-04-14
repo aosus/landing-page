@@ -4,11 +4,11 @@ date: "2021-11-20"
 author: "FarisZR"
 tags: ["matrix", "matrix federated protocol", "matrix protocol", "matrix.org", "بروتوكول ماتركس", "شبكة ماتركس الفدرالية"]
 categories: ["اعلان"]
-image: "aosus-matrix-1b892e88.jpg"
-thumbnail: "aosus-matrix-1b892e88.jpg"
-ogImage: "aosus-matrix-1b892e88.jpg"
+image: "aosus-matrix-1b892e88-2.jpg"
+thumbnail: "aosus-matrix-1b892e88-2.jpg"
+ogImage: "aosus-matrix-1b892e88-2.jpg"
 excerpt: "نعلن بشكل رسمي عن انضمام مجتمع أسس لشبكة ماتركس الفدرالية, عبر افتتاح سيرفر مستقل مخصص لمجتمع أسس واعضائه."
-slug: "أفتتاح-سيرفر-ماتركس-مخصص-لمجتمع-أسس"
+slug: "931"
 wpId: 931
 wpType: "post"
 sourceUrl: "https://aosus.org/931"
@@ -17,7 +17,7 @@ lang: "ar"
 
 السلام عليكم ورحمة الله وبركاتة
 
-![](aosus-matrix-1024x576-447a6b49.jpg)
+![](aosus-matrix-1024x576-447a6b49-2.jpg)
 
 نعلن اليوم عن انضمام مجتمع أسس بشكل رسمي لشبكة ماتركس الفدرالية, ذلك عبر افتتاح سيرفر مستقل لاستضافه جميع غرف محادثه واجتمعات فريق أسس و نقاشات أسس العامة
 

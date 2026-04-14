@@ -4,11 +4,11 @@ date: "2022-03-04"
 author: "FarisZR"
 tags: ["aosus.org", "Caddy webserver", "Fedora Silverblue", "LibreOffice", "Linux", "أسس", "جائزة أسس للكتابة", "كتابة مواضيع عن البرمجيات الحرة", "مجتمع أسس"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-2-2022-1841e922.jpeg"
-thumbnail: "writing-winners-2-2022-1841e922.jpeg"
-ogImage: "writing-winners-2-2022-1841e922.jpeg"
+image: "writing-winners-2-2022-1841e922-2.jpeg"
+thumbnail: "writing-winners-2-2022-1841e922-2.jpeg"
+ogImage: "writing-winners-2-2022-1841e922-2.jpeg"
 excerpt: "نعلن اليوم عن الفائزين لشهر فبراير 2022 في جائزة أسس للكتابة, الجائزة الاولى عربية لتحفيز الكاتبين كتابة مواضيع عن البرمجيات الحرة والمفتوحه."
-slug: "أعلان-الفائزين-بجائزة-أسس-للكتابة-في-ش-3"
+slug: "1153"
 wpId: 1153
 wpType: "post"
 sourceUrl: "https://aosus.org/1153"
@@ -19,7 +19,7 @@ lang: "ar"
 
 شهر جديد وفائزين جدد، نعلن اليوم عن الفائزين لشهر فبراير 2022 في جائزة أسس للكتابة
 
-![](writing-winners-2-2022-1024x576-5bf25b93.jpeg)
+![](writing-winners-2-2022-1024x576-5bf25b93-2.jpeg)
 
 اذا لم تر ألإعلان. فجائزة أسس للكتابة, هي أول جائزة عربية تعطي جوائز مالية لكتاب محتوى حول البرمجيات الحرة والمفتوحة باللغة العربية.  
 كامل التفاصيل حول المسابقة تجدها في صفحتها على موقعنا [هنا](https://aosus.org/writing-contest)

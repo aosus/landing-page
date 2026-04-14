@@ -4,11 +4,11 @@ date: "2024-02-03"
 author: "FarisZR"
 tags: ["501(c)(3)", "hack club", "hcb", "non-profit", "the hack foundation", "تبرع", "تواجد قانوني", "مجتمع أسس", "منظمة غير ربحية"]
 categories: ["اعلان"]
-image: "aosus-hcb-1-jpg-79b4d33a.webp"
-thumbnail: "aosus-hcb-1-jpg-79b4d33a.webp"
-ogImage: "aosus-hcb-1-jpg-79b4d33a.webp"
+image: "aosus-hcb-1-jpg-79b4d33a-2.webp"
+thumbnail: "aosus-hcb-1-jpg-79b4d33a-2.webp"
+ogImage: "aosus-hcb-1-jpg-79b4d33a-2.webp"
 excerpt: "مجتمع أسس يحصل رسميا على تواجد قانوني غير ربحي في الولايات المتحدة 501(c)(3) برعاية قانونية من Hack club, مما يتيح التبرعات مع التخفيضات الضريبية و استقلالية اكبر لأسس."
-slug: "أسس-يصبح-منظمة-غير-ربحية-مسجله-بالولاي"
+slug: "1901"
 wpId: 1901
 wpType: "post"
 sourceUrl: "https://aosus.org/1901"

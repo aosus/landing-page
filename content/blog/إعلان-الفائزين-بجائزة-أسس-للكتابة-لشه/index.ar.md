@@ -4,11 +4,11 @@ date: "2022-07-29"
 author: "FarisZR"
 tags: ["برمجيات مفتوحة المصدر", "جائزة أسس للكتابة", "حرة المصدر", "كتابة", "مجتمع أسس", "مفتوح المصدر"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-6-2022-07f39d08.jpg"
-thumbnail: "writing-winners-6-2022-07f39d08.jpg"
-ogImage: "writing-winners-6-2022-07f39d08.jpg"
+image: "writing-winners-6-2022-07f39d08-2.jpg"
+thumbnail: "writing-winners-6-2022-07f39d08-2.jpg"
+ogImage: "writing-winners-6-2022-07f39d08-2.jpg"
 excerpt: "رسميا الاعلان عن الفائزين ل #جائزة_أسس_للكتابة لشهر يونيو! 5 مواضيع تثري المحتوى العربي حول #البرمجيات_الحرة و #البرمجيات المفتوحة #مجتمع_أسس"
-slug: "إعلان-الفائزين-بجائزة-أسس-للكتابة-لشه"
+slug: "1472"
 wpId: 1472
 wpType: "post"
 sourceUrl: "https://aosus.org/1472"

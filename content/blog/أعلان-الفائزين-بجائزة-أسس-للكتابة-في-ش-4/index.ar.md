@@ -4,18 +4,18 @@ date: "2022-04-08"
 author: "FarisZR"
 tags: ["جائزة أسس للكتابة", "مجتمع أسس"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-3-2022-88f9f0ab.jpeg"
-thumbnail: "writing-winners-3-2022-88f9f0ab.jpeg"
-ogImage: "writing-winners-3-2022-88f9f0ab.jpeg"
+image: "writing-winners-3-2022-88f9f0ab-2.jpeg"
+thumbnail: "writing-winners-3-2022-88f9f0ab-2.jpeg"
+ogImage: "writing-winners-3-2022-88f9f0ab-2.jpeg"
 excerpt: "السلام عليكم ورحمة الله وبركاتة رمضان مبارك! وكل عام وانتم بخير, نعلن اليوم عن الفائزين لشهر مارس 2022 في جائزة أسس للكتابة اذا لم تر ألإعلان. فجائزة أسس للكتابة, هي أول جائزة عربية تعطي جوائز مالية لكتاب محتوى حول البرمجيات الحرة والمفتوحة باللغة العربية.كامل التفاصيل حول المسابقة تجدها في صفحتها على موقعنا هنا المواضيع الفائزة هذه&hellip; اقرأ المزيد &raquo; أعلان الفائزين بجائزة أسس للكتابة في شهر مارس 2022!"
-slug: "أعلان-الفائزين-بجائزة-أسس-للكتابة-في-ش-4"
+slug: "1173"
 wpId: 1173
 wpType: "post"
 sourceUrl: "https://aosus.org/1173"
 lang: "ar"
 ---
 
-![](writing-winners-3-2022-1024x576-febaec6b.jpeg)
+![](writing-winners-3-2022-1024x576-febaec6b-2.jpeg)
 
 السلام عليكم ورحمة الله وبركاتة
 

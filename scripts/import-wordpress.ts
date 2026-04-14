@@ -357,20 +357,6 @@ async function main() {
     writtenPosts += 1;
   }
 
-  for (const item of media.sort((a, b) => b.id - a.id)) {
-    const mediaSlug = makeWordPressSlug(item.id, item.slug);
-    const mediaDir = path.join(blogRoot, mediaSlug);
-    ensureDir(mediaDir);
-
-    const assetMap = new Map<string, string>();
-    const fileName = uniqueFileName(mediaDir, item.source_url, assetMap);
-    const filePath = path.join(mediaDir, fileName);
-
-    if (!fs.existsSync(filePath)) {
-      await downloadFile(item.source_url, filePath);
-    }
-  }
-
   console.log(`Wrote ${writtenPosts} posts and ${media.length} media items.`);
 }
 

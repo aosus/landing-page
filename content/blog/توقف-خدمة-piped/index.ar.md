@@ -4,11 +4,11 @@ date: "2024-09-01"
 author: "FarisZR"
 tags: ["piped", "البرمجيات الحرة", "خدمات أسس", "مجتمع أسس"]
 categories: ["اعلان"]
-image: "piped-deprecation-4891f9df.jpg"
-thumbnail: "piped-deprecation-4891f9df.jpg"
-ogImage: "piped-deprecation-4891f9df.jpg"
+image: "piped-deprecation-4891f9df-2.jpg"
+thumbnail: "piped-deprecation-4891f9df-2.jpg"
+ogImage: "piped-deprecation-4891f9df-2.jpg"
 excerpt: "خدمة Piped في مجتمع أسس تواجه مشاكل بتشغيل الفيديوهات منذ فترة. ولذلك نعلن عن ايقاف الخدمة قريبا."
-slug: "توقف-خدمة-piped"
+slug: "2071"
 wpId: 2071
 wpType: "post"
 sourceUrl: "https://aosus.org/2071"

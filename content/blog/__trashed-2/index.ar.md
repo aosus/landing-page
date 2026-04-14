@@ -4,11 +4,11 @@ date: "2022-07-23"
 author: "FarisZR"
 tags: ["أسس", "تُرجمان", "ترجمة", "ترجمة برامج للعربي", "ترجمة برمجيات المفتوحة للعربي", "دعم اللغة العربية في البرامج", "مجتمع أسس"]
 categories: ["اعلان"]
-image: "aosus-torjoman-58dd5766.jpg"
-thumbnail: "aosus-torjoman-58dd5766.jpg"
-ogImage: "aosus-torjoman-58dd5766.jpg"
+image: "aosus-torjoman-58dd5766-2.jpg"
+thumbnail: "aosus-torjoman-58dd5766-2.jpg"
+ogImage: "aosus-torjoman-58dd5766-2.jpg"
 excerpt: "مشروع جديد من مجتمع أسس, لجعل ترجمة البرمجيات سهل, عبر إتاحة التَّرْجَمَةً بواسطة منصتك المفضلة."
-slug: "__trashed-2"
+slug: "1440"
 wpId: 1440
 wpType: "post"
 sourceUrl: "https://aosus.org/1440"
@@ -19,7 +19,7 @@ lang: "ar"
 
 نعلن اليوم عن خطة ترجمان, احد اهم مشاريع مجتمع أسس للمساهمة في التَّرْجَمَةً و دعم اللغة العربية في البرمجيات الحرة والمفتوحة.
 
-![](aosus-torjoman-1024x576-f6e96c63.jpg)
+![](aosus-torjoman-1024x576-f6e96c63-2.jpg)
 
 ## ما هو تُرجمان؟
 

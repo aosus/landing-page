@@ -4,18 +4,18 @@ date: "2022-01-01"
 author: "FarisZR"
 tags: ["جائزة أسس للكتابة", "جنو/لينكس", "لينكس", "مجتمع أسس", "مجتمع عربي للبرمجيات المفتوحه", "مجتمع عربي لينكس", "مواضيع حول جنو/لينكس"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-12-2021-68fd0fa6.jpg"
-thumbnail: "writing-winners-12-2021-68fd0fa6.jpg"
-ogImage: "writing-winners-12-2021-68fd0fa6.jpg"
+image: "writing-winners-12-2021-68fd0fa6-2.jpg"
+thumbnail: "writing-winners-12-2021-68fd0fa6-2.jpg"
+ogImage: "writing-winners-12-2021-68fd0fa6-2.jpg"
 excerpt: "نعلن اليوم عن الفائزين لاول دفعة من جائزة أسس للكتابة. الجائزة الاولى عربيا لدعم كتاب المحتوى العربي حول البرمجيات الحرة والمفتوحة."
-slug: "أعلان-الفائزين-بجائزة-أسس-للكتابة-في-ش"
+slug: "989"
 wpId: 989
 wpType: "post"
 sourceUrl: "https://aosus.org/989"
 lang: "ar"
 ---
 
-![](writing-winners-12-2021-1024x576-d7ce3a84.jpg)
+![](writing-winners-12-2021-1024x576-d7ce3a84-2.jpg)
 
 السلام عليكم ورحمة الله وبركاتة.
 

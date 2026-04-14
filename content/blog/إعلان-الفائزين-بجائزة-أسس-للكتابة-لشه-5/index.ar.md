@@ -4,11 +4,11 @@ date: "2022-12-18"
 author: "FarisZR"
 tags: ["أسس", "البرمجيات الحرة", "جائزة أسس للكتابة", "كتابة", "لينكس", "مجتمع أسس", "مفتوح المصدر"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-10-22-c02c860e.jpeg"
-thumbnail: "writing-winners-10-22-c02c860e.jpeg"
-ogImage: "writing-winners-10-22-c02c860e.jpeg"
+image: "writing-winners-10-22-c02c860e-2.jpeg"
+thumbnail: "writing-winners-10-22-c02c860e-2.jpeg"
+ogImage: "writing-winners-10-22-c02c860e-2.jpeg"
 excerpt: "مواضيع قيمه و مفصله حول #البرمجيات_الحرة و #البرمجيات_المفتوحة تفوز ب #جائزة_أسس_للكتابة لشهر أكتوبر! كامل التفاصيل:"
-slug: "إعلان-الفائزين-بجائزة-أسس-للكتابة-لشه-5"
+slug: "1633"
 wpId: 1633
 wpType: "post"
 sourceUrl: "https://aosus.org/1633"

@@ -4,18 +4,18 @@ date: "2022-05-02"
 author: "FarisZR"
 tags: ["أسس", "جائزة أسس للكتابة", "شهر رمضان", "عيد الفطر", "عيدكم مبارك", "مجتمع أسس"]
 categories: ["غير مصنف"]
-image: "aosus-eid-2022-2-1-f9a5a21c.jpeg"
-thumbnail: "aosus-eid-2022-2-1-f9a5a21c.jpeg"
-ogImage: "aosus-eid-2022-2-1-f9a5a21c.jpeg"
+image: "aosus-eid-2022-2-1-f9a5a21c-2.jpeg"
+thumbnail: "aosus-eid-2022-2-1-f9a5a21c-2.jpeg"
+ogImage: "aosus-eid-2022-2-1-f9a5a21c-2.jpeg"
 excerpt: "مجتمع أسس يهنئكم بحلول عيد الفطر. ونتمنى لكم اسعد الاوقات."
-slug: "مجتمع-أسس-يهنئكم-بحلول-العيد"
+slug: "1192"
 wpId: 1192
 wpType: "post"
 sourceUrl: "https://aosus.org/1192"
 lang: "ar"
 ---
 
-![](aosus-eid-2022-2-1-1024x576-e25d7e36.jpeg)
+![](aosus-eid-2022-2-1-1024x576-e25d7e36-2.jpeg)
 
 السلام عليكم ورحمة الله وبركاتة
 
