@@ -80,4 +80,14 @@ describe("remarkLinkPreviews", () => {
     expect(output).not.toContain("aosus-link-preview-card");
     expect(output).toContain("https://unknown-site.org");
   });
+
+  it("converts bare URLs without manifest match to clickable links", async () => {
+    // A bare URL with no preview data should still become a clickable <a> tag,
+    // not stay as plain text.
+    const output = await render("https://unknown-site.org");
+
+    expect(output).toContain('<a href="https://unknown-site.org"');
+    expect(output).toContain(">https://unknown-site.org</a>");
+    expect(output).not.toContain("aosus-link-preview-card");
+  });
 });

@@ -182,6 +182,15 @@ export function createRemarkLinkPreviews(options?: { manifest?: LinkPreviewManif
       const preview = resolvePreview(standaloneUrl, manifest);
 
       if (!preview) {
+        // No preview data — still ensure the bare URL becomes a clickable link
+        // (remark renders bare text URLs as plain <p>text</p>, not as <a> tags)
+        if (child.type === "text") {
+          node.children[0] = {
+            type: "link",
+            url: standaloneUrl,
+            children: [{ type: "text", value: standaloneUrl }],
+          };
+        }
         return;
       }
 
