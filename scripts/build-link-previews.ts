@@ -64,7 +64,24 @@ function stripFrontmatter(markdown: string): string {
 }
 
 function trimTrailingPunctuation(rawUrl: string): string {
-  return rawUrl.replace(/[.,!?;:]+$/g, "");
+  // Strip trailing punctuation and markdown formatting chars (bold **, etc.)
+  let url = rawUrl.replace(/[.,!?;:*]+$/g, "");
+
+  // Strip unbalanced trailing parentheses — handles markdown [text](url)
+  // leaking the closing ) into the extracted URL, while preserving balanced
+  // parens in valid URLs like Wikipedia's /wiki/Matrix_(protocol).
+  while (url.endsWith(")")) {
+    const openCount = (url.match(/\(/g) || []).length;
+    const closeCount = (url.match(/\)/g) || []).length;
+
+    if (closeCount > openCount) {
+      url = url.slice(0, -1);
+    } else {
+      break;
+    }
+  }
+
+  return url;
 }
 
 function extractLinksFromMarkdown(markdown: string): string[] {

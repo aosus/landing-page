@@ -37,6 +37,20 @@ Markdown rendering happens in `src/lib/markdown.ts`:
 
 Plugin source: `src/lib/remarkLinkPreviews.ts`.
 
+## Tests
+
+```bash
+npx vitest run
+```
+
+Tests cover standalone cards, inline hover, internal link skipping, named links alone in a paragraph, and missing manifest entries.
+
+## Known Edge Cases
+
+- WordPress-imported posts with `wpType: "post"` are served at `/<wpId>`, not `/blog/<slug>`.
+- URLs with escaped parentheses (e.g. Wikipedia `Matrix_(protocol)`) may not match manifest entries correctly and are gracefully skipped.
+- The markdown regex in `build-link-previews.ts` strips trailing `)` only when unbalanced, to avoid capturing closing parens from `[text](url)` syntax.
+
 ## Manual Refresh
 
 Run this when you want to refresh preview metadata on demand:

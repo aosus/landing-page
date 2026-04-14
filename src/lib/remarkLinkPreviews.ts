@@ -121,11 +121,8 @@ function buildStandaloneMarkup(url: string, preview: LinkPreviewEntry): string {
   return `
 <aside class="aosus-link-preview-card not-prose">
   <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="aosus-link-preview-card__link">
-    <span class="aosus-link-preview-card__icon-wrap">
-      <img src="${favicon}" alt="" class="aosus-link-preview-card__icon" loading="lazy" decoding="async" />
-    </span>
     <span class="aosus-link-preview-card__body">
-      <span class="aosus-link-preview-card__site">${site}</span>
+      <span class="aosus-link-preview-card__site"><img src="${favicon}" alt="" width="14" height="14" style="display:inline-block;vertical-align:-0.15em" loading="lazy" decoding="async" /> ${site}</span>
       <span class="aosus-link-preview-card__title">${title}</span>
       ${description ? `<span class="aosus-link-preview-card__description">${description}</span>` : ""}
     </span>
@@ -199,7 +196,13 @@ export function createRemarkLinkPreviews(options?: { manifest?: LinkPreviewManif
         return;
       }
 
-      if (parent.type === "paragraph" && Array.isArray(parent.children) && parent.children.length === 1) {
+      // Skip links already handled as standalone cards (raw URLs in their own paragraph)
+      if (
+        parent.type === "paragraph" &&
+        Array.isArray(parent.children) &&
+        parent.children.length === 1 &&
+        isStandaloneRawUrl(node)
+      ) {
         return;
       }
 

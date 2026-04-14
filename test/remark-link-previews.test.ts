@@ -53,4 +53,31 @@ describe("remarkLinkPreviews", () => {
     expect(output).not.toContain("aosus-link-preview-inline");
     expect(output).not.toContain("aosus-link-preview-card");
   });
+
+  it("gives inline hover to a named link alone in its paragraph", async () => {
+    // A link like [Discord](url) alone in a paragraph should still get
+    // inline hover treatment — only bare raw URLs (link text === URL)
+    // should become standalone cards.
+    const output = await render("[Example](https://example.com)");
+
+    expect(output).toContain("aosus-link-preview-inline");
+    expect(output).toContain("aosus-link-preview-hover");
+    expect(output).toContain("Example Domain");
+    expect(output).not.toContain("aosus-link-preview-card");
+  });
+
+  it("converts a bare URL alone in its paragraph to a standalone card", async () => {
+    const output = await render("https://example.com");
+
+    expect(output).toContain("aosus-link-preview-card");
+    expect(output).not.toContain("aosus-link-preview-inline");
+  });
+
+  it("does not add previews for links without manifest entries", async () => {
+    const output = await render("[Unknown](https://unknown-site.org)");
+
+    expect(output).not.toContain("aosus-link-preview-inline");
+    expect(output).not.toContain("aosus-link-preview-card");
+    expect(output).toContain("https://unknown-site.org");
+  });
 });
