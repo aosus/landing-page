@@ -145,11 +145,11 @@ export default function ArticlePageClient({
                 
                 <div className="flex flex-col sm:flex-row gap-6 mb-12">
                   <CyberCard isDark={isDark} className="flex-1 p-4" hover={false}>
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap self-start sm:self-auto">
+                    <div className="flex flex-col sm:flex-row items-center gap-3">
+                      <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap shrink-0 self-start sm:self-auto">
                         <span className="opacity-50">/</span> {lang === "ar" ? "غرف المحادثة" : "Chat Rooms"}
                       </h3>
-                      <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end">
+                      <div className="flex items-center gap-1.5 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end flex-nowrap">
                         {CHAT_PLATFORMS.map((platform) => {
                           const Icon = platform.icon;
                           return (
@@ -159,9 +159,9 @@ export default function ArticlePageClient({
                               target="_blank"
                               rel="noopener noreferrer"
                               title={platform.label}
-                              className="p-2 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f]"
+                              className="p-1.5 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f] shrink-0"
                             >
-                              <Icon className="w-4 h-4" />
+                              <Icon className="w-3.5 h-3.5" />
                             </a>
                           );
                         })}
@@ -170,11 +170,11 @@ export default function ArticlePageClient({
                   </CyberCard>
 
                   <CyberCard isDark={isDark} className="flex-1 p-4" hover={false}>
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
-                      <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap self-start sm:self-auto">
+                    <div className="flex flex-col sm:flex-row items-center gap-3">
+                      <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap shrink-0 self-start sm:self-auto">
                         <span className="opacity-50">/</span> {lang === "ar" ? "تابعنا" : "Follow Us"}
                       </h3>
-                      <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end">
+                      <div className="flex items-center gap-1.5 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end flex-nowrap">
                         {SOCIAL_PLATFORMS.map((platform) => {
                           const Icon = platform.icon;
                           return (
@@ -184,9 +184,9 @@ export default function ArticlePageClient({
                               target="_blank"
                               rel="noopener noreferrer"
                               title={platform.label}
-                              className="p-2 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f]"
+                              className="p-1.5 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f] shrink-0"
                             >
-                              <Icon className="w-4 h-4" />
+                              <Icon className="w-3.5 h-3.5" />
                             </a>
                           );
                         })}
