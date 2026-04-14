@@ -282,6 +282,67 @@ async function isSafeHostname(hostname: string): Promise<boolean> {
   }
 }
 
+function extensionFromImageBuffer(buffer: Buffer): string | null {
+  if (
+    buffer.length >= 8 &&
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a
+  ) {
+    return "png";
+  }
+
+  if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return "jpg";
+  }
+
+  if (
+    buffer.length >= 12 &&
+    buffer.toString("ascii", 0, 4) === "RIFF" &&
+    buffer.toString("ascii", 8, 12) === "WEBP"
+  ) {
+    return "webp";
+  }
+
+  if (
+    buffer.length >= 4 &&
+    buffer[0] === 0x00 &&
+    buffer[1] === 0x00 &&
+    (buffer[2] === 0x01 || buffer[2] === 0x02) &&
+    buffer[3] === 0x00
+  ) {
+    return "ico";
+  }
+
+  const leadingText = buffer.toString("utf8", 0, Math.min(buffer.length, 2048)).trimStart();
+
+  if (leadingText.startsWith("<svg") || (leadingText.startsWith("<?xml") && leadingText.includes("<svg"))) {
+    return "svg";
+  }
+
+  return null;
+}
+
+function isValidCachedFavicon(iconPath: string): boolean {
+  try {
+    const stats = fs.statSync(iconPath);
+
+    if (!stats.isFile() || stats.size <= 0 || stats.size > 512_000) {
+      return false;
+    }
+
+    const buffer = fs.readFileSync(iconPath);
+    return extensionFromImageBuffer(buffer) !== null;
+  } catch {
+    return false;
+  }
+}
+
 async function downloadFavicon(faviconUrl: string): Promise<string | null> {
   try {
     const parsed = new URL(faviconUrl);
@@ -306,16 +367,28 @@ async function downloadFavicon(faviconUrl: string): Promise<string | null> {
       return null;
     }
 
+    const contentType = response.headers.get("content-type")?.split(";")[0].trim().toLowerCase() ?? "";
+
+    if (!contentType.startsWith("image/")) {
+      return null;
+    }
+
     const buffer = Buffer.from(await response.arrayBuffer());
 
     if (buffer.length === 0 || buffer.length > 512_000) {
       return null;
     }
 
+    const sniffedExt = extensionFromImageBuffer(buffer);
+
+    if (!sniffedExt) {
+      return null;
+    }
+
     const ext =
       extensionFromContentType(response.headers.get("content-type")) ??
       extensionFromPath(parsed.toString()) ??
-      "ico";
+      sniffedExt;
     const fileName = `${createHash("sha1").update(parsed.toString()).digest("hex")}.${ext}`;
     const outputPath = path.join(faviconsRoot, fileName);
 
@@ -357,7 +430,7 @@ function entryIsFresh(entry: LinkPreviewEntry): boolean {
   }
 
   const iconPath = path.join(root, "public", entry.localFavicon.replace(/^\//, ""));
-  return fs.existsSync(iconPath);
+  return isValidCachedFavicon(iconPath);
 }
 
 function makeFallbackEntry(url: string, now: Date): LinkPreviewEntry {

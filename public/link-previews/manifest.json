@@ -2454,7 +2454,7 @@
     "description": "You're invited to talk on Matrix",
     "siteName": "matrix.to",
     "hostname": "matrix.to",
-    "localFavicon": "/link-previews/favicons/1362ff8cb6d8e13fd6a962c3f82027a24b87bf3d.ico",
+    "localFavicon": "/link-previews/favicons/default.svg",
     "fetchedAt": "2026-04-14T19:33:02.439Z",
     "expiresAt": "2026-05-14T19:33:02.439Z",
     "error": false

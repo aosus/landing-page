@@ -25,6 +25,14 @@ const manifest = {
     hostname: "aosus.org",
     localFavicon: "/link-previews/favicons/aosus.ico",
   },
+  "https://fallback.example": {
+    title: "fallback.example",
+    description: "",
+    siteName: "fallback.example",
+    hostname: "fallback.example",
+    localFavicon: "/link-previews/favicons/default.svg",
+    error: true,
+  },
 };
 
 async function render(markdown: string) {
@@ -96,5 +104,13 @@ describe("remarkLinkPreviews", () => {
     expect(output).toContain('<a href="https://aosus.org/unknown-page"');
     expect(output).toContain(">https://aosus.org/unknown-page</a>");
     expect(output).not.toContain("aosus-link-preview-card");
+  });
+
+  it("renders fallback previews for entries marked with fetch errors", async () => {
+    const output = await render("https://fallback.example");
+
+    expect(output).toContain("aosus-link-preview-card");
+    expect(output).toContain("fallback.example");
+    expect(output).toContain("/link-previews/favicons/default.svg");
   });
 });

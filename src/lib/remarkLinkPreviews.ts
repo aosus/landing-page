@@ -82,7 +82,7 @@ function resolvePreview(url: string, manifest: LinkPreviewManifest): LinkPreview
     manifest[withTrailingSlash] ??
     manifest[url];
 
-  if (!candidate || candidate.error) {
+  if (!candidate) {
     return null;
   }
 
@@ -122,7 +122,7 @@ function buildStandaloneMarkup(url: string, preview: LinkPreviewEntry): string {
 <aside class="aosus-link-preview-card not-prose">
   <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="aosus-link-preview-card__link">
     <span class="aosus-link-preview-card__body">
-      <span class="aosus-link-preview-card__site"><img src="${favicon}" alt="" width="14" height="14" style="display:inline-block;vertical-align:-0.15em" loading="lazy" decoding="async" /> ${site}</span>
+      <span class="aosus-link-preview-card__site"><img src="${favicon}" alt="" width="14" height="14" loading="lazy" decoding="async" /> ${site}</span>
       <span class="aosus-link-preview-card__title">${title}</span>
       ${description ? `<span class="aosus-link-preview-card__description">${description}</span>` : ""}
     </span>
