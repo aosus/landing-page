@@ -11,9 +11,9 @@ import {
   Tag,
 } from "lucide-react";
 import Link from "next/link";
+import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "@/components/layout/Layout";
 import Layout, {
   CyberCard,
-  FollowLinksPanel,
   PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
@@ -27,8 +27,6 @@ const LABELS = {
     discussCta: "Discuss on Forum",
     prevLabel: "Previous Post",
     supportBtn: "Support Us",
-    followTitle: "Follow us",
-    followIntro: "Stay close to the community and catch new updates.",
   },
   ar: {
     breadcrumb: ["الرئيسية", "المدونة"],
@@ -36,8 +34,6 @@ const LABELS = {
     discussCta: "علّق في المنتدى",
     prevLabel: "المقال السابق",
     supportBtn: "ادعمنا",
-    followTitle: "تابعنا",
-    followIntro: "ابقَ قريبًا من المجتمع وتابع آخر التحديثات.",
   },
 };
 
@@ -146,27 +142,58 @@ export default function ArticlePageClient({
                   </div>
                 </CyberCard>
 
-                <CyberCard isDark={isDark} className="p-6 mb-8" hover={false}>
-                  <div className="flex flex-col gap-5">
-                    <div>
-                      <p
-                        className="text-xs font-mono uppercase tracking-widest text-[#008a2f] mb-2"
-                        style={
-                          isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
-                        }
-                      >
-                        / {t.followTitle}
-                      </p>
-                      <p
-                        className="text-sm text-gray-500 dark:text-gray-400"
-                        style={{ fontFamily: ff }}
-                      >
-                        {t.followIntro}
-                      </p>
+                
+                <div className="flex flex-col sm:flex-row gap-6 mb-12">
+                  <CyberCard isDark={isDark} className="flex-1 p-4" hover={false}>
+                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                      <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap self-start sm:self-auto">
+                        <span className="opacity-50">/</span> {lang === "ar" ? "غرف المحادثة" : "Chat Rooms"}
+                      </h3>
+                      <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end">
+                        {CHAT_PLATFORMS.map((platform) => {
+                          const Icon = platform.icon;
+                          return (
+                            <a
+                              key={platform.label}
+                              href={platform.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={platform.label}
+                              className="p-2 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f]"
+                            >
+                              <Icon className="w-4 h-4" />
+                            </a>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <FollowLinksPanel lang={lang} />
-                  </div>
-                </CyberCard>
+                  </CyberCard>
+
+                  <CyberCard isDark={isDark} className="flex-1 p-4" hover={false}>
+                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                      <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap self-start sm:self-auto">
+                        <span className="opacity-50">/</span> {lang === "ar" ? "تابعنا" : "Follow Us"}
+                      </h3>
+                      <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end">
+                        {SOCIAL_PLATFORMS.map((platform) => {
+                          const Icon = platform.icon;
+                          return (
+                            <a
+                              key={platform.label}
+                              href={platform.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={platform.label}
+                              className="p-2 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f]"
+                            >
+                              <Icon className="w-4 h-4" />
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </CyberCard>
+                </div>
 
                 <a
                   href="https://discourse.aosus.org/"

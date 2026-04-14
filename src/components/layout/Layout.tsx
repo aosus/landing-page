@@ -2,23 +2,10 @@
 
 import React, { useState, useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Sun,
-  Moon,
-  Menu,
-  X,
-  Github,
-  MessageSquare,
-  MessagesSquare,
-  Heart,
-  Twitter,
-  Linkedin,
-  Facebook,
-  Rss,
-  Share2,
-  ChevronDown,
-  Send,
-} from "lucide-react";
+import { Sun, Moon, Menu, X, Heart, ChevronDown } from "lucide-react";
+import { FaGithub, FaXTwitter, FaLinkedin, FaFacebook, FaMastodon, FaDiscord, FaTelegram } from "react-icons/fa6";
+import { SiMatrix, SiBluesky } from "react-icons/si";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getLocalizedPath, isEnglishPath, type Lang } from "@/lib/locale";
@@ -46,185 +33,22 @@ const NAV = {
   ],
 };
 
-type IconComponent = React.ComponentType<{ className?: string }>;
-
-type FollowLink = {
-  label: string;
-  href: string;
-  icon: IconComponent;
-};
-
-type FollowGroup = {
-  label: string;
-  icon: IconComponent;
-  links: FollowLink[];
-};
-
-const SOCIAL_MEDIA_LINKS: FollowLink[] = [
-  { label: "GitHub", href: "https://github.com/aosus", icon: Github },
-  {
-    label: "Twitter/X",
-    href: "https://twitter.com/aosusdotorg",
-    icon: Twitter,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/aosus/",
-    icon: Linkedin,
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/aosus1/",
-    icon: Facebook,
-  },
+export const SOCIAL_PLATFORMS = [
+  { label: "GitHub", href: "https://github.com/aosus", icon: FaGithub },
+  { label: "X / Twitter", href: "https://twitter.com/aosusdotorg", icon: FaXTwitter },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/aosus/", icon: FaLinkedin },
+  { label: "Facebook", href: "https://www.facebook.com/aosus1/", icon: FaFacebook },
+  { label: "Mastodon", href: "https://mastodon.online/@aosus", icon: FaMastodon },
+  { label: "Bluesky", href: "https://bsky.app/profile/aosus.org", icon: SiBluesky },
 ];
 
-const CHAT_PLATFORM_LINKS: FollowLink[] = [
-  {
-    label: "Matrix",
-    href: "https://matrix.to/#/#aosus:aosus.org",
-    icon: MessageSquare,
-  },
-  {
-    label: "Discord",
-    href: "https://discord.gg/YJUzEhU955",
-    icon: MessagesSquare,
-  },
-  { label: "Telegram", href: "https://t.me/aosus", icon: Send },
+export const CHAT_PLATFORMS = [
+  { label: "Matrix", href: "https://matrix.to/#/#aosus:aosus.org", icon: SiMatrix },
+  { label: "Discord", href: "https://discord.gg/YJUzEhU955", icon: FaDiscord },
+  { label: "Telegram", href: "https://t.me/aosus", icon: FaTelegram },
 ];
 
-const RSS_LINK: FollowLink = {
-  label: "RSS Feed",
-  href: "https://aosus.org/feed",
-  icon: Rss,
-};
 
-const COMMUNITY_LINKS: FollowLink[] = [
-  ...SOCIAL_MEDIA_LINKS,
-  ...CHAT_PLATFORM_LINKS,
-  RSS_LINK,
-];
-
-const FOLLOW_GROUPS = (lang: Lang): FollowGroup[] => [
-  {
-    label: lang === "ar" ? "وسائل التواصل" : "Social media",
-    icon: Share2,
-    links: SOCIAL_MEDIA_LINKS,
-  },
-  {
-    label: lang === "ar" ? "منصات الدردشة" : "Chat platforms",
-    icon: MessagesSquare,
-    links: CHAT_PLATFORM_LINKS,
-  },
-];
-
-export function FollowLinksPanel({
-  lang,
-  groups = FOLLOW_GROUPS(lang),
-  className = "",
-  buttonClassName = "",
-  onLinkClick,
-}: {
-  lang: Lang;
-  groups?: FollowGroup[];
-  className?: string;
-  buttonClassName?: string;
-  onLinkClick?: () => void;
-}) {
-  return (
-    <div className={`space-y-4 ${className}`.trim()}>
-      {groups.map((group) => {
-        const GroupIcon = group.icon;
-        return (
-          <section key={group.label} className="space-y-3">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#008a2f]">
-              <GroupIcon className="h-4 w-4" />
-              <span>{group.label}</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {group.links.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={onLinkClick}
-                    className={`inline-flex items-center gap-2 rounded-full border border-[#008a2f]/20 px-3 py-2 text-xs font-medium text-gray-500 transition-all hover:border-[#008a2f] hover:text-[#008a2f] dark:text-gray-400 dark:hover:text-[#008a2f] ${buttonClassName}`.trim()}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span>{link.label}</span>
-                  </a>
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
-    </div>
-  );
-}
-
-function FollowDropdown({
-  lang,
-  open,
-  onToggle,
-  onLinkClick,
-  align = "end",
-  label,
-}: {
-  label: string;
-  lang: Lang;
-  open: boolean;
-  onToggle: () => void;
-  onLinkClick?: () => void;
-  align?: "start" | "end";
-}) {
-  const alignClass = align === "start" ? "left-0" : "right-0";
-  const buttonLabel = label;
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={onToggle}
-        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[#008a2f]/20 bg-white/70 px-3 text-xs font-mono text-gray-500 transition-all hover:border-[#008a2f] hover:text-[#008a2f] dark:bg-black/20 dark:text-gray-400"
-        aria-label={buttonLabel}
-        aria-expanded={open}
-        title={buttonLabel}
-      >
-        <Share2 className="h-4 w-4" />
-        <MessagesSquare className="h-4 w-4" />
-        <span className="hidden xl:inline">{label}</span>
-        <ChevronDown
-          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.98 }}
-            className={`absolute ${alignClass} top-full z-50 mt-3 w-80 rounded-2xl border border-[#008a2f]/20 bg-white/95 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.18)] backdrop-blur-md dark:bg-black/95`}
-          >
-            <div className="mb-4 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#008a2f]">
-              <Share2 className="h-4 w-4" />
-              <MessagesSquare className="h-4 w-4" />
-              <span>{label}</span>
-            </div>
-            <FollowLinksPanel
-              lang={lang}
-              onLinkClick={onLinkClick}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -292,8 +116,9 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [communityMenuOpen, setCommunityMenuOpen] = useState(false);
-  const actionsRef = useRef<HTMLDivElement>(null);
+  const [chatMenuOpen, setChatMenuOpen] = useState(false);
+  const chatMenuRef = useRef<HTMLDivElement>(null);
+  const chatMenuButtonRef = useRef<HTMLButtonElement>(null);
   const isRtl = lang === "ar";
 
   useEffect(() => {
@@ -340,14 +165,15 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
-      if (!actionsRef.current?.contains(event.target as Node)) {
-        setCommunityMenuOpen(false);
+      if (!chatMenuRef.current?.contains(event.target as Node)) {
+        setChatMenuOpen(false);
       }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setCommunityMenuOpen(false);
+        setChatMenuOpen(false);
+        chatMenuButtonRef.current?.focus();
       }
     };
 
@@ -428,21 +254,71 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                 </Link>
               );
             })}
+            
+            <div
+              ref={chatMenuRef}
+              className="relative h-full flex items-center"
+              onMouseEnter={() => setChatMenuOpen(true)}
+              onMouseLeave={() => setChatMenuOpen(false)}
+            >
+              <button
+                ref={chatMenuButtonRef}
+                type="button"
+                aria-expanded={chatMenuOpen}
+                aria-controls="header-chat-menu"
+                aria-haspopup="menu"
+                onClick={() => setChatMenuOpen((current) => !current)}
+                onFocus={() => setChatMenuOpen(true)}
+                className="px-3 py-2 flex items-center gap-1 text-sm font-medium transition-all font-mono text-gray-600 hover:text-[#008a2f] dark:text-gray-400"
+                style={
+                  isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
+                }
+              >
+                {lang === "ar" ? "محادثة" : "Chat"}
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform ${chatMenuOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              <AnimatePresence>
+                {chatMenuOpen && (
+                  <motion.div
+                    id="header-chat-menu"
+                    role="menu"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className={`absolute top-full z-50 w-48 pt-2 ${isRtl ? "right-0" : "left-0"}`}
+                  >
+                    <div className="bg-white border border-[#008a2f]/30 dark:bg-black shadow-lg">
+                      {CHAT_PLATFORMS.map((s) => {
+                        const Icon = s.icon;
+                        return (
+                          <a
+                            key={s.label}
+                            href={s.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            role="menuitem"
+                            onClick={() => setChatMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#008a2f]/10 hover:text-[#008a2f] dark:text-gray-300 transition-colors border-b border-[#008a2f]/10 last:border-0 font-mono tracking-wider"
+                          >
+                            <Icon className="w-4 h-4" /> {s.label}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
-          <div ref={actionsRef} className="justify-self-end flex items-center gap-2">
-            <div className="hidden xl:flex items-center gap-2 mr-1">
-              <FollowDropdown
-                label={lang === "ar" ? "المجتمع" : "Community"}
-                lang={lang}
-                open={communityMenuOpen}
-                onToggle={() => setCommunityMenuOpen((current) => !current)}
-                onLinkClick={() => setCommunityMenuOpen(false)}
-                align={isRtl ? "start" : "end"}
-              />
-            </div>
+          <div className="justify-self-end flex items-center gap-2">
+
             <Link
               href={langToggleHref}
+
               className="px-3 py-1 text-xs border border-[#1d70ba]/30 text-[#1d70ba] hover:bg-[#1d70ba]/10 transition-all font-mono"
             >
               {lang === "ar" ? "EN" : "AR"}
@@ -492,11 +368,18 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                     {item.label}
                   </Link>
                 ))}
-                <div className="pt-4 border-t border-[#008a2f]/10">
-                  <FollowLinksPanel
-                    lang={lang}
-                    onLinkClick={() => setMenuOpen(false)}
-                  />
+              </div>
+              <div className="px-4 py-3 space-y-1 border-t border-[#008a2f]/20">
+                <div className="text-xs font-mono text-[#008a2f] uppercase tracking-wider mb-2">{lang === "ar" ? "محادثة" : "Chat Rooms"}</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {CHAT_PLATFORMS.map((s) => {
+                    const Icon = s.icon;
+                    return (
+                      <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-600 transition-colors hover:text-[#008a2f] hover:bg-[#008a2f]/5 dark:text-gray-400 font-mono uppercase border border-transparent hover:border-[#008a2f]/20">
+                        <Icon className="w-3 h-3" /> {s.label}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
@@ -508,7 +391,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
 
       <footer className="relative z-10 border-t border-[#008a2f]/20 bg-gray-50 dark:bg-black/80">
         <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
             <div className="md:col-span-1">
               <div className="flex items-center gap-3 mb-4">
                 <img
@@ -546,10 +429,30 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             <div>
               <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
                 <span className="opacity-50">/</span>{" "}
-                {lang === "ar" ? "المجتمع" : "Community"}
+                {lang === "ar" ? "محادثة" : "Chat Rooms"}
+              </h4>
+              <ul className="space-y-2 mb-8">
+                {CHAT_PLATFORMS.map((s) => (
+                  <li key={s.label}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-500 transition-colors hover:text-[#008a2f] dark:text-gray-400"
+                    >
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
+                <span className="opacity-50">/</span>{" "}
+                {lang === "ar" ? "تابعنا" : "Follow Us"}
               </h4>
               <ul className="space-y-2">
-                {COMMUNITY_LINKS.map((s) => (
+                {SOCIAL_PLATFORMS.map((s) => (
                   <li key={s.label}>
                     <a
                       href={s.href}
