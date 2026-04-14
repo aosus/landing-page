@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Menu, X, Github, MessageSquare, Heart } from "lucide-react";
+import { Sun, Moon, Menu, X, Heart, ChevronDown } from "lucide-react";
+import { FaGithub, FaXTwitter, FaLinkedin, FaFacebook, FaMastodon, FaDiscord, FaTelegram } from "react-icons/fa6";
+import { SiMatrix, SiBluesky } from "react-icons/si";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getLocalizedPath, isEnglishPath, type Lang } from "@/lib/locale";
@@ -30,20 +33,22 @@ const NAV = {
   ],
 };
 
-const SOCIALS = [
-  { label: "GitHub", href: "https://github.com/aosus", icon: Github },
-  {
-    label: "Matrix",
-    href: "https://matrix.to/#/#aosus:aosus.org",
-    icon: MessageSquare,
-  },
-  {
-    label: "Discord",
-    href: "https://discord.gg/YJUzEhU955",
-    icon: MessageSquare,
-  },
-  { label: "Telegram", href: "https://t.me/aosus", icon: MessageSquare },
+export const SOCIAL_PLATFORMS = [
+  { label: "GitHub", href: "https://github.com/aosus", icon: FaGithub },
+  { label: "X / Twitter", href: "https://twitter.com/aosusdotorg", icon: FaXTwitter },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/aosus/", icon: FaLinkedin },
+  { label: "Facebook", href: "https://www.facebook.com/aosus1/", icon: FaFacebook },
+  { label: "Mastodon", href: "https://mastodon.online/@aosus", icon: FaMastodon },
+  { label: "Bluesky", href: "https://bsky.app/profile/aosus.org", icon: SiBluesky },
 ];
+
+export const CHAT_PLATFORMS = [
+  { label: "Matrix", href: "https://matrix.to/#/#aosus:aosus.org", icon: SiMatrix },
+  { label: "Discord", href: "https://discord.gg/YJUzEhU955", icon: FaDiscord },
+  { label: "Telegram", href: "https://t.me/aosus", icon: FaTelegram },
+];
+
+
 
 function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -111,6 +116,9 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [chatMenuOpen, setChatMenuOpen] = useState(false);
+  const chatMenuRef = useRef<HTMLDivElement>(null);
+  const chatMenuButtonRef = useRef<HTMLButtonElement>(null);
   const isRtl = lang === "ar";
 
   useEffect(() => {
@@ -155,6 +163,29 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!chatMenuRef.current?.contains(event.target as Node)) {
+        setChatMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setChatMenuOpen(false);
+        chatMenuButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const navItems = NAV[lang];
   const homeHref = getLocalizedPath(lang, "/");
   const supportHref = getLocalizedPath(lang, "/support-us");
@@ -190,8 +221,8 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
       <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-[#1d70ba]/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[#008a2f]/20 bg-white/60 backdrop-blur-md dark:bg-black/60">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href={homeHref} className="flex items-center gap-3 group">
+        <nav className="max-w-7xl mx-auto px-3 sm:px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+          <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
             <img
               src="/images/aosus-logo.png"
               alt="Aosus Logo"
@@ -199,7 +230,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             />
           </Link>
 
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1 justify-self-center">
             {navItems.map((item) => {
               const isActive =
                 pathname === item.href ||
@@ -223,11 +254,71 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                 </Link>
               );
             })}
+            
+            <div
+              ref={chatMenuRef}
+              className="relative h-full flex items-center"
+              onMouseEnter={() => setChatMenuOpen(true)}
+              onMouseLeave={() => setChatMenuOpen(false)}
+            >
+              <button
+                ref={chatMenuButtonRef}
+                type="button"
+                aria-expanded={chatMenuOpen}
+                aria-controls="header-chat-menu"
+                aria-haspopup="menu"
+                onClick={() => setChatMenuOpen((current) => !current)}
+                onFocus={() => setChatMenuOpen(true)}
+                className="px-3 py-2 flex items-center gap-1 text-sm font-medium transition-all font-mono text-gray-600 hover:text-[#008a2f] dark:text-gray-400"
+                style={
+                  isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
+                }
+              >
+                {lang === "ar" ? "محادثة" : "Chat"}
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform ${chatMenuOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              <AnimatePresence>
+                {chatMenuOpen && (
+                  <motion.div
+                    id="header-chat-menu"
+                    role="menu"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className={`absolute top-full z-50 w-48 pt-2 ${isRtl ? "right-0" : "left-0"}`}
+                  >
+                    <div className="bg-white border border-[#008a2f]/30 dark:bg-black shadow-lg">
+                      {CHAT_PLATFORMS.map((s) => {
+                        const Icon = s.icon;
+                        return (
+                          <a
+                            key={s.label}
+                            href={s.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            role="menuitem"
+                            onClick={() => setChatMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#008a2f]/10 hover:text-[#008a2f] dark:text-gray-300 transition-colors border-b border-[#008a2f]/10 last:border-0 font-mono tracking-wider"
+                          >
+                            <Icon className="w-4 h-4" /> {s.label}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="justify-self-end flex items-center gap-2">
+
             <Link
               href={langToggleHref}
+
               className="px-3 py-1 text-xs border border-[#1d70ba]/30 text-[#1d70ba] hover:bg-[#1d70ba]/10 transition-all font-mono"
             >
               {lang === "ar" ? "EN" : "AR"}
@@ -278,6 +369,19 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                   </Link>
                 ))}
               </div>
+              <div className="px-4 py-3 space-y-1 border-t border-[#008a2f]/20">
+                <div className="text-xs font-mono text-[#008a2f] uppercase tracking-wider mb-2">{lang === "ar" ? "محادثة" : "Chat Rooms"}</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {CHAT_PLATFORMS.map((s) => {
+                    const Icon = s.icon;
+                    return (
+                      <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-600 transition-colors hover:text-[#008a2f] hover:bg-[#008a2f]/5 dark:text-gray-400 font-mono uppercase border border-transparent hover:border-[#008a2f]/20">
+                        <Icon className="w-3 h-3" /> {s.label}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -287,7 +391,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
 
       <footer className="relative z-10 border-t border-[#008a2f]/20 bg-gray-50 dark:bg-black/80">
         <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
             <div className="md:col-span-1">
               <div className="flex items-center gap-3 mb-4">
                 <img
@@ -325,10 +429,30 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             <div>
               <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
                 <span className="opacity-50">/</span>{" "}
-                {lang === "ar" ? "المجتمع" : "Community"}
+                {lang === "ar" ? "محادثة" : "Chat Rooms"}
+              </h4>
+              <ul className="space-y-2 mb-8">
+                {CHAT_PLATFORMS.map((s) => (
+                  <li key={s.label}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-500 transition-colors hover:text-[#008a2f] dark:text-gray-400"
+                    >
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
+                <span className="opacity-50">/</span>{" "}
+                {lang === "ar" ? "تابعنا" : "Follow Us"}
               </h4>
               <ul className="space-y-2">
-                {SOCIALS.map((s) => (
+                {SOCIAL_PLATFORMS.map((s) => (
                   <li key={s.label}>
                     <a
                       href={s.href}
