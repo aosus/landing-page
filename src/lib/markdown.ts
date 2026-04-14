@@ -3,7 +3,9 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import { visit } from "unist-util-visit";
 import type { Lang } from "@/lib/locale";
+import remarkLinkPreviews from "@/lib/remarkLinkPreviews";
 
 export interface PostFrontMatter {
   title: string;
@@ -75,6 +77,19 @@ function rewriteMarkdownImages(filePath: string, markdown: string): string {
     const resolvedUrl = resolvePostAssetUrl(filePath, url);
     return `![${alt}](${resolvedUrl})`;
   });
+}
+
+function remarkStripRawHtml() {
+  return (tree: any) => {
+    visit(tree, "html", (_node: any, index: number | undefined, parent: any) => {
+      if (!parent || typeof index !== "number" || !Array.isArray(parent.children)) {
+        return;
+      }
+
+      parent.children.splice(index, 1);
+      return index;
+    });
+  };
 }
 
 function normalizeString(value: unknown): string | undefined {
@@ -231,9 +246,11 @@ export async function getPostBySlug(
     return null;
   }
 
-  const processedContent = await remark().use(html).process(
-    rewriteMarkdownImages(post.filePath, post.content),
-  );
+  const processedContent = await remark()
+    .use(remarkStripRawHtml)
+    .use(remarkLinkPreviews)
+    .use(html, { sanitize: false })
+    .process(rewriteMarkdownImages(post.filePath, post.content));
 
   return {
     ...post.frontMatter,

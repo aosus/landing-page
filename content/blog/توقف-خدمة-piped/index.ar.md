@@ -28,3 +28,8 @@ lang: "ar"
 شكرا لكم على متابعة مجتمع أسس.
 
 [أدعمنا](https://aosus.org/support-us)
+
+
+https://discord.gg/YJUzEhU955
+
+[hyperlink](https://t.me/aosus)
