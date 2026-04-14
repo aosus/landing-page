@@ -6,7 +6,7 @@ import pLimit from "p-limit";
 const contentRoot = path.join(process.cwd(), "content");
 const blogRoot = path.join(contentRoot, "blog");
 const previewsDir = path.join(process.cwd(), "public", "link-previews", "favicons");
-const manifestPath = path.join(contentRoot, "link-previews.json");
+const manifestPath = path.join(process.cwd(), "public", "link-previews", "manifest.json");
 
 if (!fs.existsSync(previewsDir)) {
   fs.mkdirSync(previewsDir, { recursive: true });

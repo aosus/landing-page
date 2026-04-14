@@ -78,6 +78,12 @@ function rewriteMarkdownImages(filePath: string, markdown: string): string {
   });
 }
 
+function rewriteStandaloneUrls(markdown: string): string {
+  return markdown.replace(/^([ \t]*)(https?:\/\/[^\s<]+)([ \t]*)$/gm, (_match, prefix: string, url: string, suffix: string) => {
+    return `${prefix}<${url}>${suffix}`;
+  });
+}
+
 function normalizeString(value: unknown): string | undefined {
   if (typeof value === "string") {
     const normalized = value.trim();
@@ -235,7 +241,7 @@ export async function getPostBySlug(
   const processedContent = await remark()
     .use(remarkLinkPreviews)
     .use(html, { sanitize: false })
-    .process(rewriteMarkdownImages(post.filePath, post.content));
+    .process(rewriteStandaloneUrls(rewriteMarkdownImages(post.filePath, post.content)));
 
   return {
     ...post.frontMatter,

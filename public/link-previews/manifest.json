@@ -2,29 +2,17 @@
   "https://torjoman.aosus.dev": {
     "error": true
   },
-  "https://twitter.com/aosusdotorg": {
-    "title": "",
-    "description": "",
-    "siteName": "X (formerly Twitter)",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90d2l0dGVyLmNvbS9hb3N1c2RvdG9yZw.ico"
-  },
-  "https://github.com/aosus/Torjoman/blob/dev/LICENSE": {
-    "title": "Torjoman/LICENSE at dev · aosus/Torjoman",
-    "description": "Torjoman aims to make translating more accessible to general users, by translating inside the users favourite Platforms - aosus/Torjoman",
-    "siteName": "GitHub",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9naXRodWIuY29tL2Fvc3VzL1RvcmpvbWFuL2Jsb2IvZGV2L0xJQ0VOU0U.svg"
-  },
   "https://www.linkedin.com/company/aosus/": {
     "title": "Aosus Community | LinkedIn",
     "description": "Aosus Community | 75 followers on LinkedIn. Aosus is the largest active arabic community for Free and Open source software. | Aosus is the largest active arabic community for Free and Open source software, it aims to spread and enrich the culture of free and open software in the Arab world, and to facilitate contribution and participation in it.",
     "siteName": "",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2NvbXBhbnkvYW9zdXMv.ico"
   },
-  "https://www.facebook.com/aosus1/": {
-    "title": "مجتمع أسس",
-    "description": "‎مجتمع أسس‎. Gefällt 546 Mal. ‎مجتمع أسس يهدف لنشر وإثراء ثقافة البرمجيات الحرة والمفتوحة في العالم العربي‎",
-    "siteName": "",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2Fvc3VzMS8.ico"
+  "https://twitter.com/aosusdotorg": {
+    "title": "",
+    "description": "",
+    "siteName": "X (formerly Twitter)",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90d2l0dGVyLmNvbS9hb3N1c2RvdG9yZw.ico"
   },
   "https://github.com/aosus/Torjoman": {
     "title": "GitHub - aosus/Torjoman: Torjoman aims to make translating more accessible to general users, by translating inside the users favourite Platforms",
@@ -32,35 +20,17 @@
     "siteName": "GitHub",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9naXRodWIuY29tL2Fvc3VzL1RvcmpvbWFu.svg"
   },
-  "https://t.me/aosus": {
-    "title": "مجتمع أسس (لينكس، مفتوح المصدر، ردهات، أوبونتو، شبكات)",
-    "description": "مجموعة ومجتمع معني بالبرمجيات الحرة وفلسفتها \tوالمفتوحة المصدر موقعنا\t aosus.org\tمجموعات أسس:\thttps://t.me/addlist/HuRZsLlFgAQ1ZmM0\t\tماتركس:\thttps://matrix.to/#/#aosus:aosus.org\t\tمجموعات عربية متميزة: \t@ArGroups",
-    "siteName": "Telegram",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90Lm1lL2Fvc3Vz.svg"
+  "https://www.facebook.com/aosus1/": {
+    "title": "مجتمع أسس",
+    "description": "‎مجتمع أسس‎. Gefällt 546 Mal. ‎مجتمع أسس يهدف لنشر وإثراء ثقافة البرمجيات الحرة والمفتوحة في العالم العربي‎",
+    "siteName": "",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2Fvc3VzMS8.ico"
   },
-  "https://hackclub.com/hcb/": {
-    "title": "Fiscal Sponsorship – Hack Club",
-    "description": "Start your nonprofit with our fiscal sponsorship program, HCB: a 501(c)(3) legal entity, bank account, automatic taxes & accounting, and best-in-class app.",
-    "siteName": "Hack Club",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9oYWNrY2x1Yi5jb20vaGNiLw.png"
-  },
-  "https://discord.gg/YJUzEhU955": {
-    "title": "Join the مجتمع أسس Discord Server!",
-    "description": "The largest Arabic FOSS community. A community with the aim of spreading and enriching FOSS in the Arabic World. | 208 members",
-    "siteName": "Discord",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9kaXNjb3JkLmdnL1lKVXpFaFU5NTU.ico"
-  },
-  "https://github.com/SimonBrazell/privacy-redirect": {
-    "title": "GitHub - SimonBrazell/privacy-redirect: A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.",
-    "description": "A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives. - SimonBrazell/privacy-redirect",
+  "https://github.com/aosus/Torjoman/blob/dev/LICENSE": {
+    "title": "Torjoman/LICENSE at dev · aosus/Torjoman",
+    "description": "Torjoman aims to make translating more accessible to general users, by translating inside the users favourite Platforms - aosus/Torjoman",
     "siteName": "GitHub",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9naXRodWIuY29tL1NpbW9uQnJhemVsbC9wcml2YWN5LXJlZGlyZWN0.svg"
-  },
-  "https://hackclub.com/": {
-    "title": "A Home for High School Hackers – Hack Club",
-    "description": "Hack Club is a global nonprofit network of high school makers & student-led coding clubs where young people build the agency, the network, & the technical talent to think big & do big things in the world.",
-    "siteName": "Hack Club",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9oYWNrY2x1Yi5jb20v.png"
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9naXRodWIuY29tL2Fvc3VzL1RvcmpvbWFuL2Jsb2IvZGV2L0xJQ0VOU0U.svg"
   },
   "https://github.com/aosus": {
     "title": "Aosus Community | مجتمع أسس",
@@ -68,29 +38,23 @@
     "siteName": "GitHub",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9naXRodWIuY29tL2Fvc3Vz.svg"
   },
-  "https://gnulinuxsa.org/": {
-    "title": "GNU/Linux Revolution",
-    "description": "مدونة ثورة جنو/لينكس",
-    "siteName": "GNU/Linux Revolution",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9nbnVsaW51eHNhLm9yZy8.png"
+  "https://hackclub.com/hcb/": {
+    "title": "Fiscal Sponsorship – Hack Club",
+    "description": "Start your nonprofit with our fiscal sponsorship program, HCB: a 501(c)(3) legal entity, bank account, automatic taxes & accounting, and best-in-class app.",
+    "siteName": "Hack Club",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9oYWNrY2x1Yi5jb20vaGNiLw.png"
   },
-  "https://hcb.hackclub.com/aosus": {
-    "title": "Aosus",
-    "description": "Aosus's finances have been made public on HCB so you can see how their money is spent.",
-    "siteName": "HCB",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9oY2IuaGFja2NsdWIuY29tL2Fvc3Vz.png"
+  "https://t.me/aosus": {
+    "title": "مجتمع أسس (لينكس، مفتوح المصدر، ردهات، أوبونتو، شبكات)",
+    "description": "مجموعة ومجتمع معني بالبرمجيات الحرة وفلسفتها \tوالمفتوحة المصدر موقعنا\t aosus.org\tمجموعات أسس:\thttps://t.me/addlist/HuRZsLlFgAQ1ZmM0\t\tماتركس:\thttps://matrix.to/#/#aosus:aosus.org\t\tمجموعات عربية متميزة: \t@ArGroups",
+    "siteName": "Telegram",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90Lm1lL2Fvc3Vz.svg"
   },
-  "https://gnulinuxsa.org": {
-    "title": "GNU/Linux Revolution",
-    "description": "مدونة ثورة جنو/لينكس",
-    "siteName": "GNU/Linux Revolution",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9nbnVsaW51eHNhLm9yZw.png"
-  },
-  "https://android.com": {
-    "title": "Android | Mehr Möglichkeiten mit Google für Android-Smartphones und -Geräte",
-    "description": "Finde mehr über Android heraus und entdecke, wie du mit Android-Geräten das Beste von Google noch besser nutzen kannst – dank hervorragender Konnektivität, leistungsstarkem Schutz, vielseitigen Google-Apps und Quick Share.",
-    "siteName": "Android",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9hbmRyb2lkLmNvbQ.ico"
+  "https://discord.gg/YJUzEhU955": {
+    "title": "Join the مجتمع أسس Discord Server!",
+    "description": "The largest Arabic FOSS community. A community with the aim of spreading and enriching FOSS in the Arabic World. | 207 members",
+    "siteName": "Discord",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9kaXNjb3JkLmdnL1lKVXpFaFU5NTU.ico"
   },
   "https://opencollective.com/aosus/projects/aosus-writing-contest": {
     "title": "Aosus writing contest | جائزة أسس للكتابة - Open Collective",
@@ -98,10 +62,35 @@
     "siteName": "",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9vcGVuY29sbGVjdGl2ZS5jb20vYW9zdXMvcHJvamVjdHMvYW9zdXMtd3JpdGluZy1jb250ZXN0.png"
   },
-  "https://mail.google.com": {
-    "title": "Gmail",
-    "description": "Gmail is email that’s intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access.",
-    "siteName": ""
+  "https://hackclub.com/": {
+    "title": "A Home for High School Hackers – Hack Club",
+    "description": "Hack Club is a global nonprofit network of high school makers & student-led coding clubs where young people build the agency, the network, & the technical talent to think big & do big things in the world.",
+    "siteName": "Hack Club",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9oYWNrY2x1Yi5jb20v.png"
+  },
+  "https://github.com/SimonBrazell/privacy-redirect": {
+    "title": "GitHub - SimonBrazell/privacy-redirect: A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.",
+    "description": "A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives. - SimonBrazell/privacy-redirect",
+    "siteName": "GitHub",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9naXRodWIuY29tL1NpbW9uQnJhemVsbC9wcml2YWN5LXJlZGlyZWN0.svg"
+  },
+  "https://hcb.hackclub.com/aosus": {
+    "title": "Aosus",
+    "description": "Aosus's finances have been made public on HCB so you can see how their money is spent.",
+    "siteName": "HCB",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9oY2IuaGFja2NsdWIuY29tL2Fvc3Vz.png"
+  },
+  "https://gnulinuxsa.org/": {
+    "title": "GNU/Linux Revolution",
+    "description": "مدونة ثورة جنو/لينكس",
+    "siteName": "GNU/Linux Revolution",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9nbnVsaW51eHNhLm9yZy8.png"
+  },
+  "https://gnulinuxsa.org": {
+    "title": "GNU/Linux Revolution",
+    "description": "مدونة ثورة جنو/لينكس",
+    "siteName": "GNU/Linux Revolution",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9nbnVsaW51eHNhLm9yZw.png"
   },
   "https://getfedora.org/en/silverblue/": {
     "title": "",
@@ -114,20 +103,34 @@
     "siteName": "GNU/Linux Revolution",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9HbnVsaW51eHNhLm9yZw.png"
   },
-  "https://github.com/mautrxi/telegram": {
-    "error": true
-  },
-  "https://github.com/mautrxi/discord": {
-    "error": true
-  },
-  "https://en.wikipedia.org/wiki/Matrix_\\(protocol\\": {
-    "error": true
-  },
   "https://flatpak.org": {
     "title": "Flatpak—the future of application distribution",
     "description": "The days of chasing multiple Linux distributions are over. Standalone apps for Linux are here!",
     "siteName": "Flatpak",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9mbGF0cGFrLm9yZw.ico"
+  },
+  "https://android.com": {
+    "title": "Android | Mehr Möglichkeiten mit Google für Android-Smartphones und -Geräte",
+    "description": "Finde mehr über Android heraus und entdecke, wie du mit Android-Geräten das Beste von Google noch besser nutzen kannst – dank hervorragender Konnektivität, leistungsstarkem Schutz, vielseitigen Google-Apps und Quick Share.",
+    "siteName": "Android",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9hbmRyb2lkLmNvbQ.ico"
+  },
+  "https://mail.google.com": {
+    "title": "Gmail",
+    "description": "Gmail is email that’s intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access.",
+    "siteName": ""
+  },
+  "https://wiki.debian.org/UnattendedUpgrades": {
+    "error": true
+  },
+  "https://github.com/mautrxi/discord": {
+    "error": true
+  },
+  "https://github.com/mautrxi/telegram": {
+    "error": true
+  },
+  "https://en.wikipedia.org/wiki/Matrix_\\(protocol\\": {
+    "error": true
   },
   "https://matrix.org": {
     "title": "Matrix.org",
@@ -158,11 +161,6 @@
     "siteName": "Telegram",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90Lm1lL2Fvc3VzX3Byb2dyYW1taW5n.svg"
   },
-  "https://wiki.debian.org/UnattendedUpgrades": {
-    "title": "PeriodicUpdates - Debian Wiki",
-    "description": "",
-    "siteName": ""
-  },
   "https://sy.sa": {
     "title": "",
     "description": "",
@@ -173,17 +171,23 @@
     "description": "",
     "siteName": ""
   },
-  "https://telegram.com": {
-    "title": "Worcester Telegram : Local News, Politics & Sports in Worcester, MA",
-    "description": "Get the latest breaking news, sports, entertainment and obituaries in Worcester, MA from Worcester Telegram .",
-    "siteName": "The Worcester Telegram & Gazette",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90ZWxlZ3JhbS5jb20.png"
+  "https://opencollective.com/aosus": {
+    "title": "Aosus Community | مجتمع أسس - Open Collective",
+    "description": "مجتمع أسس يهدف لنشر واثراء ثقافة البرمجيات الحرة والمفتوحة في العالم العربي, ولتسهيل المساهمة والمشاركة فيها",
+    "siteName": "",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9vcGVuY29sbGVjdGl2ZS5jb20vYW9zdXM.png"
   },
   "https://twitter.com/dok_designr": {
     "title": "",
     "description": "",
     "siteName": "X (formerly Twitter)",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90d2l0dGVyLmNvbS9kb2tfZGVzaWducg.ico"
+  },
+  "https://telegram.com": {
+    "title": "Worcester Telegram : Local News, Politics & Sports in Worcester, MA",
+    "description": "Get the latest breaking news, sports, entertainment and obituaries in Worcester, MA from Worcester Telegram .",
+    "siteName": "The Worcester Telegram & Gazette",
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly90ZWxlZ3JhbS5jb20.png"
   },
   "https://rimgo.aosus.ink": {
     "error": true
@@ -206,32 +210,31 @@
   "https://mozilla-l10n.github.io/introduction/assets/l10n_logo.png": {
     "error": true
   },
+  "https://element.aosus.link": {
+    "error": true
+  },
   "https://scontent.cdninstagram.com/v/t39.30808-6/548502220_122109536462995686_4236508080224190709_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=110&ccb=1-7&_nc_sid=18de74&_nc_ohc=LNp-1-876iMQ7kNvwH75KzY&_nc_oc=AdlovKFBCjotTNQ6xeYXCS6DkJImvwPfzwkVDDIWgwSvZ-ggUovF1lYUWfRJaCUZ6Qk&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=wrArwk-J0rJcOVft45r4CQ&oh=00_AfYYiYqSDI9qdXj3pq0q4zp_6kTuGqTE9CdXq47ZO1PBiw&oe=68CE613E": {
     "error": true
   },
   "https://scontent.cdninstagram.com/v/t51.29350-15/483963605_617436901078930_4407323448315868204_n.heic?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=111&ccb=1-7&_nc_sid=18de74&_nc_ohc=JNaWzmg88G4Q7kNvwGNSnlx&_nc_oc=AdmMTUwaqn9D-9ZjmfW2K-Cg9fKmIbaFamN9R6tYuZ2LyhZQshzas2Dj0n6dz8f4ZdU&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=DQM8TwVbp3uJDfw3zaaSNw&oh=00_AfaQQhCE39wOwlEJ7E2AfzX6PtWURuj7J4Xu2ZrhkZA54g&oe=68CE5780": {
     "error": true
   },
-  "https://element.aosus.link": {
-    "error": true
-  },
-  "https://opencollective.com/aosus": {
-    "title": "Aosus Community | مجتمع أسس - Open Collective",
-    "description": "مجتمع أسس يهدف لنشر واثراء ثقافة البرمجيات الحرة والمفتوحة في العالم العربي, ولتسهيل المساهمة والمشاركة فيها",
-    "siteName": "",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9vcGVuY29sbGVjdGl2ZS5jb20vYW9zdXM.png"
-  },
   "https://paypal.com": {
-    "title": "",
-    "description": "Transfer money online in seconds with PayPal money transfer. All you need is an email address.",
+    "title": "PayPal Konto | Digitale Mobile Wallet | PayPal DE",
+    "description": "Verwende dein PayPal-Konto zum Bezahlen, Geld senden und verwalten. Erstelle ein Händlerkonto für dein Unternehmen. Nutze mobiles Bezahlen und Ratenkauf.",
     "siteName": "",
-    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9wYXlwYWwuY29t.ico"
+    "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9wYXlwYWwuY29t.png"
   },
   "https://pontoon.mozilla.org/": {
     "title": "Localize Mozilla",
     "description": "Mozilla’s Localization Platform",
     "siteName": "",
     "localFavicon": "/link-previews/favicons/aHR0cHM6Ly9wb250b29uLm1vemlsbGEub3JnLw.ico"
+  },
+  "https://google.com": {
+    "title": "Google",
+    "description": "",
+    "siteName": ""
   },
   "https://wise.com/help/articles/2571942/what-countries-can-i-send-to": {
     "title": "What countries/regions can I send to? | Wise Help Centre",

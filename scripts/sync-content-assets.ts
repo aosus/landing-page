@@ -4,6 +4,7 @@ import path from "path";
 const root = process.cwd();
 const contentDir = path.join(root, "content", "blog");
 const publicContentDir = path.join(root, "public", "content", "blog");
+const publicLinkPreviewsDir = path.join(root, "public", "link-previews");
 
 function ensureDir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -33,6 +34,10 @@ function syncDirectory(sourceDir: string, targetDir: string) {
 
 if (fs.existsSync(publicContentDir)) {
   fs.rmSync(publicContentDir, { recursive: true, force: true });
+}
+
+if (fs.existsSync(publicLinkPreviewsDir)) {
+  fs.rmSync(publicLinkPreviewsDir, { recursive: true, force: true });
 }
 
 syncDirectory(contentDir, publicContentDir);
