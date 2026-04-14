@@ -105,7 +105,7 @@ export default function SupportPage({ lang: langProp }: { lang?: Lang }) {
       {({ lang, isDark }) => {
         const t = CONTENT[lang];
         const isRtl = lang === "ar";
-        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+        const ff = isRtl ? "var(--font-arabic)" : undefined;
 
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
@@ -116,7 +116,7 @@ export default function SupportPage({ lang: langProp }: { lang?: Lang }) {
                 <h1
                   className="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-4 font-mono"
                   style={
-                    isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
+                    isRtl ? { fontFamily: "var(--font-arabic)" } : undefined
                   }
                 >
                   <span className="text-[#008a2f]">/</span> {t.title}
@@ -138,7 +138,7 @@ export default function SupportPage({ lang: langProp }: { lang?: Lang }) {
                       className="text-2xl font-bold uppercase tracking-widest mb-4 font-mono"
                       style={
                         isRtl
-                          ? { fontFamily: "'Almarai', sans-serif" }
+                          ? { fontFamily: "var(--font-arabic)" }
                           : undefined
                       }
                     >

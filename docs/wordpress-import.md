@@ -48,3 +48,12 @@ The app now treats imported WordPress posts and normal blog posts as separate ro
 Because the app uses `output: 'export'`, every dynamic route must provide `generateStaticParams()`.
 
 If the importer removes a locale from the content tree, the matching route must also be removed or updated so the static export still builds.
+
+## Fonts
+
+The site now ships its fonts locally under `public/fonts/`.
+
+- `Almarai` handles Arabic and Latin UI text
+- `Inter` handles Latin UI text
+- `Kawkab Mono` is the local monospace face for Arabic-safe monospace rendering
+- the app no longer loads Google Fonts or other third-party font servers at runtime

@@ -51,7 +51,7 @@ export default function ArticlePageClient({
       {({ lang, isDark }) => {
         const t = LABELS[lang];
         const isRtl = lang === "ar";
-        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+        const ff = isRtl ? "var(--font-arabic)" : undefined;
         const BackArrow = isRtl ? ArrowRight : ArrowLeft;
         const homeLink = getLocalizedPath(lang, "/");
         const blogLink = getLocalizedPath(lang, "/blog");

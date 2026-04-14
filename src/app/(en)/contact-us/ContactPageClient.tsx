@@ -144,7 +144,7 @@ export default function ContactPage({ lang: langProp }: { lang?: Lang }) {
       {({ lang, isDark }) => {
         const t = CONTENT[lang];
         const isRtl = lang === "ar";
-        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+        const ff = isRtl ? "var(--font-arabic)" : undefined;
 
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
@@ -182,7 +182,7 @@ export default function ContactPage({ lang: langProp }: { lang?: Lang }) {
                           className="text-lg font-bold mb-2 font-mono group-hover:text-[#008a2f] transition-colors"
                           style={
                             isRtl
-                              ? { fontFamily: "'Almarai', sans-serif" }
+                              ? { fontFamily: "var(--font-arabic)" }
                               : undefined
                           }
                         >

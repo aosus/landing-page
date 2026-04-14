@@ -155,7 +155,7 @@ export default function ServicesPage({ lang: langProp }: { lang?: Lang }) {
       {({ lang, isDark }) => {
         const t = SERVICES[lang];
         const isRtl = lang === "ar";
-        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+        const ff = isRtl ? "var(--font-arabic)" : undefined;
         const supportLink = getLocalizedPath(lang, "/support-us");
 
         return (

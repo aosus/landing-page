@@ -260,7 +260,7 @@ export default function HomePageClient({
       {({ lang, isDark }) => {
         const t = CONTENT[lang];
         const isRtl = lang === "ar";
-        const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+        const ff = isRtl ? "var(--font-arabic)" : undefined;
         const servicesLink = getLocalizedPath(lang, "/services");
         const dynamicPosts = latestPosts?.[lang]?.slice(0, 3);
 
@@ -547,7 +547,7 @@ export default function HomePageClient({
                   className="text-3xl md:text-4xl font-bold"
                   style={{
                     fontFamily: isRtl
-                      ? "'Almarai', sans-serif"
+                      ? "var(--font-arabic)"
                       : "var(--font-mono)",
                   }}
                 >

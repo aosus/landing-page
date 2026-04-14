@@ -45,7 +45,7 @@ function BlogPageContent({
 }) {
   const page = PAGE[lang];
   const isRtl = lang === "ar";
-  const ff = isRtl ? "'Almarai', sans-serif" : undefined;
+  const ff = isRtl ? "var(--font-arabic)" : undefined;
   const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
   const normalizedPage = Math.min(Math.max(currentPage, 1), totalPages);
   const visiblePosts = posts.slice(
