@@ -1,11 +1,11 @@
 # Link Previews
 
-The blog renders external-link previews with local favicon caching.
+The blog renders link previews with local favicon caching.
 
 ## Behavior
 
 - Standalone raw links (`https://example.com` on their own line) are replaced with a full preview card.
-- Inline external links get a compact hover preview on desktop only.
+- Inline links get a compact hover preview on desktop only.
 - Hover previews are disabled on touch devices.
 - Preview favicons are always served from this site (`/link-previews/favicons/*`).
 
@@ -13,12 +13,11 @@ The blog renders external-link previews with local favicon caching.
 
 `scripts/build-link-previews.ts` runs before `pnpm dev` and `pnpm build`.
 
-1. Scan `content/blog/**/index.*.md` for external HTTP(S) links.
-2. Skip internal `aosus.org` links.
-3. Fetch metadata via `open-graph-scraper`.
-4. Download each favicon and cache it in `public/link-previews/favicons`.
-5. Write `public/link-previews/manifest.json`.
-6. Remove stale favicon files no longer referenced by the manifest.
+1. Scan `content/blog/**/index.*.md` for HTTP(S) links.
+2. Fetch metadata via `open-graph-scraper`.
+3. Download each favicon and cache it in `public/link-previews/favicons`.
+4. Write `public/link-previews/manifest.json`.
+5. Remove stale favicon files no longer referenced by the manifest.
 
 ## Safety and Reliability
 
@@ -27,6 +26,8 @@ The blog renders external-link previews with local favicon caching.
 - Requests use explicit timeout and crawler user-agent.
 - Entries are cached for 30 days (`expiresAt`), then refreshed.
 - If a fetch fails, rendering falls back to a local default favicon.
+
+Previously, internal `aosus.org` URLs were excluded to reduce preview noise and avoid fetching metadata for pages we already control. That tradeoff is gone now, so all HTTP(S) links can be previewed.
 
 ## Rendering Pipeline
 
@@ -43,7 +44,7 @@ Plugin source: `src/lib/remarkLinkPreviews.ts`.
 npx vitest run
 ```
 
-Tests cover standalone cards, inline hover, internal link skipping, named links alone in a paragraph, and missing manifest entries.
+Tests cover standalone cards, inline hover, internal links, named links alone in a paragraph, and missing manifest entries.
 
 ## Known Edge Cases
 

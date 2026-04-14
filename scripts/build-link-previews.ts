@@ -6,7 +6,7 @@ import { createHash } from "node:crypto";
 import ogs from "open-graph-scraper";
 import pLimit from "p-limit";
 import {
-  isPreviewableExternalUrl,
+  isPreviewableUrl,
   normalizePreviewUrl,
 } from "../src/lib/linkPreviewUtils";
 import type {
@@ -94,7 +94,7 @@ function extractLinksFromMarkdown(markdown: string): string[] {
     const candidate = trimTrailingPunctuation(match[0]);
     const normalized = normalizePreviewUrl(candidate);
 
-    if (normalized && isPreviewableExternalUrl(normalized)) {
+    if (normalized && isPreviewableUrl(normalized)) {
       urls.add(normalized);
     }
 

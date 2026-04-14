@@ -1,5 +1,3 @@
-const INTERNAL_HOST_SUFFIXES = ["aosus.org"];
-
 function normalizePort(url: URL) {
   if ((url.protocol === "https:" && url.port === "443") || (url.protocol === "http:" && url.port === "80")) {
     url.port = "";
@@ -33,23 +31,8 @@ export function normalizePreviewUrl(rawUrl: string): string | null {
   }
 }
 
-export function isInternalPreviewHost(hostname: string): boolean {
-  const normalizedHostname = hostname.toLowerCase();
-
-  return INTERNAL_HOST_SUFFIXES.some(
-    (suffix) => normalizedHostname === suffix || normalizedHostname.endsWith(`.${suffix}`),
-  );
-}
-
-export function isPreviewableExternalUrl(rawUrl: string): boolean {
-  const normalized = normalizePreviewUrl(rawUrl);
-
-  if (!normalized) {
-    return false;
-  }
-
-  const parsed = new URL(normalized);
-  return !isInternalPreviewHost(parsed.hostname);
+export function isPreviewableUrl(rawUrl: string): boolean {
+  return Boolean(normalizePreviewUrl(rawUrl));
 }
 
 export function normalizeComparableUrl(rawUrl: string): string | null {

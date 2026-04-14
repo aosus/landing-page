@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { visit } from "unist-util-visit";
 import {
-  isPreviewableExternalUrl,
+  isPreviewableUrl,
   normalizeComparableUrl,
   normalizePreviewUrl,
 } from "@/lib/linkPreviewUtils";
@@ -175,7 +175,7 @@ export function createRemarkLinkPreviews(options?: { manifest?: LinkPreviewManif
         standaloneUrl = child.value.trim();
       }
 
-      if (!standaloneUrl || !isPreviewableExternalUrl(standaloneUrl)) {
+      if (!standaloneUrl || !isPreviewableUrl(standaloneUrl)) {
         return;
       }
 
@@ -215,7 +215,7 @@ export function createRemarkLinkPreviews(options?: { manifest?: LinkPreviewManif
         return;
       }
 
-      if (typeof node.url !== "string" || !isPreviewableExternalUrl(node.url)) {
+      if (typeof node.url !== "string" || !isPreviewableUrl(node.url)) {
         return;
       }
 

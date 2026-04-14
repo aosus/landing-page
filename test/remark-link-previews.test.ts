@@ -18,6 +18,13 @@ const manifest = {
     hostname: "news.ycombinator.com",
     localFavicon: "/link-previews/favicons/hn.ico",
   },
+  "https://aosus.org/support-us": {
+    title: "Support Aosus",
+    description: "Help the community",
+    siteName: "Aosus",
+    hostname: "aosus.org",
+    localFavicon: "/link-previews/favicons/aosus.ico",
+  },
 };
 
 async function render(markdown: string) {
@@ -47,11 +54,11 @@ describe("remarkLinkPreviews", () => {
     expect(output).toContain('target="_blank"');
   });
 
-  it("does not preview internal Aosus links", async () => {
+  it("adds previews for internal Aosus links too", async () => {
     const output = await render("[Support us](https://aosus.org/support-us)");
 
-    expect(output).not.toContain("aosus-link-preview-inline");
-    expect(output).not.toContain("aosus-link-preview-card");
+    expect(output).toContain("aosus-link-preview-inline");
+    expect(output).toContain("aosus-link-preview-hover");
   });
 
   it("gives inline hover to a named link alone in its paragraph", async () => {
@@ -84,10 +91,10 @@ describe("remarkLinkPreviews", () => {
   it("converts bare URLs without manifest match to clickable links", async () => {
     // A bare URL with no preview data should still become a clickable <a> tag,
     // not stay as plain text.
-    const output = await render("https://unknown-site.org");
+    const output = await render("https://aosus.org/unknown-page");
 
-    expect(output).toContain('<a href="https://unknown-site.org"');
-    expect(output).toContain(">https://unknown-site.org</a>");
+    expect(output).toContain('<a href="https://aosus.org/unknown-page"');
+    expect(output).toContain(">https://aosus.org/unknown-page</a>");
     expect(output).not.toContain("aosus-link-preview-card");
   });
 });
