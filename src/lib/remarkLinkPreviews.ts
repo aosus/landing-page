@@ -100,7 +100,7 @@ function buildInlineMarkup(url: string, label: string, preview: LinkPreviewEntry
   return `
 <span class="aosus-link-preview-inline">
   <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="aosus-link-preview-link">${safeLabel}</a>
-  <span aria-hidden="true" class="aosus-link-preview-hover">
+  <span aria-hidden="true" class="aosus-link-preview-hover not-prose">
     <span class="aosus-link-preview-hover__head">
       <img src="${favicon}" alt="" class="aosus-link-preview-hover__favicon" loading="lazy" decoding="async" />
       <span class="aosus-link-preview-hover__site">${site}</span>
