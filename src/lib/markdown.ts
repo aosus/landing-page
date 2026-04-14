@@ -17,6 +17,9 @@ export interface PostFrontMatter {
   excerpt: string;
   slug: string;
   lang: Lang;
+  wpId?: string;
+  wpType?: string;
+  sourceUrl?: string;
 }
 
 export const POSTS_PER_PAGE = 9;
@@ -28,30 +31,18 @@ export interface Post extends PostFrontMatter {
 const contentRoot = path.join(process.cwd(), "content");
 const blogRoot = path.join(contentRoot, "blog");
 
-function getPostDir(slug: string): string {
-  return path.join(blogRoot, slug);
+interface ParsedPostFile {
+  filePath: string;
+  content: string;
+  frontMatter: PostFrontMatter;
 }
 
-function decodeSlug(slug: string): string {
-  try {
-    return decodeURIComponent(slug);
-  } catch {
-    return slug;
-  }
+function getPostDir(directorySlug: string): string {
+  return path.join(blogRoot, directorySlug);
 }
 
-function getPostFilePath(slug: string, lang: Lang): string {
-  const slugs = [slug, decodeSlug(slug)];
-
-  for (const candidate of slugs) {
-    const filePath = path.join(getPostDir(candidate), `index.${lang}.md`);
-
-    if (fs.existsSync(filePath)) {
-      return filePath;
-    }
-  }
-
-  return path.join(getPostDir(slug), `index.${lang}.md`);
+function getMarkdownFilePath(directorySlug: string, lang: Lang): string {
+  return path.join(getPostDir(directorySlug), `index.${lang}.md`);
 }
 
 function isRemoteAsset(assetPath: string): boolean {
@@ -65,8 +56,12 @@ function resolvePostAssetUrl(filePath: string, assetPath: string): string {
 
   const absolutePath = path.resolve(path.dirname(filePath), assetPath);
   const relativePath = path.relative(contentRoot, absolutePath).replaceAll(path.sep, "/");
+  const encodedRelativePath = relativePath
+    .split("/")
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
 
-  return `/content/${relativePath}`;
+  return `/content/${encodedRelativePath}`;
 }
 
 function rewriteMarkdownImages(filePath: string, markdown: string): string {
@@ -80,6 +75,29 @@ function rewriteMarkdownImages(filePath: string, markdown: string): string {
     const resolvedUrl = resolvePostAssetUrl(filePath, url);
     return `![${alt}](${resolvedUrl})`;
   });
+}
+
+function normalizeString(value: unknown): string | undefined {
+  if (typeof value === "string") {
+    const normalized = value.trim();
+    return normalized ? normalized : undefined;
+  }
+
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return String(value);
+  }
+
+  return undefined;
+}
+
+function resolvePublicSlug(data: Record<string, unknown>, directorySlug: string): string {
+  const wpType = normalizeString(data.wpType);
+
+  if (wpType === "post") {
+    return normalizeString(data.wpId) ?? normalizeString(data.slug) ?? directorySlug;
+  }
+
+  return normalizeString(data.slug) ?? directorySlug;
 }
 
 function getAllPostDirectories(): string[] {
@@ -111,7 +129,7 @@ function getAllPostDirectories(): string[] {
   return walk(blogRoot);
 }
 
-function parsePostFrontMatter(filePath: string, slug: string, lang: Lang) {
+function parsePostFile(filePath: string, directorySlug: string, lang: Lang): ParsedPostFile {
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
   const imageSource = data.image || "cover.png";
@@ -123,8 +141,13 @@ function parsePostFrontMatter(filePath: string, slug: string, lang: Lang) {
       ? [data.categories]
       : [];
   const tags = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [];
+  const wpId = normalizeString(data.wpId);
+  const wpType = normalizeString(data.wpType);
+  const sourceUrl = normalizeString(data.sourceUrl);
+  const slug = resolvePublicSlug(data, directorySlug);
 
   return {
+    filePath,
     frontMatter: {
       title: data.title || "",
       date: data.date || "",
@@ -137,23 +160,33 @@ function parsePostFrontMatter(filePath: string, slug: string, lang: Lang) {
       excerpt: data.excerpt || "",
       slug,
       lang,
+      wpId,
+      wpType,
+      sourceUrl,
     } as PostFrontMatter,
     content,
   };
 }
 
-export function getAllPosts(lang: Lang): PostFrontMatter[] {
-  const posts = getAllPostDirectories()
-    .map((slug) => {
-      const filePath = getPostFilePath(slug, lang);
+function getParsedPosts(lang: Lang): ParsedPostFile[] {
+  return getAllPostDirectories()
+    .flatMap((directorySlug) => {
+      const filePath = getMarkdownFilePath(directorySlug, lang);
 
       if (!fs.existsSync(filePath)) {
-        return null;
+        return [];
       }
 
-      return parsePostFrontMatter(filePath, slug, lang).frontMatter;
-    })
-    .filter((post): post is PostFrontMatter => post !== null);
+      return [parsePostFile(filePath, directorySlug, lang)];
+    });
+}
+
+function findPostBySlug(slug: string, lang: Lang): ParsedPostFile | null {
+  return getParsedPosts(lang).find((post) => post.frontMatter.slug === slug) ?? null;
+}
+
+export function getAllPosts(lang: Lang): PostFrontMatter[] {
+  const posts = getParsedPosts(lang).map((post) => post.frontMatter);
 
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -175,9 +208,7 @@ export function getPostsByCategory(lang: Lang, category: string): PostFrontMatte
 }
 
 export function getArticleFilePath(slug: string, lang: Lang): string | null {
-  const filePath = getPostFilePath(slug, lang);
-
-  return fs.existsSync(filePath) ? filePath : null;
+  return findPostBySlug(slug, lang)?.filePath ?? null;
 }
 
 export function getPostAssetPath(slug: string, lang: Lang, assetPath: string): string {
@@ -194,31 +225,43 @@ export async function getPostBySlug(
   slug: string,
   lang: Lang,
 ): Promise<Post | null> {
-  const filePath = getPostFilePath(slug, lang);
+  const post = findPostBySlug(slug, lang);
 
-  if (!fs.existsSync(filePath)) {
+  if (!post) {
     return null;
   }
 
-  const { frontMatter, content: rawContent } = parsePostFrontMatter(
-    filePath,
-    slug,
-    lang,
-  );
-
   const processedContent = await remark().use(html).process(
-    rewriteMarkdownImages(filePath, rawContent),
+    rewriteMarkdownImages(post.filePath, post.content),
   );
 
   return {
-    ...frontMatter,
+    ...post.frontMatter,
     content: processedContent.toString(),
   };
 }
 
 export function getAllSlugs(lang: Lang): string[] {
-  return getAllPostDirectories().filter((slug) =>
-    fs.existsSync(getPostFilePath(slug, lang)),
+  return Array.from(new Set(getParsedPosts(lang).map((post) => post.frontMatter.slug)));
+}
+
+export function getWordPressPostSlugs(lang: Lang): string[] {
+  return Array.from(
+    new Set(
+      getParsedPosts(lang)
+        .filter((post) => post.frontMatter.wpId && post.frontMatter.wpType === "post")
+        .map((post) => post.frontMatter.slug),
+    ),
+  );
+}
+
+export function getBlogRouteSlugs(lang: Lang): string[] {
+  return Array.from(
+    new Set(
+      getParsedPosts(lang)
+        .filter((post) => !(post.frontMatter.wpType === "post" && post.frontMatter.wpId))
+        .map((post) => post.frontMatter.slug),
+    ),
   );
 }
 

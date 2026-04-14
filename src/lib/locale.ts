@@ -25,3 +25,13 @@ export function getBlogIndexPath(lang: Lang, page: number): string {
   const blogRoot = getLocalizedPath(lang, "/blog");
   return page <= 1 ? blogRoot : `${blogRoot}?page=${page}`;
 }
+
+export function getPostPath(lang: Lang, slug: string, isWordPressPost = false): string {
+  const encodedSlug = encodeURIComponent(slug);
+
+  if (isWordPressPost) {
+    return getLocalizedPath(lang, `/${encodedSlug}`);
+  }
+
+  return `${getLocalizedPath(lang, "/blog")}/${encodedSlug}`;
+}

@@ -1,19 +1,16 @@
 import {
+  getBlogRouteSlugs,
   getPostBySlug,
-  getAllSlugs,
   getRegularPosts,
 } from "@/lib/markdown";
 import ArticlePageClient from "../../../(en)/blog/[slug]/ArticlePageClient";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-  const slugs = getAllSlugs("ar");
-  return Array.from(
-    new Set(
-      slugs.flatMap((slug) => [slug, encodeURIComponent(slug)]),
-    ),
-  ).map((slug) => ({ slug }));
+  return getBlogRouteSlugs("ar").map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -23,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug, "ar");
-  if (!post) return {};
+  if (!post || (post.wpType === "post" && post.wpId === post.slug)) return {};
 
   return {
     title: `${post.title} - أسس`,
@@ -54,7 +51,7 @@ export default async function ArArticlePage({
   const { slug } = await params;
   const post = await getPostBySlug(slug, "ar");
 
-  if (!post) {
+  if (!post || (post.wpType === "post" && post.wpId === post.slug)) {
     notFound();
   }
 

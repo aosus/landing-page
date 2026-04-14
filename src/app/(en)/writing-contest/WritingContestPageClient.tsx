@@ -18,7 +18,7 @@ import Layout, {
   type Lang,
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
-import { getLocalizedPath } from "@/lib/locale";
+import { getPostPath } from "@/lib/locale";
 
 const CONTENT = {
   en: {
@@ -182,8 +182,6 @@ export default function WritingContestPage({
         const isRtl = lang === "ar";
         const ff = isRtl ? "'Almarai', sans-serif" : undefined;
         const latestPosts = posts?.slice(0, 3) || [];
-        const blogBase = getLocalizedPath(lang, "/blog");
-
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
             <section className="relative py-24 overflow-hidden border-b border-[#008a2f]/20">
@@ -327,7 +325,14 @@ export default function WritingContestPage({
                           {item.date}
                         </div>
                         {"slug" in item ? (
-                          <a href={`${blogBase}/${encodeURIComponent((item as PostFrontMatter).slug)}`}>
+                          <a
+                            href={getPostPath(
+                              lang,
+                              (item as PostFrontMatter).slug,
+                              (item as PostFrontMatter).wpType === "post"
+                                && (item as PostFrontMatter).wpId === (item as PostFrontMatter).slug,
+                            )}
+                          >
                             <h3 className="font-bold" style={{ fontFamily: ff }}>
                               {item.title}
                             </h3>

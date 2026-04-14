@@ -3,7 +3,7 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import TurndownService from "turndown";
 
-type Lang = "ar";
+type Lang = "ar" | "en";
 
 type WPText = { rendered: string };
 
@@ -187,6 +187,29 @@ function rewriteMarkdownAssets(markdown: string, assetMap: Map<string, string>):
   });
 }
 
+function scriptCounts(text: string): { arabic: number; latin: number } {
+  return {
+    arabic: (text.match(/\p{Script=Arabic}/gu) ?? []).length,
+    latin: (text.match(/\p{Script=Latin}/gu) ?? []).length,
+  };
+}
+
+function detectContentLang(title: string, excerpt: string, body: string): Lang {
+  const normalizedBody = body
+    .replace(/https?:\/\/\S+/g, " ")
+    .replace(/\[[^\]]*\]\([^)]+\)/g, " ")
+    .slice(0, 1200);
+
+  const titleCounts = scriptCounts(stripHtml(title));
+  const excerptCounts = scriptCounts(stripHtml(excerpt));
+  const bodyCounts = scriptCounts(normalizedBody);
+
+  const arabic = titleCounts.arabic * 4 + excerptCounts.arabic * 2 + bodyCounts.arabic;
+  const latin = titleCounts.latin * 4 + excerptCounts.latin * 2 + bodyCounts.latin;
+
+  return latin > arabic * 1.2 ? "en" : "ar";
+}
+
 function toMarkdown(html: string): string {
   return turndown.turndown(html).trim();
 }
@@ -232,6 +255,22 @@ function writePostLocales(
   }
 }
 
+function writeSingleLocalePost(
+  postDir: string,
+  frontMatter: Record<string, unknown>,
+  body: string,
+  lang: Lang,
+) {
+  const otherLang: Lang = lang === "ar" ? "en" : "ar";
+  const otherFilePath = path.join(postDir, `index.${otherLang}.md`);
+
+  if (fs.existsSync(otherFilePath)) {
+    fs.unlinkSync(otherFilePath);
+  }
+
+  writeMarkdownFile(path.join(postDir, `index.${lang}.md`), { ...frontMatter, lang }, body);
+}
+
 function writeMarkdownFile(filePath: string, frontMatter: Record<string, unknown>, body: string) {
   const lines = ["---"];
 
@@ -263,18 +302,12 @@ async function main() {
   const tagNames = new Map(tags.map((term) => [term.id, term.name]));
   const userNames = new Map(users.map((user) => [user.id, user.name]));
 
-  let importedPosts = 0;
-  let skippedPosts = 0;
+  let writtenPosts = 0;
 
   for (const post of posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())) {
-    const slug = decodeSlug(post.slug);
-    const postDir = path.join(blogRoot, slug);
-    const postFile = path.join(postDir, "index.ar.md");
-
-    if (fs.existsSync(postFile)) {
-      skippedPosts += 1;
-      continue;
-    }
+    const directorySlug = decodeSlug(post.slug);
+    const slug = String(post.id);
+    const postDir = path.join(blogRoot, directorySlug);
 
     ensureDir(postDir);
 
@@ -310,8 +343,13 @@ async function main() {
     const imagePath = featuredMedia ? assetMap.get(featuredMedia.source_url) ?? "" : "";
     const categoriesForPost = post.categories.map((id) => categoryNames.get(id)).filter(Boolean) as string[];
     const tagsForPost = post.tags.map((id) => tagNames.get(id)).filter(Boolean) as string[];
+    const postLang = detectContentLang(
+      post.title.rendered,
+      post.excerpt.rendered,
+      markdown,
+    );
 
-    writePostLocales(postDir, {
+    writeSingleLocalePost(postDir, {
       title: post.title.rendered,
       date: post.date.slice(0, 10),
       author: userNames.get(post.author) ?? "Aosus",
@@ -325,9 +363,9 @@ async function main() {
       wpId: post.id,
       wpType: post.type,
       sourceUrl: post.link,
-    }, markdown);
+    }, markdown, postLang);
 
-    importedPosts += 1;
+    writtenPosts += 1;
   }
 
   for (const item of media.sort((a, b) => b.id - a.id)) {
@@ -364,7 +402,7 @@ async function main() {
     }, body || `![${item.title.rendered}](${fileName})`);
   }
 
-  console.log(`Imported ${importedPosts} posts, skipped ${skippedPosts}, and wrote ${media.length} media items.`);
+  console.log(`Wrote ${writtenPosts} posts and ${media.length} media items.`);
 }
 
 main().catch((error) => {

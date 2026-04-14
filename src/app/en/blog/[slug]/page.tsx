@@ -1,15 +1,16 @@
 import {
+  getBlogRouteSlugs,
   getPostBySlug,
-  getAllSlugs,
   getRegularPosts,
 } from "@/lib/markdown";
 import ArticlePageClient from "../../../(en)/blog/[slug]/ArticlePageClient";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-  const slugs = getAllSlugs("en");
-  return slugs.map((slug) => ({ slug }));
+  return getBlogRouteSlugs("en").map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -19,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug, "en");
-  if (!post) return {};
+  if (!post || (post.wpType === "post" && post.wpId === post.slug)) return {};
 
   return {
     title: `${post.title} - Aosus`,
@@ -48,15 +49,14 @@ export default async function EnArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
-  const post = await getPostBySlug(decodedSlug, "en");
+  const post = await getPostBySlug(slug, "en");
 
-  if (!post) {
+  if (!post || (post.wpType === "post" && post.wpId === post.slug)) {
     notFound();
   }
 
   const allPosts = getRegularPosts("en");
-  const currentIndex = allPosts.findIndex((item) => item.slug === decodedSlug);
+  const currentIndex = allPosts.findIndex((item) => item.slug === slug);
   const prevPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 

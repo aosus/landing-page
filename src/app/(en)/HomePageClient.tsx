@@ -23,7 +23,7 @@ import Layout, {
   type Lang,
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
-import { getLocalizedPath } from "@/lib/locale";
+import { getLocalizedPath, getPostPath } from "@/lib/locale";
 
 const CONTENT = {
   en: {
@@ -116,21 +116,21 @@ const CONTENT = {
         date: "2025-09-18",
         excerpt:
           "Introducing school students to FOSS through game dev with Godot engine.",
-        link: "/blog/aosus-sponsors-daydream",
+        link: "/2135",
       },
       {
         title: "Contribute to Translating Firefox!",
         date: "2025-09-01",
         excerpt:
           "Mozilla needs your help to improve Arabic language support in Firefox.",
-        link: "/blog/contribute-translating-firefox",
+        link: "/2125",
       },
       {
         title: "Piped Service Discontinuation",
         date: "2025-08-15",
         excerpt:
           "The Piped service has been facing playback issues. Announcing discontinuation.",
-        link: "/blog/piped-service-discontinuation",
+        link: "/2071",
       },
     ],
     ctaHeading: "Join the Open-Source Revolution",
@@ -227,19 +227,19 @@ const CONTENT = {
         date: "٢٠٢٥-٠٩-١٨",
         excerpt:
           "تعريف طلاب المدارس بالبرمجيات الحرة عبر تطوير الألعاب مع محرك Godot.",
-        link: "/blog/aosus-sponsors-daydream",
+        link: "/2135",
       },
       {
         title: "ساهم في ترجمة Firefox!",
         date: "٢٠٢٥-٠٩-٠١",
         excerpt: "Mozilla تحتاج مساعدتك لتحسين دعم اللغة العربية في Firefox.",
-        link: "/blog/contribute-translating-firefox",
+        link: "/2125",
       },
       {
         title: "إيقاف خدمة Piped",
         date: "٢٠٢٥-٠٨-١٥",
         excerpt: "خدمة Piped تواجه مشاكل في التشغيل. نعلن عن الإيقاف القريب.",
-        link: "/blog/piped-service-discontinuation",
+        link: "/2071",
       },
     ],
     ctaHeading: "انضم إلى ثورة المصادر المفتوحة",
@@ -261,7 +261,6 @@ export default function HomePageClient({
         const t = CONTENT[lang];
         const isRtl = lang === "ar";
         const ff = isRtl ? "'Almarai', sans-serif" : undefined;
-        const blogBase = getLocalizedPath(lang, "/blog");
         const servicesLink = getLocalizedPath(lang, "/services");
         const dynamicPosts = latestPosts?.[lang]?.slice(0, 3);
 
@@ -501,7 +500,12 @@ export default function HomePageClient({
                       {(dynamicPosts && dynamicPosts.length ? dynamicPosts : t.blog).map((post, i) => {
                         const isDynamic = "slug" in post;
                         const link = isDynamic
-                          ? `${blogBase}/${encodeURIComponent((post as PostFrontMatter).slug)}`
+                          ? getPostPath(
+                              lang,
+                              (post as PostFrontMatter).slug,
+                              (post as PostFrontMatter).wpType === "post"
+                                && (post as PostFrontMatter).wpId === (post as PostFrontMatter).slug,
+                            )
                           : (post as { link: string }).link;
                         const title = post.title;
                         const date = post.date;

@@ -11,7 +11,7 @@ import Layout, {
   type Lang,
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
-import { getBlogIndexPath, getLocalizedPath } from "@/lib/locale";
+import { getBlogIndexPath, getPostPath } from "@/lib/locale";
 
 const POSTS_PER_PAGE = 9;
 
@@ -46,7 +46,6 @@ function BlogPageContent({
   const page = PAGE[lang];
   const isRtl = lang === "ar";
   const ff = isRtl ? "'Almarai', sans-serif" : undefined;
-  const blogBase = getLocalizedPath(lang, "/blog");
   const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
   const normalizedPage = Math.min(Math.max(currentPage, 1), totalPages);
   const visiblePosts = posts.slice(
@@ -78,7 +77,14 @@ function BlogPageContent({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
             >
-                <Link href={`${blogBase}/${encodeURIComponent(post.slug)}`} className="block h-full">
+                <Link
+                  href={getPostPath(
+                    lang,
+                    post.slug,
+                    post.wpType === "post" && post.wpId === post.slug,
+                  )}
+                  className="block h-full"
+                >
                 <CyberCard
                   isDark={isDark}
                   className="group h-full cursor-pointer overflow-hidden"
