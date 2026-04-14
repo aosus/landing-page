@@ -13,6 +13,7 @@ The importer:
 - downloads referenced WordPress upload assets next to the post files
 - rewrites image URLs in markdown so local assets point at `/content/blog/...`
 - stores WordPress metadata in front matter, including `wpId`, `wpType`, and `sourceUrl`
+- skips writing markdown pages for WordPress media attachments
 
 ## Post routing
 
@@ -30,6 +31,9 @@ Imported posts are written as a single locale file when the importer can determi
 - the importer keeps only one of `index.ar.md` or `index.en.md` for posts
 - media items still keep both locale files
 - the markdown loader reads the exact locale file and does not fall back to the other locale
+
+Attachment folders are different. They keep the downloaded files, but they no longer get a page.
+If you see a folder with only images or other binaries, it is probably a WordPress media asset folder.
 
 ## Route changes
 

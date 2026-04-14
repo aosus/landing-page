@@ -244,17 +244,6 @@ function isLocalWordPressUpload(url: string): boolean {
   }
 }
 
-function writePostLocales(
-  postDir: string,
-  frontMatter: Record<string, unknown>,
-  body: string,
-  langs: Array<"ar" | "en"> = ["ar", "en"],
-) {
-  for (const lang of langs) {
-    writeMarkdownFile(path.join(postDir, `index.${lang}.md`), { ...frontMatter, lang }, body);
-  }
-}
-
 function writeSingleLocalePost(
   postDir: string,
   frontMatter: Record<string, unknown>,
@@ -380,26 +369,6 @@ async function main() {
     if (!fs.existsSync(filePath)) {
       await downloadFile(item.source_url, filePath);
     }
-
-    const body = toMarkdown(item.description.rendered || item.caption.rendered || item.title.rendered || "");
-    const excerpt = toExcerpt(item.caption.rendered || item.alt_text || item.title.rendered || "");
-
-    writePostLocales(mediaDir, {
-      title: item.title.rendered || item.slug,
-      date: item.date.slice(0, 10),
-      author: "Aosus",
-      tags: [item.mime_type, item.media_type],
-      categories: ["media"],
-      image: fileName,
-      thumbnail: fileName,
-      ogImage: fileName,
-      excerpt,
-      slug: mediaSlug,
-      wpId: item.id,
-      wpType: "attachment",
-      sourceUrl: item.source_url,
-      parent: item.parent,
-    }, body || `![${item.title.rendered}](${fileName})`);
   }
 
   console.log(`Wrote ${writtenPosts} posts and ${media.length} media items.`);
