@@ -51,9 +51,4 @@ If the importer removes a locale from the content tree, the matching route must 
 
 ## Fonts
 
-The site now ships its fonts locally under `public/fonts/`.
-
-- `Almarai` handles Arabic and Latin UI text
-- `Inter` handles Latin UI text
-- `Kawkab Mono` is the local monospace face for Arabic-safe monospace rendering
-- the app no longer loads Google Fonts or other third-party font servers at runtime
+See [docs/fonts.md](./fonts.md) for the local font setup.

@@ -74,7 +74,7 @@ function MatrixRain() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "#008a2f";
-      ctx.font = `${fontSize}px \"Kawkab Mono\", monospace`;
+      ctx.font = `${fontSize}px "Kawkab Mono", monospace`;
       for (let i = 0; i < drops.length; i++) {
         const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
