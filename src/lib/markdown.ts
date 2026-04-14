@@ -3,8 +3,8 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
-import remarkLinkPreviews from "./remarkLinkPreviews";
 import type { Lang } from "@/lib/locale";
+import remarkLinkPreviews from "@/lib/remarkLinkPreviews";
 
 export interface PostFrontMatter {
   title: string;
@@ -75,12 +75,6 @@ function rewriteMarkdownImages(filePath: string, markdown: string): string {
 
     const resolvedUrl = resolvePostAssetUrl(filePath, url);
     return `![${alt}](${resolvedUrl})`;
-  });
-}
-
-function rewriteStandaloneUrls(markdown: string): string {
-  return markdown.replace(/^([ \t]*)(https?:\/\/[^\s<]+)([ \t]*)$/gm, (_match, prefix: string, url: string, suffix: string) => {
-    return `${prefix}<${url}>${suffix}`;
   });
 }
 
@@ -241,7 +235,7 @@ export async function getPostBySlug(
   const processedContent = await remark()
     .use(remarkLinkPreviews)
     .use(html, { sanitize: false })
-    .process(rewriteStandaloneUrls(rewriteMarkdownImages(post.filePath, post.content)));
+    .process(rewriteMarkdownImages(post.filePath, post.content));
 
   return {
     ...post.frontMatter,

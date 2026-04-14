@@ -1,80 +1,226 @@
-import { visit } from "unist-util-visit";
 import fs from "fs";
 import path from "path";
+import { visit } from "unist-util-visit";
+import {
+  isPreviewableExternalUrl,
+  normalizeComparableUrl,
+  normalizePreviewUrl,
+} from "@/lib/linkPreviewUtils";
 
 const manifestPath = path.join(process.cwd(), "public", "link-previews", "manifest.json");
 
-let manifest: Record<string, any> = {};
-try {
-  if (fs.existsSync(manifestPath)) {
-    manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+export interface LinkPreviewEntry {
+  title?: string;
+  description?: string;
+  siteName?: string;
+  hostname?: string;
+  localFavicon?: string;
+  fetchedAt?: string;
+  expiresAt?: string;
+  error?: boolean;
+}
+
+export type LinkPreviewManifest = Record<string, LinkPreviewEntry>;
+
+function loadManifestFromDisk(): LinkPreviewManifest {
+  try {
+    if (!fs.existsSync(manifestPath)) {
+      return {};
+    }
+
+    const contents = fs.readFileSync(manifestPath, "utf8");
+    const parsed = JSON.parse(contents) as LinkPreviewManifest;
+
+    if (!parsed || typeof parsed !== "object") {
+      return {};
+    }
+
+    return parsed;
+  } catch {
+    return {};
   }
-} catch (e) {
-  console.warn("Failed to load link previews manifest");
 }
 
-function escapeHtml(unsafe: string) {
+function escapeHtml(unsafe: string): string {
   return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-export default function remarkLinkPreviews() {
-  return (tree: any) => {
-    const makePreviewHtml = (url: string, preview: Record<string, any>) => {
-      let hostname = url;
-      try {
-        hostname = new URL(url).hostname;
-      } catch {
-        // Ignore malformed URLs and fall back to the raw value.
+function toPlainText(node: any): string {
+  if (!node) {
+    return "";
+  }
+
+  if (node.type === "text" && typeof node.value === "string") {
+    return node.value;
+  }
+
+  if (!Array.isArray(node.children)) {
+    return "";
+  }
+
+  return node.children.map((child: any) => toPlainText(child)).join("");
+}
+
+function resolvePreview(url: string, manifest: LinkPreviewManifest): LinkPreviewEntry | null {
+  const normalized = normalizePreviewUrl(url);
+
+  if (!normalized) {
+    return null;
+  }
+
+  const withoutTrailingSlash = normalized.endsWith("/") ? normalized.slice(0, -1) : normalized;
+  const withTrailingSlash = normalized.endsWith("/") ? normalized : `${normalized}/`;
+
+  const candidate =
+    manifest[normalized] ??
+    manifest[withoutTrailingSlash] ??
+    manifest[withTrailingSlash] ??
+    manifest[url];
+
+  if (!candidate || candidate.error) {
+    return null;
+  }
+
+  return candidate;
+}
+
+function buildInlineMarkup(url: string, label: string, preview: LinkPreviewEntry): string {
+  const safeUrl = escapeHtml(url);
+  const safeLabel = escapeHtml(label);
+  const site = escapeHtml(preview.siteName || preview.hostname || new URL(url).hostname);
+  const title = escapeHtml(preview.title || label || url);
+  const description = preview.description ? escapeHtml(preview.description) : "";
+  const favicon = escapeHtml(preview.localFavicon || "/link-previews/favicons/default.svg");
+
+  return `
+<span class="aosus-link-preview-inline">
+  <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="aosus-link-preview-link">${safeLabel}</a>
+  <span aria-hidden="true" class="aosus-link-preview-hover">
+    <span class="aosus-link-preview-hover__head">
+      <img src="${favicon}" alt="" class="aosus-link-preview-hover__favicon" loading="lazy" decoding="async" />
+      <span class="aosus-link-preview-hover__site">${site}</span>
+    </span>
+    <span class="aosus-link-preview-hover__title">${title}</span>
+    ${description ? `<span class="aosus-link-preview-hover__description">${description}</span>` : ""}
+  </span>
+</span>`;
+}
+
+function buildStandaloneMarkup(url: string, preview: LinkPreviewEntry): string {
+  const safeUrl = escapeHtml(url);
+  const site = escapeHtml(preview.siteName || preview.hostname || new URL(url).hostname);
+  const title = escapeHtml(preview.title || url);
+  const description = preview.description ? escapeHtml(preview.description) : "";
+  const favicon = escapeHtml(preview.localFavicon || "/link-previews/favicons/default.svg");
+
+  return `
+<aside class="aosus-link-preview-card not-prose">
+  <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="aosus-link-preview-card__link">
+    <span class="aosus-link-preview-card__icon-wrap">
+      <img src="${favicon}" alt="" class="aosus-link-preview-card__icon" loading="lazy" decoding="async" />
+    </span>
+    <span class="aosus-link-preview-card__body">
+      <span class="aosus-link-preview-card__site">${site}</span>
+      <span class="aosus-link-preview-card__title">${title}</span>
+      ${description ? `<span class="aosus-link-preview-card__description">${description}</span>` : ""}
+    </span>
+  </a>
+</aside>`;
+}
+
+function isStandaloneRawUrl(linkNode: any): boolean {
+  if (!Array.isArray(linkNode.children) || linkNode.children.length !== 1) {
+    return false;
+  }
+
+  const child = linkNode.children[0];
+
+  if (!child || child.type !== "text" || typeof child.value !== "string") {
+    return false;
+  }
+
+  const textUrl = normalizeComparableUrl(child.value.trim());
+  const hrefUrl = normalizeComparableUrl(linkNode.url || "");
+
+  return Boolean(textUrl && hrefUrl && textUrl === hrefUrl);
+}
+
+function isRawHttpUrl(value: string): boolean {
+  return /^https?:\/\/\S+$/i.test(value.trim());
+}
+
+export function createRemarkLinkPreviews(options?: { manifest?: LinkPreviewManifest }) {
+  const manifest = options?.manifest ?? loadManifestFromDisk();
+
+  return () => (tree: any) => {
+    visit(tree, "paragraph", (node: any, index: number | undefined, parent: any) => {
+      if (!parent || typeof index !== "number") {
+        return;
       }
 
-      const title = preview.title ? escapeHtml(preview.title) : escapeHtml(url);
-      const desc = preview.description ? escapeHtml(preview.description) : "";
-      const site = preview.siteName ? escapeHtml(preview.siteName) : escapeHtml(hostname);
-      const icon = preview.localFavicon ? escapeHtml(preview.localFavicon) : "";
-
-      return `
-        <span class="preview-tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 md:w-80 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl opacity-0 invisible max-md:hidden md:group-hover:opacity-100 md:group-hover:visible transition-all duration-200 z-[100] p-4 pointer-events-none text-start flex flex-col gap-2">
-          <span class="flex items-center gap-2">
-            ${icon ? `<img src="${icon}" alt="" class="w-4 h-4 rounded-sm flex-shrink-0 bg-white" />` : ""}
-            <span class="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider truncate">${site}</span>
-          </span>
-          <span class="text-sm font-bold text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-snug break-words">${title}</span>
-          ${desc ? `<span class="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed break-words">${desc}</span>` : ""}
-        </span>
-      `;
-    };
-
-    visit(tree, "paragraph", (node: any) => {
-      if (node.children.length !== 1) {
+      if (!Array.isArray(node.children) || node.children.length !== 1) {
         return;
       }
 
       const child = node.children[0];
-      const url = child.type === "link" ? child.url : child.type === "text" ? child.value.trim() : null;
+      let standaloneUrl: string | null = null;
 
-      if (!url || !/^https?:\/\/\S+$/.test(url)) {
+      if (child.type === "link" && typeof child.url === "string" && isStandaloneRawUrl(child)) {
+        standaloneUrl = child.url;
+      }
+
+      if (child.type === "text" && typeof child.value === "string" && isRawHttpUrl(child.value)) {
+        standaloneUrl = child.value.trim();
+      }
+
+      if (!standaloneUrl || !isPreviewableExternalUrl(standaloneUrl)) {
         return;
       }
 
-      const preview = manifest[url];
+      const preview = resolvePreview(standaloneUrl, manifest);
 
-      if (!preview || preview.error) {
+      if (!preview) {
         return;
       }
 
-      node.type = "html";
-      node.value = `
-        <span class="group relative inline-block align-baseline">
-          <a href="${escapeHtml(url)}" class="underline decoration-2 decoration-zinc-300 dark:decoration-zinc-700 hover:decoration-green-500 transition-colors">${escapeHtml(url)}</a>
-          ${makePreviewHtml(url, preview)}
-        </span>
-      `;
-      delete node.children;
+      parent.children[index] = {
+        type: "html",
+        value: buildStandaloneMarkup(standaloneUrl, preview),
+      };
+    });
+
+    visit(tree, "link", (node: any, index: number | undefined, parent: any) => {
+      if (!parent || typeof index !== "number") {
+        return;
+      }
+
+      if (parent.type === "paragraph" && Array.isArray(parent.children) && parent.children.length === 1) {
+        return;
+      }
+
+      if (typeof node.url !== "string" || !isPreviewableExternalUrl(node.url)) {
+        return;
+      }
+
+      const preview = resolvePreview(node.url, manifest);
+
+      if (!preview) {
+        return;
+      }
+
+      const label = toPlainText(node).trim() || node.url;
+
+      parent.children[index] = {
+        type: "html",
+        value: buildInlineMarkup(node.url, label, preview),
+      };
     });
   };
 }
+
+export default createRemarkLinkPreviews();

@@ -2,3 +2,198 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.aosus-link-preview-inline {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.aosus-link-preview-link {
+  color: #008a2f;
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
+  text-decoration-thickness: 0.11rem;
+  text-decoration-color: color-mix(in srgb, #008a2f 35%, transparent);
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+
+.aosus-link-preview-link:hover {
+  text-decoration-color: #008a2f;
+}
+
+.aosus-link-preview-hover {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.6rem);
+  z-index: 40;
+  width: min(22rem, calc(100vw - 2rem));
+  border: 1px solid color-mix(in srgb, #008a2f 35%, transparent);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 24px 40px rgba(2, 8, 23, 0.16);
+  transform: translateX(-50%) translateY(0.28rem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: start;
+}
+
+.dark .aosus-link-preview-hover {
+  background: rgba(3, 7, 18, 0.98);
+  box-shadow: 0 22px 38px rgba(0, 0, 0, 0.45);
+}
+
+.aosus-link-preview-hover__head {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.aosus-link-preview-hover__favicon {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 0.2rem;
+  flex-shrink: 0;
+}
+
+.aosus-link-preview-hover__site {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: #008a2f;
+}
+
+.aosus-link-preview-hover__title {
+  font-size: 0.78rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: rgb(31 41 55);
+}
+
+.dark .aosus-link-preview-hover__title {
+  color: rgb(229 231 235);
+}
+
+.aosus-link-preview-hover__description {
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: rgb(75 85 99);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dark .aosus-link-preview-hover__description {
+  color: rgb(148 163 184);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aosus-link-preview-inline:hover .aosus-link-preview-hover,
+  .aosus-link-preview-inline:focus-within .aosus-link-preview-hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .aosus-link-preview-hover {
+    display: none;
+  }
+}
+
+.aosus-link-preview-card {
+  margin: 1.1rem 0;
+}
+
+.aosus-link-preview-card__link {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  border: 1px solid color-mix(in srgb, #008a2f 35%, transparent);
+  background: color-mix(in srgb, #008a2f 6%, white);
+  text-decoration: none;
+  color: inherit;
+  padding: 0.85rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.dark .aosus-link-preview-card__link {
+  background: color-mix(in srgb, #008a2f 10%, black);
+}
+
+.aosus-link-preview-card__link:hover {
+  border-color: #008a2f;
+  background: color-mix(in srgb, #008a2f 11%, white);
+}
+
+.dark .aosus-link-preview-card__link:hover {
+  background: color-mix(in srgb, #008a2f 18%, black);
+}
+
+.aosus-link-preview-card__icon-wrap {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, #008a2f 30%, transparent);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.dark .aosus-link-preview-card__icon-wrap {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.aosus-link-preview-card__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.aosus-link-preview-card__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+}
+
+.aosus-link-preview-card__site {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #008a2f;
+}
+
+.aosus-link-preview-card__title {
+  font-size: 0.92rem;
+  line-height: 1.22;
+  font-weight: 700;
+  color: rgb(31 41 55);
+}
+
+.dark .aosus-link-preview-card__title {
+  color: rgb(229 231 235);
+}
+
+.aosus-link-preview-card__description {
+  font-size: 0.78rem;
+  line-height: 1.38;
+  color: rgb(75 85 99);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dark .aosus-link-preview-card__description {
+  color: rgb(148 163 184);
+}

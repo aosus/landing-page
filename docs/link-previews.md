@@ -1,23 +1,46 @@
 # Link Previews
 
-Standalone external links in blog posts get hover previews on desktop.
+The blog renders external-link previews with local favicon caching.
 
-## Flow
+## Behavior
 
-1. `scripts/build-link-previews.ts` scans markdown for external URLs.
-2. It fetches Open Graph metadata at build time.
-3. Favicons are downloaded into `public/link-previews/favicons`.
-4. Preview metadata is written to `public/link-previews/manifest.json`.
-5. `src/lib/markdown.ts` normalizes standalone URLs and passes content through `remarkLinkPreviews`.
-6. `src/lib/remarkLinkPreviews.ts` replaces standalone link paragraphs with a wrapped link and a desktop-only hover card.
+- Standalone raw links (`https://example.com` on their own line) are replaced with a full preview card.
+- Inline external links get a compact hover preview on desktop only.
+- Hover previews are disabled on touch devices.
+- Preview favicons are always served from this site (`/link-previews/favicons/*`).
 
-## Rules
+## Build Flow
 
-- Only standalone links are enhanced.
-- Mobile never shows the preview.
-- Favicons are served locally.
-- If metadata is missing, the link stays normal.
+`scripts/build-link-previews.ts` runs before `pnpm dev` and `pnpm build`.
 
-## Build
+1. Scan `content/blog/**/index.*.md` for external HTTP(S) links.
+2. Skip internal `aosus.org` links.
+3. Fetch metadata via `open-graph-scraper`.
+4. Download each favicon and cache it in `public/link-previews/favicons`.
+5. Write `public/link-previews/manifest.json`.
+6. Remove stale favicon files no longer referenced by the manifest.
 
-The preview cache is regenerated during `pnpm dev` and `pnpm build`.
+## Safety and Reliability
+
+- URLs are normalized before caching.
+- Private/local targets are blocked before metadata and favicon fetches.
+- Requests use explicit timeout and crawler user-agent.
+- Entries are cached for 30 days (`expiresAt`), then refreshed.
+- If a fetch fails, rendering falls back to a local default favicon.
+
+## Rendering Pipeline
+
+Markdown rendering happens in `src/lib/markdown.ts`:
+
+- `remarkLinkPreviews` transforms markdown link nodes.
+- `remark-html` then serializes HTML with preview markup.
+
+Plugin source: `src/lib/remarkLinkPreviews.ts`.
+
+## Manual Refresh
+
+Run this when you want to refresh preview metadata on demand:
+
+```bash
+pnpm previews:refresh
+```
