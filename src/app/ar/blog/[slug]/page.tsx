@@ -8,9 +8,11 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 export const dynamicParams = false;
+const placeholderSlug = "__blog_placeholder__";
 
 export async function generateStaticParams() {
-  return getBlogRouteSlugs("ar").map((slug) => ({ slug }));
+  const slugs = getBlogRouteSlugs("ar");
+  return slugs.length > 0 ? slugs.map((slug) => ({ slug })) : [{ slug: placeholderSlug }];
 }
 
 export async function generateMetadata({

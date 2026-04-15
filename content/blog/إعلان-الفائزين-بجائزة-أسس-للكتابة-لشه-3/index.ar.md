@@ -4,9 +4,9 @@ date: "2022-09-20"
 author: "FarisZR"
 tags: ["أسس", "البرمجيات الحرة", "جائزة أسس للكتابة", "جوائز كتابة مواضيع تقنية", "كتابة", "لينكس", "مجتمع أسس", "مفتوح المصدر"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-8-2022-8624b76e-2.jpg"
-thumbnail: "writing-winners-8-2022-8624b76e-2.jpg"
-ogImage: "writing-winners-8-2022-8624b76e-2.jpg"
+image: "writing-winners-8-2022-8624b76e.jpg"
+thumbnail: "writing-winners-8-2022-8624b76e.jpg"
+ogImage: "writing-winners-8-2022-8624b76e.jpg"
 excerpt: "مواضيع قيمة في شهر #أغسطس , تفوز ب #جائزة_أسس_للكتابة , ترفع من جودة المحتوى العربي التقني, وتحفز الجميع لأثراء المحتوى التقني حول #البرمجيات #مفتوحة_مصدر و #حرة_المصدر."
 slug: "1549"
 wpId: 1549

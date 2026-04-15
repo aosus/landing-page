@@ -4,9 +4,9 @@ date: "2023-05-13"
 author: "FarisZR"
 tags: ["discord", "أسس", "سيرفر دسكورد برمجيات مفتوحة", "سيرفر دسكورد دوكر", "سيرفر دسكورد لينكس", "مجتمع أسس"]
 categories: ["اعلان"]
-image: "Aosus-discord-1-jpeg-1f23b7bf-2.webp"
-thumbnail: "Aosus-discord-1-jpeg-1f23b7bf-2.webp"
-ogImage: "Aosus-discord-1-jpeg-1f23b7bf-2.webp"
+image: "Aosus-discord-1-jpeg-1f23b7bf.webp"
+thumbnail: "Aosus-discord-1-jpeg-1f23b7bf.webp"
+ogImage: "Aosus-discord-1-jpeg-1f23b7bf.webp"
 excerpt: "أفتتاح سيرفر #دسكورد لمجتمع أسس ليكون اول سيرفر عربي حول #البرمجيات_المفتوحة على المنصة, مع إمكانيه التحدث مع المستخدمين على منصات اخرى مثل #تيليجرام و #ماتركس. انضمو الان!"
 slug: "1847"
 wpId: 1847
@@ -16,8 +16,6 @@ lang: "ar"
 ---
 
 بعد عدة تصويتات اظهرت اهتمام واضح بدسكورد داخل مجتمع أسس, نعلن اليوم عن افتتاح سيرفر دسكورد للمجتمع ليكون أول سيرفر عربي حول البرمجيات المفتوحة على المنصة, مع جسر مباشر لماتركس و تيليجرام, يُمكن نقاشات عابرة للمنصات.
-
-[أنضم الان](https://discord.gg/YJUzEhU955)
 
 ## نقاشات عابرة للمنصات
 
@@ -36,12 +34,3 @@ lang: "ar"
 نشكر المصمم [dok\_designer](https://twitter.com/dok_designr) لتصميم صورة المقالة.
 
 شكرا لكم على متابعة مجتمع أسس, ونحن بانتظاركم على منصتكم المفضلة!
-
--   [Twitter](https://twitter.com/aosusdotorg)
--   [LinkedIn](https://www.linkedin.com/company/aosus/)
--   [Facebook](https://www.facebook.com/aosus1/)
--   [GitHub](https://github.com/aosus)
--   [Matrix](https://matrix.to/#/#aosus:aosus.org)
--   [Discord](https://discord.gg/YJUzEhU955)
--   [Telegram](https://t.me/aosus)
--   [RSS Feed](https://aosus.org/feed)

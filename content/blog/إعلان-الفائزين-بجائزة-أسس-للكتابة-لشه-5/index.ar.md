@@ -4,9 +4,9 @@ date: "2022-12-18"
 author: "FarisZR"
 tags: ["أسس", "البرمجيات الحرة", "جائزة أسس للكتابة", "كتابة", "لينكس", "مجتمع أسس", "مفتوح المصدر"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-10-22-c02c860e-2.jpeg"
-thumbnail: "writing-winners-10-22-c02c860e-2.jpeg"
-ogImage: "writing-winners-10-22-c02c860e-2.jpeg"
+image: "writing-winners-10-22-c02c860e.jpeg"
+thumbnail: "writing-winners-10-22-c02c860e.jpeg"
+ogImage: "writing-winners-10-22-c02c860e.jpeg"
 excerpt: "مواضيع قيمه و مفصله حول #البرمجيات_الحرة و #البرمجيات_المفتوحة تفوز ب #جائزة_أسس_للكتابة لشهر أكتوبر! كامل التفاصيل:"
 slug: "1633"
 wpId: 1633
@@ -53,5 +53,4 @@ lang: "ar"
 
 يفوز عبد الرحمن مره اخرى بموضوع عن تقنيات الويب, هذه المره عن React, وتريخها وطريقه عملها.
 
-شكرا لكم على دعمكم ومتابعتكم لمجتمع أسس,  
-بامكانكم التبرع للجائزة [هنا](https://opencollective.com/aosus/projects/aosus-writing-contest)
+شكرا لكم على دعمكم ومتابعتكم لمجتمع أسس.

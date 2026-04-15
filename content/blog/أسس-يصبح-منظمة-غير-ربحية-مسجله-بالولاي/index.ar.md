@@ -4,9 +4,9 @@ date: "2024-02-03"
 author: "FarisZR"
 tags: ["501(c)(3)", "hack club", "hcb", "non-profit", "the hack foundation", "تبرع", "تواجد قانوني", "مجتمع أسس", "منظمة غير ربحية"]
 categories: ["اعلان"]
-image: "aosus-hcb-1-jpg-79b4d33a-2.webp"
-thumbnail: "aosus-hcb-1-jpg-79b4d33a-2.webp"
-ogImage: "aosus-hcb-1-jpg-79b4d33a-2.webp"
+image: "aosus-hcb-1-jpg-79b4d33a.webp"
+thumbnail: "aosus-hcb-1-jpg-79b4d33a.webp"
+ogImage: "aosus-hcb-1-jpg-79b4d33a.webp"
 excerpt: "مجتمع أسس يحصل رسميا على تواجد قانوني غير ربحي في الولايات المتحدة 501(c)(3) برعاية قانونية من Hack club, مما يتيح التبرعات مع التخفيضات الضريبية و استقلالية اكبر لأسس."
 slug: "1901"
 wpId: 1901
@@ -36,7 +36,5 @@ lang: "ar"
 نذكر ان هذا التغيير لن يؤثر على الشفافية المالية لأسس, كل السجلات المالية موجوده على [صفحتنا](https://hcb.hackclub.com/aosus) على منصة HCB.
 
 نشكركم على متابعتكم ومشاركاتكم في مجتمع أسس, قمنا بتحديث صفحة دعم أسس لأضافه خيارات بديله لدعم المجتمع, مثلا عبر روابط ربحية, بالإضافة الى التبرع المباشر عبر منصة HCB.
-
-[ادعمنا](https://aosus.org/support-us)
 
 Aosus is fiscally sponsored by The Hack Foundation (d.b.a. Hack Club), a 501(c)(3) nonprofit (EIN: 81-2908499).

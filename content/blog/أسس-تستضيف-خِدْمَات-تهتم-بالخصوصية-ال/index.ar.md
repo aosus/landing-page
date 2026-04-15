@@ -4,9 +4,9 @@ date: "2022-02-21"
 author: "FarisZR"
 tags: ["bibliogram", "libreddit", "lingva.ml", "medium", "nitter", "piped", "Privacy redirect", "scribe.rip", "searx", "searxng", "youtube", "يوتيوب بدون اعلانات"]
 categories: ["اعلان"]
-image: "service-annoucement-03d85680-2.jpg"
-thumbnail: "service-annoucement-03d85680-2.jpg"
-ogImage: "service-annoucement-03d85680-2.jpg"
+image: "service-annoucement-03d85680.jpg"
+thumbnail: "service-annoucement-03d85680.jpg"
+ogImage: "service-annoucement-03d85680.jpg"
 excerpt: "نعلن اليوم عن استضافة واجهات وخدمات تسهل من استخدام خِدْمَات شائعة مثل YouTube و Reddit و Twitter وغيرها, دون تتتبع."
 slug: "1105"
 wpId: 1105
@@ -25,7 +25,7 @@ lang: "ar"
 
 ## قائمة الخِدْمَات المتوفرة
 
-![](service-annoucement-1024x576-3e4ff321-2.jpg)
+![](service-annoucement-1024x576-3e4ff321.jpg)
 
 ### [Piped](https://piped.aosus.org)
 

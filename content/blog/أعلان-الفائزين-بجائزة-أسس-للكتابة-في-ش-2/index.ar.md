@@ -4,9 +4,9 @@ date: "2022-02-03"
 author: "FarisZR"
 tags: ["أسس", "جائزة أسس للكتابة", "كتابة", "مجتمع أسس", "مواضيع عن البرمجيات الحرة", "مواضيع عن لينكس"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-1-2022-f71abc58-2.jpg"
-thumbnail: "writing-winners-1-2022-f71abc58-2.jpg"
-ogImage: "writing-winners-1-2022-f71abc58-2.jpg"
+image: "writing-winners-1-2022-f71abc58.jpg"
+thumbnail: "writing-winners-1-2022-f71abc58.jpg"
+ogImage: "writing-winners-1-2022-f71abc58.jpg"
 excerpt: "أعلان اول فائزين بجائزة أسس للكتابة في عام 2022, 5 مواضيع تغطي اهم التفاصيل عن عالم البرمجيات الحرة والمفتوحه باللغة العربية على مجتمع أسس."
 slug: "1046"
 wpId: 1046
@@ -15,7 +15,7 @@ sourceUrl: "https://aosus.org/1046"
 lang: "ar"
 ---
 
-![](writing-winners-1-2022-1024x576-d9801ab4-2.jpg)
+![](writing-winners-1-2022-1024x576-d9801ab4.jpg)
 
 السلام عليكم ورحمة الله وبركاتة.
 

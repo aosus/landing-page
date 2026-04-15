@@ -4,9 +4,9 @@ date: "2022-02-06"
 author: "FarisZR"
 tags: ["matrix federated protocol", "matrix protocol", "matrix.org", "Telegram", "أسس", "بروتوكول ماتركس", "تيليجرام", "تيليقرام", "شبكة ماتركس الفدرالية", "مجتمع أسس", "مجموعات تيليقرام تقنية"]
 categories: ["اعلان"]
-image: "image-2-2462f8c9-2.png"
-thumbnail: "image-2-2462f8c9-2.png"
-ogImage: "image-2-2462f8c9-2.png"
+image: "image-2-2462f8c9.png"
+thumbnail: "image-2-2462f8c9.png"
+ogImage: "image-2-2462f8c9.png"
 excerpt: "نعلن اليوم عن افتتاح غرف محادثة فرعية لمجتمع أسس, لها تخصص واحد, لتساهم في تركيز النقاشات على تخصص موحد, تنمية المحادثات العميقة في المجتمع."
 slug: "1086"
 wpId: 1086
@@ -15,7 +15,7 @@ sourceUrl: "https://aosus.org/1086"
 lang: "ar"
 ---
 
-![](image-2-1024x518-dac78182-2.png)
+![](image-2-1024x518-dac78182.png)
 
 السلام عليكم ورحمة الله وبركاتة.
 
@@ -35,9 +35,5 @@ lang: "ar"
 الغرف جميعها موجوده على ماتركس داخل aosus space, وهو بعنوان #aosus:aosus.org او رابط مباشر من [هنا](https://matrix.to/#/#aosus:aosus.org)
 
 ### Telegram
-
--   [خوادم و شبكات وأستضافة الخدمات المحلية](https://t.me/networksAndServers)
--   [أمن المعلومات و الخصوصية الرقمية](https://t.me/aosus_privacy_security)
--   [برمجة](https://t.me/aosus_programming)
 
 شكرا لكم على المتابعة, ونحن بانتظار مشاركاتم في غرف المحادثة
