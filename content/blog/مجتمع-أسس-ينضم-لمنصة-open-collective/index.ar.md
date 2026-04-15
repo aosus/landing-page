@@ -4,9 +4,9 @@ date: "2022-05-28"
 author: "FarisZR"
 tags: ["Open Collective", "أدعم مجتمع أسس", "جائزة أسس للكتابة", "مجتمع أسس", "مجتمع عربي للOpen source", "مجتمع عربي للبرمجيات المفتوحة", "منتدى للOpen Source"]
 categories: ["اعلان"]
-image: "aosus-OC-ea0fc418-2.jpeg"
-thumbnail: "aosus-OC-ea0fc418-2.jpeg"
-ogImage: "aosus-OC-ea0fc418-2.jpeg"
+image: "aosus-OC-ea0fc418.jpeg"
+thumbnail: "aosus-OC-ea0fc418.jpeg"
+ogImage: "aosus-OC-ea0fc418.jpeg"
 excerpt: "رسميا ينضم مجتمع أسس لمنصة Open Collective لتعطينا شفافيه كاملة في العمليات المالية و سهولة استقبال التبرعات."
 slug: "1359"
 wpId: 1359
@@ -19,7 +19,7 @@ lang: "ar"
 
 أخيرا, بعد عمل طويل في الكواليس, نعلن اليوم عن انضمام مجتمع أسس بشكل رسمي لمنصة Open Collective!
 
-![](aosus-OC-1024x576-16b48832-2.jpeg)
+![](aosus-OC-1024x576-16b48832.jpeg)
 
 منصة Open Collective هي منصة مالية ذو شفافية عاليه, تمكن المجتمعات, البرمجيات و غيرها من التجمعات من ادارة الموارد المالية بشفافية عاليه وسهولة.  
 و يعد مجتمع أسس أحد اوائل المشاريع العربية التي تنضم للمنصة.
@@ -36,11 +36,9 @@ lang: "ar"
 
 ## دعم مجتمع أسس
 
-![](image-1-fff3822f-2.png)
+![](image-1-fff3822f.png)
 
 بإمكانكم الان دعم مجتمع على Open Collective, لدينا عدة مستويات من الدعم لتناسب هدف تبرعك لنا
-
-[أدعم المجتمع!](https://opencollective.com/aosus)
 
 ### أشكرنا
 
@@ -56,11 +54,9 @@ lang: "ar"
 
 ## دعم جائزة أسس للكتابة
 
-![](image-2-1024x576-d14f25b9-2.png)
+![](image-2-1024x576-d14f25b9.png)
 
 جائزة أسس للكتابة هي احد اكبر الأشياء المكلفة في انشطة مجتمع أسس, والآن اصبح بإمكانكم دعم الجائزة على منصة Open Collective
-
-[أدعم جائزة أسس للكتابة!](https://opencollective.com/aosus/projects/aosus-writing-contest)
 
 ### شجع الجائزة
 

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import TurndownService from "turndown";
+import { convertWordPressHtmlToMarkdown } from "@/lib/wordpress-html";
 
 type Lang = "ar" | "en";
 
@@ -54,14 +54,6 @@ type WPUser = {
 const apiBase = "https://aosus.org/wp-json/wp/v2";
 const root = process.cwd();
 const blogRoot = path.join(root, "content", "blog");
-
-const turndown = new TurndownService({
-  headingStyle: "atx",
-  bulletListMarker: "-",
-  codeBlockStyle: "fenced",
-  emDelimiter: "*",
-  strongDelimiter: "**",
-});
 
 function ensureDir(dir: string) {
   fs.mkdirSync(dir, { recursive: true });
@@ -210,10 +202,6 @@ function detectContentLang(title: string, excerpt: string, body: string): Lang {
   return latin > arabic * 1.2 ? "en" : "ar";
 }
 
-function toMarkdown(html: string): string {
-  return turndown.turndown(html).trim();
-}
-
 function toExcerpt(excerptHtml: string): string {
   return stripHtml(excerptHtml);
 }
@@ -328,7 +316,7 @@ async function main() {
       }
     }
 
-    const markdown = rewriteMarkdownAssets(toMarkdown(html), assetMap);
+    const markdown = rewriteMarkdownAssets(convertWordPressHtmlToMarkdown(html), assetMap);
     const imagePath = featuredMedia ? assetMap.get(featuredMedia.source_url) ?? "" : "";
     const categoriesForPost = post.categories.map((id) => categoryNames.get(id)).filter(Boolean) as string[];
     const tagsForPost = post.tags.map((id) => tagNames.get(id)).filter(Boolean) as string[];

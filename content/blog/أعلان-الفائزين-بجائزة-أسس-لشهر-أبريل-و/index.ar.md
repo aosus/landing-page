@@ -4,9 +4,9 @@ date: "2022-06-15"
 author: "FarisZR"
 tags: ["LibreOffice", "Python", "أسس", "برمجيات حرة", "برمجيات مفتوحه", "جائزة أسس للكتابة", "كتابة", "لينكس", "مجتمع أسس", "مفتوح المصدر", "مواضيع عن برامج مفتوحة المصدر"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-6-2022-5e01cc01-2.jpeg"
-thumbnail: "writing-winners-6-2022-5e01cc01-2.jpeg"
-ogImage: "writing-winners-6-2022-5e01cc01-2.jpeg"
+image: "writing-winners-6-2022-5e01cc01.jpeg"
+thumbnail: "writing-winners-6-2022-5e01cc01.jpeg"
+ogImage: "writing-winners-6-2022-5e01cc01.jpeg"
 excerpt: "الاعلان عن الفائزين لشهر ابريل ومايو لسنة 2022 في جائزة أسس للكتابة, مواضيع شيقة, ذو قيمة عاليه لترفع المحتوى العربي حول البرمجيات الحرة."
 slug: "1391"
 wpId: 1391
@@ -23,8 +23,6 @@ lang: "ar"
 كامل التفاصيل حول المسابقة تجدها في صفحتها على موقعنا [هنا](https://aosus.org/writing-contest)
 
 [أكتب الان!](https://discourse.aosus.org)
-
-[أدعم جائزة أسس للكتابة](https://opencollective.com/aosus/projects/aosus-writing-contest)
 
 ## المواضيع الفائزة
 

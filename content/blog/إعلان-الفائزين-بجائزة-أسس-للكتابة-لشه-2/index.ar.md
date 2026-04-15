@@ -4,9 +4,9 @@ date: "2022-08-25"
 author: "FarisZR"
 tags: ["أسس", "البرمجيات الحرة", "برمجيات المفتوحة", "جائزة أسس للكتابة", "كتابة", "لينكس", "مجتمع أسس", "مفتوح المصدر", "ويكيبديا"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-winners-7-2022-cbfe38ad-2.jpeg"
-thumbnail: "writing-winners-7-2022-cbfe38ad-2.jpeg"
-ogImage: "writing-winners-7-2022-cbfe38ad-2.jpeg"
+image: "writing-winners-7-2022-cbfe38ad.jpeg"
+thumbnail: "writing-winners-7-2022-cbfe38ad.jpeg"
+ogImage: "writing-winners-7-2022-cbfe38ad.jpeg"
 excerpt: "تكمل #جائزة_أسس_للكتابة أثراء المحتوى العربي حول #البرمجيات_الحرة و #البرمجيات_المفتوحة ب5 مواضيع قيمة باللغة العربية تفوز بشهر يوليو."
 slug: "1502"
 wpId: 1502
@@ -20,8 +20,6 @@ lang: "ar"
 اليوم نعلن عن المواضيع الفائزة بجائزة أسس للكتابة بشهر يوليو, مواضيع شيقة, تثير المحتوى العربي حول البرمجيات الحرة والمفتوحة.
 
 [أكتب الان!](https://discourse.aosus.org)
-
-[أدعم جائزة أسس للكتابة](https://opencollective.com/aosus/projects/aosus-writing-contest)
 
 ## المواضيع
 

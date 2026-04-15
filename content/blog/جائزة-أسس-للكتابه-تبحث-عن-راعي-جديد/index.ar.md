@@ -4,9 +4,9 @@ date: "2023-03-15"
 author: "FarisZR"
 tags: ["تبرع", "تمويل", "جائزة أسس للكتابة", "دعم مجتمع أسس", "مجتمع أسس"]
 categories: ["جأئزة أسس للكتابة"]
-image: "writing-preview-end-59eaff4c-2.jpeg"
-thumbnail: "writing-preview-end-59eaff4c-2.jpeg"
-ogImage: "writing-preview-end-59eaff4c-2.jpeg"
+image: "writing-preview-end-59eaff4c.jpeg"
+thumbnail: "writing-preview-end-59eaff4c.jpeg"
+ogImage: "writing-preview-end-59eaff4c.jpeg"
 excerpt: "بعد أكثر من سنة من أطلاق #جائزة_أسس_للكتابة, التي قدمت محتوى دفع المحتوى العربي حول #البرمجيات_المفتوحة الى مستوى جديد. نعلن اليوم عن توقف المسابقة, والبحث عن راعي جديد."
 slug: "1623"
 wpId: 1623

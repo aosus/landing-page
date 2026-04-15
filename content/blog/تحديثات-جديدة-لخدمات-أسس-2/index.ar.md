@@ -4,9 +4,9 @@ date: "2023-04-30"
 author: "FarisZR"
 tags: ["element", "Imgur", "matrix", "piped", "Privacy", "rimgo", "youtube", "أسس", "الخصوصية الرقمية", "خدمات أسس", "ماتركس", "مجتمع أسس"]
 categories: ["اعلان"]
-image: "services-2023-712a5891-2.png"
-thumbnail: "services-2023-712a5891-2.png"
-ogImage: "services-2023-712a5891-2.png"
+image: "services-2023-712a5891.png"
+thumbnail: "services-2023-712a5891.png"
+ogImage: "services-2023-712a5891.png"
 excerpt: "تحسينات وتغييرات جديدة لخدمات #أسس العامة لحماية #الخصوصية_الرقمية, تحسن الأداء و طريقة عمله واجهه #piped بالإضافة لدعم واجهات جديدة."
 slug: "1826"
 wpId: 1826
@@ -48,5 +48,3 @@ lang: "ar"
 يمكن استخدام الواجهه لاي خادم, ليس فقط خادم أسس الرسمي.
 
 شكرا لكم على متابعتكم لمجتمع أسس, ونتطلع لسماع رأيكم حول التحسينات الجديدة.
-
-[ادعمنا](https://opencollective.com/aosus)
