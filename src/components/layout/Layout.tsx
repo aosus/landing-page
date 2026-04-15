@@ -74,7 +74,7 @@ function MatrixRain() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "#008a2f";
-      ctx.font = `${fontSize}px monospace`;
+      ctx.font = `${fontSize}px "Kawkab Mono", monospace`;
       for (let i = 0; i < drops.length; i++) {
         const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -210,9 +210,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
       className="min-h-screen overflow-x-hidden bg-white text-gray-900 transition-colors duration-300 selection:bg-[#008a2f] selection:text-black dark:bg-black dark:text-white"
       dir={isRtl ? "rtl" : "ltr"}
       style={{
-        fontFamily: isRtl
-          ? "'Almarai', sans-serif"
-          : "'Inter', system-ui, sans-serif",
+        fontFamily: isRtl ? "var(--font-arabic)" : "var(--font-sans)",
       }}
     >
       <MatrixRain />
@@ -246,9 +244,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                       ? "text-[#008a2f] border-b-2 border-[#008a2f]"
                       : "text-gray-600 hover:text-[#008a2f] dark:text-gray-400"
                   }`}
-                  style={
-                    isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
-                  }
+                  style={isRtl ? { fontFamily: "var(--font-arabic)" } : undefined}
                 >
                   {item.label}
                 </Link>
@@ -270,9 +266,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                 onClick={() => setChatMenuOpen((current) => !current)}
                 onFocus={() => setChatMenuOpen(true)}
                 className="px-3 py-2 flex items-center gap-1 text-sm font-medium transition-all font-mono text-gray-600 hover:text-[#008a2f] dark:text-gray-400"
-                style={
-                  isRtl ? { fontFamily: "'Almarai', sans-serif" } : undefined
-                }
+                style={isRtl ? { fontFamily: "var(--font-arabic)" } : undefined}
               >
                 {lang === "ar" ? "محادثة" : "Chat"}
                 <ChevronDown
@@ -545,7 +539,7 @@ export function SectionHeading({
       <h2
         className="text-3xl md:text-4xl font-bold uppercase tracking-widest mb-4"
         style={{
-          fontFamily: isRtl ? "'Almarai', sans-serif" : "var(--font-mono)",
+          fontFamily: isRtl ? "var(--font-arabic)" : "var(--font-mono)",
         }}
       >
         <span className="text-[#008a2f]">/</span> {title}
@@ -554,7 +548,7 @@ export function SectionHeading({
         <p
           className={`text-base max-w-2xl text-gray-500 dark:text-gray-400 ${center ? "mx-auto" : ""}`}
           style={{
-            fontFamily: isRtl ? "'Almarai', sans-serif" : undefined,
+            fontFamily: isRtl ? "var(--font-arabic)" : undefined,
           }}
         >
           {subtitle}

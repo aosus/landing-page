@@ -59,6 +59,9 @@ describe("ArticlePageClient social banners", () => {
       expect(screen.getByTitle(platform.label)).toBeInTheDocument();
     }
 
+    const bannerHeaders = screen.getAllByText(/Chat Rooms|Follow Us/);
+    expect(bannerHeaders).toHaveLength(2);
+
     expect(screen.queryByText(/Join our chat rooms/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Follow our social media accounts/i)).not.toBeInTheDocument();
   });

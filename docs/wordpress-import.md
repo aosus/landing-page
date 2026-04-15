@@ -48,3 +48,7 @@ The app now treats imported WordPress posts and normal blog posts as separate ro
 Because the app uses `output: 'export'`, every dynamic route must provide `generateStaticParams()`.
 
 If the importer removes a locale from the content tree, the matching route must also be removed or updated so the static export still builds.
+
+## Fonts
+
+See [docs/fonts.md](./fonts.md) for the local font setup.
