@@ -275,7 +275,15 @@ export default function HomePageClient({
                 * Buttons re-enable pointer-events-auto individually.
                 */}
               <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pointer-events-none">
-                <div className="max-w-3xl mx-auto text-center space-y-8">
+                {/*
+                  * data-calligraphy-avoid: CalligraphyPattern uses this
+                  * element's bounding box as an exclusion zone so animated
+                  * strokes never cross through the headline, subtitle, or CTAs.
+                  */}
+                <div
+                  data-calligraphy-avoid
+                  className="max-w-3xl mx-auto text-center space-y-8"
+                >
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}

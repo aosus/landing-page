@@ -350,3 +350,19 @@
 .cal-accent.cal-undrawing {
   animation: cal-undraw-rtl 0.6s ease-in forwards;
 }
+
+/*
+ * Accessibility: honor prefers-reduced-motion. The component also
+ * skips registering listeners and timers in this mode, but this CSS
+ * rule is a defence-in-depth fallback — if any code path ever sets
+ * clip-path, it resolves instantly instead of animating.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .cal-accent {
+    transition: none !important;
+    animation: none !important;
+    /* Always hidden in reduced-motion mode — only the static base
+     * texture remains visible. */
+    clip-path: inset(0 0 0 100%) !important;
+  }
+}

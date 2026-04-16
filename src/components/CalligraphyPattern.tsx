@@ -40,6 +40,20 @@ const MOBILE_INTERVAL_MAX = 2200;
 /** Mobile: delay before first pulse after mount. */
 const MOBILE_INITIAL_DELAY = 350;
 
+/**
+ * Padding (CSS px) around the hero text exclusion rect.
+ * Accents whose center falls within [rect + pad] are skipped so
+ * animations never cross through the headline or CTAs.
+ */
+const TEXT_EXCLUSION_PAD = 24;
+
+/**
+ * Selector identifying the hero-text container whose bounding box
+ * should never host an animated accent. The host page marks that
+ * element with `data-calligraphy-avoid`.
+ */
+const TEXT_AVOID_SELECTOR = "[data-calligraphy-avoid]";
+
 interface CalligraphyPatternProps {
   isDark: boolean;
 }
@@ -47,11 +61,15 @@ interface CalligraphyPatternProps {
 export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
-  /* ── Desktop: deliberate-hover drawing ───────────────────────── */
+  /* ── Desktop: deliberate-hover drawing (single concurrent accent) ── */
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
     if (!window.matchMedia("(hover: hover)").matches) return;
+
+    // Respect the user's reduced-motion preference
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reducedMotion.matches) return;
 
     type GlyphState = {
       revealTimer: number | null;
@@ -60,6 +78,11 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       isDrawn: boolean;
     };
     const state = new WeakMap<Element, GlyphState>();
+
+    // Cap concurrent drawn accents to 1. When a new glyph reveals,
+    // the previously-drawn one is retracted immediately so the hero
+    // never accumulates several lingering strokes at once.
+    let currentDrawn: Element | null = null;
 
     const getState = (glyph: Element): GlyphState => {
       let s = state.get(glyph);
@@ -73,10 +96,22 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     const reveal = (glyph: Element) => {
       const accent = glyph.querySelector<SVGPathElement>(".cal-accent");
       if (!accent) return;
+
+      // Retract whatever was drawn before — only one accent at a time
+      if (currentDrawn && currentDrawn !== glyph) {
+        const prevState = getState(currentDrawn);
+        if (prevState.retractTimer !== null) {
+          clearTimeout(prevState.retractTimer);
+          prevState.retractTimer = null;
+        }
+        retract(currentDrawn);
+      }
+
       accent.style.clipPath = "inset(0)";
       const s = getState(glyph);
       s.isDrawn = true;
       s.drawnAt = performance.now();
+      currentDrawn = glyph;
     };
 
     const retract = (glyph: Element) => {
@@ -85,6 +120,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       accent.style.clipPath = "inset(0 0 0 100%)";
       const s = getState(glyph);
       s.isDrawn = false;
+      if (currentDrawn === glyph) currentDrawn = null;
     };
 
     const onMouseOver = (e: Event) => {
@@ -95,7 +131,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
 
       const s = getState(glyph);
 
-      // Cancel any pending retraction — cursor's back on this glyph
+      // Cursor's back on this glyph — cancel any pending retraction
       if (s.retractTimer !== null) {
         clearTimeout(s.retractTimer);
         s.retractTimer = null;
@@ -147,10 +183,25 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     };
   }, []);
 
-  /* ── Mobile: random pulses in the visible center area ────────── */
+  /* ── Mobile: random pulses, skipping the hero-text bounding box ── */
   const animateRandom = useCallback(() => {
     const svg = svgRef.current;
     if (!svg) return;
+
+    // Recompute the exclusion rect each tick — handles resize + scroll
+    // without a dedicated ResizeObserver.
+    const avoidEl = document.querySelector(TEXT_AVOID_SELECTOR);
+    const avoid = avoidEl
+      ? (() => {
+          const r = avoidEl.getBoundingClientRect();
+          return {
+            left: r.left - TEXT_EXCLUSION_PAD,
+            right: r.right + TEXT_EXCLUSION_PAD,
+            top: r.top - TEXT_EXCLUSION_PAD,
+            bottom: r.bottom + TEXT_EXCLUSION_PAD,
+          };
+        })()
+      : null;
 
     const accents = svg.querySelectorAll<SVGPathElement>(".cal-accent");
     const visible: SVGPathElement[] = [];
@@ -168,10 +219,20 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       if (r.width === 0 || r.height === 0) continue;
       const cx = r.left + r.width / 2;
       const cy = r.top + r.height / 2;
-      // Restrict to central 80% horizontally and within the viewport
-      // vertically — no animating shapes in the invisible margins.
+      // Central 80% horizontally, within viewport vertically
       if (cx < vw * 0.1 || cx > vw * 0.9) continue;
       if (cy < 0 || cy > vh) continue;
+      // Exclude the hero-text bounding box (+ padding) so animations
+      // never cross through the headline, subtitle, or CTA buttons.
+      if (
+        avoid &&
+        cx >= avoid.left &&
+        cx <= avoid.right &&
+        cy >= avoid.top &&
+        cy <= avoid.bottom
+      ) {
+        continue;
+      }
       visible.push(el);
     }
 
@@ -193,6 +254,9 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
   useEffect(() => {
     if (!window.matchMedia("(hover: none)").matches) return;
 
+    // Respect the user's reduced-motion preference — no pulses at all
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let timer: number;
     let cancelled = false;
 
@@ -207,7 +271,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       }, delay);
     };
 
-    // Start almost immediately after mount
     schedule(MOBILE_INITIAL_DELAY);
 
     return () => {
