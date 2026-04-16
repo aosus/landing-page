@@ -18,10 +18,10 @@ const TOTAL_W = TILE_STRIDE * (TILE_COUNT - 1) + TILE_W;
 
 /**
  * Desktop: the cursor must linger on a glyph this long before the
- * drawing starts. Eliminates jank from cursor sweeps — only deliberate
- * hovers trigger the reveal.
+ * drawing starts. Short enough to feel responsive, long enough to
+ * filter out fast sweeps across dozens of glyphs.
  */
-const HOVER_COMMIT_DELAY = 220;
+const HOVER_COMMIT_DELAY = 90;
 
 /** Desktop: CSS transition duration for draw-in / draw-out (keep in sync with globals.css). */
 const DRAW_DURATION = 900;
@@ -216,7 +216,12 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     };
   }, [animateRandom]);
 
-  const baseFill = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)";
+  /**
+   * Dark mode: pure white at 4% sits too bright on black (the eye
+   * notices emitted light more than absorbed light). Drop to 2.5%
+   * so the vignette blends as seamlessly as the 4% black does on white.
+   */
+  const baseFill = isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.04)";
 
   return (
     <div
