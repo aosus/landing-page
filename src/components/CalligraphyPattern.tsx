@@ -14,6 +14,32 @@ const TILE_STRIDE = TILE_W - TILE_OVERLAP;
 const TILE_COUNT = 2;
 const TOTAL_W = TILE_STRIDE * (TILE_COUNT - 1) + TILE_W;
 
+/* ── Timing constants ─────────────────────────────────────────── */
+
+/**
+ * Desktop: the cursor must linger on a glyph this long before the
+ * drawing starts. Eliminates jank from cursor sweeps — only deliberate
+ * hovers trigger the reveal.
+ */
+const HOVER_COMMIT_DELAY = 220;
+
+/** Desktop: CSS transition duration for draw-in / draw-out (keep in sync with globals.css). */
+const DRAW_DURATION = 900;
+
+/**
+ * Desktop: once committed, hold the fully-drawn accent at least this
+ * long before allowing retraction, even if the cursor has moved away.
+ * Ensures the right-to-left draw animation always completes gracefully.
+ */
+const MIN_HOLD = 700;
+
+/** Mobile: time between random pulses (ms). */
+const MOBILE_INTERVAL_MIN = 1200;
+const MOBILE_INTERVAL_MAX = 2200;
+
+/** Mobile: delay before first pulse after mount. */
+const MOBILE_INITIAL_DELAY = 350;
+
 interface CalligraphyPatternProps {
   isDark: boolean;
 }
@@ -21,94 +47,173 @@ interface CalligraphyPatternProps {
 export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
-  /* ── Desktop: JS event delegation for hover drawing effect ──── */
+  /* ── Desktop: deliberate-hover drawing ───────────────────────── */
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
 
-    // Only on hover-capable devices (real pointer, not touch)
-    const mq = window.matchMedia("(hover: hover)");
-    if (!mq.matches) return;
+    type GlyphState = {
+      revealTimer: number | null;
+      retractTimer: number | null;
+      drawnAt: number;
+      isDrawn: boolean;
+    };
+    const state = new WeakMap<Element, GlyphState>();
 
-    let activeGlyph: Element | null = null;
+    const getState = (glyph: Element): GlyphState => {
+      let s = state.get(glyph);
+      if (!s) {
+        s = { revealTimer: null, retractTimer: null, drawnAt: 0, isDrawn: false };
+        state.set(glyph, s);
+      }
+      return s;
+    };
 
-    const setAccent = (glyph: Element | null, revealed: boolean) => {
-      if (!glyph) return;
+    const reveal = (glyph: Element) => {
       const accent = glyph.querySelector<SVGPathElement>(".cal-accent");
-      if (accent) {
-        accent.style.clipPath = revealed ? "inset(0)" : "inset(0 0 0 100%)";
+      if (!accent) return;
+      accent.style.clipPath = "inset(0)";
+      const s = getState(glyph);
+      s.isDrawn = true;
+      s.drawnAt = performance.now();
+    };
+
+    const retract = (glyph: Element) => {
+      const accent = glyph.querySelector<SVGPathElement>(".cal-accent");
+      if (!accent) return;
+      accent.style.clipPath = "inset(0 0 0 100%)";
+      const s = getState(glyph);
+      s.isDrawn = false;
+    };
+
+    const onMouseOver = (e: Event) => {
+      const target = e.target as Element;
+      if (!target?.classList?.contains("cal-base")) return;
+      const glyph = target.closest(".cal-glyph");
+      if (!glyph) return;
+
+      const s = getState(glyph);
+
+      // Cancel any pending retraction — cursor's back on this glyph
+      if (s.retractTimer !== null) {
+        clearTimeout(s.retractTimer);
+        s.retractTimer = null;
+      }
+
+      // Already drawn or scheduled to draw — nothing more to do
+      if (s.isDrawn || s.revealTimer !== null) return;
+
+      // Delayed commit: only reveal if cursor lingers
+      s.revealTimer = window.setTimeout(() => {
+        s.revealTimer = null;
+        reveal(glyph);
+      }, HOVER_COMMIT_DELAY);
+    };
+
+    const onMouseOut = (e: Event) => {
+      const target = e.target as Element;
+      if (!target?.classList?.contains("cal-base")) return;
+      const glyph = target.closest(".cal-glyph");
+      if (!glyph) return;
+
+      const s = getState(glyph);
+
+      // Cursor left before commit — cancel the pending reveal cleanly
+      if (s.revealTimer !== null) {
+        clearTimeout(s.revealTimer);
+        s.revealTimer = null;
+        return;
+      }
+
+      // Already drawn: schedule retraction but respect MIN_HOLD so the
+      // full right-to-left draw animation completes before reversing.
+      if (s.isDrawn && s.retractTimer === null) {
+        const elapsed = performance.now() - s.drawnAt;
+        const wait = Math.max(0, DRAW_DURATION + MIN_HOLD - elapsed);
+        s.retractTimer = window.setTimeout(() => {
+          s.retractTimer = null;
+          retract(glyph);
+        }, wait);
       }
     };
 
-    const onMouseOver = (e: MouseEvent) => {
-      const target = e.target as Element;
-      // Only react when the mouse lands on a base path
-      if (!target.classList.contains("cal-base")) return;
-
-      const glyph = target.closest(".cal-glyph");
-      if (!glyph || glyph === activeGlyph) return;
-
-      // Retract previous glyph
-      setAccent(activeGlyph, false);
-      activeGlyph = glyph;
-      // Reveal current glyph (CSS transition handles the animation)
-      setAccent(glyph, true);
-    };
-
-    const onMouseLeave = () => {
-      setAccent(activeGlyph, false);
-      activeGlyph = null;
-    };
-
     svg.addEventListener("mouseover", onMouseOver);
-    svg.addEventListener("mouseleave", onMouseLeave);
+    svg.addEventListener("mouseout", onMouseOut);
 
     return () => {
       svg.removeEventListener("mouseover", onMouseOver);
-      svg.removeEventListener("mouseleave", onMouseLeave);
+      svg.removeEventListener("mouseout", onMouseOut);
     };
   }, []);
 
-  /* ── Mobile: random "drawing" pulses ─────────────────────────── */
+  /* ── Mobile: random pulses in the visible center area ────────── */
   const animateRandom = useCallback(() => {
     const svg = svgRef.current;
     if (!svg) return;
 
-    const allAccents = svg.querySelectorAll<SVGPathElement>(".cal-accent");
-    if (allAccents.length === 0) return;
+    const accents = svg.querySelectorAll<SVGPathElement>(".cal-accent");
+    const visible: SVGPathElement[] = [];
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
 
-    const count = Math.random() > 0.5 ? 2 : 1;
-    for (let i = 0; i < count; i++) {
-      const idx = Math.floor(Math.random() * allAccents.length);
-      const el = allAccents[idx];
-      if (el.classList.contains("cal-drawing") || el.classList.contains("cal-undrawing")) continue;
-
-      el.classList.add("cal-drawing");
-
-      setTimeout(() => {
-        el.classList.remove("cal-drawing");
-        el.classList.add("cal-undrawing");
-        setTimeout(() => {
-          el.classList.remove("cal-undrawing");
-        }, 600);
-      }, 1400);
+    for (const el of accents) {
+      if (
+        el.classList.contains("cal-drawing") ||
+        el.classList.contains("cal-undrawing")
+      ) {
+        continue;
+      }
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) continue;
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      // Restrict to central 80% horizontally and within the viewport
+      // vertically — no animating shapes in the invisible margins.
+      if (cx < vw * 0.1 || cx > vw * 0.9) continue;
+      if (cy < 0 || cy > vh) continue;
+      visible.push(el);
     }
+
+    if (visible.length === 0) return;
+
+    const el = visible[Math.floor(Math.random() * visible.length)];
+    el.classList.add("cal-drawing");
+
+    // draw-in (800ms) + linger (500ms) + draw-out (600ms)
+    window.setTimeout(() => {
+      el.classList.remove("cal-drawing");
+      el.classList.add("cal-undrawing");
+      window.setTimeout(() => {
+        el.classList.remove("cal-undrawing");
+      }, 600);
+    }, 1300);
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(hover: none)");
-    if (!mq.matches) return;
+    if (!window.matchMedia("(hover: none)").matches) return;
 
-    let timer: ReturnType<typeof setTimeout>;
-    const schedule = () => {
-      const delay = 2500 + Math.random() * 1500;
-      timer = setTimeout(() => {
+    let timer: number;
+    let cancelled = false;
+
+    const schedule = (delay: number) => {
+      timer = window.setTimeout(() => {
+        if (cancelled) return;
         animateRandom();
-        schedule();
+        const next =
+          MOBILE_INTERVAL_MIN +
+          Math.random() * (MOBILE_INTERVAL_MAX - MOBILE_INTERVAL_MIN);
+        schedule(next);
       }, delay);
     };
-    schedule();
-    return () => clearTimeout(timer);
+
+    // Start almost immediately after mount
+    schedule(MOBILE_INITIAL_DELAY);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [animateRandom]);
 
   const baseFill = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)";
@@ -140,7 +245,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
             <g transform={OUTER_TRANSFORM}>
               {PATHS.map((d, pathIdx) => (
                 <g key={pathIdx} className="cal-glyph">
-                  {/* Base: always-visible faint texture, receives mouseover */}
                   <path
                     className="cal-base"
                     d={d}
@@ -148,7 +252,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
                     fill={baseFill}
                     style={{ pointerEvents: "visiblePainted" }}
                   />
-                  {/* Accent: green, animated by JS hover + mobile random pulse */}
                   <path
                     className="cal-accent"
                     d={d}

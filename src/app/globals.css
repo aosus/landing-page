@@ -317,7 +317,9 @@
 .cal-accent {
   opacity: 0.8;
   clip-path: inset(0 0 0 100%);
-  transition: clip-path 0.8s ease-out;
+  /* Match DRAW_DURATION in CalligraphyPattern.tsx (900ms).
+   * ease-out-quart feels like ink laying down and then settling. */
+  transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
