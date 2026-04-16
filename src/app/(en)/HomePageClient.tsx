@@ -24,6 +24,7 @@ import Layout, {
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
+import CalligraphyPattern from "@/components/CalligraphyPattern";
 
 const CONTENT = {
   en: {
@@ -267,7 +268,8 @@ export default function HomePageClient({
         return (
           <>
             <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+              <CalligraphyPattern isDark={isDark} />
+              <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="max-w-3xl mx-auto text-center space-y-8">
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
