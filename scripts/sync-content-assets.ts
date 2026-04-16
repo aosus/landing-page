@@ -4,6 +4,38 @@ import path from "path";
 const root = process.cwd();
 const contentDir = path.join(root, "content", "blog");
 const publicContentDir = path.join(root, "public", "content", "blog");
+const brandAssetsDir = path.join(root, "brand-assets");
+
+const brandAssetCopies = [
+  {
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-horizontal-black-no-link.svg"),
+    target: path.join(root, "public", "images", "aosus-logo-light.svg"),
+  },
+  {
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-white-logo.svg"),
+    target: path.join(root, "public", "images", "aosus-logo-dark.svg"),
+  },
+  {
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-icon.svg"),
+    target: path.join(root, "public", "favicon.svg"),
+  },
+  {
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "PNG", "writing-contest.png"),
+    target: path.join(root, "public", "images", "writing-contest.png"),
+  },
+  {
+    source: path.join(brandAssetsDir, "logos", "discourse-chat-bridge", "Discourse_Bridge.webp"),
+    target: path.join(root, "public", "images", "discourse-bridge.webp"),
+  },
+  {
+    source: path.join(brandAssetsDir, "assets", "aosus-preview.jpg"),
+    target: path.join(root, "public", "opengraph.jpg"),
+  },
+  {
+    source: path.join(brandAssetsDir, "assets", "writing-preview.jpg"),
+    target: path.join(root, "public", "og", "writing-contest.jpg"),
+  },
+];
 
 function ensureDir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -31,8 +63,20 @@ function syncDirectory(sourceDir: string, targetDir: string) {
   }
 }
 
+function syncBrandAssets() {
+  for (const { source, target } of brandAssetCopies) {
+    if (!fs.existsSync(source)) {
+      continue;
+    }
+
+    ensureDir(path.dirname(target));
+    fs.copyFileSync(source, target);
+  }
+}
+
 if (fs.existsSync(publicContentDir)) {
   fs.rmSync(publicContentDir, { recursive: true, force: true });
 }
 
 syncDirectory(contentDir, publicContentDir);
+syncBrandAssets();

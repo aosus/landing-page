@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Viewport } from "next";
 import "./globals.css";
+import { brandAssets } from "@/lib/brandAssets";
 
 const bootstrapScript = `
 (() => {
@@ -21,20 +22,26 @@ const bootstrapScript = `
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aosus.org"),
-  title: "Aosus - The Largest Arabic Open-Source Community",
+  title: "أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة | مجتمع أسس",
   description:
-    "Aosus is a non-profit community established by Arab technologists. We focus on empowering and spreading awareness of Free and Open Source Software in Arabic.",
+    "مجتمع أسس هو أكبر مجتمع عربي مختص بإثراء المحتوى العربي في عدة مجالات أهمها البرمجيات الحرة والمفتوحة المصدر، مع عدة مبادرات كالمعجم التقني ومسابقة أسس لكتابة المحتوى.",
+  icons: {
+    icon: [{ url: brandAssets.favicon, type: "image/svg+xml" }],
+  },
   openGraph: {
-    title: "Aosus - The Largest Arabic Open-Source Community",
-    description: "Where Arab technologists build the future of open source.",
-    images: ["/opengraph.jpg"],
+    title: "أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة | مجتمع أسس",
+    description:
+      "مجتمع أسس هو أكبر مجتمع عربي مختص بإثراء المحتوى العربي في عدة مجالات أهمها البرمجيات الحرة والمفتوحة المصدر، مع عدة مبادرات كالمعجم التقني ومسابقة أسس لكتابة المحتوى.",
+    images: [brandAssets.defaultPreview],
     type: "website",
+    siteName: "مجتمع أسس",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aosus - The Largest Arabic Open-Source Community",
-    description: "Where Arab technologists build the future of open source.",
-    images: ["/opengraph.jpg"],
+    title: "أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة | مجتمع أسس",
+    description:
+      "مجتمع أسس هو أكبر مجتمع عربي مختص بإثراء المحتوى العربي في عدة مجالات أهمها البرمجيات الحرة والمفتوحة المصدر، مع عدة مبادرات كالمعجم التقني ومسابقة أسس لكتابة المحتوى.",
+    images: [brandAssets.defaultPreview],
   },
 };
 
@@ -54,7 +61,6 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script dangerouslySetInnerHTML={{ __html: bootstrapScript }} />
       </head>
       <body>{children}</body>
