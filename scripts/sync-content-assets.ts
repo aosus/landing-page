@@ -8,8 +8,16 @@ const brandAssetsDir = path.join(root, "brand-assets");
 
 const brandAssetCopies = [
   {
-    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-logo.svg"),
-    target: path.join(root, "public", "images", "aosus-logo.svg"),
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-horizontal-black-no-link.svg"),
+    target: path.join(root, "public", "images", "aosus-logo-light.svg"),
+  },
+  {
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-white-logo.svg"),
+    target: path.join(root, "public", "images", "aosus-logo-dark.svg"),
+  },
+  {
+    source: path.join(brandAssetsDir, "logos", "Aosus Logo", "SVG", "aosus-icon.svg"),
+    target: path.join(root, "public", "favicon.svg"),
   },
   {
     source: path.join(brandAssetsDir, "logos", "Aosus Logo", "PNG", "writing-contest.png"),

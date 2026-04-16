@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description:
     "مجتمع أسس هو أكبر مجتمع عربي مختص بإثراء المحتوى العربي في عدة مجالات أهمها البرمجيات الحرة والمفتوحة المصدر، مع عدة مبادرات كالمعجم التقني ومسابقة أسس لكتابة المحتوى.",
   icons: {
-    icon: [{ url: brandAssets.logo, type: "image/svg+xml" }],
+    icon: [{ url: brandAssets.favicon, type: "image/svg+xml" }],
   },
   openGraph: {
     title: "أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة | مجتمع أسس",

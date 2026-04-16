@@ -221,11 +221,16 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[#008a2f]/20 bg-white/60 backdrop-blur-md dark:bg-black/60">
         <nav className="max-w-7xl mx-auto px-3 sm:px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
-            <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
+          <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
             <img
-              src={brandAssets.logo}
+              src={brandAssets.logoLight}
               alt="Aosus Logo"
-              className="h-8 w-auto brightness-0 transition-[filter] dark:invert"
+              className="h-8 w-auto dark:hidden"
+            />
+            <img
+              src={brandAssets.logoDark}
+              alt="Aosus Logo"
+              className="hidden h-8 w-auto dark:block"
             />
           </Link>
 
@@ -390,9 +395,14 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             <div className="md:col-span-1">
               <div className="flex items-center gap-3 mb-4">
                 <img
-                  src={brandAssets.logo}
+                  src={brandAssets.logoLight}
                   alt="Aosus"
-                  className="h-7 w-auto brightness-0 transition-[filter] dark:invert"
+                  className="h-7 w-auto dark:hidden"
+                />
+                <img
+                  src={brandAssets.logoDark}
+                  alt="Aosus"
+                  className="hidden h-7 w-auto dark:block"
                 />
               </div>
               <p className="text-sm leading-relaxed text-gray-500">
