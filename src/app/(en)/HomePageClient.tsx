@@ -269,7 +269,12 @@ export default function HomePageClient({
           <>
             <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
               <CalligraphyPattern isDark={isDark} />
-              <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+              {/*
+                * pointer-events-none on the content wrapper so mouse events
+                * pass through to the calligraphy layer below (z-[1]).
+                * Buttons re-enable pointer-events-auto individually.
+                */}
+              <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pointer-events-none">
                 <div className="max-w-3xl mx-auto text-center space-y-8">
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
@@ -295,7 +300,7 @@ export default function HomePageClient({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="flex flex-wrap justify-center gap-4"
+                    className="flex flex-wrap justify-center gap-4 pointer-events-auto"
                   >
                     <PrimaryButton href="https://discourse.aosus.org">
                       {t.ctaJoin}

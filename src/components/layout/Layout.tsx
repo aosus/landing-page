@@ -47,63 +47,6 @@ export const CHAT_PLATFORMS = [
   { label: "Discord", href: "https://discord.gg/YJUzEhU955", icon: FaDiscord },
   { label: "Telegram", href: "https://t.me/aosus", icon: FaTelegram },
 ];
-
-
-
-function MatrixRain() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const chars = "أبجدهوزحطيكلمنسعفصقرشتثخذضظغABCDEF0123456789$+-*/=".split(
-      "",
-    );
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops: number[] = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
-
-    const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#008a2f";
-      ctx.font = `${fontSize}px "Kawkab Mono", monospace`;
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-          drops[i] = 0;
-        drops[i]++;
-      }
-    };
-
-    const interval = setInterval(draw, 33);
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none opacity-[0.08] z-0 mix-blend-screen"
-    />
-  );
-}
-
 interface LayoutProps {
   children: (ctx: { lang: Lang; isDark: boolean }) => ReactNode;
   lang?: Lang;
@@ -213,8 +156,6 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
         fontFamily: isRtl ? "var(--font-arabic)" : "var(--font-sans)",
       }}
     >
-      <MatrixRain />
-
       <div className="fixed top-0 left-1/4 w-96 h-96 bg-[#008a2f]/10 rounded-full blur-[120px] pointer-events-none z-0" />
       <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-[#1d70ba]/10 rounded-full blur-[120px] pointer-events-none z-0" />
 

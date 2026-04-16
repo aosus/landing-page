@@ -308,7 +308,12 @@
 
 /* ── Arabic calligraphy pattern ────────────────────────────────── */
 
-/* Accent layer: hidden by default, green fill revealed on interaction */
+/*
+ * Accent path: hidden by default.
+ * JS sets style.clipPath = 'inset(0)' on hover to reveal right-to-left.
+ * The CSS transition here animates the style change smoothly.
+ * opacity: 0.8 keeps it strong but not completely opaque.
+ */
 .cal-accent {
   opacity: 0.8;
   clip-path: inset(0 0 0 100%);
@@ -316,20 +321,21 @@
   pointer-events: none;
 }
 
-/* Desktop: reveal accent from right-to-left on glyph hover */
-@media (hover: hover) and (pointer: fine) {
-  .cal-glyph:hover .cal-accent {
-    clip-path: inset(0);
+/* Mobile: slightly enlarge the pattern so strokes are more visible */
+@media (max-width: 768px) {
+  .cal-pattern-svg {
+    transform: scale(1.8);
+    transform-origin: center center;
   }
 }
 
-/* Mobile: draw-in animation (right-to-left reveal) */
+/* Mobile: draw-in — right-to-left reveal */
 @keyframes cal-draw-rtl {
   from { clip-path: inset(0 0 0 100%); }
   to   { clip-path: inset(0); }
 }
 
-/* Mobile: draw-out animation (left-to-right fade) */
+/* Mobile: draw-out — left-to-right erase */
 @keyframes cal-undraw-rtl {
   from { clip-path: inset(0); }
   to   { clip-path: inset(0 100% 0 0); }
