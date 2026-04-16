@@ -1,5 +1,8 @@
 import HomePageClient from "../(en)/HomePageClient";
 import { getLatestPosts } from "@/lib/markdown";
+import { homeMetadata } from "@/lib/siteMetadata";
+
+export const metadata = homeMetadata("ar");
 
 export default function ArHomePage() {
   const enPosts = getLatestPosts("en");

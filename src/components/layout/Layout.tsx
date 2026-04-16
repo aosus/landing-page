@@ -9,6 +9,7 @@ import { SiMatrix, SiBluesky } from "react-icons/si";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getLocalizedPath, isEnglishPath, type Lang } from "@/lib/locale";
+import { brandAssets } from "@/lib/brandAssets";
 
 export type { Lang } from "@/lib/locale";
 
@@ -220,9 +221,9 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[#008a2f]/20 bg-white/60 backdrop-blur-md dark:bg-black/60">
         <nav className="max-w-7xl mx-auto px-3 sm:px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
-          <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
+            <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
             <img
-              src="/images/aosus-logo.png"
+              src={brandAssets.logo}
               alt="Aosus Logo"
               className="h-8 w-auto brightness-0 transition-[filter] dark:invert"
             />
@@ -389,7 +390,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             <div className="md:col-span-1">
               <div className="flex items-center gap-3 mb-4">
                 <img
-                  src="/images/aosus-logo.png"
+                  src={brandAssets.logo}
                   alt="Aosus"
                   className="h-7 w-auto brightness-0 transition-[filter] dark:invert"
                 />

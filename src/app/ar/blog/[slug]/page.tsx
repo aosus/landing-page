@@ -6,6 +6,7 @@ import {
 import ArticlePageClient from "../../../(en)/blog/[slug]/ArticlePageClient";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { articleMetadata } from "@/lib/siteMetadata";
 
 export const dynamicParams = false;
 const placeholderSlug = "__blog_placeholder__";
@@ -24,25 +25,7 @@ export async function generateMetadata({
   const post = await getPostBySlug(slug, "ar");
   if (!post || (post.wpType === "post" && post.wpId === post.slug)) return {};
 
-  return {
-    title: `${post.title} - أسس`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [post.ogImage],
-      type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      tags: post.tags,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-      images: [post.ogImage],
-    },
-  };
+  return articleMetadata(post, "ar");
 }
 
 export default async function ArArticlePage({

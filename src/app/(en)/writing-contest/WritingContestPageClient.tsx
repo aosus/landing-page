@@ -19,6 +19,7 @@ import Layout, {
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
 import { getPostPath } from "@/lib/locale";
+import { brandAssets } from "@/lib/brandAssets";
 
 const CONTENT = {
   en: {
@@ -187,7 +188,11 @@ export default function WritingContestPage({
             <section className="relative py-24 overflow-hidden border-b border-[#008a2f]/20">
               <div className="absolute inset-0 bg-gradient-to-br from-[#008a2f]/10 to-transparent" />
               <div className="relative max-w-4xl mx-auto px-6 text-center">
-                <PenTool className="w-12 h-12 mx-auto mb-6 text-[#008a2f]" />
+                <img
+                  src={brandAssets.writingContestLogo}
+                  alt={lang === "ar" ? "جائزة أسس للكتابة" : "Aosus Writing Contest"}
+                  className="h-16 w-auto mx-auto mb-6 object-contain"
+                />
                 <h1
                   className="text-3xl md:text-5xl font-bold uppercase tracking-widest mb-4 font-mono"
                   style={

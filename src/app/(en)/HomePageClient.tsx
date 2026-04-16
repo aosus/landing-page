@@ -24,8 +24,40 @@ import Layout, {
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
+import { brandAssets } from "@/lib/brandAssets";
 
-const CONTENT = {
+type ProjectIcon = React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+
+type ProjectItem = {
+  title: string;
+  desc: string;
+  icon: ProjectIcon;
+  color: string;
+  link: string;
+  logo?: string;
+};
+
+type HomeContent = {
+  heading: string;
+  subtitle: string;
+  ctaJoin: string;
+  ctaExplore: string;
+  stats: { label: string; value: string; icon: ProjectIcon }[];
+  projectsHeading: string;
+  projects: ProjectItem[];
+  timelineHeading: string;
+  timeline: { year: string; title: string; desc: string }[];
+  aboutHeading: string;
+  aboutBody: string;
+  aboutValues: string[];
+  blogHeading: string;
+  blog: { title: string; date: string; excerpt: string; link: string }[];
+  ctaHeading: string;
+  ctaSubtitle: string;
+  ctaButton: string;
+};
+
+const CONTENT: Record<Lang, HomeContent> = {
   en: {
     heading: "The Largest Arabic Open-Source Community",
     subtitle:
@@ -60,6 +92,7 @@ const CONTENT = {
         icon: Cpu,
         color: "#008a2f",
         link: "https://github.com/aosus/discourse-chat-bridge",
+        logo: brandAssets.bridge,
       },
     ],
     timelineHeading: "Timeline",
@@ -171,6 +204,7 @@ const CONTENT = {
         icon: Cpu,
         color: "#008a2f",
         link: "https://github.com/aosus/discourse-chat-bridge",
+        logo: brandAssets.bridge,
       },
     ],
     timelineHeading: "الجدول_الزمني",
@@ -263,6 +297,7 @@ export default function HomePageClient({
         const ff = isRtl ? "var(--font-arabic)" : undefined;
         const servicesLink = getLocalizedPath(lang, "/services");
         const dynamicPosts = latestPosts?.[lang]?.slice(0, 3);
+        const projects = t.projects as ProjectItem[];
 
         return (
           <>
@@ -346,17 +381,25 @@ export default function HomePageClient({
                   lang={lang}
                 />
                 <div className="grid md:grid-cols-3 gap-8">
-                  {t.projects.map((project, i) => {
+                  {projects.map((project, i) => {
                     const isExternal = project.link.startsWith("http");
                     const CardContent = (
                       <CyberCard
                         isDark={isDark}
                         className="p-6 h-full group cursor-pointer"
                       >
-                        <project.icon
-                          className="w-8 h-8 mb-4"
-                          style={{ color: project.color }}
-                        />
+                        {project.logo ? (
+                          <img
+                            src={project.logo}
+                            alt={project.title}
+                            className="h-10 w-auto mb-4 object-contain"
+                          />
+                        ) : (
+                          <project.icon
+                            className="w-8 h-8 mb-4"
+                            style={{ color: project.color }}
+                          />
+                        )}
                         <h3
                           className="text-lg font-bold mb-2 group-hover:text-[#008a2f] transition-colors"
                           style={{ fontFamily: ff }}
