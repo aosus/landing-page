@@ -3,14 +3,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Search,
-  Globe,
-  MessageSquare,
-  BookOpen,
+  Languages,
   ImageIcon,
   ExternalLink,
   Shield,
 } from "lucide-react";
+import {
+  FaChrome,
+  FaMedium,
+  FaPuzzlePiece,
+  FaQuora,
+  FaReddit,
+  FaTiktok,
+  FaXTwitter,
+} from "react-icons/fa6";
+import { SiMatrix, SiSearxng } from "react-icons/si";
 import Layout, {
   CyberCard,
   SectionHeading,
@@ -30,30 +37,37 @@ const SERVICES = {
       {
         name: "Simply Translate",
         desc: "Interface for multiple translation services like Google Translate without tracking, with automatic translation and audio support.",
-        icon: Globe,
+        icon: Languages,
         link: "https://simplytranslate.aosus.link/",
         color: "#008a2f",
       },
       {
+        name: "Nitter",
+        desc: "Twitter/X frontend without ads or tracking. No JavaScript required and supports RSS feeds.",
+        icon: FaXTwitter,
+        link: "https://nitter.aosus.link/",
+        color: "#1d70ba",
+      },
+      {
         name: "SearXNG",
         desc: "A metasearch engine that fetches results from other engines while protecting your privacy. Default results from Google and Brave.",
-        icon: Search,
+        icon: SiSearxng,
         link: "https://search.aosus.link/",
-        color: "#1d70ba",
+        color: "#008a2f",
       },
       {
         name: "Redlib",
         desc: "Reddit frontend without ads or tracking. Does not use JavaScript and is built with Rust.",
-        icon: MessageSquare,
+        icon: FaReddit,
         link: "https://redlib.aosus.link/",
-        color: "#008a2f",
+        color: "#1d70ba",
       },
       {
         name: "Element",
         desc: "The most popular Matrix protocol client. A federated, open-source messaging protocol.",
-        icon: MessageSquare,
+        icon: SiMatrix,
         link: "https://element.aosus.link/",
-        color: "#1d70ba",
+        color: "#008a2f",
       },
       {
         name: "rimgo",
@@ -65,8 +79,22 @@ const SERVICES = {
       {
         name: "Scribe",
         desc: "Frontend for the Medium blogging platform. Much lighter, no ads, no login required.",
-        icon: BookOpen,
+        icon: FaMedium,
         link: "https://scribe.aosus.link/",
+        color: "#1d70ba",
+      },
+      {
+        name: "Quetre",
+        desc: "Frontend for Quora with cleaner layout and without ads or tracking.",
+        icon: FaQuora,
+        link: "https://quetre.aosus.link/",
+        color: "#008a2f",
+      },
+      {
+        name: "Sticktock",
+        desc: "TikTok frontend to browse content without ads, tracking, or needing an account.",
+        icon: FaTiktok,
+        link: "https://sticktock.aosus.link/",
         color: "#1d70ba",
       },
     ],
@@ -76,11 +104,15 @@ const SERVICES = {
         name: "LibRedirect",
         desc: "Redirect platform links to privacy-respecting frontends. More features and active development.",
         link: "https://github.com/libredirect/libredirect",
+        icon: FaPuzzlePiece,
+        color: "#008a2f",
       },
       {
         name: "Privacy Redirect",
         desc: "Redirect platform links to privacy-friendly frontends. Available on Chrome Web Store.",
         link: "https://github.com/SimonBrazell/privacy-redirect",
+        icon: FaChrome,
+        color: "#1d70ba",
       },
     ],
   },
@@ -93,30 +125,37 @@ const SERVICES = {
       {
         name: "Simply Translate",
         desc: "واجهة لخدمات ترجمة متعددة مثل ترجمة Google دون تتبع مع دعم الترجمة التلقائية والصوت.",
-        icon: Globe,
+        icon: Languages,
         link: "https://simplytranslate.aosus.link/",
         color: "#008a2f",
       },
       {
+        name: "Nitter",
+        desc: "واجهة لمنصة Twitter/X دون إعلانات أو تتبع. لا تستخدم JavaScript وتدعم RSS.",
+        icon: FaXTwitter,
+        link: "https://nitter.aosus.link/",
+        color: "#1d70ba",
+      },
+      {
         name: "SearXNG",
         desc: "محرك بحث يجلب النتائج من محركات بحث أخرى مع المحافظة على خصوصيتك الرقمية.",
-        icon: Search,
+        icon: SiSearxng,
         link: "https://search.aosus.link/",
-        color: "#1d70ba",
+        color: "#008a2f",
       },
       {
         name: "Redlib",
         desc: "واجهة لمنصة Reddit دون إعلانات أو تتبع، لا تستخدم JS وهي مبنية بلغة Rust.",
-        icon: MessageSquare,
+        icon: FaReddit,
         link: "https://redlib.aosus.link/",
-        color: "#008a2f",
+        color: "#1d70ba",
       },
       {
         name: "Element",
         desc: "أشهر واجهة لبروتوكول Matrix، بروتوكول فدرالي للمحادثة مفتوح المصدر.",
-        icon: MessageSquare,
+        icon: SiMatrix,
         link: "https://element.aosus.link/",
-        color: "#1d70ba",
+        color: "#008a2f",
       },
       {
         name: "rimgo",
@@ -128,8 +167,22 @@ const SERVICES = {
       {
         name: "Scribe",
         desc: "واجهة لمنصة التدوينات الشهيرة Medium. أخف بكثير من الموقع الرسمي.",
-        icon: BookOpen,
+        icon: FaMedium,
         link: "https://scribe.aosus.link/",
+        color: "#1d70ba",
+      },
+      {
+        name: "Quetre",
+        desc: "واجهة لمنصة Quora دون تتبع أو إعلانات مع ترتيب أوضح من الموقع الرسمي.",
+        icon: FaQuora,
+        link: "https://quetre.aosus.link/",
+        color: "#008a2f",
+      },
+      {
+        name: "Sticktock",
+        desc: "واجهة لمنصة TikTok دون إعلانات أو تتبع لمشاهدة المحتوى بدون حساب.",
+        icon: FaTiktok,
+        link: "https://sticktock.aosus.link/",
         color: "#1d70ba",
       },
     ],
@@ -139,11 +192,15 @@ const SERVICES = {
         name: "LibRedirect",
         desc: "إعادة توجيه روابط المنصات إلى واجهات تحافظ على الخصوصية مع ميزات أكثر.",
         link: "https://github.com/libredirect/libredirect",
+        icon: FaPuzzlePiece,
+        color: "#008a2f",
       },
       {
         name: "Privacy Redirect",
         desc: "إعادة توجيه روابط المنصات إلى واجهات تحافظ على الخصوصية. متوفرة على متجر Chrome.",
         link: "https://github.com/SimonBrazell/privacy-redirect",
+        icon: FaChrome,
+        color: "#1d70ba",
       },
     ],
   },
@@ -245,6 +302,10 @@ export default function ServicesPage({ lang: langProp }: { lang?: Lang }) {
                         isDark={isDark}
                         className="p-6 group cursor-pointer"
                       >
+                        <ext.icon
+                          className="w-8 h-8 mb-4"
+                          style={{ color: ext.color }}
+                        />
                         <h3 className="text-lg font-bold mb-2 font-mono group-hover:text-[#008a2f] transition-colors">
                           {ext.name}
                         </h3>
