@@ -2,6 +2,8 @@
 // Run: pnpm tsx scripts/extract-calligraphy-paths.ts
 
 export const VIEWBOX = "0 0 3183.4758 6532.8936";
+export const TILE_W = 3183.4758;
+export const TILE_H = 6532.8936;
 export const OUTER_TRANSFORM = "translate(-408.26273,-66.885986)";
 export const PATH_TRANSFORM = "matrix(0.13333333,0,0,-0.13333333,0,6666.6667)";
 

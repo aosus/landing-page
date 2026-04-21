@@ -5,10 +5,10 @@ import {
   PATHS,
   OUTER_TRANSFORM,
   PATH_TRANSFORM,
+  TILE_W,
+  TILE_H,
 } from "@/data/calligraphy-paths";
 
-const TILE_W = 3183.4758;
-const TILE_H = 6532.8936;
 const TILE_OVERLAP = 480;
 const TILE_STRIDE = TILE_W - TILE_OVERLAP;
 const TILE_COUNT = 2;
@@ -85,6 +85,9 @@ function pointInsideRect(x: number, y: number, rect: ExclusionRect | null) {
 
 export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  // Cancellation flag for in-flight mobile pulse timeouts so they don't
+  // touch the DOM after the component has unmounted.
+  const mobileCancelledRef = useRef(false);
 
   /* ── Desktop: deliberate-hover drawing (single concurrent accent) ── */
   useEffect(() => {
@@ -103,6 +106,24 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       isDrawn: boolean;
     };
     const state = new WeakMap<Element, GlyphState>();
+
+    // Tracks all live timer IDs so the cleanup can cancel any pending
+    // callbacks that would otherwise fire after the component unmounts.
+    const pendingTimers = new Set<number>();
+
+    const scheduleTimer = (fn: () => void, delay: number): number => {
+      const id = window.setTimeout(() => {
+        pendingTimers.delete(id);
+        fn();
+      }, delay);
+      pendingTimers.add(id);
+      return id;
+    };
+
+    const cancelTimer = (id: number): void => {
+      clearTimeout(id);
+      pendingTimers.delete(id);
+    };
 
     // Cap concurrent drawn accents to 1. When a new glyph reveals,
     // the previously-drawn one is retracted immediately so the hero
@@ -126,7 +147,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       if (currentDrawn && currentDrawn !== glyph) {
         const prevState = getState(currentDrawn);
         if (prevState.retractTimer !== null) {
-          clearTimeout(prevState.retractTimer);
+          cancelTimer(prevState.retractTimer);
           prevState.retractTimer = null;
         }
         retract(currentDrawn);
@@ -167,7 +188,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
 
       // Cursor's back on this glyph — cancel any pending retraction
       if (s.retractTimer !== null) {
-        clearTimeout(s.retractTimer);
+        cancelTimer(s.retractTimer);
         s.retractTimer = null;
       }
 
@@ -175,7 +196,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       if (s.isDrawn || s.revealTimer !== null) return;
 
       // Delayed commit: only reveal if cursor lingers
-      s.revealTimer = window.setTimeout(() => {
+      s.revealTimer = scheduleTimer(() => {
         s.revealTimer = null;
         reveal(glyph);
       }, HOVER_COMMIT_DELAY);
@@ -191,7 +212,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
 
       // Cursor left before commit — cancel the pending reveal cleanly
       if (s.revealTimer !== null) {
-        clearTimeout(s.revealTimer);
+        cancelTimer(s.revealTimer);
         s.revealTimer = null;
         return;
       }
@@ -201,7 +222,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       if (s.isDrawn && s.retractTimer === null) {
         const elapsed = performance.now() - s.drawnAt;
         const wait = Math.max(0, DRAW_DURATION + MIN_HOLD - elapsed);
-        s.retractTimer = window.setTimeout(() => {
+        s.retractTimer = scheduleTimer(() => {
           s.retractTimer = null;
           retract(glyph);
         }, wait);
@@ -214,6 +235,10 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     return () => {
       svg.removeEventListener("mouseover", onMouseOver);
       svg.removeEventListener("mouseout", onMouseOut);
+      // Clear all pending reveal/retract timers to prevent post-unmount
+      // callbacks from mutating detached DOM nodes.
+      pendingTimers.forEach((id) => clearTimeout(id));
+      pendingTimers.clear();
     };
   }, []);
 
@@ -260,9 +285,11 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
 
     // draw-in (800ms) + linger (500ms) + draw-out (600ms)
     window.setTimeout(() => {
+      if (mobileCancelledRef.current) return;
       el.classList.remove("cal-drawing");
       el.classList.add("cal-undrawing");
       window.setTimeout(() => {
+        if (mobileCancelledRef.current) return;
         el.classList.remove("cal-undrawing");
       }, 600);
     }, 1300);
@@ -276,6 +303,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
 
     let timer: number;
     let cancelled = false;
+    mobileCancelledRef.current = false;
 
     const schedule = (delay: number) => {
       timer = window.setTimeout(() => {
@@ -292,6 +320,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
 
     return () => {
       cancelled = true;
+      mobileCancelledRef.current = true;
       clearTimeout(timer);
     };
   }, [animateRandom]);
