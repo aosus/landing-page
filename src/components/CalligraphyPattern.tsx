@@ -78,6 +78,37 @@ function getTextExclusionRect(): ExclusionRect | null {
   };
 }
 
+function rectsIntersect(
+  a: Pick<DOMRectReadOnly, "left" | "right" | "top" | "bottom">,
+  b: ExclusionRect | null,
+) {
+  if (!b) return false;
+  return !(
+    a.right < b.left ||
+    a.left > b.right ||
+    a.bottom < b.top ||
+    a.top > b.bottom
+  );
+}
+
+function clearTimerSet(timerIds: Set<number>) {
+  timerIds.forEach((id) => clearTimeout(id));
+  timerIds.clear();
+}
+
+function scheduleTrackedTimeout(
+  timerIds: Set<number>,
+  fn: () => void,
+  delay: number,
+) {
+  const id = window.setTimeout(() => {
+    timerIds.delete(id);
+    fn();
+  }, delay);
+  timerIds.add(id);
+  return id;
+}
+
 function pointInsideRect(x: number, y: number, rect: ExclusionRect | null) {
   if (!rect) return false;
   return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
@@ -88,6 +119,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
   // Cancellation flag for in-flight mobile pulse timeouts so they don't
   // touch the DOM after the component has unmounted.
   const mobileCancelledRef = useRef(false);
+  const mobileTimerIdsRef = useRef<Set<number>>(new Set());
 
   /* ── Desktop: deliberate-hover drawing (single concurrent accent) ── */
   useEffect(() => {
@@ -176,10 +208,8 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       // Desktop should honor the same exclusion zone as mobile so
       // hover-driven reveals never light up strokes directly under
       // the headline, subtitle, or CTA block.
-      const r = target.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      if (pointInsideRect(cx, cy, getTextExclusionRect())) return;
+      const targetRect = target.getBoundingClientRect();
+      if (rectsIntersect(targetRect, getTextExclusionRect())) return;
 
       const glyph = target.closest(".cal-glyph");
       if (!glyph) return;
@@ -237,8 +267,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       svg.removeEventListener("mouseout", onMouseOut);
       // Clear all pending reveal/retract timers to prevent post-unmount
       // callbacks from mutating detached DOM nodes.
-      pendingTimers.forEach((id) => clearTimeout(id));
-      pendingTimers.clear();
+      clearTimerSet(pendingTimers);
     };
   }, []);
 
@@ -272,7 +301,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       if (cy < 0 || cy > vh) continue;
       // Exclude the hero-text bounding box (+ padding) so animations
       // never cross through the headline, subtitle, or CTA buttons.
-      if (pointInsideRect(cx, cy, avoid)) {
+      if (rectsIntersect(r, avoid)) {
         continue;
       }
       visible.push(el);
@@ -284,11 +313,11 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     el.classList.add("cal-drawing");
 
     // draw-in (800ms) + linger (500ms) + draw-out (600ms)
-    window.setTimeout(() => {
+    scheduleTrackedTimeout(mobileTimerIdsRef.current, () => {
       if (mobileCancelledRef.current) return;
       el.classList.remove("cal-drawing");
       el.classList.add("cal-undrawing");
-      window.setTimeout(() => {
+      scheduleTrackedTimeout(mobileTimerIdsRef.current, () => {
         if (mobileCancelledRef.current) return;
         el.classList.remove("cal-undrawing");
       }, 600);
@@ -301,12 +330,12 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     // Respect the user's reduced-motion preference — no pulses at all
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let timer: number;
     let cancelled = false;
     mobileCancelledRef.current = false;
+    clearTimerSet(mobileTimerIdsRef.current);
 
     const schedule = (delay: number) => {
-      timer = window.setTimeout(() => {
+      scheduleTrackedTimeout(mobileTimerIdsRef.current, () => {
         if (cancelled) return;
         animateRandom();
         const next =
@@ -321,7 +350,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     return () => {
       cancelled = true;
       mobileCancelledRef.current = true;
-      clearTimeout(timer);
+      clearTimerSet(mobileTimerIdsRef.current);
     };
   }, [animateRandom]);
 

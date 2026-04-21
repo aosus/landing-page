@@ -15,6 +15,7 @@ const svg = readFileSync(SVG_PATH, "utf-8");
 // Extract viewBox
 const vbMatch = svg.match(/viewBox="([^"]+)"/);
 const viewBox = vbMatch?.[1] ?? "";
+const [, , tileW = "0", tileH = "0"] = viewBox.split(/\s+/);
 
 // Extract outer <g> transform (translate)
 const outerTransformMatch = svg.match(
@@ -46,6 +47,8 @@ const output = `// Auto-generated from pattern-2.svg — do not edit by hand
 // Run: pnpm tsx scripts/extract-calligraphy-paths.ts
 
 export const VIEWBOX = "${viewBox}";
+export const TILE_W = ${tileW};
+export const TILE_H = ${tileH};
 export const OUTER_TRANSFORM = "${outerTransform}";
 export const PATH_TRANSFORM = "${pathTransform}";
 
