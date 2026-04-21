@@ -284,7 +284,7 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
    * notices emitted light more than absorbed light). Drop to 2.5%
    * so the vignette blends as seamlessly as the 4% black does on white.
    */
-  const baseFill = isDark ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.04)";
+  const baseFill = isDark ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.04)";
 
   return (
     <div
