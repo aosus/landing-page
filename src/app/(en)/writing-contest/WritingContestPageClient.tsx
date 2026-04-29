@@ -9,7 +9,6 @@ import {
   Newspaper,
   DollarSign,
   ArrowRight,
-  AlertCircle,
 } from "lucide-react";
 import Layout, {
   CyberCard,
@@ -18,7 +17,7 @@ import Layout, {
   type Lang,
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
-import { getPostPath } from "@/lib/locale";
+import { getLocalizedPath, getPostPath } from "@/lib/locale";
 
 const CONTENT = {
   en: {
@@ -26,7 +25,8 @@ const CONTENT = {
     subtitle:
       "A contest to encourage writers to create topics about free and open-source software, enriching Arabic content.",
     sponsorNotice:
-      "The writing contest is currently looking for a new sponsor.",
+      "The Aosus Writing Contest is currently looking for a new sponsor.",
+    sponsorCta: "Read announcement",
     prizeAmount: "Total prizes up to $250+ USD",
     supportCta: "Support the Contest",
     steps: {
@@ -98,7 +98,8 @@ const CONTENT = {
     title: "جائزة_الكتابة",
     subtitle:
       "جائزة لتحفيز الكتّاب لكتابة مواضيع حول البرمجيات الحرة والمفتوحة، لإثراء المحتوى العربي عنها.",
-    sponsorNotice: "جائزة أسس تبحث عن راعٍ جديد.",
+    sponsorNotice: "جائزة أسس للكتابة تبحث عن راعٍ جديد.",
+    sponsorCta: "اقرأ الإعلان",
     prizeAmount: "يصل مجموع الجوائز إلى أكثر من 250 دولار",
     supportCta: "ادعم الجائزة",
     steps: {
@@ -182,8 +183,45 @@ export default function WritingContestPage({
         const isRtl = lang === "ar";
         const ff = isRtl ? "var(--font-arabic)" : undefined;
         const latestPosts = posts?.slice(0, 3) || [];
+        const sponsorPostPath = getPostPath("ar", "1623", true);
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
+            <div className="sticky top-16 z-40 border-y border-[#008a2f]/30 bg-white/95 backdrop-blur-md dark:bg-black/90 dark:border-[#008a2f]/30">
+              <div className="mx-auto max-w-7xl px-4 sm:px-6">
+                <div className="relative overflow-hidden border-x border-[#008a2f]/25 px-4 py-4 shadow-[0_0_0_1px_rgba(0,138,47,0.06)] dark:shadow-[0_0_0_1px_rgba(0,138,47,0.18)] sm:px-5">
+                  <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#008a2f]/50 pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#008a2f]/50 pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#008a2f]/50 pointer-events-none" />
+                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#008a2f]/50 pointer-events-none" />
+                  <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center md:gap-6">
+                    <div className="space-y-2">
+                      <div
+                        className="text-xs font-mono uppercase tracking-[0.3em] text-[#008a2f]"
+                        style={isRtl ? { fontFamily: "var(--font-arabic)" } : undefined}
+                      >
+                        {isRtl ? "تنبيه" : "Notice"}
+                      </div>
+                      <p
+                        className="text-sm font-semibold leading-relaxed text-gray-900 dark:text-white sm:text-base"
+                        style={{ fontFamily: ff }}
+                      >
+                        {t.sponsorNotice}
+                      </p>
+                    </div>
+                    <PrimaryButton
+                      href={sponsorPostPath}
+                      className="justify-self-start border border-[#008a2f] bg-transparent px-5 py-3 text-sm font-bold text-[#008a2f] hover:bg-[#008a2f] hover:text-black dark:hover:text-black"
+                    >
+                      {t.sponsorCta}
+                      <ArrowRight
+                        className={`w-4 h-4 ${isRtl ? "rotate-180" : ""}`}
+                      />
+                    </PrimaryButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <section className="relative py-24 overflow-hidden border-b border-[#008a2f]/20">
               <div className="absolute inset-0 bg-gradient-to-br from-[#008a2f]/10 to-transparent" />
               <div className="relative max-w-4xl mx-auto px-6 text-center">
@@ -205,10 +243,6 @@ export default function WritingContestPage({
                 <div className="inline-flex items-center gap-2 px-4 py-2 border border-[#008a2f]/30 bg-[#008a2f]/5 text-sm font-mono text-[#008a2f] mb-4">
                   <DollarSign className="w-4 h-4" />
                   {t.prizeAmount}
-                </div>
-                <div className="flex items-center justify-center gap-2 text-sm text-gray-400 dark:text-gray-500">
-                  <AlertCircle className="w-4 h-4 text-yellow-500" />
-                  <span style={{ fontFamily: ff }}>{t.sponsorNotice}</span>
                 </div>
               </div>
             </section>
