@@ -183,7 +183,7 @@ export default function WritingContestPage({
         const isRtl = lang === "ar";
         const ff = isRtl ? "var(--font-arabic)" : undefined;
         const latestPosts = posts?.slice(0, 3) || [];
-        const sponsorPostPath = getLocalizedPath("ar", "/1623");
+        const sponsorPostPath = getPostPath("ar", "1623", true);
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
             <div className="sticky top-16 z-40 border-y border-[#008a2f]/30 bg-white/95 backdrop-blur-md dark:bg-black/90 dark:border-[#008a2f]/30">
