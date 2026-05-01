@@ -5,6 +5,7 @@ const pageMetadata = {
   title: "اتصل بنا",
   description:
     "تواصل مع فريق مجتمع أسس للاستفسارات العامة، الشراكات، فرص الرعاية، وروابط المجتمع المختلفة.",
+  thumbnail: "/og/contact-us-link-preview.jpg",
 };
 
 export const metadata = getPageMetadata("ar", "/contact-us", pageMetadata);
