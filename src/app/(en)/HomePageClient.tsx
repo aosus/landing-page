@@ -424,7 +424,7 @@ export default function HomePageClient({
                           className={`absolute ${isRtl ? "right-3 md:right-[calc(50%-5px)]" : "left-3 md:left-[calc(50%-5px)]"} top-2 w-2.5 h-2.5 bg-[#008a2f] border-2 border-black z-10`}
                         />
                         <div
-                          className={`${isRtl ? "mr-12 md:mr-0" : "ml-12 md:ml-0"} md:w-[45%] ${!isLeft ? "md:ml-auto" : ""}`}
+                          className={`${isRtl ? "mr-12 md:mr-0" : "ml-12 md:ml-0"} md:w-[45%] ${!isLeft ? (isRtl ? "md:mr-auto" : "md:ml-auto") : ""}`}
                         >
                           <CyberCard
                             isDark={isDark}
