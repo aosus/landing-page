@@ -6,6 +6,7 @@ import {
 import ArticlePageClient from "../(en)/blog/[slug]/ArticlePageClient";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { getBlogPostMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
 
@@ -23,25 +24,7 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  return {
-    title: `${post.title} - أسس`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [post.ogImage],
-      type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      tags: post.tags,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-      images: [post.ogImage],
-    },
-  };
+  return getBlogPostMetadata("ar", `/${encodeURIComponent(id)}`, post);
 }
 
 export default async function RootWordPressArticlePage({

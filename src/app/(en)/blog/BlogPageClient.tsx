@@ -92,7 +92,7 @@ function BlogPageContent({
                   <div className="flex h-full flex-col">
                     <div className="h-56 overflow-hidden">
                       <img
-                        src={post.thumbnail}
+                        src={post.thumbnail || post.image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Viewport } from "next";
 import "./globals.css";
+import { getBaseLocaleMetadata } from "@/lib/metadata";
 
 const bootstrapScript = `
 (() => {
@@ -21,20 +22,20 @@ const bootstrapScript = `
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aosus.org"),
-  title: "Aosus - The Largest Arabic Open-Source Community",
-  description:
-    "Aosus is a non-profit community established by Arab technologists. We focus on empowering and spreading awareness of Free and Open Source Software in Arabic.",
-  openGraph: {
-    title: "Aosus - The Largest Arabic Open-Source Community",
-    description: "Where Arab technologists build the future of open source.",
-    images: ["/opengraph.jpg"],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Aosus - The Largest Arabic Open-Source Community",
-    description: "Where Arab technologists build the future of open source.",
-    images: ["/opengraph.jpg"],
+  ...getBaseLocaleMetadata("ar"),
+  icons: {
+    icon: [
+      {
+        url: "/brand/logo-symbol.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/brand/logo-symbol-dark.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
   },
 };
 
@@ -54,7 +55,6 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script dangerouslySetInnerHTML={{ __html: bootstrapScript }} />
       </head>
       <body>{children}</body>

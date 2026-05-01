@@ -14,7 +14,7 @@ export interface PostFrontMatter {
   tags: string[];
   categories: string[];
   image: string;
-  thumbnail: string;
+  thumbnail?: string;
   ogImage: string;
   excerpt: string;
   slug: string;
@@ -148,7 +148,7 @@ function parsePostFile(filePath: string, directorySlug: string, lang: Lang): Par
   const fileContents = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContents);
   const imageSource = data.image || "cover.png";
-  const thumbnailSource = data.thumbnail || imageSource;
+  const thumbnailSource = normalizeString(data.thumbnail);
   const ogImageSource = data.ogImage || imageSource;
   const categories = Array.isArray(data.categories)
     ? data.categories
@@ -170,7 +170,9 @@ function parsePostFile(filePath: string, directorySlug: string, lang: Lang): Par
       tags,
       categories,
       image: resolvePostAssetUrl(filePath, imageSource),
-      thumbnail: resolvePostAssetUrl(filePath, thumbnailSource),
+      thumbnail: thumbnailSource
+        ? resolvePostAssetUrl(filePath, thumbnailSource)
+        : undefined,
       ogImage: resolvePostAssetUrl(filePath, ogImageSource),
       excerpt: data.excerpt || "",
       slug,
