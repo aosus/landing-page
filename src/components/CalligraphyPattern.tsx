@@ -41,54 +41,49 @@ const MOBILE_INTERVAL_MAX = 2200;
 const MOBILE_INITIAL_DELAY = 350;
 
 /**
- * Padding (CSS px) around the hero text exclusion rect.
- * Accents whose center falls within [rect + pad] are skipped so
- * animations never cross through the headline or CTAs.
+ * Mobile only — minimum rendered area (CSS px²) a glyph must have to be
+ * eligible for a random pulse. Keeps animations on the big, legible letters
+ * and skips tiny connector strokes.
  */
-const TEXT_EXCLUSION_PAD = 24;
+const MOBILE_MIN_GLYPH_AREA = 4000;
 
 /**
- * Selector identifying the hero-text container whose bounding box
- * should never host an animated accent. The host page marks that
- * element with `data-calligraphy-avoid`.
+ * Selectors for the elements whose exact bounding boxes should block mobile
+ * pulses. Keeping this to the actual text lines and CTA buttons means the
+ * exclusion is as tight as possible — no large invisible rectangle.
  */
-const TEXT_AVOID_SELECTOR = "[data-calligraphy-avoid]";
+const MOBILE_AVOID_SELECTORS = [
+  "[data-calligraphy-avoid-text]",
+  "[data-calligraphy-avoid-buttons]",
+];
+
+type Rect = { left: number; right: number; top: number; bottom: number };
+
+/** Collect the current viewport rects of every avoid element. */
+function getMobileAvoidRects(): Rect[] {
+  const rects: Rect[] = [];
+  for (const sel of MOBILE_AVOID_SELECTORS) {
+    for (const el of document.querySelectorAll(sel)) {
+      const r = el.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rects.push(r);
+    }
+  }
+  return rects;
+}
+
+function overlapsAny(
+  a: Pick<DOMRectReadOnly, "left" | "right" | "top" | "bottom">,
+  rects: Rect[],
+): boolean {
+  for (const b of rects) {
+    if (!(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom))
+      return true;
+  }
+  return false;
+}
 
 interface CalligraphyPatternProps {
   isDark: boolean;
-}
-
-type ExclusionRect = {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-};
-
-function getTextExclusionRect(): ExclusionRect | null {
-  const avoidEl = document.querySelector(TEXT_AVOID_SELECTOR);
-  if (!avoidEl) return null;
-
-  const r = avoidEl.getBoundingClientRect();
-  return {
-    left: r.left - TEXT_EXCLUSION_PAD,
-    right: r.right + TEXT_EXCLUSION_PAD,
-    top: r.top - TEXT_EXCLUSION_PAD,
-    bottom: r.bottom + TEXT_EXCLUSION_PAD,
-  };
-}
-
-function rectsIntersect(
-  a: Pick<DOMRectReadOnly, "left" | "right" | "top" | "bottom">,
-  b: ExclusionRect | null,
-) {
-  if (!b) return false;
-  return !(
-    a.right < b.left ||
-    a.left > b.right ||
-    a.bottom < b.top ||
-    a.top > b.bottom
-  );
 }
 
 function clearTimerSet(timerIds: Set<number>) {
@@ -107,11 +102,6 @@ function scheduleTrackedTimeout(
   }, delay);
   timerIds.add(id);
   return id;
-}
-
-function pointInsideRect(x: number, y: number, rect: ExclusionRect | null) {
-  if (!rect) return false;
-  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
 }
 
 export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) {
@@ -205,12 +195,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       const target = e.target as Element;
       if (!target?.classList?.contains("cal-base")) return;
 
-      // Desktop should honor the same exclusion zone as mobile so
-      // hover-driven reveals never light up strokes directly under
-      // the headline, subtitle, or CTA block.
-      const targetRect = target.getBoundingClientRect();
-      if (rectsIntersect(targetRect, getTextExclusionRect())) return;
-
       const glyph = target.closest(".cal-glyph");
       if (!glyph) return;
 
@@ -271,14 +255,13 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     };
   }, []);
 
-  /* ── Mobile: random pulses, skipping the hero-text bounding box ── */
+  /* ── Mobile: random pulses, large glyphs only, skipping text/button rects ── */
   const animateRandom = useCallback(() => {
     const svg = svgRef.current;
     if (!svg) return;
 
-    // Recompute the exclusion rect each tick — handles resize + scroll
-    // without a dedicated ResizeObserver.
-    const avoid = getTextExclusionRect();
+    // Recompute per-tick so we handle scroll/resize without an observer.
+    const avoidRects = getMobileAvoidRects();
 
     const accents = svg.querySelectorAll<SVGPathElement>(".cal-accent");
     const visible: SVGPathElement[] = [];
@@ -294,16 +277,15 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       }
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) continue;
+      // Skip small connector strokes — only animate large glyphs.
+      if (r.width * r.height < MOBILE_MIN_GLYPH_AREA) continue;
       const cx = r.left + r.width / 2;
       const cy = r.top + r.height / 2;
       // Central 80% horizontally, within viewport vertically
       if (cx < vw * 0.1 || cx > vw * 0.9) continue;
       if (cy < 0 || cy > vh) continue;
-      // Exclude the hero-text bounding box (+ padding) so animations
-      // never cross through the headline, subtitle, or CTA buttons.
-      if (rectsIntersect(r, avoid)) {
-        continue;
-      }
+      // Skip any glyph whose bounding box overlaps an avoid element.
+      if (overlapsAny(r, avoidRects)) continue;
       visible.push(el);
     }
 
