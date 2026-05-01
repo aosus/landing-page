@@ -1,11 +1,9 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import Layout, {
-  CHAT_PLATFORMS,
-  SOCIAL_PLATFORMS,
-} from "../src/components/layout/Layout";
+import Layout from "../src/components/layout/Layout";
+import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "../src/lib/community-platforms";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) => (
@@ -28,17 +26,26 @@ vi.mock("framer-motion", () => ({
 
 describe("Layout community navigation", () => {
   it("renders chat and social platform groups in the footer", () => {
-    render(<Layout lang="en">{() => <div>content</div>}</Layout>);
+    const { container } = render(
+      <Layout lang="en">{() => <div>content</div>}</Layout>,
+    );
+    const footer = container.querySelector("footer");
 
-    expect(screen.getByText("Chat Rooms")).toBeInTheDocument();
-    expect(screen.getByText("Follow Us")).toBeInTheDocument();
+    expect(footer).not.toBeNull();
+
+    expect(within(footer as HTMLElement).getByText("Chat Rooms")).toBeInTheDocument();
+    expect(within(footer as HTMLElement).getByText("Follow Us")).toBeInTheDocument();
 
     for (const platform of CHAT_PLATFORMS) {
-      expect(screen.getByText(platform.label)).toBeInTheDocument();
+      expect(
+        within(footer as HTMLElement).getByRole("link", { name: platform.label }),
+      ).toHaveAttribute("href", platform.href);
     }
 
     for (const platform of SOCIAL_PLATFORMS) {
-      expect(screen.getByText(platform.label)).toBeInTheDocument();
+      expect(
+        within(footer as HTMLElement).getByRole("link", { name: platform.label }),
+      ).toHaveAttribute("href", platform.href);
     }
   });
 

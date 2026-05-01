@@ -3,12 +3,12 @@
 import React, { useState, useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon, Menu, X, Heart, ChevronDown } from "lucide-react";
-import { FaGithub, FaXTwitter, FaLinkedin, FaFacebook, FaMastodon, FaDiscord, FaTelegram } from "react-icons/fa6";
-import { SiMatrix, SiBluesky } from "react-icons/si";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import CommunityLinks from "@/components/CommunityLinks";
 import { getLocalizedPath, isEnglishPath, type Lang } from "@/lib/locale";
+import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "@/lib/community-platforms";
 
 export type { Lang } from "@/lib/locale";
 
@@ -33,20 +33,6 @@ const NAV = {
   ],
 };
 
-export const SOCIAL_PLATFORMS = [
-  { label: "GitHub", href: "https://github.com/aosus", icon: FaGithub },
-  { label: "X / Twitter", href: "https://twitter.com/aosusdotorg", icon: FaXTwitter },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/aosus/", icon: FaLinkedin },
-  { label: "Facebook", href: "https://www.facebook.com/aosus1/", icon: FaFacebook },
-  { label: "Mastodon", href: "https://mastodon.online/@aosus", icon: FaMastodon },
-  { label: "Bluesky", href: "https://bsky.app/profile/aosus.org", icon: SiBluesky },
-];
-
-export const CHAT_PLATFORMS = [
-  { label: "Matrix", href: "https://matrix.to/#/#aosus:aosus.org", icon: SiMatrix },
-  { label: "Discord", href: "https://discord.gg/YJUzEhU955", icon: FaDiscord },
-  { label: "Telegram", href: "https://t.me/aosus", icon: FaTelegram },
-];
 interface LayoutProps {
   children: (ctx: { lang: Lang; isDark: boolean }) => ReactNode;
   lang?: Lang;
@@ -366,40 +352,22 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                 <span className="opacity-50">/</span>{" "}
                 {lang === "ar" ? "محادثة" : "Chat Rooms"}
               </h4>
-              <ul className="space-y-2 mb-8">
-                {CHAT_PLATFORMS.map((s) => (
-                  <li key={s.label}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-gray-500 transition-colors hover:text-[#008a2f] dark:text-gray-400"
-                    >
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <CommunityLinks
+                platforms={CHAT_PLATFORMS}
+                className="gap-2"
+                itemClassName="border-[#008a2f]/20 dark:border-[#008a2f]/20"
+              />
             </div>
             <div>
               <h4 className="font-mono text-xs uppercase tracking-widest mb-4 text-[#008a2f]">
                 <span className="opacity-50">/</span>{" "}
                 {lang === "ar" ? "تابعنا" : "Follow Us"}
               </h4>
-              <ul className="space-y-2">
-                {SOCIAL_PLATFORMS.map((s) => (
-                  <li key={s.label}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-gray-500 transition-colors hover:text-[#008a2f] dark:text-gray-400"
-                    >
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <CommunityLinks
+                platforms={SOCIAL_PLATFORMS}
+                className="gap-2"
+                itemClassName="border-[#008a2f]/20 dark:border-[#008a2f]/20"
+              />
             </div>
 
             <div>
