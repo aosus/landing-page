@@ -40,55 +40,8 @@ const MOBILE_INTERVAL_MAX = 2200;
 /** Mobile: delay before first pulse after mount. */
 const MOBILE_INITIAL_DELAY = 350;
 
-/**
- * Padding (CSS px) around the hero text exclusion rect.
- * Accents whose center falls within [rect + pad] are skipped so
- * animations never cross through the headline or CTAs.
- */
-const TEXT_EXCLUSION_PAD = 24;
-
-/**
- * Selector identifying the hero-text container whose bounding box
- * should never host an animated accent. The host page marks that
- * element with `data-calligraphy-avoid`.
- */
-const TEXT_AVOID_SELECTOR = "[data-calligraphy-avoid]";
-
 interface CalligraphyPatternProps {
   isDark: boolean;
-}
-
-type ExclusionRect = {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-};
-
-function getTextExclusionRect(): ExclusionRect | null {
-  const avoidEl = document.querySelector(TEXT_AVOID_SELECTOR);
-  if (!avoidEl) return null;
-
-  const r = avoidEl.getBoundingClientRect();
-  return {
-    left: r.left - TEXT_EXCLUSION_PAD,
-    right: r.right + TEXT_EXCLUSION_PAD,
-    top: r.top - TEXT_EXCLUSION_PAD,
-    bottom: r.bottom + TEXT_EXCLUSION_PAD,
-  };
-}
-
-function rectsIntersect(
-  a: Pick<DOMRectReadOnly, "left" | "right" | "top" | "bottom">,
-  b: ExclusionRect | null,
-) {
-  if (!b) return false;
-  return !(
-    a.right < b.left ||
-    a.left > b.right ||
-    a.bottom < b.top ||
-    a.top > b.bottom
-  );
 }
 
 function clearTimerSet(timerIds: Set<number>) {
@@ -107,11 +60,6 @@ function scheduleTrackedTimeout(
   }, delay);
   timerIds.add(id);
   return id;
-}
-
-function pointInsideRect(x: number, y: number, rect: ExclusionRect | null) {
-  if (!rect) return false;
-  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
 }
 
 export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) {
@@ -205,12 +153,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       const target = e.target as Element;
       if (!target?.classList?.contains("cal-base")) return;
 
-      // Desktop should honor the same exclusion zone as mobile so
-      // hover-driven reveals never light up strokes directly under
-      // the headline, subtitle, or CTA block.
-      const targetRect = target.getBoundingClientRect();
-      if (rectsIntersect(targetRect, getTextExclusionRect())) return;
-
       const glyph = target.closest(".cal-glyph");
       if (!glyph) return;
 
@@ -276,10 +218,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     const svg = svgRef.current;
     if (!svg) return;
 
-    // Recompute the exclusion rect each tick — handles resize + scroll
-    // without a dedicated ResizeObserver.
-    const avoid = getTextExclusionRect();
-
     const accents = svg.querySelectorAll<SVGPathElement>(".cal-accent");
     const visible: SVGPathElement[] = [];
     const vw = window.innerWidth;
@@ -299,11 +237,6 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       // Central 80% horizontally, within viewport vertically
       if (cx < vw * 0.1 || cx > vw * 0.9) continue;
       if (cy < 0 || cy > vh) continue;
-      // Exclude the hero-text bounding box (+ padding) so animations
-      // never cross through the headline, subtitle, or CTA buttons.
-      if (rectsIntersect(r, avoid)) {
-        continue;
-      }
       visible.push(el);
     }
 
