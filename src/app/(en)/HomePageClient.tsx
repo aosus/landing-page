@@ -125,29 +125,6 @@ const CONTENT = {
       "Our Values: Collaboration, Transparency, Commitment, Responsibility and Privacy",
     ],
     blogHeading: "Latest updates in the Aosus community",
-    blog: [
-      {
-        title: "Aosus sponsors the Daydream Hackathon for school students in Alexandria",
-        date: "2025-09-18",
-        excerpt:
-          "Aosus Community sponsors the Daydream Hackathon in Alexandria, introducing school students to free and open source software through game development with the Godot engine.",
-        link: "/en/2135",
-      },
-      {
-        title: "Help Translate Firefox!",
-        date: "2025-06-21",
-        excerpt:
-          "Do you use Firefox and care about improving its Arabic support? Mozilla is asking for your help! The browser needs your contributions to improve its Arabic language support.",
-        link: "/en/2125",
-      },
-      {
-        title: "Piped service shutdown",
-        date: "2024-09-01",
-        excerpt:
-          "The Piped service on Aosus has been experiencing video playback issues for some time. We are therefore announcing the upcoming shutdown of the service.",
-        link: "/en/2071",
-      },
-    ],
     ctaHeading: "Join our community",
     ctaSubtitle: "Connect with the Aosus community on our forum",
     ctaButton: "Visit the community",
@@ -250,29 +227,6 @@ const CONTENT = {
       "قيمنا: التعاون والشفافية والإلتزام والمسؤولية والخصوصية",
     ],
     blogHeading: "آخر التحديثات في مجتمع أسس",
-    blog: [
-      {
-        title: "مجتمع أسس يرعى هاكاثون Daydream لطلاب المدارس بالإسكندرية",
-        date: "2025-09-18",
-        excerpt:
-          "مجتمع أسس يرعى هاكاثون Daydream في الإسكندرية, ليعرف طلاب المدارس على البرمجيات المفتوحة و الحرة عبر برمجة الالعاب مع محرك Godot.",
-        link: "/2135",
-      },
-      {
-        title: "ساهم في تَرْجَمَة Firefox!",
-        date: "2025-06-21",
-        excerpt:
-          "هل انت تستخدم متصفح Firefox ومهتم بتحسين دعمة للعربية؟ Mozilla تطلب منك المساعدة! المتصفح يحتاج لمساهمتكم لتحسين دعمه للعربية.",
-        link: "/2125",
-      },
-      {
-        title: "توقف خدمة Piped.",
-        date: "2024-09-01",
-        excerpt:
-          "خدمة Piped في مجتمع أسس تواجه مشاكل بتشغيل الفيديوهات منذ فترة. ولذلك نعلن عن ايقاف الخدمة قريبا.",
-        link: "/2071",
-      },
-    ],
     ctaHeading: "انضم إلى ثورة المصادر المفتوحة",
     ctaSubtitle: "انضم إلى أكبر مجتمع عربي مفتوح المصدر اليوم.",
     ctaButton: "ابدأ الآن",
@@ -540,7 +494,7 @@ export default function HomePageClient({
                       center={false}
                     />
                     <div className="space-y-4">
-                      {(dynamicPosts && dynamicPosts.length ? dynamicPosts : t.blog).map((post, i) => {
+                      {(dynamicPosts ?? []).map((post, i) => {
                         const isDynamic = "slug" in post;
                         const link = isDynamic
                           ? getPostPath(
