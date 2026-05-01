@@ -40,6 +40,48 @@ const MOBILE_INTERVAL_MAX = 2200;
 /** Mobile: delay before first pulse after mount. */
 const MOBILE_INITIAL_DELAY = 350;
 
+/**
+ * Mobile only — minimum rendered area (CSS px²) a glyph must have to be
+ * eligible for a random pulse. Keeps animations on the big, legible letters
+ * and skips tiny connector strokes.
+ */
+const MOBILE_MIN_GLYPH_AREA = 4000;
+
+/**
+ * Selectors for the elements whose exact bounding boxes should block mobile
+ * pulses. Keeping this to the actual text lines and CTA buttons means the
+ * exclusion is as tight as possible — no large invisible rectangle.
+ */
+const MOBILE_AVOID_SELECTORS = [
+  "[data-calligraphy-avoid-text]",
+  "[data-calligraphy-avoid-buttons]",
+];
+
+type Rect = { left: number; right: number; top: number; bottom: number };
+
+/** Collect the current viewport rects of every avoid element. */
+function getMobileAvoidRects(): Rect[] {
+  const rects: Rect[] = [];
+  for (const sel of MOBILE_AVOID_SELECTORS) {
+    for (const el of document.querySelectorAll(sel)) {
+      const r = el.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) rects.push(r);
+    }
+  }
+  return rects;
+}
+
+function overlapsAny(
+  a: Pick<DOMRectReadOnly, "left" | "right" | "top" | "bottom">,
+  rects: Rect[],
+): boolean {
+  for (const b of rects) {
+    if (!(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom))
+      return true;
+  }
+  return false;
+}
+
 interface CalligraphyPatternProps {
   isDark: boolean;
 }
@@ -213,10 +255,13 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
     };
   }, []);
 
-  /* ── Mobile: random pulses, skipping the hero-text bounding box ── */
+  /* ── Mobile: random pulses, large glyphs only, skipping text/button rects ── */
   const animateRandom = useCallback(() => {
     const svg = svgRef.current;
     if (!svg) return;
+
+    // Recompute per-tick so we handle scroll/resize without an observer.
+    const avoidRects = getMobileAvoidRects();
 
     const accents = svg.querySelectorAll<SVGPathElement>(".cal-accent");
     const visible: SVGPathElement[] = [];
@@ -232,11 +277,15 @@ export default function CalligraphyPattern({ isDark }: CalligraphyPatternProps) 
       }
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) continue;
+      // Skip small connector strokes — only animate large glyphs.
+      if (r.width * r.height < MOBILE_MIN_GLYPH_AREA) continue;
       const cx = r.left + r.width / 2;
       const cy = r.top + r.height / 2;
       // Central 80% horizontally, within viewport vertically
       if (cx < vw * 0.1 || cx > vw * 0.9) continue;
       if (cy < 0 || cy > vh) continue;
+      // Skip any glyph whose bounding box overlaps an avoid element.
+      if (overlapsAny(r, avoidRects)) continue;
       visible.push(el);
     }
 

@@ -271,7 +271,15 @@ export default function HomePageClient({
               <CalligraphyPattern isDark={isDark} />
               <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pointer-events-none">
                 <div className="max-w-3xl mx-auto text-center space-y-8">
+                  {/*
+                    * data-calligraphy-avoid-text / data-calligraphy-avoid-buttons:
+                    * CalligraphyPattern uses these elements' bounding boxes as
+                    * per-element exclusion zones on mobile so random pulses never
+                    * fire directly behind the headline/subtitle or the CTA buttons.
+                    * Desktop hover is unrestricted and ignores these attributes.
+                    */}
                   <motion.h1
+                    data-calligraphy-avoid-text
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
@@ -282,6 +290,7 @@ export default function HomePageClient({
                   </motion.h1>
 
                   <motion.p
+                    data-calligraphy-avoid-text
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
@@ -292,6 +301,7 @@ export default function HomePageClient({
                   </motion.p>
 
                   <motion.div
+                    data-calligraphy-avoid-buttons
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
