@@ -5,6 +5,7 @@ import {
   FaGithub,
   FaLinkedin,
   FaMastodon,
+  FaRss,
   FaTelegram,
   FaXTwitter,
 } from "react-icons/fa6";
@@ -17,6 +18,7 @@ export type CommunityPlatformId =
   | "facebook"
   | "linkedin"
   | "github"
+  | "rss"
   | "matrix"
   | "telegram"
   | "discord";
@@ -71,6 +73,13 @@ export const SOCIAL_PLATFORMS: readonly CommunityPlatform[] = [
     href: "https://github.com/aosus",
     icon: FaGithub,
     detail: "aosus",
+  },
+  {
+    id: "rss",
+    label: "RSS Feed",
+    href: "https://aosus.org/feed",
+    icon: FaRss,
+    detail: "aosus.org/feed",
   },
 ];
 

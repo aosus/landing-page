@@ -82,7 +82,6 @@ export default function CommunityLinks({
             target="_blank"
             rel="noopener noreferrer"
             title={platform.label}
-            aria-label={platform.label}
             className={`group flex items-center justify-center border border-gray-200 text-gray-500 transition-all hover:border-[#008a2f] hover:bg-[#008a2f]/5 hover:text-[#008a2f] dark:border-[#008a2f]/20 dark:text-gray-400 dark:hover:text-[#008a2f] ${ICON_BUTTON_SIZE_CLASS[size]} ${itemClassName}`}
           >
             <Icon className={ICON_SIZE_CLASS[size]} />
