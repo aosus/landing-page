@@ -426,21 +426,29 @@ export default function HomePageClient({
                     className={`absolute ${isRtl ? "right-4 md:right-1/2" : "left-4 md:left-1/2"} top-0 bottom-0 w-px bg-[#008a2f]/30`}
                   />
                   {t.timeline.map((event, i) => {
-                    const isLeft = i % 2 === 0;
+                    const isRightSide = isRtl ? i % 2 === 0 : i % 2 !== 0;
+                    const justifyClass = isRightSide
+                      ? isRtl
+                        ? "justify-start"
+                        : "justify-end"
+                      : isRtl
+                        ? "justify-end"
+                        : "justify-start";
+
                     return (
                       <motion.div
                         key={i}
-                        initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
+                        initial={{ opacity: 0, x: isRightSide ? 30 : -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.08 }}
-                        className={`relative flex items-start mb-8 md:${isLeft ? "justify-start" : "justify-end"}`}
+                        className={`relative flex items-start mb-8 md:${justifyClass}`}
                       >
                         <div
                           className={`absolute ${isRtl ? "right-3 md:right-[calc(50%-5px)]" : "left-3 md:left-[calc(50%-5px)]"} top-2 w-2.5 h-2.5 bg-[#008a2f] border-2 border-black z-10`}
                         />
                         <div
-                          className={`${isRtl ? "mr-12 md:mr-0" : "ml-12 md:ml-0"} md:w-[45%] ${!isLeft ? "md:ml-auto" : ""}`}
+                          className={`${isRtl ? "mr-12 md:mr-0" : "ml-12 md:ml-0"} md:w-[45%]`}
                         >
                           <CyberCard
                             isDark={isDark}
