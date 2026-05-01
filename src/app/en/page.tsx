@@ -1,8 +1,8 @@
 import HomePageClient from "../(en)/HomePageClient";
-import { getLatestPosts } from "@/lib/markdown";
+import { getLatestPosts, getLatestPostsWithFallback } from "@/lib/markdown";
 
 export default function EnHomePage() {
-  const enPosts = getLatestPosts("en");
+  const enPosts = getLatestPostsWithFallback("en", "ar");
   const arPosts = getLatestPosts("ar");
 
   return (
