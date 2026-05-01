@@ -163,13 +163,20 @@ export function getBlogPostMetadata(
   pathname: string,
   post: Pick<
     PostFrontMatter,
-    "title" | "excerpt" | "thumbnail" | "date" | "author" | "tags"
+    | "title"
+    | "excerpt"
+    | "thumbnail"
+    | "image"
+    | "ogImage"
+    | "date"
+    | "author"
+    | "tags"
   >,
 ): Metadata {
   return getPageMetadata(lang, pathname, {
     title: post.title,
     description: post.excerpt,
-    thumbnail: post.thumbnail,
+    thumbnail: post.thumbnail || post.ogImage || post.image,
     type: "article",
     publishedTime: post.date,
     authors: [post.author],

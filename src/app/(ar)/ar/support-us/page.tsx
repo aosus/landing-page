@@ -1,5 +1,5 @@
-import SupportPage from "@/app/(en)/support-us/SupportPageClient";
 import { getPageMetadata } from "@/lib/metadata";
+import { permanentRedirect } from "next/navigation";
 
 const pageMetadata = {
   title: "ادعمنا",
@@ -7,8 +7,8 @@ const pageMetadata = {
     "ادعم مجتمع أسس ليستمر في استضافة الخدمات المجتمعية، ورعاية الفعاليات، وتمويل المبادرات المفتوحة.",
 };
 
-export const metadata = getPageMetadata("ar", "/ar/support-us", pageMetadata);
+export const metadata = getPageMetadata("ar", "/support-us", pageMetadata);
 
 export default function ArSupportPage() {
-  return <SupportPage lang="ar" />;
+  permanentRedirect("/support-us");
 }
