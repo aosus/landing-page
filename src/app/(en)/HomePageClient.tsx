@@ -46,7 +46,7 @@ const CONTENT = {
         desc: "To support and raise awareness about Digital privacy, we host Privacy services/front ends for popular social platforms, allowing you to browse their content without Ads and tracking.",
         icon: Shield,
         color: "#1d70ba",
-        link: "/services",
+        link: getLocalizedPath("en", "/services"),
       },
       {
         title: "Community",
@@ -73,7 +73,7 @@ const CONTENT = {
       {
         year: "2016",
         title: "Aosus Launch",
-        desc: "AOSUS was founded in 2016 by a group of Arab FOSS enthusiasts as a complete community for free and open source software, with the aim of spreading and raising awareness for Arabic speakers in all countries of the world.",
+        desc: "Aosus was founded in 2016 by a group of Arab FOSS enthusiasts as a complete community for free and open source software, with the aim of spreading and raising awareness for Arabic speakers in all countries of the world.",
       },
       {
         year: "2016",
@@ -116,7 +116,7 @@ const CONTENT = {
         desc: "Aosus moved in 2024 to The Hack Foundation as its fiscal sponsor, becoming a registered U.S. 501(c)(3) nonprofit and gaining greater independence as well as the ability to offer tax-deductible donations in the United States.",
       },
     ],
-    aboutHeading: "Who are we ?",
+    aboutHeading: "Who are we?",
     aboutBody:
       "Aosus Community is a non-profit project by a group of Arab tech enthusiasts to create a dedicated community for FOSS software, hardware and its philosophy in the Arabic language.",
     aboutValues: [
@@ -127,30 +127,30 @@ const CONTENT = {
     blogHeading: "Latest updates in the Aosus community",
     blog: [
       {
-        title: "مجتمع أسس يرعى هاكاثون Daydream لطلاب المدارس بالإسكندرية",
+        title: "Aosus sponsors the Daydream Hackathon for school students in Alexandria",
         date: "2025-09-18",
         excerpt:
-          "مجتمع أسس يرعى هاكاثون Daydream في الاسنكدرية, ليعرف طلاب المدارس على البرمجيات المفتوحة و الحرة عبر برمجة الالعاب مع محرك Godot.",
+          "Aosus Community sponsors the Daydream Hackathon in Alexandria, introducing school students to free and open source software through game development with the Godot engine.",
         link: "/en/2135",
       },
       {
-        title: "ساهم في تَرْجَمَة Firefox!",
+        title: "Help Translate Firefox!",
         date: "2025-06-21",
         excerpt:
-          "هل انت تستخدم متصفح Firefox ومهتم بتحسين دعمة للعربية؟ Mozilla تطلب منك المساعدة! المتصفح يحتاج لمساهمتكم لتحسين دعمه للعربية.",
+          "Do you use Firefox and care about improving its Arabic support? Mozilla is asking for your help! The browser needs your contributions to improve its Arabic language support.",
         link: "/en/2125",
       },
       {
-        title: "توقف خدمة Piped.",
+        title: "Piped service shutdown",
         date: "2024-09-01",
         excerpt:
-          "خدمة Piped في مجتمع أسس تواجه مشاكل بتشغيل الفيديوهات منذ فترة. ولذلك نعلن عن ايقاف الخدمة قريبا.",
+          "The Piped service on Aosus has been experiencing video playback issues for some time. We are therefore announcing the upcoming shutdown of the service.",
         link: "/en/2071",
       },
     ],
-    ctaHeading: "Join the Open-Source Revolution",
-    ctaSubtitle: "Join the largest Arabic open-source community today.",
-    ctaButton: "Get Started",
+    ctaHeading: "Join our community",
+    ctaSubtitle: "Connect with the Aosus community on our forum",
+    ctaButton: "Visit the community",
   },
   ar: {
     heading: "أكبر مجتمع عربي للبرمجيات الحرة والمفتوحة",
@@ -168,7 +168,7 @@ const CONTENT = {
     projects: [
       {
         title: "خِدْمَات أسس العامة",
-        desc: "في سبيل دعم الخصوصية الرقمية, وزيادة الوعي عنها, يقدم مجتمع أسس خِدْمَات عامة, توفر واجهات لمنصات معروفة مثل Youtube, Tiktok, reddit وغيرها دون أعلانات او تتبع.",
+        desc: "في سبيل دعم الخصوصية الرقمية, وزيادة الوعي عنها, يقدم مجتمع أسس خِدْمَات عامة, توفر واجهات لمنصات معروفة مثل YouTube, TikTok, Reddit وغيرها دون أعلانات او تتبع.",
         icon: Shield,
         color: "#1d70ba",
         link: "/services",
@@ -249,13 +249,13 @@ const CONTENT = {
       "رؤيتنا: أن تكون أسس رائدة في التوعية والنشر عن حركة المصادر الحرة والمفتوحة المصدر في العالم العربي على نطاق العتاد والبرمجيات في سبيل الاعتماد وسد الاحتياجات المعرفية للتشغيل والتطوير",
       "قيمنا: التعاون والشفافية والإلتزام والمسؤولية والخصوصية",
     ],
-    blogHeading: "أخر التحديثات في مجتمع أسس",
+    blogHeading: "آخر التحديثات في مجتمع أسس",
     blog: [
       {
         title: "مجتمع أسس يرعى هاكاثون Daydream لطلاب المدارس بالإسكندرية",
         date: "2025-09-18",
         excerpt:
-          "مجتمع أسس يرعى هاكاثون Daydream في الاسنكدرية, ليعرف طلاب المدارس على البرمجيات المفتوحة و الحرة عبر برمجة الالعاب مع محرك Godot.",
+          "مجتمع أسس يرعى هاكاثون Daydream في الإسكندرية, ليعرف طلاب المدارس على البرمجيات المفتوحة و الحرة عبر برمجة الالعاب مع محرك Godot.",
         link: "/2135",
       },
       {
