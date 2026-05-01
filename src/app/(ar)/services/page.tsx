@@ -7,7 +7,7 @@ const pageMetadata = {
   thumbnail: "/og/privacy-frontends-link-preview.jpg",
 };
 
-export const metadata = getPageMetadata("ar", "/services", pageMetadata);
+export const metadata = getPageMetadata("ar", "/ar/services", pageMetadata);
 
 export default function ServicesPageRoute() {
   return <ServicesPage lang="ar" />;
