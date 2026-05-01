@@ -218,6 +218,26 @@ export function getLatestPosts(lang: Lang, count = 3): PostFrontMatter[] {
   return getRegularPosts(lang).slice(0, count);
 }
 
+export function getLatestPostsWithFallback(
+  lang: Lang,
+  fallbackLang: Lang,
+  count = 3,
+): PostFrontMatter[] {
+  const preferredPosts = getLatestPosts(lang, count);
+
+  if (preferredPosts.length >= count || lang === fallbackLang) {
+    return preferredPosts;
+  }
+
+  const fallbackPosts = getLatestPosts(fallbackLang, count);
+  const seenSlugs = new Set(preferredPosts.map((post) => post.slug));
+
+  return [...preferredPosts, ...fallbackPosts.filter((post) => !seenSlugs.has(post.slug))].slice(
+    0,
+    count,
+  );
+}
+
 export function getPostsByCategory(lang: Lang, category: string): PostFrontMatter[] {
   return getAllPosts(lang).filter((post) => post.categories.includes(category));
 }
