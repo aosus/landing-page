@@ -26,6 +26,8 @@ import type { PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
 import CalligraphyPattern from "@/components/CalligraphyPattern";
 
+const YEARS_ACTIVE = new Date().getFullYear() - 2016;
+
 const CONTENT = {
   en: {
     heading: "The largest Arabic FOSS community",
@@ -36,7 +38,7 @@ const CONTENT = {
     stats: [
       { label: "Members", value: "3,000+", icon: Users },
       { label: "Posts", value: "10,000+", icon: MessageSquare },
-      { label: "Years of activity", value: "9", icon: Activity },
+      { label: "Years of activity", value: String(YEARS_ACTIVE), icon: Activity },
       { label: "Topics", value: "1,300+", icon: Database },
     ],
     projectsHeading: "Aosus projects",
@@ -138,7 +140,7 @@ const CONTENT = {
     stats: [
       { label: "عضو", value: "+3,000", icon: Users },
       { label: "منشور", value: "+10,000", icon: MessageSquare },
-      { label: "سنين من العطاء", value: "9", icon: Activity },
+      { label: "سنين من العطاء", value: String(YEARS_ACTIVE), icon: Activity },
       { label: "موضوع", value: "+1,300", icon: Database },
     ],
     projectsHeading: "أبرز انتاجات أسس",
@@ -307,7 +309,7 @@ export default function HomePageClient({
 
             <section className="py-20 border-y border-[#008a2f]/10 bg-gray-50/80 backdrop-blur-sm dark:bg-black/40">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                   {t.stats.map((stat, i) => (
                     <motion.div
                       key={i}
@@ -318,13 +320,13 @@ export default function HomePageClient({
                     >
                       <CyberCard
                         isDark={isDark}
-                        className="p-6 group cursor-default"
+                        className="h-full min-w-0 overflow-hidden p-6 group cursor-default flex flex-col gap-3"
                       >
-                        <stat.icon className="w-6 h-6 text-[#008a2f] mb-4 opacity-50 group-hover:opacity-100 transition-all" />
-                        <div className="text-3xl sm:text-4xl font-bold mb-2 font-mono text-gray-900 transition-colors group-hover:text-[#008a2f] dark:text-white">
+                        <stat.icon className="w-6 h-6 text-[#008a2f] opacity-50 group-hover:opacity-100 transition-all self-end shrink-0" />
+                        <div className="text-2xl sm:text-3xl font-bold font-mono text-gray-900 transition-colors group-hover:text-[#008a2f] dark:text-white break-words leading-none">
                           {stat.value}
                         </div>
-                        <div className="text-xs uppercase tracking-widest font-mono text-gray-400 dark:text-gray-500">
+                        <div className="text-xs uppercase tracking-widest font-mono text-gray-400 dark:text-gray-500 leading-snug break-words">
                           {stat.label}
                         </div>
                       </CyberCard>
