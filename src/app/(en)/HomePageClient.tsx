@@ -544,7 +544,7 @@ export default function HomePageClient({
                         const isDynamic = "slug" in post;
                         const link = isDynamic
                           ? getPostPath(
-                              lang,
+                              (post as PostFrontMatter).lang,
                               (post as PostFrontMatter).slug,
                               (post as PostFrontMatter).wpType === "post"
                                 && (post as PostFrontMatter).wpId === (post as PostFrontMatter).slug,
