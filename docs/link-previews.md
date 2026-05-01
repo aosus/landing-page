@@ -27,6 +27,8 @@ The blog renders link previews with local favicon caching.
 - Entries are cached for 30 days (`expiresAt`), then refreshed.
 - If a fetch fails, rendering falls back to a local default favicon.
 
+The site also serves a direct `/favicon.ico` fallback generated from the standard colored logo so preview systems that probe that path can still resolve a favicon.
+
 Previously, internal `aosus.org` URLs were excluded to reduce preview noise and avoid fetching metadata for pages we already control. That tradeoff is gone now, so all HTTP(S) links can be previewed.
 
 ## Rendering Pipeline
