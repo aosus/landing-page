@@ -146,8 +146,8 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
       <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-[#1d70ba]/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[#008a2f]/20 bg-white/60 backdrop-blur-md dark:bg-black/60">
-        <nav className="max-w-7xl mx-auto px-3 sm:px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
-          <Link href={homeHref} className="justify-self-start flex items-center gap-3 group">
+        <nav className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-3 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <Link href={homeHref} className="flex items-center gap-3 group">
             <>
               <img
                 src="/brand/logo-text.svg"
@@ -242,8 +242,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
             </div>
           </div>
 
-          <div className="justify-self-end flex items-center gap-2">
-
+          <div className="flex items-center gap-2">
             <Link
               href={langToggleHref}
 
