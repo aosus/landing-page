@@ -11,12 +11,13 @@ import {
   Tag,
 } from "lucide-react";
 import Link from "next/link";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "@/components/layout/Layout";
+import CommunityLinks from "@/components/CommunityLinks";
 import Layout, {
   CyberCard,
   PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
+import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "@/lib/community-platforms";
 import type { Post, PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
 
@@ -149,23 +150,11 @@ export default function ArticlePageClient({
                       <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap shrink-0 self-start sm:self-auto">
                         <span className="opacity-50">/</span> {lang === "ar" ? "غرف المحادثة" : "Chat Rooms"}
                       </h3>
-                      <div className="flex items-center gap-1.5 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end flex-nowrap">
-                        {CHAT_PLATFORMS.map((platform) => {
-                          const Icon = platform.icon;
-                          return (
-                            <a
-                              key={platform.label}
-                              href={platform.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              title={platform.label}
-                              className="p-1.5 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f] shrink-0"
-                            >
-                              <Icon className="w-3.5 h-3.5" />
-                            </a>
-                          );
-                        })}
-                      </div>
+                      <CommunityLinks
+                        platforms={CHAT_PLATFORMS}
+                        size="sm"
+                        className="w-full justify-start sm:ms-auto sm:w-auto sm:justify-end sm:flex-nowrap"
+                      />
                     </div>
                   </CyberCard>
 
@@ -174,23 +163,11 @@ export default function ArticlePageClient({
                       <h3 className="font-mono text-sm uppercase tracking-wider text-[#008a2f] whitespace-nowrap shrink-0 self-start sm:self-auto">
                         <span className="opacity-50">/</span> {lang === "ar" ? "تابعنا" : "Follow Us"}
                       </h3>
-                      <div className="flex items-center gap-1.5 w-full sm:w-auto sm:ms-auto justify-start sm:justify-end flex-nowrap">
-                        {SOCIAL_PLATFORMS.map((platform) => {
-                          const Icon = platform.icon;
-                          return (
-                            <a
-                              key={platform.label}
-                              href={platform.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              title={platform.label}
-                              className="p-1.5 border border-gray-200 dark:border-[#008a2f]/20 hover:border-[#008a2f] hover:bg-[#008a2f]/5 transition-all text-gray-500 dark:text-gray-400 hover:text-[#008a2f] dark:hover:text-[#008a2f] shrink-0"
-                            >
-                              <Icon className="w-3.5 h-3.5" />
-                            </a>
-                          );
-                        })}
-                      </div>
+                      <CommunityLinks
+                        platforms={SOCIAL_PLATFORMS}
+                        size="sm"
+                        className="w-full justify-start sm:ms-auto sm:w-auto sm:justify-end sm:flex-nowrap"
+                      />
                     </div>
                   </CyberCard>
                 </div>
