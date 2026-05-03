@@ -128,7 +128,7 @@ export function buildRssXml(lang: Lang, posts: Post[]): string {
         ...post.tags.map((tag) => `      <category>${escapeXml(tag)}</category>`),
         ...(post.image && imageContentType
           ? [
-              `      <enclosure url=\"${escapeXml(getAbsoluteUrl(post.image))}\" type=\"${imageContentType}\" />`,
+              `      <enclosure url=\"${escapeXml(getAbsoluteUrl(post.image))}\" length=\"0\" type=\"${imageContentType}\" />`,
             ]
           : []),
         ...(htmlContent

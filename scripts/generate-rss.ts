@@ -9,9 +9,7 @@ const publicDir = path.join(root, "public");
 const langs: Lang[] = ["ar", "en"];
 
 function ensureDir(dir: string) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+  fs.mkdirSync(dir, { recursive: true });
 }
 
 async function generateFeed(lang: Lang) {

@@ -16,7 +16,7 @@ describe("rss", () => {
         categories: ["updates"],
         slug: "example-post",
         lang: "en",
-        content: "<p>Hello feed readers.</p>",
+        content: '<p>Hello <a href="/path">feed readers</a> and <img src="/img.png" alt="img" /></p>',
       },
     ] as any);
 
@@ -25,8 +25,10 @@ describe("rss", () => {
     expect(xml).toContain('<atom:link href="https://aosus.org/en/rss.xml" rel="self" type="application/rss+xml" />');
     expect(xml).toContain("<link>https://aosus.org/en/blog/example-post</link>");
     expect(xml).toContain("<dc:creator><![CDATA[Aosus]]></dc:creator>");
-    expect(xml).toContain('<enclosure url="https://aosus.org/content/blog/example/cover.png" type="image/png" />');
-    expect(xml).toContain("<content:encoded><![CDATA[<p>Hello feed readers.</p>]]></content:encoded>");
+    expect(xml).toContain('<enclosure url="https://aosus.org/content/blog/example/cover.png" length="0" type="image/png" />');
+    expect(xml).toContain('<content:encoded><![CDATA[');
+    expect(xml).toContain('href="https://aosus.org/path"');
+    expect(xml).toContain('src="https://aosus.org/img.png"');
   });
 
   it("uses root-level URLs for Arabic WordPress-style posts", () => {
