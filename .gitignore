@@ -6,6 +6,8 @@
 out/
 *.tsbuildinfo
 public/content/
+public/rss.xml
+public/en/rss.xml
 artifacts/
 
 # dependencies
