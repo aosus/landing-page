@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import type { PostFrontMatter } from "@/lib/markdown";
 import type { Lang } from "@/lib/locale";
+import { SITE_URL, getRssFeedPath } from "@/lib/rss";
 
-const SITE_URL = "https://aosus.org";
 const DEFAULT_OG_IMAGE = "/opengraph.jpg";
 
 const SITE_COPY = {
@@ -118,6 +118,9 @@ export function getPageMetadata(
     description: resolved.description,
     alternates: {
       canonical: pathname,
+      types: {
+        "application/rss+xml": getRssFeedPath(lang),
+      },
     },
     openGraph: {
       title: resolved.title,
