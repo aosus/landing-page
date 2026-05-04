@@ -7,11 +7,11 @@ import {
   User,
   ArrowLeft,
   ArrowRight,
-  MessageSquare,
   Tag,
 } from "lucide-react";
 import Link from "next/link";
 import CommunityLinks from "@/components/CommunityLinks";
+import DiscourseComments from "@/components/DiscourseComments";
 import Layout, {
   CyberCard,
   PrimaryButton,
@@ -25,18 +25,18 @@ const LABELS = {
   en: {
     breadcrumb: ["Home", "Blog"],
     supportCta: "Support Aosus Community",
-    discussCta: "Discuss on Forum",
     prevLabel: "Previous Post",
     supportBtn: "Support Us",
   },
   ar: {
     breadcrumb: ["الرئيسية", "المدونة"],
     supportCta: "ادعم مجتمع أسس",
-    discussCta: "علّق في المنتدى",
     prevLabel: "المقال السابق",
     supportBtn: "ادعمنا",
   },
 };
+
+const SITE_URL = "https://aosus.org";
 
 export default function ArticlePageClient({
   post,
@@ -57,6 +57,7 @@ export default function ArticlePageClient({
         const homeLink = getLocalizedPath(lang, "/");
         const blogLink = getLocalizedPath(lang, "/blog");
         const supportLink = getLocalizedPath(lang, "/support-us");
+        const discussionEmbedUrl = new URL(post.discussionPath, SITE_URL).toString();
 
         return (
           <article className="min-h-screen py-24 bg-gray-50 dark:bg-transparent">
@@ -172,13 +173,11 @@ export default function ArticlePageClient({
                   </CyberCard>
                 </div>
 
-                <a
-                  href="https://discourse.aosus.org/"
-                  className="flex items-center gap-2 text-sm font-mono uppercase tracking-wider text-[#008a2f] hover:underline mb-12"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  {t.discussCta}
-                </a>
+                <DiscourseComments
+                  lang={lang}
+                  isDark={isDark}
+                  embedUrl={discussionEmbedUrl}
+                />
 
                 {prevPost && (
                   <div className="border-t border-[#008a2f]/20 pt-8">

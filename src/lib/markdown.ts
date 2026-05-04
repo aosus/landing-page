@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
 import { visit } from "unist-util-visit";
-import type { Lang } from "@/lib/locale";
+import { getPostPath, type Lang } from "@/lib/locale";
 import remarkLinkPreviews from "@/lib/remarkLinkPreviews";
 
 export interface PostFrontMatter {
@@ -22,6 +22,7 @@ export interface PostFrontMatter {
   wpId?: string;
   wpType?: string;
   sourceUrl?: string;
+  discussionPath: string;
 }
 
 export const POSTS_PER_PAGE = 9;
@@ -115,6 +116,42 @@ function resolvePublicSlug(data: Record<string, unknown>, directorySlug: string)
   return normalizeString(data.slug) ?? directorySlug;
 }
 
+function readFrontMatterData(filePath: string): Record<string, unknown> {
+  if (!fs.existsSync(filePath)) {
+    return {};
+  }
+
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  return matter(fileContents).data;
+}
+
+function resolveDiscussionPath(
+  directorySlug: string,
+  lang: Lang,
+  data: Record<string, unknown>,
+): string {
+  const wpType = normalizeString(data.wpType);
+
+  if (wpType === "post") {
+    const discussionId = normalizeString(data.wpId) ?? resolvePublicSlug(data, directorySlug);
+    return getPostPath("ar", discussionId, true);
+  }
+
+  const discussionLang: Lang = fs.existsSync(getMarkdownFilePath(directorySlug, "ar"))
+    ? "ar"
+    : lang;
+  const discussionData =
+    discussionLang === lang ? data : readFrontMatterData(getMarkdownFilePath(directorySlug, discussionLang));
+  const discussionWpType = normalizeString(discussionData.wpType);
+  const discussionSlug = resolvePublicSlug(discussionData, directorySlug);
+
+  return getPostPath(
+    discussionLang,
+    discussionSlug,
+    discussionWpType === "post" && normalizeString(discussionData.wpId) === discussionSlug,
+  );
+}
+
 function getAllPostDirectories(): string[] {
   if (!fs.existsSync(blogRoot)) {
     return [];
@@ -160,6 +197,7 @@ function parsePostFile(filePath: string, directorySlug: string, lang: Lang): Par
   const wpType = normalizeString(data.wpType);
   const sourceUrl = normalizeString(data.sourceUrl);
   const slug = resolvePublicSlug(data, directorySlug);
+  const discussionPath = resolveDiscussionPath(directorySlug, lang, data);
 
   return {
     filePath,
@@ -180,6 +218,7 @@ function parsePostFile(filePath: string, directorySlug: string, lang: Lang): Par
       wpId,
       wpType,
       sourceUrl,
+      discussionPath,
     } as PostFrontMatter,
     content,
   };
