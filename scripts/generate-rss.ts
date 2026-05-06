@@ -21,7 +21,12 @@ async function generateFeed(lang: Lang) {
   const outputPath = path.join(publicDir, feedPath.replace(/^\//, ""));
 
   ensureDir(path.dirname(outputPath));
-  fs.writeFileSync(outputPath, buildRssXml(lang, publishedPosts));
+  const xml = buildRssXml(lang, publishedPosts);
+  fs.writeFileSync(outputPath, xml);
+
+  for (const aliasPath of [outputPath.replace(/rss\.xml$/, "rss"), outputPath.replace(/rss\.xml$/, "feed")]) {
+    fs.writeFileSync(aliasPath, xml);
+  }
 }
 
 await Promise.all(langs.map((lang) => generateFeed(lang)));

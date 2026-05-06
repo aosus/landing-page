@@ -11,6 +11,7 @@ const contentTypes = new Map([
   [".js", "text/javascript; charset=utf-8"],
   [".css", "text/css; charset=utf-8"],
   [".json", "application/json; charset=utf-8"],
+  [".xml", "application/rss+xml; charset=utf-8"],
   [".svg", "image/svg+xml"],
   [".png", "image/png"],
   [".jpg", "image/jpeg"],
@@ -22,6 +23,12 @@ const contentTypes = new Map([
 ]);
 
 function contentTypeFor(filePath) {
+  const basename = path.basename(filePath);
+
+  if (basename === "rss" || basename === "feed") {
+    return "application/rss+xml; charset=utf-8";
+  }
+
   return contentTypes.get(path.extname(filePath)) || "application/octet-stream";
 }
 
