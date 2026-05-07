@@ -25,6 +25,7 @@ import Layout, {
 import type { PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
 import CalligraphyPattern from "@/components/CalligraphyPattern";
+import { SITE_URL } from "@/lib/rss";
 
 const YEARS_ACTIVE = new Date().getFullYear() - 2016;
 
@@ -250,9 +251,56 @@ export default function HomePageClient({
         const ff = isRtl ? "var(--font-arabic)" : undefined;
         const servicesLink = getLocalizedPath(lang, "/services");
         const dynamicPosts = latestPosts?.[lang]?.slice(0, 3);
+        const homeUrl = new URL(getLocalizedPath(lang, "/"), SITE_URL).toString();
+        const blogUrl = new URL(getLocalizedPath(lang, "/blog"), SITE_URL).toString();
+        const socialProfiles = [
+          "https://twitter.com/aosusdotorg",
+          "https://bsky.app/profile/aosus.org",
+          "https://mastodon.online/@aosus",
+          "https://www.facebook.com/aosus1/",
+          "https://www.linkedin.com/company/aosus/",
+          "https://github.com/aosus",
+        ];
+        const structuredData = {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": `${SITE_URL}/#organization`,
+              name: lang === "ar" ? "مجتمع أسس" : "Aosus Community",
+              url: SITE_URL,
+              logo: `${SITE_URL}/brand/logo-symbol.svg`,
+              sameAs: socialProfiles,
+            },
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: SITE_URL,
+              name: lang === "ar" ? "مجتمع أسس" : "Aosus Community",
+              inLanguage: lang,
+            },
+            {
+              "@type": "WebPage",
+              "@id": `${homeUrl}#webpage`,
+              url: homeUrl,
+              name: t.heading,
+              isPartOf: { "@id": `${SITE_URL}/#website` },
+              about: { "@id": `${SITE_URL}/#organization` },
+              inLanguage: lang,
+              description: t.subtitle,
+              mainEntity: { "@id": `${SITE_URL}/#organization` },
+            },
+          ],
+        };
 
         return (
           <>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(structuredData),
+              }}
+            />
             <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
               <CalligraphyPattern isDark={isDark} />
               <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pointer-events-none">
@@ -534,6 +582,17 @@ export default function HomePageClient({
                         );
                       })}
                     </div>
+                    {lang === "en" && !dynamicPosts?.length && (
+                      <div className="rounded-sm border border-[#008a2f]/20 bg-[#008a2f]/5 p-4 text-sm text-gray-500 dark:text-gray-400">
+                        English posts appear here once they are translated and published.
+                        <Link
+                          href={blogUrl.replace(SITE_URL, "")}
+                          className="ml-2 font-mono text-[#008a2f] hover:underline"
+                        >
+                          Visit the English blog
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

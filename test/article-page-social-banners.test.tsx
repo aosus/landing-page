@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 
 import ArticlePageClient from "../src/app/(en)/blog/[slug]/ArticlePageClient";
 import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "../src/lib/community-platforms";
+import { getRssFeedUrl } from "../src/lib/rss";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) => (
@@ -59,9 +60,12 @@ describe("ArticlePageClient social banners", () => {
     }
 
     for (const platform of SOCIAL_PLATFORMS) {
+      const expectedHref =
+        platform.id === "rss" ? getRssFeedUrl("en") : platform.href;
+
       expect(screen.getByRole("link", { name: platform.label })).toHaveAttribute(
         "href",
-        platform.href,
+        expectedHref,
       );
     }
 

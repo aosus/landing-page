@@ -2,12 +2,12 @@
 
 import React, { Suspense } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowRight, Calendar, Languages, User } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Layout, {
   CyberCard,
-  SectionHeading,
+  PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
 import type { PostFrontMatter } from "@/lib/markdown";
@@ -37,11 +37,18 @@ function BlogPageContent({
   lang,
   isDark,
   currentPage,
+  untranslatedNotice,
 }: {
   posts: PostFrontMatter[];
   lang: Lang;
   isDark: boolean;
   currentPage: number;
+  untranslatedNotice?: {
+    title: string;
+    description: string;
+    href: string;
+    cta: string;
+  };
 }) {
   const page = PAGE[lang];
   const isRtl = lang === "ar";
@@ -62,12 +69,51 @@ function BlogPageContent({
   return (
     <section className="min-h-screen py-24 bg-gray-50 dark:bg-transparent">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionHeading
-          title={page.title}
-          subtitle={page.subtitle}
-          isDark={isDark}
-          lang={lang}
-        />
+        <div className="mb-12 text-center">
+          <h1
+            className="text-3xl md:text-4xl font-bold uppercase tracking-widest mb-4"
+            style={{
+              fontFamily: isRtl ? "var(--font-arabic)" : "var(--font-mono)",
+            }}
+          >
+            <span className="text-[#008a2f]">/</span> {page.title}
+          </h1>
+          <p
+            className="text-base max-w-2xl text-gray-500 dark:text-gray-400 mx-auto"
+            style={{ fontFamily: ff }}
+          >
+            {page.subtitle}
+          </p>
+        </div>
+
+        {untranslatedNotice && (
+          <CyberCard isDark={isDark} className="mb-12 p-6" hover={false}>
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-2xl">
+                <div className="mb-2 flex items-center gap-2 text-xs font-mono uppercase tracking-[0.3em] text-[#008a2f]">
+                  <Languages className="h-4 w-4" />
+                  <span>Translation note</span>
+                </div>
+                <h2
+                  className="mb-2 text-xl font-bold text-gray-900 dark:text-white"
+                  style={{ fontFamily: ff }}
+                >
+                  {untranslatedNotice.title}
+                </h2>
+                <p
+                  className="text-sm leading-relaxed text-gray-500 dark:text-gray-400"
+                  style={{ fontFamily: ff }}
+                >
+                  {untranslatedNotice.description}
+                </p>
+              </div>
+              <PrimaryButton href={untranslatedNotice.href} className="shrink-0">
+                {untranslatedNotice.cta}
+                <ArrowRight className="w-4 h-4" />
+              </PrimaryButton>
+            </div>
+          </CyberCard>
+        )}
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {visiblePosts.map((post, i) => (
@@ -181,10 +227,17 @@ function PaginatedBlogPageContent({
   posts,
   lang,
   isDark,
+  untranslatedNotice,
 }: {
   posts: PostFrontMatter[];
   lang: Lang;
   isDark: boolean;
+  untranslatedNotice?: {
+    title: string;
+    description: string;
+    href: string;
+    cta: string;
+  };
 }) {
   const searchParams = useSearchParams();
   const requestedPage = Number(searchParams.get("page") ?? "1");
@@ -197,6 +250,7 @@ function PaginatedBlogPageContent({
       lang={lang}
       isDark={isDark}
       currentPage={currentPage}
+      untranslatedNotice={untranslatedNotice}
     />
   );
 }
@@ -204,9 +258,16 @@ function PaginatedBlogPageContent({
 export default function BlogPageClient({
   posts,
   lang: langProp,
+  untranslatedNotice,
 }: {
   posts: PostFrontMatter[];
   lang: Lang;
+  untranslatedNotice?: {
+    title: string;
+    description: string;
+    href: string;
+    cta: string;
+  };
 }) {
   return (
     <Layout lang={langProp}>
@@ -218,10 +279,16 @@ export default function BlogPageClient({
               lang={lang}
               isDark={isDark}
               currentPage={1}
+              untranslatedNotice={untranslatedNotice}
             />
           }
         >
-          <PaginatedBlogPageContent posts={posts} lang={lang} isDark={isDark} />
+          <PaginatedBlogPageContent
+            posts={posts}
+            lang={lang}
+            isDark={isDark}
+            untranslatedNotice={untranslatedNotice}
+          />
         </Suspense>
       )}
     </Layout>
