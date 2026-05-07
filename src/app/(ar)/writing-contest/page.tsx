@@ -12,6 +12,9 @@ export const metadata = getPageMetadata(
   "ar",
   "/writing-contest",
   pageMetadata,
+  {
+    includeLanguageAlternates: true,
+  },
 );
 
 export default function WritingContestPageRoute() {

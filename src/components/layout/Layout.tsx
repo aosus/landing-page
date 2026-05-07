@@ -8,7 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import CommunityLinks from "@/components/CommunityLinks";
 import { getLocalizedPath, isEnglishPath, type Lang } from "@/lib/locale";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "@/lib/community-platforms";
+import { CHAT_PLATFORMS, getSocialPlatforms } from "@/lib/community-platforms";
 
 export type { Lang } from "@/lib/locale";
 
@@ -116,6 +116,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
   }, []);
 
   const navItems = NAV[lang];
+  const socialPlatforms = getSocialPlatforms(lang);
   const homeHref = getLocalizedPath(lang, "/");
   const supportHref = getLocalizedPath(lang, "/support-us");
   const langToggleHref = getLocalizedPath(
@@ -380,7 +381,7 @@ export default function Layout({ children, lang: langProp }: LayoutProps) {
                 {lang === "ar" ? "تابعنا" : "Follow Us"}
               </h4>
               <CommunityLinks
-                platforms={SOCIAL_PLATFORMS}
+                platforms={socialPlatforms}
                 className="gap-2"
                 itemClassName="border-[#008a2f]/20 dark:border-[#008a2f]/20"
               />

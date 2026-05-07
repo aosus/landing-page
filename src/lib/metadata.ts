@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { PostFrontMatter } from "@/lib/markdown";
 import type { Lang } from "@/lib/locale";
+import { getLocalizedPath, stripLocalePrefix } from "@/lib/locale";
 import { SITE_URL, getRssFeedPath } from "@/lib/rss";
 
 const DEFAULT_OG_IMAGE = "/opengraph.jpg";
@@ -52,8 +53,21 @@ type PageMetadataInput = {
   tags?: string[];
 };
 
+type MetadataOptions = {
+  includeLanguageAlternates?: boolean;
+};
+
 function getLocalizedUrl(pathname: string): string {
   return new URL(pathname, SITE_URL).toString();
+}
+
+function getLanguageAlternates(pathname: string) {
+  const basePath = stripLocalePrefix(pathname);
+
+  return {
+    ar: getLocalizedPath("ar", basePath),
+    en: getLocalizedPath("en", basePath),
+  };
 }
 
 function getFullTitle(lang: Lang, title?: string): string {
@@ -108,6 +122,7 @@ export function getPageMetadata(
   lang: Lang,
   pathname: string,
   metadata: PageMetadataInput = {},
+  options: MetadataOptions = {},
 ): Metadata {
   const copy = SITE_COPY[lang];
   const url = getLocalizedUrl(pathname);
@@ -118,6 +133,9 @@ export function getPageMetadata(
     description: resolved.description,
     alternates: {
       canonical: pathname,
+      ...(options.includeLanguageAlternates
+        ? { languages: getLanguageAlternates(pathname) }
+        : {}),
       types: {
         "application/rss+xml": getRssFeedPath(lang),
       },
@@ -149,6 +167,8 @@ export function getSiteMetadata(lang: Lang, pathname: string): Metadata {
   return getPageMetadata(lang, pathname, {
     title: copy.homeTitle,
     description: copy.description,
+  }, {
+    includeLanguageAlternates: true,
   });
 }
 
@@ -158,6 +178,8 @@ export function getBlogIndexMetadata(lang: Lang, pathname: string): Metadata {
   return getPageMetadata(lang, pathname, {
     title: copy.blogTitle,
     description: copy.blogDescription,
+  }, {
+    includeLanguageAlternates: true,
   });
 }
 
