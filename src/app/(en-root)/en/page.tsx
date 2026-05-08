@@ -1,11 +1,11 @@
 import HomePageClient from "@/app/(en)/HomePageClient";
-import { getLatestPosts, getLatestPostsWithFallback } from "@/lib/markdown";
+import { getLatestPosts } from "@/lib/markdown";
 import { getSiteMetadata } from "@/lib/metadata";
 
 export const metadata = getSiteMetadata("en", "/en");
 
 export default function EnHomePage() {
-  const enPosts = getLatestPostsWithFallback("en", "ar");
+  const enPosts = getLatestPosts("en");
   const arPosts = getLatestPosts("ar");
 
   return (

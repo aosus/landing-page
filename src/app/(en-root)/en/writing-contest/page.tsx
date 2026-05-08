@@ -12,6 +12,9 @@ export const metadata = getPageMetadata(
   "en",
   "/en/writing-contest",
   pageMetadata,
+  {
+    includeLanguageAlternates: true,
+  },
 );
 
 export default function EnWritingContestPage() {

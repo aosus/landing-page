@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import ArticlePageClient from "../src/app/(en)/blog/[slug]/ArticlePageClient";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "../src/lib/community-platforms";
+import { CHAT_PLATFORMS, getSocialPlatforms } from "../src/lib/community-platforms";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) => (
@@ -47,6 +47,7 @@ describe("ArticlePageClient social banners", () => {
 
   it("renders compressed one-row icon banners for chat and social links", () => {
     render(<ArticlePageClient post={post} prevPost={null} lang="en" />);
+    const socialPlatforms = getSocialPlatforms("en");
 
     expect(screen.getByText("Chat Rooms")).toBeInTheDocument();
     expect(screen.getByText("Follow Us")).toBeInTheDocument();
@@ -58,7 +59,7 @@ describe("ArticlePageClient social banners", () => {
       );
     }
 
-    for (const platform of SOCIAL_PLATFORMS) {
+    for (const platform of socialPlatforms) {
       expect(screen.getByRole("link", { name: platform.label })).toHaveAttribute(
         "href",
         platform.href,

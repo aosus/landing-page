@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import ContactPage from "../src/app/(en)/contact-us/ContactPageClient";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "../src/lib/community-platforms";
+import { CHAT_PLATFORMS, getSocialPlatforms } from "../src/lib/community-platforms";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) => (
@@ -28,6 +28,7 @@ vi.mock("framer-motion", () => ({
 describe("ContactPage community links", () => {
   it("renders separate chat and social sections with all shared platforms", () => {
     render(<ContactPage lang="en" />);
+    const socialPlatforms = getSocialPlatforms("en");
 
     expect(screen.getByText("Chat_Platforms")).toBeInTheDocument();
     expect(screen.getByText("Follow_Us")).toBeInTheDocument();
@@ -40,7 +41,7 @@ describe("ContactPage community links", () => {
       expect(screen.getByText(platform.detail)).toBeInTheDocument();
     }
 
-    for (const platform of SOCIAL_PLATFORMS) {
+    for (const platform of socialPlatforms) {
       expect(screen.getByRole("link", { name: platform.label })).toHaveAttribute(
         "href",
         platform.href,

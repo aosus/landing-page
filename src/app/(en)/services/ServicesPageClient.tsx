@@ -219,12 +219,22 @@ export default function ServicesPage({ lang: langProp }: { lang?: Lang }) {
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
             <section className="py-24">
               <div className="max-w-6xl mx-auto px-6">
-                <SectionHeading
-                  title={t.title}
-                  subtitle={t.subtitle}
-                  isDark={isDark}
-                  lang={lang}
-                />
+                <div className="mb-12 text-center">
+                  <h1
+                    className="text-3xl md:text-4xl font-bold uppercase tracking-widest mb-4"
+                    style={{
+                      fontFamily: isRtl ? "var(--font-arabic)" : "var(--font-mono)",
+                    }}
+                  >
+                    <span className="text-[#008a2f]">/</span> {t.title}
+                  </h1>
+                  <p
+                    className="text-base max-w-2xl text-gray-500 dark:text-gray-400 mx-auto"
+                    style={{ fontFamily: ff }}
+                  >
+                    {t.subtitle}
+                  </p>
+                </div>
 
                 <CyberCard
                   isDark={isDark}

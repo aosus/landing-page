@@ -10,6 +10,8 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 import { SiBluesky, SiMatrix } from "react-icons/si";
+import type { Lang } from "@/lib/locale";
+import { getRssFeedPath, getRssFeedUrl } from "@/lib/rss";
 
 export type CommunityPlatformId =
   | "twitter"
@@ -31,7 +33,7 @@ export interface CommunityPlatform {
   detail: string;
 }
 
-export const SOCIAL_PLATFORMS: readonly CommunityPlatform[] = [
+const BASE_SOCIAL_PLATFORMS: readonly CommunityPlatform[] = [
   {
     id: "twitter",
     label: "X / Twitter",
@@ -74,14 +76,22 @@ export const SOCIAL_PLATFORMS: readonly CommunityPlatform[] = [
     icon: FaGithub,
     detail: "aosus",
   },
-  {
-    id: "rss",
-    label: "RSS Feed",
-    href: "https://aosus.org/feed",
-    icon: FaRss,
-    detail: "aosus.org/feed",
-  },
 ];
+
+export function getSocialPlatforms(lang: Lang): readonly CommunityPlatform[] {
+  return [
+    ...BASE_SOCIAL_PLATFORMS,
+    {
+      id: "rss",
+      label: "RSS Feed",
+      href: getRssFeedUrl(lang),
+      icon: FaRss,
+      detail: `aosus.org${getRssFeedPath(lang)}`,
+    },
+  ];
+}
+
+export const SOCIAL_PLATFORMS_AR: readonly CommunityPlatform[] = getSocialPlatforms("ar");
 
 export const CHAT_PLATFORMS: readonly CommunityPlatform[] = [
   {

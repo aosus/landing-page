@@ -17,9 +17,10 @@ import Layout, {
   PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "@/lib/community-platforms";
+import { CHAT_PLATFORMS, getSocialPlatforms } from "@/lib/community-platforms";
 import type { Post, PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
+import { SITE_URL } from "@/lib/rss";
 
 const LABELS = {
   en: {
@@ -38,6 +39,10 @@ const LABELS = {
   },
 };
 
+function serializeJsonLd(value: unknown) {
+  return JSON.stringify(value).replace(/<\/(script)/gi, "<\\/$1");
+}
+
 export default function ArticlePageClient({
   post,
   prevPost,
@@ -53,13 +58,80 @@ export default function ArticlePageClient({
         const t = LABELS[lang];
         const isRtl = lang === "ar";
         const ff = isRtl ? "var(--font-arabic)" : undefined;
+        const socialPlatforms = getSocialPlatforms(lang);
         const BackArrow = isRtl ? ArrowRight : ArrowLeft;
         const homeLink = getLocalizedPath(lang, "/");
         const blogLink = getLocalizedPath(lang, "/blog");
         const supportLink = getLocalizedPath(lang, "/support-us");
+        const articleUrl = new URL(
+          getPostPath(
+            lang,
+            post.slug,
+            post.wpType === "post" && post.wpId === post.slug,
+          ),
+          SITE_URL,
+        ).toString();
+        const articleStructuredData = {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: t.breadcrumb[0],
+                  item: new URL(homeLink, SITE_URL).toString(),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: t.breadcrumb[1],
+                  item: new URL(blogLink, SITE_URL).toString(),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: post.title,
+                  item: articleUrl,
+                },
+              ],
+            },
+            {
+              "@type": "Article",
+              headline: post.title,
+              description: post.excerpt,
+              image: [new URL(post.image, SITE_URL).toString()],
+              datePublished: post.date,
+              dateModified: post.date,
+              author: {
+                "@type": "Person",
+                name: post.author,
+              },
+              publisher: {
+                "@type": "Organization",
+                name: lang === "ar" ? "مجتمع أسس" : "Aosus Community",
+                logo: {
+                  "@type": "ImageObject",
+                  url: `${SITE_URL}/brand/logo-symbol.svg`,
+                },
+              },
+              mainEntityOfPage: articleUrl,
+              inLanguage: lang,
+              keywords: post.tags.join(", "),
+            },
+          ],
+        };
+        const articleStructuredDataJson = serializeJsonLd(articleStructuredData);
 
         return (
           <article className="min-h-screen py-24 bg-gray-50 dark:bg-transparent">
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: articleStructuredDataJson,
+              }}
+            />
             <div className="max-w-3xl mx-auto px-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -164,7 +236,7 @@ export default function ArticlePageClient({
                         <span className="opacity-50">/</span> {lang === "ar" ? "تابعنا" : "Follow Us"}
                       </h3>
                       <CommunityLinks
-                        platforms={SOCIAL_PLATFORMS}
+                        platforms={socialPlatforms}
                         size="sm"
                         className="w-full justify-start sm:ms-auto sm:w-auto sm:justify-end sm:flex-nowrap"
                       />

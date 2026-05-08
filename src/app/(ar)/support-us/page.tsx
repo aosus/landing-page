@@ -7,7 +7,9 @@ const pageMetadata = {
     "ادعم مجتمع أسس ليستمر في استضافة الخدمات المجتمعية، ورعاية الفعاليات، وتمويل المبادرات المفتوحة.",
 };
 
-export const metadata = getPageMetadata("ar", "/support-us", pageMetadata);
+export const metadata = getPageMetadata("ar", "/support-us", pageMetadata, {
+  includeLanguageAlternates: true,
+});
 
 export default function SupportPageRoute() {
   return <SupportPage lang="ar" />;

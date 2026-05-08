@@ -8,7 +8,9 @@ const pageMetadata = {
   thumbnail: "/og/contact-us-link-preview.jpg",
 };
 
-export const metadata = getPageMetadata("ar", "/contact-us", pageMetadata);
+export const metadata = getPageMetadata("ar", "/contact-us", pageMetadata, {
+  includeLanguageAlternates: true,
+});
 
 export default function ContactPageRoute() {
   return <ContactPage lang="ar" />;
