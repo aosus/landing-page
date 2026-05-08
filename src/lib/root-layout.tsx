@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { getBaseLocaleMetadata } from "@/lib/metadata";
 
 type Locale = "ar" | "en";
@@ -7,6 +8,14 @@ const localeDirection: Record<Locale, "rtl" | "ltr"> = {
   ar: "rtl",
   en: "ltr",
 };
+
+function getRybbitScriptSrc() {
+  const analyticsHost = (process.env.NEXT_PUBLIC_RYBBIT_HOST ?? "https://app.rybbit.io").replace(/\/+$/g, "");
+
+  return analyticsHost.endsWith("/api")
+    ? `${analyticsHost}/script.js`
+    : `${analyticsHost}/api/script.js`;
+}
 
 function getThemeBootstrapScript(locale: Locale) {
   const dir = localeDirection[locale];
@@ -63,6 +72,7 @@ export function RootDocument({
   locale: Locale;
 }) {
   const dir = localeDirection[locale];
+  const siteId = process.env.NEXT_PUBLIC_RYBBIT_SITE_ID;
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
@@ -73,7 +83,16 @@ export function RootDocument({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {siteId ? (
+          <Script
+            src={getRybbitScriptSrc()}
+            data-site-id={siteId}
+            strategy="afterInteractive"
+          />
+        ) : null}
+      </body>
     </html>
   );
 }
