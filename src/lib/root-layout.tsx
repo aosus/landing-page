@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { getBaseLocaleMetadata } from "@/lib/metadata";
 
 type Locale = "ar" | "en";
@@ -9,13 +8,8 @@ const localeDirection: Record<Locale, "rtl" | "ltr"> = {
   en: "ltr",
 };
 
-function getRybbitScriptSrc() {
-  const analyticsHost = (process.env.NEXT_PUBLIC_RYBBIT_HOST ?? "https://app.rybbit.io").replace(/\/+$/g, "");
-
-  return analyticsHost.endsWith("/api")
-    ? `${analyticsHost}/script.js`
-    : `${analyticsHost}/api/script.js`;
-}
+const RYBBIT_SCRIPT_SRC = "https://ry.aosus.org/api/script.js";
+const RYBBIT_SITE_ID = "ac3689413d93";
 
 function getThemeBootstrapScript(locale: Locale) {
   const dir = localeDirection[locale];
@@ -72,7 +66,6 @@ export function RootDocument({
   locale: Locale;
 }) {
   const dir = localeDirection[locale];
-  const siteId = process.env.NEXT_PUBLIC_RYBBIT_SITE_ID;
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
@@ -82,17 +75,13 @@ export function RootDocument({
             __html: getThemeBootstrapScript(locale),
           }}
         />
+        <script
+          src={RYBBIT_SCRIPT_SRC}
+          data-site-id={RYBBIT_SITE_ID}
+          defer
+        ></script>
       </head>
-      <body>
-        {children}
-        {siteId ? (
-          <Script
-            src={getRybbitScriptSrc()}
-            data-site-id={siteId}
-            strategy="afterInteractive"
-          />
-        ) : null}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
