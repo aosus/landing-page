@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
 import Layout from "../src/components/layout/Layout";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "../src/lib/community-platforms";
+import { CHAT_PLATFORMS, getSocialPlatforms } from "../src/lib/community-platforms";
 import { getRssFeedUrl } from "../src/lib/rss";
 
 vi.mock("next/link", () => ({
@@ -31,6 +31,7 @@ describe("Layout community navigation", () => {
       <Layout lang="en">{() => <div>content</div>}</Layout>,
     );
     const footer = container.querySelector("footer");
+    const socialPlatforms = getSocialPlatforms("en");
 
     expect(footer).not.toBeNull();
 
@@ -43,7 +44,7 @@ describe("Layout community navigation", () => {
       ).toHaveAttribute("href", platform.href);
     }
 
-    for (const platform of SOCIAL_PLATFORMS) {
+    for (const platform of socialPlatforms) {
       const expectedHref =
         platform.id === "rss" ? getRssFeedUrl("en") : platform.href;
 

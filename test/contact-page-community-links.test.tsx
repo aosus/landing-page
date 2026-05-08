@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import ContactPage from "../src/app/(en)/contact-us/ContactPageClient";
-import { CHAT_PLATFORMS, SOCIAL_PLATFORMS } from "../src/lib/community-platforms";
+import { CHAT_PLATFORMS, getSocialPlatforms } from "../src/lib/community-platforms";
 import { getRssFeedUrl } from "../src/lib/rss";
 
 vi.mock("next/link", () => ({
@@ -29,6 +29,7 @@ vi.mock("framer-motion", () => ({
 describe("ContactPage community links", () => {
   it("renders separate chat and social sections with all shared platforms", () => {
     render(<ContactPage lang="en" />);
+    const socialPlatforms = getSocialPlatforms("en");
 
     expect(screen.getByText("Chat_Platforms")).toBeInTheDocument();
     expect(screen.getByText("Follow_Us")).toBeInTheDocument();
@@ -41,7 +42,7 @@ describe("ContactPage community links", () => {
       expect(screen.getByText(platform.detail)).toBeInTheDocument();
     }
 
-    for (const platform of SOCIAL_PLATFORMS) {
+    for (const platform of socialPlatforms) {
       const expectedHref =
         platform.id === "rss" ? getRssFeedUrl("en") : platform.href;
       const expectedDetail =

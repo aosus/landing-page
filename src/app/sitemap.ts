@@ -42,7 +42,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  const postEntries: MetadataRoute.Sitemap = getAllPosts("ar").map((post) => ({
+  const postEntries: MetadataRoute.Sitemap = [
+    ...getAllPosts("ar"),
+    ...getAllPosts("en"),
+  ].map((post) => ({
     url: toAbsoluteUrl(
       getPostPath(
         post.lang,

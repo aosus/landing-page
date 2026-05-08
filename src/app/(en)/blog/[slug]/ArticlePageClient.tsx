@@ -39,6 +39,10 @@ const LABELS = {
   },
 };
 
+function serializeJsonLd(value: unknown) {
+  return JSON.stringify(value).replace(/<\/(script)/gi, "<\\/$1");
+}
+
 export default function ArticlePageClient({
   post,
   prevPost,
@@ -118,13 +122,14 @@ export default function ArticlePageClient({
             },
           ],
         };
+        const articleStructuredDataJson = serializeJsonLd(articleStructuredData);
 
         return (
           <article className="min-h-screen py-24 bg-gray-50 dark:bg-transparent">
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
-                __html: JSON.stringify(articleStructuredData),
+                __html: articleStructuredDataJson,
               }}
             />
             <div className="max-w-3xl mx-auto px-6">

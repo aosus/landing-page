@@ -91,7 +91,7 @@ export function getSocialPlatforms(lang: Lang): readonly CommunityPlatform[] {
   ];
 }
 
-export const SOCIAL_PLATFORMS: readonly CommunityPlatform[] = getSocialPlatforms("ar");
+export const SOCIAL_PLATFORMS_AR: readonly CommunityPlatform[] = getSocialPlatforms("ar");
 
 export const CHAT_PLATFORMS: readonly CommunityPlatform[] = [
   {
