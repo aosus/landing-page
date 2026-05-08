@@ -4,7 +4,6 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 
 import Layout from "../src/components/layout/Layout";
 import { CHAT_PLATFORMS, getSocialPlatforms } from "../src/lib/community-platforms";
-import { getRssFeedUrl } from "../src/lib/rss";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) => (
@@ -45,12 +44,9 @@ describe("Layout community navigation", () => {
     }
 
     for (const platform of socialPlatforms) {
-      const expectedHref =
-        platform.id === "rss" ? getRssFeedUrl("en") : platform.href;
-
       expect(
         within(footer as HTMLElement).getByRole("link", { name: platform.label }),
-      ).toHaveAttribute("href", expectedHref);
+      ).toHaveAttribute("href", platform.href);
     }
   });
 

@@ -36,7 +36,6 @@ function getLanguageAlternates(pathname: string) {
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.map((pathname) => ({
     url: toAbsoluteUrl(pathname),
-    lastModified: new Date(),
     alternates: {
       languages: getLanguageAlternates(pathname),
     },
@@ -50,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       getPostPath(
         post.lang,
         post.slug,
-        post.wpType === "post" && post.wpId === post.slug,
+        post.wpType === "post",
       ),
     ),
     lastModified: post.date,

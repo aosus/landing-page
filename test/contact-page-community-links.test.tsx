@@ -4,7 +4,6 @@ import { render, screen } from "@testing-library/react";
 
 import ContactPage from "../src/app/(en)/contact-us/ContactPageClient";
 import { CHAT_PLATFORMS, getSocialPlatforms } from "../src/lib/community-platforms";
-import { getRssFeedUrl } from "../src/lib/rss";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: any) => (
@@ -43,16 +42,11 @@ describe("ContactPage community links", () => {
     }
 
     for (const platform of socialPlatforms) {
-      const expectedHref =
-        platform.id === "rss" ? getRssFeedUrl("en") : platform.href;
-      const expectedDetail =
-        platform.id === "rss" ? "aosus.org/en/rss.xml" : platform.detail;
-
       expect(screen.getByRole("link", { name: platform.label })).toHaveAttribute(
         "href",
-        expectedHref,
+        platform.href,
       );
-      expect(screen.getByText(expectedDetail)).toBeInTheDocument();
+      expect(screen.getByText(platform.detail)).toBeInTheDocument();
     }
   });
 });
