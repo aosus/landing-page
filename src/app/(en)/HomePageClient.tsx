@@ -28,6 +28,7 @@ import CalligraphyPattern from "@/components/CalligraphyPattern";
 import { SITE_URL } from "@/lib/rss";
 
 const YEARS_ACTIVE = new Date().getFullYear() - 2016;
+const NORMALIZED_SITE_URL = SITE_URL.replace(/\/$/, "");
 
 function serializeJsonLd(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -255,8 +256,14 @@ export default function HomePageClient({
         const ff = isRtl ? "var(--font-arabic)" : undefined;
         const servicesLink = getLocalizedPath(lang, "/services");
         const dynamicPosts = latestPosts?.[lang]?.slice(0, 3);
-        const homeUrl = new URL(getLocalizedPath(lang, "/"), SITE_URL).toString();
-        const blogUrl = new URL(getLocalizedPath(lang, "/blog"), SITE_URL).toString();
+        const homeUrl = new URL(
+          getLocalizedPath(lang, "/"),
+          NORMALIZED_SITE_URL,
+        ).toString();
+        const blogUrl = new URL(
+          getLocalizedPath(lang, "/blog"),
+          NORMALIZED_SITE_URL,
+        ).toString();
         const socialProfiles = [
           "https://twitter.com/aosusdotorg",
           "https://bsky.app/profile/aosus.org",
@@ -270,16 +277,16 @@ export default function HomePageClient({
           "@graph": [
             {
               "@type": "Organization",
-              "@id": `${SITE_URL}/#organization`,
+              "@id": `${NORMALIZED_SITE_URL}/#organization`,
               name: lang === "ar" ? "مجتمع أسس" : "Aosus Community",
-              url: SITE_URL,
-              logo: `${SITE_URL}/brand/logo-symbol.svg`,
+              url: NORMALIZED_SITE_URL,
+              logo: `${NORMALIZED_SITE_URL}/brand/logo-symbol.svg`,
               sameAs: socialProfiles,
             },
             {
               "@type": "WebSite",
-              "@id": `${SITE_URL}/#website`,
-              url: SITE_URL,
+              "@id": `${NORMALIZED_SITE_URL}/#website`,
+              url: NORMALIZED_SITE_URL,
               name: lang === "ar" ? "مجتمع أسس" : "Aosus Community",
               inLanguage: lang,
             },
@@ -288,11 +295,11 @@ export default function HomePageClient({
               "@id": `${homeUrl}#webpage`,
               url: homeUrl,
               name: t.heading,
-              isPartOf: { "@id": `${SITE_URL}/#website` },
-              about: { "@id": `${SITE_URL}/#organization` },
+              isPartOf: { "@id": `${NORMALIZED_SITE_URL}/#website` },
+              about: { "@id": `${NORMALIZED_SITE_URL}/#organization` },
               inLanguage: lang,
               description: t.subtitle,
-              mainEntity: { "@id": `${SITE_URL}/#organization` },
+              mainEntity: { "@id": `${NORMALIZED_SITE_URL}/#organization` },
             },
           ],
         };
@@ -591,7 +598,7 @@ export default function HomePageClient({
                       <div className="rounded-sm border border-[#008a2f]/20 bg-[#008a2f]/5 p-4 text-sm text-gray-500 dark:text-gray-400">
                         English posts appear here once they are translated and published.
                         <Link
-                          href={blogUrl.replace(SITE_URL, "")}
+                          href={blogUrl.replace(NORMALIZED_SITE_URL, "")}
                           className="ml-2 font-mono text-[#008a2f] hover:underline"
                         >
                           Visit the English blog
