@@ -29,6 +29,10 @@ import { SITE_URL } from "@/lib/rss";
 
 const YEARS_ACTIVE = new Date().getFullYear() - 2016;
 
+function serializeJsonLd(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 const CONTENT = {
   en: {
     heading: "The largest Arabic FOSS community",
@@ -292,13 +296,14 @@ export default function HomePageClient({
             },
           ],
         };
+        const structuredDataJson = serializeJsonLd(structuredData);
 
         return (
           <>
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
-                __html: JSON.stringify(structuredData),
+                __html: structuredDataJson,
               }}
             />
             <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
