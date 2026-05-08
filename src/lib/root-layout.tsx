@@ -8,6 +8,9 @@ const localeDirection: Record<Locale, "rtl" | "ltr"> = {
   en: "ltr",
 };
 
+const RYBBIT_SCRIPT_SRC = "https://ry.aosus.org/api/script.js";
+const RYBBIT_SITE_ID = "ac3689413d93";
+
 function getThemeBootstrapScript(locale: Locale) {
   const dir = localeDirection[locale];
 
@@ -72,6 +75,11 @@ export function RootDocument({
             __html: getThemeBootstrapScript(locale),
           }}
         />
+        <script
+          src={RYBBIT_SCRIPT_SRC}
+          data-site-id={RYBBIT_SITE_ID}
+          defer
+        ></script>
       </head>
       <body>{children}</body>
     </html>
