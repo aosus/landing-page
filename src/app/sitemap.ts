@@ -49,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       getPostPath(
         post.lang,
         post.slug,
-        post.wpType === "post",
+        post.wpType === "post" && Boolean(post.wpId),
       ),
     ),
     lastModified: post.date,
