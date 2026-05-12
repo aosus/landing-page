@@ -45,7 +45,7 @@ There's no longer a need for someone to be at a computer to resolve a problem th
 We are also working on integrating AI into user experiences across Aosus platforms — whether through enabling Discourse AI to improve search, using the askaosus bot to find articles from within your favorite chat platform, or even to improve Aosus's presence on social media.
 
 This has already saved us a significant amount of time during the migration of Aosus's infrastructure to this new system.
-For example, there was an issue where messages from Matrix users were not arriving on Telegram. When I described the problem to the AI, it searched, read the logs, and concluded that the messages were not being delivered at all — the cause being missing Matrix configuration settings on the new server.
+For example, there was an issue where messages from Matrix users were not arriving on Telegram. When I described the problem to the AI, it searched, read the logs, and concluded that the messages were not being delivered at all — the cause being missing Matrix well-known files on the new website.
 
 Since we're on the topic of Matrix, let's move on to the most important change to your daily experience in the Aosus community.
 
