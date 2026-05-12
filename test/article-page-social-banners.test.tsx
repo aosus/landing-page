@@ -72,4 +72,15 @@ describe("ArticlePageClient social banners", () => {
     expect(screen.queryByText(/Join our chat rooms/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Follow our social media accounts/i)).not.toBeInTheDocument();
   });
+
+  it("renders a lazy discourse comments shell with a forum fallback action", () => {
+    render(<ArticlePageClient post={post} prevPost={null} lang="en" />);
+
+    expect(screen.getByRole("heading", { name: "Comments" })).toBeInTheDocument();
+    expect(screen.getByText(/Comments load only when you get here/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Open Forum/i })).toHaveAttribute(
+      "href",
+      "https://discourse.aosus.org/",
+    );
+  });
 });
