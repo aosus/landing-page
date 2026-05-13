@@ -1,6 +1,6 @@
 ---
 title: "الإصدار الثالث من مجتمع أسس"
-date: "2026-05-04"
+date: "2026-05-13"
 author: "FarisZR"
 categories: ["إعلان"]
 image: "aosus-v3.jpg"
