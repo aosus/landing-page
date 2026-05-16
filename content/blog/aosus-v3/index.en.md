@@ -1,6 +1,6 @@
 ---
 title: "Aosus Community v3"
-date: "2026-05-13"
+date: "2026-05-16"
 author: "FarisZR"
 categories: ["Announcement"]
 image: "aosus-v3.jpg"
