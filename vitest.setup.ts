@@ -1,5 +1,10 @@
 import "@testing-library/jest-dom/vitest";
-import { vi } from "vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach, vi } from "vitest";
+
+afterEach(() => {
+  cleanup();
+});
 
 if (!window.matchMedia) {
   window.matchMedia = vi.fn().mockImplementation(() => ({
@@ -12,6 +17,27 @@ if (!window.matchMedia) {
     removeListener: vi.fn(),
     dispatchEvent: vi.fn(),
   }));
+}
+
+if (!window.IntersectionObserver) {
+  class MockIntersectionObserver implements IntersectionObserver {
+    readonly root = null;
+    readonly rootMargin = "0px";
+    readonly thresholds = [];
+
+    disconnect() {}
+
+    observe() {}
+
+    takeRecords() {
+      return [];
+    }
+
+    unobserve() {}
+  }
+
+  window.IntersectionObserver =
+    MockIntersectionObserver as unknown as typeof IntersectionObserver;
 }
 
 HTMLCanvasElement.prototype.getContext = vi.fn(() => null) as any;

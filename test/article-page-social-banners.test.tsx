@@ -43,6 +43,7 @@ describe("ArticlePageClient social banners", () => {
     image: "/image.png",
     content: "<p>Body</p>",
     tags: ["tag"],
+    commentsEnabled: false,
   } as any;
 
   it("renders compressed one-row icon banners for chat and social links", () => {
@@ -71,5 +72,29 @@ describe("ArticlePageClient social banners", () => {
 
     expect(screen.queryByText(/Join our chat rooms/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Follow our social media accounts/i)).not.toBeInTheDocument();
+  });
+
+  it("renders a lazy discourse comments shell with a forum fallback action", () => {
+    render(
+      <ArticlePageClient
+        post={{ ...post, commentsEnabled: true }}
+        prevPost={null}
+        lang="en"
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "Comments" })).toBeInTheDocument();
+    expect(screen.getByText(/Comments load only when you get here/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Open Forum/i })).toHaveAttribute(
+      "href",
+      "https://discourse.aosus.org/",
+    );
+  });
+
+  it("does not render discourse comments when the post has not opted in", () => {
+    render(<ArticlePageClient post={post} prevPost={null} lang="en" />);
+
+    expect(screen.queryByRole("heading", { name: "Comments" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Open Forum/i })).not.toBeInTheDocument();
   });
 });

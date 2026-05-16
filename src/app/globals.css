@@ -114,6 +114,54 @@
   --font-mono: "Kawkab Mono", ui-monospace, monospace;
 }
 
+.aosus-discourse-comments__shell {
+  border: 1px solid color-mix(in srgb, #008a2f 28%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #008a2f 5%, white), rgba(255, 255, 255, 0.92)),
+    linear-gradient(135deg, rgba(29, 112, 186, 0.08), transparent 42%);
+  padding: 1.5rem;
+  box-shadow: 0 24px 60px rgba(2, 8, 23, 0.06);
+}
+
+.dark .aosus-discourse-comments__shell {
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.9), rgba(0, 0, 0, 0.92)),
+    linear-gradient(135deg, rgba(29, 112, 186, 0.14), transparent 45%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.aosus-discourse-comments__placeholder {
+  margin-top: 1.5rem;
+  display: flex;
+  min-height: 7rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border: 1px dashed color-mix(in srgb, #008a2f 28%, transparent);
+  background: color-mix(in srgb, #008a2f 4%, white);
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgb(75 85 99);
+}
+
+.dark .aosus-discourse-comments__placeholder {
+  background: color-mix(in srgb, #008a2f 8%, black);
+  color: rgb(209 213 219);
+}
+
+.aosus-discourse-comments__mount {
+  margin-top: 1.5rem;
+  min-height: 1px;
+}
+
+.aosus-discourse-comments__mount iframe {
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
 .aosus-link-preview-inline {
   position: relative;
   display: inline-flex;
