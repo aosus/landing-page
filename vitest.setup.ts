@@ -36,7 +36,8 @@ if (!window.IntersectionObserver) {
     unobserve() {}
   }
 
-  window.IntersectionObserver = MockIntersectionObserver as any;
+  window.IntersectionObserver =
+    MockIntersectionObserver as unknown as typeof IntersectionObserver;
 }
 
 HTMLCanvasElement.prototype.getContext = vi.fn(() => null) as any;

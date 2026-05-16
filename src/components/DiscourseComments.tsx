@@ -60,6 +60,7 @@ export default function DiscourseComments({
   const isRtl = lang === "ar";
   const shellFont = isRtl ? "var(--font-arabic)" : undefined;
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const resetInProgressRef = React.useRef(false);
   const [isActivated, setIsActivated] = React.useState(false);
   const [status, setStatus] = React.useState<"idle" | "loading" | "ready" | "error">("idle");
 
@@ -88,6 +89,7 @@ export default function DiscourseComments({
     let observer: IntersectionObserver | null = null;
 
     const activate = () => {
+      resetInProgressRef.current = false;
       setIsActivated(true);
     };
 
@@ -142,6 +144,10 @@ export default function DiscourseComments({
       return;
     }
 
+    if (resetInProgressRef.current) {
+      return;
+    }
+
     let isCancelled = false;
     setStatus("loading");
     node.innerHTML = "";
@@ -176,9 +182,11 @@ export default function DiscourseComments({
     };
 
     document.head.appendChild(script);
+    resetInProgressRef.current = false;
 
     return () => {
       isCancelled = true;
+      resetInProgressRef.current = true;
       script.remove();
 
       if (window.DiscourseEmbed?.discourseEmbedUrl === articleUrl) {
