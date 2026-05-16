@@ -13,6 +13,7 @@ export interface PostFrontMatter {
   author: string;
   tags: string[];
   categories: string[];
+  commentsEnabled: boolean;
   image: string;
   thumbnail?: string;
   ogImage: string;
@@ -105,6 +106,23 @@ function normalizeString(value: unknown): string | undefined {
   return undefined;
 }
 
+function normalizeBoolean(value: unknown): boolean {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    return normalized === "true" || normalized === "yes" || normalized === "1";
+  }
+
+  if (typeof value === "number") {
+    return value === 1;
+  }
+
+  return false;
+}
+
 function resolvePublicSlug(data: Record<string, unknown>, directorySlug: string): string {
   const wpType = normalizeString(data.wpType);
 
@@ -169,6 +187,7 @@ function parsePostFile(filePath: string, directorySlug: string, lang: Lang): Par
       author: data.author || "",
       tags,
       categories,
+      commentsEnabled: normalizeBoolean(data.commentsEnabled),
       image: resolvePostAssetUrl(filePath, imageSource),
       thumbnail: thumbnailSource
         ? resolvePostAssetUrl(filePath, thumbnailSource)

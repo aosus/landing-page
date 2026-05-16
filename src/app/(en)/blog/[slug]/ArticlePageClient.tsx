@@ -242,7 +242,9 @@ export default function ArticlePageClient({
                   </CyberCard>
                 </div>
 
-                <DiscourseComments lang={lang} articleUrl={articleUrl} />
+                {post.commentsEnabled && (
+                  <DiscourseComments lang={lang} articleUrl={articleUrl} />
+                )}
 
                 {prevPost && (
                   <div className="border-t border-[#008a2f]/20 pt-8">
