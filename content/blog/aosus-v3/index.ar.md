@@ -2,7 +2,7 @@
 title: "الإصدار الثالث من مجتمع أسس"
 date: "2026-05-16"
 author: "FarisZR"
-categories: ["إعلان"]
+categories: ["اعلان"]
 image: "aosus-v3.jpg"
 thumbnail: "aosus-v3.jpg"
 ogImage: "aosus-v3.jpg"
