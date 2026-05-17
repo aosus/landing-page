@@ -4,8 +4,7 @@ import React from "react";
 import { ExternalLink, LoaderCircle, MessageSquare } from "lucide-react";
 import { PrimaryButton } from "@/components/layout/Layout";
 import type { Lang } from "@/lib/locale";
-
-export const DISCOURSE_URL = "https://discourse.aosus.org/";
+import { DISCOURSE_URL } from "@/lib/discourse";
 
 const EMBED_SCRIPT_ID = "aosus-discourse-embed-script";
 const EMBED_ROOT_ID = "discourse-comments";
@@ -51,9 +50,11 @@ declare global {
 export default function DiscourseComments({
   lang,
   articleUrl,
+  discussionUrl = DISCOURSE_URL,
 }: {
   lang: Lang;
   articleUrl: string;
+  discussionUrl?: string;
 }) {
   const t = COPY[lang];
   const titleId = React.useId();
@@ -225,7 +226,7 @@ export default function DiscourseComments({
           </div>
 
           <PrimaryButton
-            href={DISCOURSE_URL}
+            href={discussionUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0"
@@ -251,7 +252,7 @@ export default function DiscourseComments({
 
         <noscript>
           <p className="mt-4 text-sm text-gray-600">
-            <a href={DISCOURSE_URL} className="text-[#008a2f] underline underline-offset-4">
+            <a href={discussionUrl} className="text-[#008a2f] underline underline-offset-4">
               {t.fallback}
             </a>
           </p>

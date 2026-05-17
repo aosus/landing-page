@@ -1,7 +1,7 @@
 # AGENTS.md
 
-- Use `pnpm dev` for local work; it runs `tsx scripts/sync-content-assets.ts` first, then `next dev` on port `25211` by default.
-- Use `pnpm build` to verify changes; this repo is a static export (`output: 'export'`), so `pnpm start` serves the generated `out/` directory, not a long-running Next server.
+- Use `pnpm dev` for local work; it runs `tsx scripts/sync-content-assets.ts`, `tsx scripts/sync-discourse-discussions.ts`, then `next dev` on port `25211` by default.
+- Use `pnpm build` to verify changes; it also refreshes `public/discourse-discussions.json` before exporting the static site, and `pnpm start` serves the generated `out/` directory.
 - There is no repo-local `lint` or `test` script in `package.json`.
 - The app router lives in `src/app`; shared markdown/content logic lives in `src/lib/markdown.ts`.
 - Locale routing is split between Arabic and English: `/` is Arabic, `/en` is English.

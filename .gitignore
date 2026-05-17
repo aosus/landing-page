@@ -6,6 +6,7 @@
 out/
 *.tsbuildinfo
 public/content/
+public/discourse-discussions.json
 public/rss.xml
 public/rss
 public/feed

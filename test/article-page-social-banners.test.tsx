@@ -91,6 +91,22 @@ describe("ArticlePageClient social banners", () => {
     );
   });
 
+  it("uses the resolved discussion URL when one is provided", () => {
+    render(
+      <ArticlePageClient
+        post={{ ...post, commentsEnabled: true }}
+        prevPost={null}
+        discussionUrl="https://discourse.aosus.org/t/topic/5323/2"
+        lang="en"
+      />,
+    );
+
+    expect(screen.getByRole("link", { name: /Open Forum/i })).toHaveAttribute(
+      "href",
+      "https://discourse.aosus.org/t/topic/5323/2",
+    );
+  });
+
   it("does not render discourse comments when the post has not opted in", () => {
     render(<ArticlePageClient post={post} prevPost={null} lang="en" />);
 
