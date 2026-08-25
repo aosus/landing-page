@@ -13,6 +13,7 @@ import {
   ChevronRight,
   ArrowRight,
   ExternalLink,
+  AlertTriangle,
 } from "lucide-react";
 import Link from "next/link";
 import Layout, {
@@ -41,6 +42,8 @@ const CONTENT = {
       "A community with the aim of spreading and enriching the culture of FOSS software in the Arab world and to make it easy for people to contribute and take part.",
     ctaJoin: "Join us",
     ctaExplore: "Privacy frontends",
+    shutdownNotice:
+      "Aosus public services have been shut down. Most of them were already broken by newly introduced AI-scraper protections, so we've turned them off to use our resources more effectively internally.",
     stats: [
       { label: "Members", value: "3,000+", icon: Users },
       { label: "Posts", value: "10,000+", icon: MessageSquare },
@@ -143,6 +146,8 @@ const CONTENT = {
       "مجتمع أسس يهدف لنشر وإثراء ثقافة البرمجيات الحرة والمفتوحة في العالم العربي, ولتسهيل المساهمة والمشاركة فيها",
     ctaJoin: "انضم الان",
     ctaExplore: "خدمات أسس",
+    shutdownNotice:
+      "تم إيقاف خدمات أسس العامة. معظمها كان معطلاً أصلاً بسبب حمايات كاشطات الذكاء الاصطناعي الجديدة، لذا أوقفناها لاستخدام مواردنا بشكل أكثر فعالية داخلياً.",
     stats: [
       { label: "عضو", value: "+3,000", icon: Users },
       { label: "منشور", value: "+10,000", icon: MessageSquare },
@@ -364,6 +369,30 @@ export default function HomePageClient({
                     </SecondaryButton>
                   </motion.div>
                 </div>
+              </div>
+            </section>
+
+            <section className="pt-20">
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <CyberCard
+                    isDark={isDark}
+                    className="p-4 sm:p-5 flex items-start gap-3"
+                    hover={false}
+                  >
+                    <AlertTriangle className="w-5 h-5 text-[#008a2f] flex-shrink-0 mt-0.5" />
+                    <p
+                      className="text-sm sm:text-base leading-relaxed text-gray-600 dark:text-gray-400"
+                      style={{ fontFamily: ff }}
+                    >
+                      {t.shutdownNotice}
+                    </p>
+                  </CyberCard>
+                </motion.div>
               </div>
             </section>
 

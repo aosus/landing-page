@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import {
   Languages,
   ImageIcon,
-  ExternalLink,
-  Shield,
+  AlertTriangle,
 } from "lucide-react";
 import {
   FaChrome,
@@ -21,18 +20,16 @@ import { SiMatrix, SiSearxng } from "react-icons/si";
 import Layout, {
   CyberCard,
   SectionHeading,
-  PrimaryButton,
   type Lang,
 } from "@/components/layout/Layout";
-import { getLocalizedPath } from "@/lib/locale";
 
 const SERVICES = {
   en: {
     title: "Services",
     subtitle:
       "Privacy-respecting frontends for popular platforms. No ads, no tracking.",
-    notice: "These services are public. Please be mindful of server resources.",
-    supportCta: "Support Us",
+    notice:
+      "Aosus public services have been shut down. Most of them were already broken by newly introduced AI-scraper protections, so we've turned them off to use our resources more effectively internally.",
     items: [
       {
         name: "Simply Translate",
@@ -119,8 +116,8 @@ const SERVICES = {
   ar: {
     title: "الخدمات",
     subtitle: "واجهات تحترم الخصوصية للمنصات الشائعة. بدون إعلانات أو تتبع.",
-    notice: "هذه الخدمات عامة. يرجى مراعاة استخدام موارد الخادم.",
-    supportCta: "ادعمنا",
+    notice:
+      "تم إيقاف خدمات أسس العامة. معظمها كان معطلاً أصلاً بسبب حمايات كاشطات الذكاء الاصطناعي الجديدة، لذا أوقفناها لاستخدام مواردنا بشكل أكثر فعالية داخلياً.",
     items: [
       {
         name: "Simply Translate",
@@ -213,7 +210,6 @@ export default function ServicesPage({ lang: langProp }: { lang?: Lang }) {
         const t = SERVICES[lang];
         const isRtl = lang === "ar";
         const ff = isRtl ? "var(--font-arabic)" : undefined;
-        const supportLink = getLocalizedPath(lang, "/support-us");
 
         return (
           <div className="min-h-screen bg-gray-50 dark:bg-transparent">
@@ -241,41 +237,33 @@ export default function ServicesPage({ lang: langProp }: { lang?: Lang }) {
                   className="p-4 mb-12 flex items-center gap-3"
                   hover={false}
                 >
-                  <Shield className="w-5 h-5 text-[#008a2f] flex-shrink-0" />
+                  <AlertTriangle className="w-5 h-5 text-[#008a2f] flex-shrink-0" />
                   <p
                     className="text-sm font-mono text-gray-600 dark:text-gray-400"
                     style={{ fontFamily: ff }}
                   >
                     {t.notice}
                   </p>
-                  <PrimaryButton
-                    href={supportLink}
-                    className="ml-auto text-xs px-3 py-1.5 whitespace-nowrap"
-                  >
-                    {t.supportCta}
-                  </PrimaryButton>
                 </CyberCard>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
                   {t.items.map((service, i) => (
-                    <motion.a
+                    <motion.div
                       key={i}
-                      href={service.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05 }}
                     >
                       <CyberCard
                         isDark={isDark}
-                        className="p-6 h-full group cursor-pointer"
+                        className="p-6 h-full opacity-70"
+                        hover={false}
                       >
                         <service.icon
                           className="w-8 h-8 mb-4"
                           style={{ color: service.color }}
                         />
-                        <h3 className="text-lg font-bold mb-2 font-mono group-hover:text-[#008a2f] transition-colors">
+                        <h3 className="text-lg font-bold mb-2 font-mono">
                           {service.name}
                         </h3>
                         <p
@@ -284,14 +272,8 @@ export default function ServicesPage({ lang: langProp }: { lang?: Lang }) {
                         >
                           {service.desc}
                         </p>
-                        <div className="mt-4 flex items-center gap-1 text-xs font-mono text-[#008a2f]">
-                          <ExternalLink className="w-3 h-3" />
-                          {service.link
-                            .replace("https://", "")
-                            .replace("/", "")}
-                        </div>
                       </CyberCard>
-                    </motion.a>
+                    </motion.div>
                   ))}
                 </div>
 
