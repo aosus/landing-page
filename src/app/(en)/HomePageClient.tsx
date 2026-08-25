@@ -7,13 +7,11 @@ import {
   MessageSquare,
   Database,
   Activity,
-  Shield,
   Server,
   Cpu,
   ChevronRight,
   ArrowRight,
   ExternalLink,
-  AlertTriangle,
 } from "lucide-react";
 import Link from "next/link";
 import Layout, {
@@ -41,9 +39,7 @@ const CONTENT = {
     subtitle:
       "A community with the aim of spreading and enriching the culture of FOSS software in the Arab world and to make it easy for people to contribute and take part.",
     ctaJoin: "Join us",
-    ctaExplore: "Privacy frontends",
-    shutdownNotice:
-      "Aosus public services have been shut down. Most of them were already broken by newly introduced AI-scraper protections, so we've turned them off to use our resources more effectively internally.",
+    ctaExplore: "Our blog",
     stats: [
       { label: "Members", value: "3,000+", icon: Users },
       { label: "Posts", value: "10,000+", icon: MessageSquare },
@@ -52,13 +48,6 @@ const CONTENT = {
     ],
     projectsHeading: "Aosus projects",
     projects: [
-      {
-        title: "Aosus services",
-        desc: "To support and raise awareness about Digital privacy, we host Privacy services/front ends for popular social platforms, allowing you to browse their content without Ads and tracking.",
-        icon: Shield,
-        color: "#1d70ba",
-        link: getLocalizedPath("en", "/services"),
-      },
       {
         title: "Community",
         desc: "The largest part of the Aosus project, which is dedicated to everyone interested in contributing to the enrichment of technical Arabic content, specializing in free and open source software and hardware.",
@@ -145,9 +134,7 @@ const CONTENT = {
     subtitle:
       "مجتمع أسس يهدف لنشر وإثراء ثقافة البرمجيات الحرة والمفتوحة في العالم العربي, ولتسهيل المساهمة والمشاركة فيها",
     ctaJoin: "انضم الان",
-    ctaExplore: "خدمات أسس",
-    shutdownNotice:
-      "تم إيقاف خدمات أسس العامة. معظمها كان معطلاً أصلاً بسبب حمايات كاشطات الذكاء الاصطناعي الجديدة، لذا أوقفناها لاستخدام مواردنا بشكل أكثر فعالية داخلياً.",
+    ctaExplore: "المدونة",
     stats: [
       { label: "عضو", value: "+3,000", icon: Users },
       { label: "منشور", value: "+10,000", icon: MessageSquare },
@@ -156,13 +143,6 @@ const CONTENT = {
     ],
     projectsHeading: "أبرز انتاجات أسس",
     projects: [
-      {
-        title: "خِدْمَات أسس العامة",
-        desc: "في سبيل دعم الخصوصية الرقمية, وزيادة الوعي عنها, يقدم مجتمع أسس خِدْمَات عامة, توفر واجهات لمنصات معروفة مثل YouTube, TikTok, Reddit وغيرها دون أعلانات او تتبع.",
-        icon: Shield,
-        color: "#1d70ba",
-        link: "/services",
-      },
       {
         title: "المجتمع",
         desc: "أكبر جزء من مشروع أسس, وهو مخصص للجميع في مساهمه أثراء المحتوى العربي التقني المتخصص بالبرمجيات الحرة والمفتوحة.",
@@ -259,7 +239,7 @@ export default function HomePageClient({
         const t = CONTENT[lang];
         const isRtl = lang === "ar";
         const ff = isRtl ? "var(--font-arabic)" : undefined;
-        const servicesLink = getLocalizedPath(lang, "/services");
+        const blogLink = getLocalizedPath(lang, "/blog");
         const dynamicPosts = latestPosts?.[lang]?.slice(0, 3);
         const homeUrl = new URL(
           getLocalizedPath(lang, "/"),
@@ -364,35 +344,11 @@ export default function HomePageClient({
                         className={`w-4 h-4 ${isRtl ? "rotate-180" : ""}`}
                       />
                     </PrimaryButton>
-                    <SecondaryButton href={servicesLink} isDark={isDark}>
+                    <SecondaryButton href={blogLink} isDark={isDark}>
                       {t.ctaExplore}
                     </SecondaryButton>
                   </motion.div>
                 </div>
-              </div>
-            </section>
-
-            <section className="pt-20">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <CyberCard
-                    isDark={isDark}
-                    className="p-4 sm:p-5 flex items-start gap-3"
-                    hover={false}
-                  >
-                    <AlertTriangle className="w-5 h-5 text-[#008a2f] flex-shrink-0 mt-0.5" />
-                    <p
-                      className="text-sm sm:text-base leading-relaxed text-gray-600 dark:text-gray-400"
-                      style={{ fontFamily: ff }}
-                    >
-                      {t.shutdownNotice}
-                    </p>
-                  </CyberCard>
-                </motion.div>
               </div>
             </section>
 
@@ -432,7 +388,7 @@ export default function HomePageClient({
                   isDark={isDark}
                   lang={lang}
                 />
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                   {t.projects.map((project, i) => {
                     const isExternal = project.link.startsWith("http");
                     const CardContent = (

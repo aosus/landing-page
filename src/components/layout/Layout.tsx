@@ -18,7 +18,6 @@ const NAV = {
   en: [
     { label: "Home", href: "/en" },
     { label: "Blog", href: "/en/blog" },
-    { label: "Services", href: "/en/services" },
     { label: "Writing Contest", href: "/en/writing-contest" },
     { label: "Support Us", href: "/en/support-us" },
     { label: "Contact", href: "/en/contact-us" },
@@ -26,7 +25,6 @@ const NAV = {
   ar: [
     { label: "الرئيسية", href: "/" },
     { label: "المدونة", href: "/blog" },
-    { label: "خدمات", href: "/services" },
     { label: "جائزة الكتابة", href: "/writing-contest" },
     { label: "ادعمنا", href: "/support-us" },
     { label: "اتصل بنا", href: "/contact-us" },
