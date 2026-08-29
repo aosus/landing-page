@@ -4,6 +4,7 @@ import {
   getWordPressPostSlugs,
 } from "@/lib/markdown";
 import ArticlePageClient from "@/app/(en)/blog/[slug]/ArticlePageClient";
+import { getArticleDiscussionUrl } from "@/lib/article-pages";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getBlogPostMetadata } from "@/lib/metadata";
@@ -43,6 +44,9 @@ export default async function RootWordPressArticlePage({
   const currentIndex = allPosts.findIndex((item) => item.slug === id);
   const prevPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const discussionUrl = await getArticleDiscussionUrl(post, "ar");
 
-  return <ArticlePageClient post={post} prevPost={prevPost} lang="ar" />;
+  return (
+    <ArticlePageClient post={post} prevPost={prevPost} discussionUrl={discussionUrl} lang="ar" />
+  );
 }

@@ -18,6 +18,7 @@ import Layout, {
   type Lang,
 } from "@/components/layout/Layout";
 import { CHAT_PLATFORMS, getSocialPlatforms } from "@/lib/community-platforms";
+import { getAbsolutePostUrl } from "@/lib/discourse";
 import type { Post, PostFrontMatter } from "@/lib/markdown";
 import { getLocalizedPath, getPostPath } from "@/lib/locale";
 import { SITE_URL } from "@/lib/rss";
@@ -44,10 +45,12 @@ function serializeJsonLd(value: unknown) {
 export default function ArticlePageClient({
   post,
   prevPost,
+  discussionUrl,
   lang: langProp,
 }: {
   post: Post;
   prevPost: PostFrontMatter | null;
+  discussionUrl?: string | null;
   lang: Lang;
 }) {
   return (
@@ -61,14 +64,11 @@ export default function ArticlePageClient({
         const homeLink = getLocalizedPath(lang, "/");
         const blogLink = getLocalizedPath(lang, "/blog");
         const supportLink = getLocalizedPath(lang, "/support-us");
-        const articleUrl = new URL(
-          getPostPath(
-            lang,
-            post.slug,
-            post.wpType === "post" && post.wpId === post.slug,
-          ),
-          SITE_URL,
-        ).toString();
+        const articleUrl = getAbsolutePostUrl(
+          lang,
+          post.slug,
+          post.wpType === "post" && post.wpId === post.slug,
+        );
         const articleStructuredData = {
           "@context": "https://schema.org",
           "@graph": [
@@ -243,7 +243,11 @@ export default function ArticlePageClient({
                 </div>
 
                 {post.commentsEnabled && (
-                  <DiscourseComments lang={lang} articleUrl={articleUrl} />
+                  <DiscourseComments
+                    lang={lang}
+                    articleUrl={articleUrl}
+                    discussionUrl={discussionUrl ?? undefined}
+                  />
                 )}
 
                 {prevPost && (
